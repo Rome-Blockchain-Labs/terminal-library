@@ -1,6 +1,5 @@
 import React from 'react'
 import { theme } from 'twin.macro'
-import { ConnectWalletIcon } from './components/icons'
 
 import { NetworkName } from './constants'
 import { useWallets } from './WalletContext'
@@ -39,13 +38,14 @@ const NetworkAwareWalletIconWithTooltip: (props: {
       tw="transition mx-1.5"
       onClick={onClick}
     >
-      <ConnectWalletIcon
-        active={active}
-        activeColor={activeColor}
-        color={color}
-        height={height}
-        width={width}
-      />
+      Icon here
+      {/*<ConnectWalletIcon*/}
+      {/*  active={active}*/}
+      {/*  activeColor={activeColor}*/}
+      {/*  color={color}*/}
+      {/*  height={height}*/}
+      {/*  width={width}*/}
+      {/*/>*/}
     </button>
   )
 }
