@@ -38,7 +38,7 @@ const NetworkAwareWalletIconWithTooltip: (props: {
       tw="transition mx-1.5"
       onClick={onClick}
     >
-      Icon here
+      Icon here version 3
       {/*<ConnectWalletIcon*/}
       {/*  active={active}*/}
       {/*  activeColor={activeColor}*/}
