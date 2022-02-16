@@ -1,0 +1,12 @@
+{
+  "name": "@rbl/terminal-library",
+  "version": "1.0.0",
+  "description": "Shared library for Rome Terminal",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "artifactregistry-login": "npx google-artifactregistry-auth --repo-config=.npmrc --credential-config=.npmrc"
+  },
+  "author": "Rome Blockchain Labs",
+  "license": "ISC"
+}

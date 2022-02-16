@@ -1,0 +1,9 @@
+steps:
+- name: gcr.io/cloud-builders/npm
+  args: ['run', 'artifactregistry-login', '/workspace/.npmrc']
+- name: node:14
+  entrypoint: npm
+  args: ['install']
+- name: node:14
+  entrypoint: npm
+  args: ['publish']
