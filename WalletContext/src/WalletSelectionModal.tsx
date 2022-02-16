@@ -2,10 +2,10 @@ import React, { FC, useRef } from 'react'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import tw from 'twin.macro'
 import useOnClickOutside from 'use-onclickoutside'
-import { CloseButton } from './components/buttons'
-import { AvalancheIcon, BinanceIcon } from './components/icons'
+// import { CloseButton } from './components/buttons'
+// import { AvalancheIcon, BinanceIcon } from './components/icons'
 import { WalletName } from './constants'
-import MetamaskLogo from './images/logos/MetamaskLogo'
+// import MetamaskLogo from './images/logos/MetamaskLogo'
 import { useWallets } from './WalletContext'
 
 const ExtraWidgetDivider = tw.div`border-b border-solid border-gray-400 ml-3 mr-3 mt-1.5 mb-3.5`
@@ -64,12 +64,13 @@ const WalletSelectionModal: (props: { children?: any }) => any = (props) => {
           >
             <div tw="flex justify-between text-yellow-400 pb-4 w-full">
               <div tw="flex-grow ">CONNECT TO WALLET</div>
-              <CloseButton onClick={cancelWalletChangePrompt} />
+              <button onClick={cancelWalletChangePrompt} />
             </div>
             <ExtraWidgetDivider css={['width:100%']} />
             <div tw="flex">
               <WalletBox walletName={'metamask'}>
-                <MetamaskLogo size={30} />
+                Metamask
+                {/*<MetamaskLogo size={30} />*/}
               </WalletBox>
             </div>
             <div tw="mt-5 text-lg">
@@ -90,7 +91,7 @@ const WalletSelectionModal: (props: { children?: any }) => any = (props) => {
         >
           <div tw="flex justify-between text-yellow-400 pb-4 w-full">
             <div tw="flex-grow text-center">SELECT A METAMASK NETWORK</div>
-            <CloseButton onClick={cancelWalletChangePrompt} />
+            <button onClick={cancelWalletChangePrompt} />
           </div>
           <ExtraWidgetDivider css={['width:100%']} />
           <div tw="flex">
@@ -98,13 +99,16 @@ const WalletSelectionModal: (props: { children?: any }) => any = (props) => {
               text={'Avalanche'}
               onClick={() => switchNetwork('Avalanche')}
             >
-              <AvalancheIcon color={'gray-100'} />
+              {/*<AvalancheIcon color={'gray-100'} />*/}
+              Avalanche
             </HoverBox>
             <HoverBox text={'BSC'} onClick={() => switchNetwork('BSC')}>
-              <BinanceIcon color={'gray-100'} />
+              {/*<BinanceIcon color={'gray-100'} />*/}
+              BSC
             </HoverBox>
             <HoverBox text={'Rinkeby'} onClick={() => switchNetwork('Rinkeby')}>
-              <BinanceIcon color={'gray-100'} />
+              {/*<BinanceIcon color={'gray-100'} />*/}
+              Rinkeby
             </HoverBox>
           </div>
         </div>

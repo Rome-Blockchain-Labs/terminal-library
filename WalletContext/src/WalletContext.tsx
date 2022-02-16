@@ -2,7 +2,6 @@ import { useWeb3React } from '@web3-react/core'
 import { InjectedConnector } from '@web3-react/injected-connector'
 import { createContext, FC, useContext, useEffect, useState } from 'react'
 import { isMobile } from 'react-device-detect'
-import { injected } from '../connectors'
 import {
   getChainHexByNetworkName,
   getNetworkByNetworkName,
@@ -10,6 +9,9 @@ import {
   WalletName,
 } from './constants'
 import { getChainIdByNetworkName } from './constants'
+
+declare var window: any//todo add a declaration file globally pointed to by tsconfig?
+
 
 const injectedProvider = new InjectedConnector({})
 
@@ -70,9 +72,9 @@ export const WalletsContextProvider: FC<ProviderProps> = (props) => {
   const cancelWalletChangePrompt = () => setPromptingWalletChange(false)
 
   useEffect(() => {
-    injected.isAuthorized().then((isAuthorized) => {
+    injectedProvider.isAuthorized().then((isAuthorized) => {
       if (isAuthorized || (isMobile && window.ethereum)) {
-        activate(injected)
+        activate(injectedProvider)
         // next line is a for for: https://giters.com/NoahZinsmeister/web3-react/issues/257
         window?.ethereum?.removeAllListeners(['networkChanged'])
       }

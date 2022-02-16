@@ -12,8 +12,13 @@
   "dependencies": {
     "@popperjs/core": "^2.11.2",
     "@reach/portal": "^0.16.2",
+    "@web3-react/core": "^6.1.9",
+    "@web3-react/injected-connector": "^6.0.7",
+    "ethers": "^5.5.4",
     "react": "^17.0.2",
+    "react-device-detect": "^2.1.2",
     "react-popper": "^2.2.5",
-    "twin.macro": "^2.8.2"
+    "twin.macro": "^2.8.2",
+    "use-onclickoutside": "^0.4.0"
   }
 }
