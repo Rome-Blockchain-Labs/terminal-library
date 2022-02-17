@@ -1,6 +1,6 @@
 {
   "name": "@rbl/terminal-library",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Shared library for Rome Terminal",
   "main": "index.js",
   "scripts": {
