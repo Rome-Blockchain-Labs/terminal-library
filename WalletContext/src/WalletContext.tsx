@@ -1,3 +1,4 @@
+// @ts-nocheck //todo fix
 import { useWeb3React } from '@web3-react/core'
 import { InjectedConnector } from '@web3-react/injected-connector'
 import { createContext, FC, useContext, useEffect, useState } from 'react'
@@ -9,8 +10,6 @@ import {
   WalletName,
 } from './constants'
 import { getChainIdByNetworkName } from './constants'
-
-declare var window: any//todo add a declaration file globally pointed to by tsconfig?
 
 
 const injectedProvider = new InjectedConnector({})
