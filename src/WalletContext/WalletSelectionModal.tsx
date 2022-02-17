@@ -66,7 +66,7 @@ const WalletSelectionModal: (props: { children?: any }) => any = (props) => {
               <div tw="flex-grow ">CONNECT TO WALLET</div>
               <button onClick={cancelWalletChangePrompt} />
             </div>
-            <ExtraWidgetDivider css={['width:100%']} />
+            {/*<ExtraWidgetDivider css={['width:100%']} />*/}
             <div tw="flex">
               <WalletBox walletName={'metamask'}>
                 Metamask
@@ -93,7 +93,7 @@ const WalletSelectionModal: (props: { children?: any }) => any = (props) => {
             <div tw="flex-grow text-center">SELECT A METAMASK NETWORK</div>
             <button onClick={cancelWalletChangePrompt} />
           </div>
-          <ExtraWidgetDivider css={['width:100%']} />
+          {/*<ExtraWidgetDivider css={['width:100%']} />*/}
           <div tw="flex">
             <HoverBox
               text={'Avalanche'}

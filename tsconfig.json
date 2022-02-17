@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "baseUrl": "./src",
+    "allowSyntheticDefaultImports": true,
+    "target": "es6",
+    "module": "commonjs",
+    "lib": ["es6", "dom"],
+    "allowJs": true,
+    "outDir": "lib",
+    "rootDir": "src",
+    "strict": true,
+    "noImplicitAny": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "useUnknownInCatchVariables": false,
+    "types": ["node"],
+    "typeRoots": ["./node_modules/@types"],
+    "jsx": "react"
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "lib", "src/**/*.spec.ts", "src/**/test/**"]
+}
