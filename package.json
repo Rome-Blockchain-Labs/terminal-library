@@ -1,12 +1,12 @@
 {
   "name": "@rbl/terminal-library",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Shared library for Rome Terminal",
   "main": "dist/index.js",
   "source": "src/index.ts",
   "types": "dist/index.d.ts",
   "scripts": {
-    "prepare": "npm run build && rm -rf ./dist/* && cp -r ./lib/* ./dist && rm -rf ./lib",
+    "prepare": "npm run build && cp -r ./lib/* . && rm -rf ./lib",
     "build": "tsc;",
     "test": "echo \"Error: no test specified\" && exit 1",
     "artifactregistry-login": "npx google-artifactregistry-auth --repo-config=.npmrc --credential-config=.npmrc"
