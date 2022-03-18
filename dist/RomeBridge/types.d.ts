@@ -9,7 +9,6 @@ export declare class RomeEvent {
     constructor(payload: any);
 }
 export declare type RomeEventHandler<T> = (event: T) => void;
-
 export declare class TerminalClickButtonEvent extends RomeEvent {
     static TYPE: RomeEventType;
     type: RomeEventType;
@@ -18,7 +17,6 @@ export declare class TerminalBridgeReadyEvent extends RomeEvent {
     static TYPE: RomeEventType;
     type: RomeEventType;
 }
-
 export declare class WidgetUpdateButtonStatusEvent extends RomeEvent {
     static TYPE: RomeEventType;
     type: RomeEventType;
