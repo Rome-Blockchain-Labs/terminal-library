@@ -2,6 +2,7 @@
   "name": "@rbl/terminal-library",
   "version": "1.0.9",
   "description": "Shared library for Rome Terminal",
+  "main": "src/RomeBridge/terminal.ts",
   "scripts": {
     "prepare": "npm run build && cp -r ./lib/* . && rm -rf ./lib",
     "build": "tsc;",
