@@ -1,0 +1,15 @@
+{
+  "name": "rome-react-components",
+  "version": "1.0.0",
+  "description": "Library of react components for the Rome Terminal",
+  "main": "dist/index.js",
+  "types": "dist/TODO",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Rome Blockchain Labs",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^17.0.2"
+  }
+}
