@@ -59,4 +59,4 @@ declare namespace terminal {
   };
 }
 
-export { terminal as Terminal, widget as Widget };
+export { widget as client, terminal };

@@ -130,7 +130,7 @@ var RomeBridgeFactory = class {
 var romeBridgeFactory = new RomeBridgeFactory();
 var terminal_default = romeBridgeFactory;
 export {
-  terminal_exports as Terminal,
-  widget_exports as Widget
+  widget_exports as client,
+  terminal_exports as terminal
 };
 //# sourceMappingURL=index.js.map

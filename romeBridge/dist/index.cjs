@@ -36,8 +36,8 @@ var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: tru
 // src/index.ts
 var src_exports = {};
 __export(src_exports, {
-  Terminal: () => terminal_exports,
-  Widget: () => widget_exports
+  client: () => widget_exports,
+  terminal: () => terminal_exports
 });
 module.exports = __toCommonJS(src_exports);
 
@@ -150,7 +150,7 @@ var romeBridgeFactory = new RomeBridgeFactory();
 var terminal_default = romeBridgeFactory;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  Terminal,
-  Widget
+  client,
+  terminal
 });
 //# sourceMappingURL=index.cjs.map
