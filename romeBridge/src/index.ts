@@ -1,2 +1,3 @@
-export * as client from "./widget";
-export * as terminal from "./terminal";
+export * from "./widget";
+export * from "./terminal";
+export * from "./types";

@@ -9,24 +9,28 @@ declare class RomeEvent {
     constructor(payload: any);
 }
 declare type RomeEventHandler<T> = (event: T) => void;
+declare class TerminalClickButtonEvent extends RomeEvent {
+    static TYPE: RomeEventType;
+    type: RomeEventType;
+}
+declare class TerminalBridgeReadyEvent extends RomeEvent {
+    static TYPE: RomeEventType;
+    type: RomeEventType;
+}
+declare class WidgetUpdateButtonStatusEvent extends RomeEvent {
+    static TYPE: RomeEventType;
+    type: RomeEventType;
+}
 
-declare class RomeBridge$1 {
+declare class WidgetBridge {
     widgetId: null;
     init(): void;
     emit(type: RomeEventType, payload: any): void;
     subscribe<T>(type: RomeEventType, handler: RomeEventHandler<T>): void;
 }
-declare const romeBridge: RomeBridge$1;
+declare const widgetBridge: WidgetBridge;
 
-declare const widget_romeBridge: typeof romeBridge;
-declare namespace widget {
-  export {
-    romeBridge as default,
-    widget_romeBridge as romeBridge,
-  };
-}
-
-declare class RomeBridge {
+declare class TerminalBridge {
     iframeWindow: any;
     widgetId: string;
     constructor(widgetId: string);
@@ -34,29 +38,15 @@ declare class RomeBridge {
     emit(event: RomeEvent): void;
     subscribe<T>(type: RomeEventType, handler: RomeEventHandler<T>): void;
 }
-declare type RomeBridgeMap = {
-    [key: string]: RomeBridge;
+declare type TerminalBridgeMap = {
+    [key: string]: TerminalBridge;
 };
-declare class RomeBridgeFactory {
-    bridges: RomeBridgeMap;
+declare class TerminalBridgeFactory {
+    bridges: TerminalBridgeMap;
     constructor();
-    getBridge(widgetId: string): RomeBridge;
+    getBridge(widgetId: string): TerminalBridge;
     removeBridge(widgetId: string): void;
 }
-declare const romeBridgeFactory: RomeBridgeFactory;
+declare const terminalBridgeFactory: TerminalBridgeFactory;
 
-type terminal_RomeBridge = RomeBridge;
-declare const terminal_RomeBridge: typeof RomeBridge;
-type terminal_RomeBridgeFactory = RomeBridgeFactory;
-declare const terminal_RomeBridgeFactory: typeof RomeBridgeFactory;
-declare const terminal_romeBridgeFactory: typeof romeBridgeFactory;
-declare namespace terminal {
-  export {
-    romeBridgeFactory as default,
-    terminal_RomeBridge as RomeBridge,
-    terminal_RomeBridgeFactory as RomeBridgeFactory,
-    terminal_romeBridgeFactory as romeBridgeFactory,
-  };
-}
-
-export { widget as client, terminal };
+export { RomeEvent, RomeEventHandler, RomeEventType, TerminalBridge, TerminalBridgeFactory, TerminalBridgeReadyEvent, TerminalClickButtonEvent, WidgetUpdateButtonStatusEvent, terminalBridgeFactory, widgetBridge };

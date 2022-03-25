@@ -36,19 +36,25 @@ var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: tru
 // src/index.ts
 var src_exports = {};
 __export(src_exports, {
-  client: () => widget_exports,
-  terminal: () => terminal_exports
+  RomeEvent: () => RomeEvent,
+  RomeEventType: () => RomeEventType,
+  TerminalBridge: () => TerminalBridge,
+  TerminalBridgeFactory: () => TerminalBridgeFactory,
+  TerminalBridgeReadyEvent: () => TerminalBridgeReadyEvent,
+  TerminalClickButtonEvent: () => TerminalClickButtonEvent,
+  WidgetUpdateButtonStatusEvent: () => WidgetUpdateButtonStatusEvent,
+  terminalBridgeFactory: () => terminalBridgeFactory,
+  widgetBridge: () => widgetBridge
 });
 module.exports = __toCommonJS(src_exports);
 
-// src/widget.ts
-var widget_exports = {};
-__export(widget_exports, {
-  default: () => widget_default,
-  romeBridge: () => romeBridge
-});
-
 // src/types.ts
+var RomeEventType = /* @__PURE__ */ ((RomeEventType3) => {
+  RomeEventType3["TERMINAL_CLICK_BUTTON"] = "rome.terminal.click_button";
+  RomeEventType3["TERMINAL_BRIDGE_READY"] = "rome.terminal.bridge_ready";
+  RomeEventType3["WIDGET_UPDATE_BUTTON_STATUS"] = "rome.widget.update_button_status";
+  return RomeEventType3;
+})(RomeEventType || {});
 var RomeEvent = class {
   constructor(payload) {
     this.payload = payload;
@@ -77,7 +83,7 @@ var WidgetUpdateButtonStatusEvent = class extends RomeEvent {
 WidgetUpdateButtonStatusEvent.TYPE = "rome.widget.update_button_status" /* WIDGET_UPDATE_BUTTON_STATUS */;
 
 // src/widget.ts
-var RomeBridge = class {
+var WidgetBridge = class {
   constructor() {
     this.widgetId = null;
   }
@@ -97,18 +103,10 @@ var RomeBridge = class {
     });
   }
 };
-var romeBridge = new RomeBridge();
-var widget_default = romeBridge;
+var widgetBridge = new WidgetBridge();
 
 // src/terminal.ts
-var terminal_exports = {};
-__export(terminal_exports, {
-  RomeBridge: () => RomeBridge2,
-  RomeBridgeFactory: () => RomeBridgeFactory,
-  default: () => terminal_default,
-  romeBridgeFactory: () => romeBridgeFactory
-});
-var RomeBridge2 = class {
+var TerminalBridge = class {
   constructor(widgetId) {
     this.widgetId = widgetId;
   }
@@ -130,7 +128,7 @@ var RomeBridge2 = class {
     });
   }
 };
-var RomeBridgeFactory = class {
+var TerminalBridgeFactory = class {
   constructor() {
     this.bridges = {};
   }
@@ -138,7 +136,7 @@ var RomeBridgeFactory = class {
     if (this.bridges[widgetId]) {
       return this.bridges[widgetId];
     }
-    const bridge = new RomeBridge2(widgetId);
+    const bridge = new TerminalBridge(widgetId);
     this.bridges[widgetId] = bridge;
     return bridge;
   }
@@ -146,11 +144,17 @@ var RomeBridgeFactory = class {
     delete this.bridges[widgetId];
   }
 };
-var romeBridgeFactory = new RomeBridgeFactory();
-var terminal_default = romeBridgeFactory;
+var terminalBridgeFactory = new TerminalBridgeFactory();
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  client,
-  terminal
+  RomeEvent,
+  RomeEventType,
+  TerminalBridge,
+  TerminalBridgeFactory,
+  TerminalBridgeReadyEvent,
+  TerminalClickButtonEvent,
+  WidgetUpdateButtonStatusEvent,
+  terminalBridgeFactory,
+  widgetBridge
 });
 //# sourceMappingURL=index.cjs.map

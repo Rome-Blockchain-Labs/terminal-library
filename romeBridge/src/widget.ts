@@ -4,7 +4,7 @@ import {
   TerminalBridgeReadyEvent,
 } from "./types";
 
-class RomeBridge {
+class WidgetBridge {
   widgetId = null;
 
   init() {
@@ -32,6 +32,4 @@ class RomeBridge {
   }
 }
 
-export const romeBridge = new RomeBridge();
-
-export default romeBridge;
+export const widgetBridge = new WidgetBridge();
