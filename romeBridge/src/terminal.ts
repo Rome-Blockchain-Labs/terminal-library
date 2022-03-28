@@ -1,6 +1,6 @@
 import { RomeEvent, RomeEventHandler, RomeEventType } from "./types";
 
-export class RomeBridge {
+export class TerminalBridge {
   iframeWindow: any;
   widgetId: string;
 
@@ -13,13 +13,13 @@ export class RomeBridge {
   }
 
   emit(event: RomeEvent) {
-    if (!this.iframeWindow) throw new Error('Invalid window object');
+    if (!this.iframeWindow) throw new Error("Invalid window object");
 
-    this.iframeWindow.postMessage({ ...event, widgetId: this.widgetId }, '*');
+    this.iframeWindow.postMessage({ ...event, widgetId: this.widgetId }, "*");
   }
 
   subscribe<T>(type: RomeEventType, handler: RomeEventHandler<T>) {
-    window.addEventListener('message', (event) => {
+    window.addEventListener("message", (event) => {
       if (event.data.widgetId !== this.widgetId) return;
       if (event.data.type !== type) return;
 
@@ -28,21 +28,21 @@ export class RomeBridge {
   }
 }
 
-type RomeBridgeMap = { [key: string]: RomeBridge };
+type TerminalBridgeMap = { [key: string]: TerminalBridge };
 
-export class RomeBridgeFactory {
-  bridges: RomeBridgeMap;
+export class TerminalBridgeFactory {
+  bridges: TerminalBridgeMap;
 
   constructor() {
     this.bridges = {};
   }
 
-  getBridge(widgetId: string): RomeBridge {
+  getBridge(widgetId: string): TerminalBridge {
     if (this.bridges[widgetId]) {
       return this.bridges[widgetId];
     }
 
-    const bridge = new RomeBridge(widgetId);
+    const bridge = new TerminalBridge(widgetId);
     this.bridges[widgetId] = bridge;
 
     return bridge;
@@ -53,6 +53,4 @@ export class RomeBridgeFactory {
   }
 }
 
-export const romeBridgeFactory = new RomeBridgeFactory();
-
-export default romeBridgeFactory;
+export const terminalBridgeFactory = new TerminalBridgeFactory();

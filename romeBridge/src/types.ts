@@ -1,8 +1,8 @@
 export enum RomeEventType {
-  TERMINAL_CLICK_BUTTON = 'rome.terminal.click_button',
-  TERMINAL_BRIDGE_READY = 'rome.terminal.bridge_ready',
+  TERMINAL_CLICK_BUTTON = "rome.terminal.click_button",
+  TERMINAL_BRIDGE_READY = "rome.terminal.bridge_ready",
 
-  WIDGET_UPDATE_BUTTON_STATUS = 'rome.widget.update_button_status',
+  WIDGET_UPDATE_BUTTON_STATUS = "rome.widget.update_button_status",
 }
 
 export class RomeEvent {
@@ -15,7 +15,6 @@ export class RomeEvent {
 }
 
 export type RomeEventHandler<T> = (event: T) => void;
-
 
 export class TerminalClickButtonEvent extends RomeEvent {
   static TYPE: RomeEventType = RomeEventType.TERMINAL_CLICK_BUTTON;
