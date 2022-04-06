@@ -1,0 +1,25 @@
+{
+  "name": "rome-react-components",
+  "version": "1.0.0",
+  "description": "Library of react components for the Rome Terminal",
+  "main": "dist/index.js",
+  "types": "dist/TODO",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
+  },
+  "author": "Rome Blockchain Labs",
+  "license": "ISC",
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.8.1",
+    "@types/graphql": "^14.5.0",
+    "@types/react-redux": "^7.1.23",
+    "async-retry": "^1.3.3",
+    "flatted": "^3.2.5",
+    "graphql-request": "^4.2.0",
+    "react": "^17.0.2",
+    "react-virtualized": "^9.22.3",
+    "reactstrap": "^9.0.1",
+    "styled-components": "^5.3.5"
+  }
+}
