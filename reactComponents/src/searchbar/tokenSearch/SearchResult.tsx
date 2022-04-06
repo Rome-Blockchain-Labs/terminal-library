@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { AutoSizer, List } from 'react-virtualized';
+import { AutoSizer, List } from 'react-virtualized/dist/es';
 import styled from 'styled-components';
 
 import SearchResultRow from './SearchResultRow';
