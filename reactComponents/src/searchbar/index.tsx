@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { store } from './redux/store';
 import TokenSearch from "./tokenSearch";
 
-function SearchBar() {
+export function SearchBar() {
   return (
     <div className="App">
       <Provider store={store}>
@@ -17,5 +17,3 @@ function SearchBar() {
     </div>
   );
 }
-
-export default SearchBar;
