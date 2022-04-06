@@ -1,1 +1,3 @@
-export * from "./searchbar";
+declare function SearchBar(): JSX.Element;
+
+export { SearchBar };

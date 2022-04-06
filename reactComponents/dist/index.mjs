@@ -27,10 +27,6 @@ var __esm = (fn, res) => function __init() {
 var __commonJS = (cb, mod) => function __require() {
   return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
 };
-var __export = (target, all) => {
-  for (var name in all)
-    __defProp(target, name, { get: all[name], enumerable: true });
-};
 var __copyProps = (to, from, except, desc) => {
   if (from && typeof from === "object" || typeof from === "function") {
     for (let key of __getOwnPropNames(from))
@@ -40,18 +36,17 @@ var __copyProps = (to, from, except, desc) => {
   return to;
 };
 var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target, mod));
-var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// ../node_modules/tsup/assets/cjs_shims.js
-var init_cjs_shims = __esm({
-  "../node_modules/tsup/assets/cjs_shims.js"() {
+// ../node_modules/tsup/assets/esm_shims.js
+var init_esm_shims = __esm({
+  "../node_modules/tsup/assets/esm_shims.js"() {
   }
 });
 
 // node_modules/lodash/lodash.js
 var require_lodash = __commonJS({
-  "node_modules/lodash/lodash.js"(exports, module2) {
-    init_cjs_shims();
+  "node_modules/lodash/lodash.js"(exports, module) {
+    init_esm_shims();
     (function() {
       var undefined2;
       var VERSION = "4.17.21";
@@ -378,7 +373,7 @@ var require_lodash = __commonJS({
       var freeSelf = typeof self == "object" && self && self.Object === Object && self;
       var root = freeGlobal || freeSelf || Function("return this")();
       var freeExports = typeof exports == "object" && exports && !exports.nodeType && exports;
-      var freeModule = freeExports && typeof module2 == "object" && module2 && !module2.nodeType && module2;
+      var freeModule = freeExports && typeof module == "object" && module && !module.nodeType && module;
       var moduleExports = freeModule && freeModule.exports === freeExports;
       var freeProcess = moduleExports && freeGlobal.process;
       var nodeUtil = function() {
@@ -5461,33 +5456,31 @@ var require_lodash = __commonJS({
 });
 
 // src/index.tsx
-var src_exports = {};
-__export(src_exports, {
-  SearchBar: () => SearchBar
-});
-module.exports = __toCommonJS(src_exports);
-init_cjs_shims();
+init_esm_shims();
 
 // src/searchbar/index.tsx
-init_cjs_shims();
-var import_react9 = __toESM(require("react"));
-var import_react_redux8 = require("react-redux");
+init_esm_shims();
+import React9 from "react";
+import { Provider } from "react-redux";
 
 // src/searchbar/redux/store.ts
-init_cjs_shims();
-var import_toolkit2 = require("@reduxjs/toolkit");
+init_esm_shims();
+import {
+  configureStore,
+  getDefaultMiddleware
+} from "@reduxjs/toolkit";
 
 // src/searchbar/redux/tokenSearchSlice.ts
-init_cjs_shims();
-var import_toolkit = require("@reduxjs/toolkit");
-var import_async_retry = __toESM(require("async-retry"));
-var import_flatted2 = require("flatted");
+init_esm_shims();
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import retry from "async-retry";
+import { stringify as stringify2 } from "flatted";
 
 // src/searchbar/tokenSearch/helpers/async.ts
-init_cjs_shims();
+init_esm_shims();
 
 // ../../node_modules/bignumber.js/bignumber.mjs
-init_cjs_shims();
+init_esm_shims();
 var isNumeric = /^-?(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?$/i;
 var mathceil = Math.ceil;
 var mathfloor = Math.floor;
@@ -6923,15 +6916,15 @@ var BigNumber = clone();
 var bignumber_default = BigNumber;
 
 // src/searchbar/tokenSearch/helpers/async.ts
-var import_flatted = require("flatted");
-var import_graphql_request2 = require("graphql-request");
+import { stringify } from "flatted";
+import { gql } from "graphql-request";
 
 // src/searchbar/tokenSearch/helpers/graphqlClients.ts
-init_cjs_shims();
-var import_graphql_request = require("graphql-request");
+init_esm_shims();
+import { GraphQLClient } from "graphql-request";
 
 // src/searchbar/tokenSearch/helpers/config.ts
-init_cjs_shims();
+init_esm_shims();
 var import_lodash = __toESM(require_lodash());
 var romeTokenSyncUri = String(process.env.REACT_APP_HASURA_API_ENDPOINT_WS || "https://romenet.prod.velox.global/v1/graphql").replace("ws", "http");
 var maxHits = Number(process.env.REACT_APP_SEARCH_ASYNC_DATASET_LENGTH_MAXIMUM || 500);
@@ -6976,7 +6969,7 @@ var networkNames = (0, import_lodash.uniq)(networkExchangePairs.map((pair) => pa
 var exchangeNames = (networkNames2) => (0, import_lodash.uniq)(networkExchangePairs.filter((pair) => networkNames2.includes(pair[0])).map((pair) => pair[1]));
 
 // src/searchbar/tokenSearch/helpers/graphqlClients.ts
-var romePairsClient = new import_graphql_request.GraphQLClient(romeTokenSyncUri);
+var romePairsClient = new GraphQLClient(romeTokenSyncUri);
 
 // src/searchbar/tokenSearch/helpers/async.ts
 var getRomeSearchTokenQuery = (networks) => {
@@ -7018,7 +7011,7 @@ var getRomeSearchTokenQuery = (networks) => {
           latest_token1_usd_price
         }`;
   }
-  return import_graphql_request2.gql`query SearchTokens($searchText:String!,$exchanges:[String!]!){${pair_search}}`;
+  return gql`query SearchTokens($searchText:String!,$exchanges:[String!]!){${pair_search}}`;
 };
 var searchTokenAsync_Parameters = (searchText, searchExchanges) => {
   return {
@@ -7037,7 +7030,7 @@ var searchTokensAsync = async (searchString, searchNetworks, searchExchanges) =>
   try {
     res = await romePairsClient.request(query, parameters);
   } catch (e) {
-    throw new Error(`${(0, import_flatted.stringify)(e, Object.getOwnPropertyNames(e))}, args:${(0, import_flatted.stringify)({ parameters, query })}`);
+    throw new Error(`${stringify(e, Object.getOwnPropertyNames(e))}, args:${stringify({ parameters, query })}`);
   }
   const mappedPairs = Object.entries(res).map((network) => {
     network[1].map((result) => result.network = network[0]);
@@ -7059,15 +7052,15 @@ var searchTokensAsync = async (searchString, searchNetworks, searchExchanges) =>
 
 // src/searchbar/redux/tokenSearchSlice.ts
 var import_lodash2 = __toESM(require_lodash());
-var setPair = (0, import_toolkit.createAsyncThunk)("token/setPair", async ({ selectedPair }) => {
+var setPair = createAsyncThunk("token/setPair", async ({ selectedPair }) => {
   console.log("setPair");
   return selectedPair;
 });
-var resetSearchOnNewExchange = (0, import_toolkit.createAsyncThunk)("token/searchReset", async (searchString, thunkAPI) => {
+var resetSearchOnNewExchange = createAsyncThunk("token/searchReset", async (searchString, thunkAPI) => {
   console.log("resetSearchOnNewExchange");
   thunkAPI.dispatch(searchTokenPairs(""));
 });
-var setPairSearchTimestamp = (0, import_toolkit.createAsyncThunk)("token/saveTime", async (timestamp) => {
+var setPairSearchTimestamp = createAsyncThunk("token/saveTime", async (timestamp) => {
   return timestamp;
 });
 var allValueHandler = (networkMap, exchangeMap) => {
@@ -7086,7 +7079,7 @@ var valueCleaner = (networkMap, exchangeMap) => {
   exchangeMap = Object.keys((0, import_lodash2.omitBy)(exchangeMap, (b) => !b));
   return [networkMap, exchangeMap];
 };
-var searchTokenPairs = (0, import_toolkit.createAsyncThunk)("token/search", async (searchString, thunkAPI) => {
+var searchTokenPairs = createAsyncThunk("token/search", async (searchString, thunkAPI) => {
   try {
     let { networkMap, exchangeMap } = thunkAPI.getState();
     let processedNetworks;
@@ -7097,12 +7090,12 @@ var searchTokenPairs = (0, import_toolkit.createAsyncThunk)("token/search", asyn
     [processedNetworks, processedExchanges] = allValueHandler(processedNetworks, processedExchanges);
     processedExchanges = processedExchanges.filter((exchange) => networkExchangePairs.filter((pair) => processedNetworks.includes(pair[0]) && pair[1] === exchange).length >= 1);
     processedNetworks = processedNetworks.filter((network) => networkExchangePairs.filter((pair) => pair[0] === network && processedExchanges.includes(pair[1])).length >= 1);
-    const data = await (0, import_async_retry.default)(() => searchTokensAsync(searchString, processedNetworks, processedExchanges), { retries: 1 });
+    const data = await retry(() => searchTokensAsync(searchString, processedNetworks, processedExchanges), { retries: 1 });
     console.log("data", data.length);
     return { data, pairSearchTimestamp };
   } catch (e) {
     console.log("err searchTokenPairs", e);
-    throw new Error((0, import_flatted2.stringify)(e, Object.getOwnPropertyNames(e)));
+    throw new Error(stringify2(e, Object.getOwnPropertyNames(e)));
   }
 });
 var initialTimestamp = new Date().getTime();
@@ -7118,7 +7111,7 @@ var initialState = {
   exchangeMap: {},
   networkMap: {}
 };
-var tokenSearchSlice = (0, import_toolkit.createSlice)({
+var tokenSearchSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(resetSearchOnNewExchange.fulfilled, (state, action) => {
       state.searchText = "";
@@ -7206,30 +7199,30 @@ var tokenSearchSlice_default = tokenSearchSlice.reducer;
 
 // src/searchbar/redux/store.ts
 var rootReducer = tokenSearchSlice.reducer;
-var store = (0, import_toolkit2.configureStore)({
+var store = configureStore({
   devTools: process.env.NODE_ENV !== "production",
-  middleware: (0, import_toolkit2.getDefaultMiddleware)({
+  middleware: getDefaultMiddleware({
     immutableCheck: false
   }),
   reducer: rootReducer
 });
 
 // src/searchbar/tokenSearch/index.tsx
-init_cjs_shims();
-var import_react8 = __toESM(require("react"));
-var import_react_redux7 = require("react-redux");
+init_esm_shims();
+import React8, { useEffect as useEffect2, useRef } from "react";
+import { useDispatch as useDispatch5, useSelector as useSelector6 } from "react-redux";
 
 // src/searchbar/tokenSearch/SearchInput.tsx
-init_cjs_shims();
-var import_react = __toESM(require("react"));
-var import_react_redux = require("react-redux");
-var import_styled_components = __toESM(require("styled-components"));
+init_esm_shims();
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import styled from "styled-components";
 
 // src/searchbar/tokenSearch/icon-search.svg
 var icon_search_default = "./icon-search-AYYIN6AJ.svg";
 
 // src/searchbar/tokenSearch/SearchInput.tsx
-var PairField = import_styled_components.default.div`
+var PairField = styled.div`
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -7252,14 +7245,14 @@ var PairField = import_styled_components.default.div`
     width: 100%;
   }
 `;
-var StyledInput = import_styled_components.default.input`
+var StyledInput = styled.input`
   width: 100%;
   border: none;
   background-color: inherit;
   color: #ffffff;
   //width: auto;
 `;
-var HideOnSmallScreen = import_styled_components.default.img`
+var HideOnSmallScreen = styled.img`
   width: 30px;
   cursor: pointer;
   float: right;
@@ -7271,24 +7264,24 @@ var HideOnSmallScreen = import_styled_components.default.img`
   }
 `;
 var SearchInput = () => {
-  const dispatch = (0, import_react_redux.useDispatch)();
-  const { searchText, networkMap, exchangeMap } = (0, import_react_redux.useSelector)((state) => state);
-  const isSelecting = (0, import_react_redux.useSelector)((state) => state == null ? void 0 : state.isSelecting);
-  const isLoading = (0, import_react_redux.useSelector)((state) => state.isLoading);
-  const fetchError = (0, import_react_redux.useSelector)((state) => state == null ? void 0 : state.fetchError);
-  const selectedPair = (0, import_react_redux.useSelector)((state) => state == null ? void 0 : state.selectedPair);
-  (0, import_react.useEffect)(() => {
+  const dispatch = useDispatch();
+  const { searchText, networkMap, exchangeMap } = useSelector((state) => state);
+  const isSelecting = useSelector((state) => state == null ? void 0 : state.isSelecting);
+  const isLoading = useSelector((state) => state.isLoading);
+  const fetchError = useSelector((state) => state == null ? void 0 : state.fetchError);
+  const selectedPair = useSelector((state) => state == null ? void 0 : state.selectedPair);
+  useEffect(() => {
     if (searchText.length >= minStringSearch) {
       dispatch(searchTokenPairs(searchText));
     }
   }, [dispatch, searchText, networkMap, exchangeMap]);
-  return /* @__PURE__ */ import_react.default.createElement(PairField, {
+  return /* @__PURE__ */ React.createElement(PairField, {
     onClick: () => dispatch(startSelecting())
-  }, /* @__PURE__ */ import_react.default.createElement(StyledInput, {
+  }, /* @__PURE__ */ React.createElement(StyledInput, {
     placeholder: "Select a token pair",
     autocomplete: "off",
     onChange: (e) => dispatch(setSearchText(e.target.value))
-  }), /* @__PURE__ */ import_react.default.createElement(HideOnSmallScreen, {
+  }), /* @__PURE__ */ React.createElement(HideOnSmallScreen, {
     alt: "",
     src: icon_search_default,
     onClick: () => dispatch(toggleSelecting())
@@ -7297,24 +7290,24 @@ var SearchInput = () => {
 var SearchInput_default = SearchInput;
 
 // src/searchbar/tokenSearch/SearchResult.tsx
-init_cjs_shims();
-var import_react3 = __toESM(require("react"));
-var import_react_redux3 = require("react-redux");
-var import_react_virtualized = require("react-virtualized");
-var import_styled_components3 = __toESM(require("styled-components"));
+init_esm_shims();
+import React3 from "react";
+import { useSelector as useSelector2 } from "react-redux";
+import { AutoSizer, List } from "react-virtualized";
+import styled3 from "styled-components";
 
 // src/searchbar/tokenSearch/SearchResultRow.tsx
-init_cjs_shims();
-var import_react2 = __toESM(require("react"));
-var import_react_redux2 = require("react-redux");
-var import_styled_components2 = __toESM(require("styled-components"));
+init_esm_shims();
+import React2 from "react";
+import { useDispatch as useDispatch2 } from "react-redux";
+import styled2 from "styled-components";
 
 // src/searchbar/tokenSearch/helpers/firstAndLast.ts
-init_cjs_shims();
+init_esm_shims();
 var firstAndLast = (str, chars = 8) => str && str.slice(0, chars) + "..." + str.slice(-chars);
 
 // src/searchbar/tokenSearch/helpers/intToWords.ts
-init_cjs_shims();
+init_esm_shims();
 function intToWords(int) {
   if (typeof int !== "number") {
     int = Number(int);
@@ -7333,15 +7326,15 @@ function intToWords(int) {
 
 // src/searchbar/tokenSearch/SearchResultRow.tsx
 var imageSize = 26;
-var NumberFont = import_styled_components2.default.span`
+var NumberFont = styled2.span`
   font-family: 'Fira Code', monospace;
 `;
-var Ellipsis = import_styled_components2.default.div`
+var Ellipsis = styled2.div`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 `;
-var MiniEllipsis = import_styled_components2.default.span`
+var MiniEllipsis = styled2.span`
   font-weight: bold;
   white-space: nowrap;
   overflow: hidden;
@@ -7352,7 +7345,7 @@ var MiniEllipsis = import_styled_components2.default.span`
   text-transform: uppercase;
   font-size: 1rem;
 `;
-var MainRow = import_styled_components2.default.div`
+var MainRow = styled2.div`
   border-bottom: 1px dotted #15b3b0;
   border-radius: 0;
   font-size: 9px;
@@ -7363,7 +7356,7 @@ var MainRow = import_styled_components2.default.div`
 var VirtualizedRow = (props) => {
   const { index, style, suggestions } = props;
   const selectedPair = suggestions[index];
-  const dispatch = (0, import_react_redux2.useDispatch)();
+  const dispatch = useDispatch2();
   const rowHeight = props.parent.props.rowHeight;
   const onClick = (event) => {
     event.preventDefault();
@@ -7376,38 +7369,38 @@ var VirtualizedRow = (props) => {
   const truncatedToken1 = firstAndLast(selectedPair.token1.id);
   const mobileMode = !(rowHeight < 120);
   if (mobileMode) {
-    return /* @__PURE__ */ import_react2.default.createElement("div", {
+    return /* @__PURE__ */ React2.createElement("div", {
       style,
       onClick
-    }, /* @__PURE__ */ import_react2.default.createElement(MainRow, {
+    }, /* @__PURE__ */ React2.createElement(MainRow, {
       style: { textAlign: "center" }
-    }, /* @__PURE__ */ import_react2.default.createElement("span", {
+    }, /* @__PURE__ */ React2.createElement("span", {
       style: { display: "inline-block", fontWeight: "bold" }
-    }, /* @__PURE__ */ import_react2.default.createElement("img", {
+    }, /* @__PURE__ */ React2.createElement("img", {
       alt: "",
       src: selectedPair.token0.image,
       style: { borderRadius: "50%" },
       width: imageSize
-    }), " ", /* @__PURE__ */ import_react2.default.createElement(MiniEllipsis, null, selectedPair.token0.symbol, " /"), " ", selectedPair.token1.image && /* @__PURE__ */ import_react2.default.createElement("img", {
+    }), " ", /* @__PURE__ */ React2.createElement(MiniEllipsis, null, selectedPair.token0.symbol, " /"), " ", selectedPair.token1.image && /* @__PURE__ */ React2.createElement("img", {
       alt: "",
       src: selectedPair.token1.image,
       style: { borderRadius: "50%" },
       width: imageSize
-    }), " ", /* @__PURE__ */ import_react2.default.createElement(MiniEllipsis, null, selectedPair.token1.symbol)), /* @__PURE__ */ import_react2.default.createElement("br", null), /* @__PURE__ */ import_react2.default.createElement("div", null, "Pair volume:", /* @__PURE__ */ import_react2.default.createElement(NumberFont, null, intToWords(selectedPair.volumeUSD))), /* @__PURE__ */ import_react2.default.createElement("div", null, "Pair: ", /* @__PURE__ */ import_react2.default.createElement(NumberFont, null, truncatedPair)), /* @__PURE__ */ import_react2.default.createElement("div", null, "First token: ", /* @__PURE__ */ import_react2.default.createElement(NumberFont, null, truncatedToken0)), /* @__PURE__ */ import_react2.default.createElement("div", null, "Second token: ", /* @__PURE__ */ import_react2.default.createElement(NumberFont, null, truncatedToken1))));
+    }), " ", /* @__PURE__ */ React2.createElement(MiniEllipsis, null, selectedPair.token1.symbol)), /* @__PURE__ */ React2.createElement("br", null), /* @__PURE__ */ React2.createElement("div", null, "Pair volume:", /* @__PURE__ */ React2.createElement(NumberFont, null, intToWords(selectedPair.volumeUSD))), /* @__PURE__ */ React2.createElement("div", null, "Pair: ", /* @__PURE__ */ React2.createElement(NumberFont, null, truncatedPair)), /* @__PURE__ */ React2.createElement("div", null, "First token: ", /* @__PURE__ */ React2.createElement(NumberFont, null, truncatedToken0)), /* @__PURE__ */ React2.createElement("div", null, "Second token: ", /* @__PURE__ */ React2.createElement(NumberFont, null, truncatedToken1))));
   }
-  return /* @__PURE__ */ import_react2.default.createElement("div", {
+  return /* @__PURE__ */ React2.createElement("div", {
     style,
     onClick
-  }, /* @__PURE__ */ import_react2.default.createElement(MainRow, {
+  }, /* @__PURE__ */ React2.createElement(MainRow, {
     style: { height: rowHeight }
-  }, /* @__PURE__ */ import_react2.default.createElement("div", {
+  }, /* @__PURE__ */ React2.createElement("div", {
     style: {
       display: "flex",
       gap: "15px",
       height: "100%",
       width: "100%"
     }
-  }, /* @__PURE__ */ import_react2.default.createElement("div", {
+  }, /* @__PURE__ */ React2.createElement("div", {
     style: {
       alignItems: "center",
       display: "flex",
@@ -7415,39 +7408,39 @@ var VirtualizedRow = (props) => {
       maxWidth: "120px",
       width: "100%"
     }
-  }, /* @__PURE__ */ import_react2.default.createElement("div", {
+  }, /* @__PURE__ */ React2.createElement("div", {
     style: { alignItems: "center", display: "flex", flex: "1" }
-  }, selectedPair.token1.image && /* @__PURE__ */ import_react2.default.createElement("img", {
+  }, selectedPair.token1.image && /* @__PURE__ */ React2.createElement("img", {
     alt: selectedPair.token0.symbol,
     src: selectedPair.token0.image,
     style: { borderRadius: "50%" },
     width: imageSize
-  }), " ", /* @__PURE__ */ import_react2.default.createElement(MiniEllipsis, null, selectedPair.token0.symbol, " ")), /* @__PURE__ */ import_react2.default.createElement("div", {
+  }), " ", /* @__PURE__ */ React2.createElement(MiniEllipsis, null, selectedPair.token0.symbol, " ")), /* @__PURE__ */ React2.createElement("div", {
     style: { alignItems: "center", display: "flex", flex: "1" }
-  }, /* @__PURE__ */ import_react2.default.createElement("span", null, " / "), /* @__PURE__ */ import_react2.default.createElement("span", null, "\xA0"), selectedPair.token1.image && /* @__PURE__ */ import_react2.default.createElement("img", {
+  }, /* @__PURE__ */ React2.createElement("span", null, " / "), /* @__PURE__ */ React2.createElement("span", null, "\xA0"), selectedPair.token1.image && /* @__PURE__ */ React2.createElement("img", {
     alt: selectedPair.token1.symbol,
     src: selectedPair.token1.image,
     style: { borderRadius: "50%" },
     width: imageSize
-  }), /* @__PURE__ */ import_react2.default.createElement("span", null, "\xA0"), /* @__PURE__ */ import_react2.default.createElement(MiniEllipsis, null, selectedPair.token1.symbol))), /* @__PURE__ */ import_react2.default.createElement("div", {
+  }), /* @__PURE__ */ React2.createElement("span", null, "\xA0"), /* @__PURE__ */ React2.createElement(MiniEllipsis, null, selectedPair.token1.symbol))), /* @__PURE__ */ React2.createElement("div", {
     style: {
       alignItems: "center",
       display: "flex",
       flex: 1,
       gap: "10px"
     }
-  }, /* @__PURE__ */ import_react2.default.createElement("div", {
+  }, /* @__PURE__ */ React2.createElement("div", {
     style: { whiteSpace: "nowrap" }
-  }, /* @__PURE__ */ import_react2.default.createElement("div", null, "Pair Volume:"), /* @__PURE__ */ import_react2.default.createElement("div", null, "Pair:")), /* @__PURE__ */ import_react2.default.createElement("div", null, /* @__PURE__ */ import_react2.default.createElement(Ellipsis, null, /* @__PURE__ */ import_react2.default.createElement(NumberFont, null, intToWords(selectedPair.volumeUSD))), /* @__PURE__ */ import_react2.default.createElement(Ellipsis, null, /* @__PURE__ */ import_react2.default.createElement(NumberFont, null, truncatedPair)))), /* @__PURE__ */ import_react2.default.createElement("div", {
+  }, /* @__PURE__ */ React2.createElement("div", null, "Pair Volume:"), /* @__PURE__ */ React2.createElement("div", null, "Pair:")), /* @__PURE__ */ React2.createElement("div", null, /* @__PURE__ */ React2.createElement(Ellipsis, null, /* @__PURE__ */ React2.createElement(NumberFont, null, intToWords(selectedPair.volumeUSD))), /* @__PURE__ */ React2.createElement(Ellipsis, null, /* @__PURE__ */ React2.createElement(NumberFont, null, truncatedPair)))), /* @__PURE__ */ React2.createElement("div", {
     style: { alignItems: "center", display: "flex", gap: "10px" }
-  }, /* @__PURE__ */ import_react2.default.createElement("div", {
+  }, /* @__PURE__ */ React2.createElement("div", {
     style: { whiteSpace: "nowrap" }
-  }, /* @__PURE__ */ import_react2.default.createElement("div", null, "First Token:"), /* @__PURE__ */ import_react2.default.createElement("div", null, "Second Token:")), /* @__PURE__ */ import_react2.default.createElement("div", null, /* @__PURE__ */ import_react2.default.createElement("div", null, /* @__PURE__ */ import_react2.default.createElement(Ellipsis, null, /* @__PURE__ */ import_react2.default.createElement(NumberFont, null, truncatedToken0))), /* @__PURE__ */ import_react2.default.createElement("div", null, /* @__PURE__ */ import_react2.default.createElement(Ellipsis, null, /* @__PURE__ */ import_react2.default.createElement(NumberFont, null, truncatedToken1))))))));
+  }, /* @__PURE__ */ React2.createElement("div", null, "First Token:"), /* @__PURE__ */ React2.createElement("div", null, "Second Token:")), /* @__PURE__ */ React2.createElement("div", null, /* @__PURE__ */ React2.createElement("div", null, /* @__PURE__ */ React2.createElement(Ellipsis, null, /* @__PURE__ */ React2.createElement(NumberFont, null, truncatedToken0))), /* @__PURE__ */ React2.createElement("div", null, /* @__PURE__ */ React2.createElement(Ellipsis, null, /* @__PURE__ */ React2.createElement(NumberFont, null, truncatedToken1))))))));
 };
 var SearchResultRow_default = VirtualizedRow;
 
 // src/searchbar/tokenSearch/SearchResult.tsx
-var NilFoundContainer = import_styled_components3.default.div`
+var NilFoundContainer = styled3.div`
   width: 50%;
   margin-left: 25%;
   margin-right: 25%;
@@ -7465,25 +7458,25 @@ var NilFoundContainer = import_styled_components3.default.div`
   justify-content: center;
 `;
 var SearchDropdown = (props) => {
-  const { suggestions, searchText } = (0, import_react_redux3.useSelector)((state) => state);
+  const { suggestions, searchText } = useSelector2((state) => state);
   const filteredSuggestions = suggestions.slice().sort((pair1, pair2) => pair2.volumeUSD - pair1.volumeUSD);
   if (props.loading) {
-    return /* @__PURE__ */ import_react3.default.createElement(NilFoundContainer, null, "Loading...");
+    return /* @__PURE__ */ React3.createElement(NilFoundContainer, null, "Loading...");
   }
   if (!!searchText && !filteredSuggestions.length) {
-    return /* @__PURE__ */ import_react3.default.createElement(NilFoundContainer, null, "No pairs found...");
+    return /* @__PURE__ */ React3.createElement(NilFoundContainer, null, "No pairs found...");
   }
-  return /* @__PURE__ */ import_react3.default.createElement("div", {
+  return /* @__PURE__ */ React3.createElement("div", {
     style: { display: "flex", height: "240px", marginTop: "20px" }
-  }, /* @__PURE__ */ import_react3.default.createElement("div", {
+  }, /* @__PURE__ */ React3.createElement("div", {
     style: { flex: "1 1 auto" }
-  }, /* @__PURE__ */ import_react3.default.createElement(import_react_virtualized.AutoSizer, null, ({ height, width }) => {
-    return /* @__PURE__ */ import_react3.default.createElement(import_react_virtualized.List, {
+  }, /* @__PURE__ */ React3.createElement(AutoSizer, null, ({ height, width }) => {
+    return /* @__PURE__ */ React3.createElement(List, {
       height,
       overscanRowCount: 3,
       rowCount: filteredSuggestions.length,
       rowHeight: 40,
-      rowRenderer: (props2) => /* @__PURE__ */ import_react3.default.createElement(SearchResultRow_default, __spreadValues({
+      rowRenderer: (props2) => /* @__PURE__ */ React3.createElement(SearchResultRow_default, __spreadValues({
         suggestions: filteredSuggestions
       }, props2)),
       width
@@ -7493,41 +7486,47 @@ var SearchDropdown = (props) => {
 var SearchResult_default = SearchDropdown;
 
 // src/searchbar/tokenSearch/SearchFilters.tsx
-init_cjs_shims();
-var import_react7 = __toESM(require("react"));
-var import_react_redux6 = require("react-redux");
-var import_react_accessible_accordion = require("react-accessible-accordion");
+init_esm_shims();
+import React7 from "react";
+import { useSelector as useSelector5 } from "react-redux";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionItemHeading,
+  AccordionItemButton,
+  AccordionItemPanel
+} from "react-accessible-accordion";
 
 // src/searchbar/tokenSearch/SearchFiltersNetworkSelectors.tsx
-init_cjs_shims();
-var import_react5 = __toESM(require("react"));
-var import_react_redux4 = require("react-redux");
+init_esm_shims();
 var import_lodash3 = __toESM(require_lodash());
+import React5 from "react";
+import { useDispatch as useDispatch3, useSelector as useSelector3 } from "react-redux";
 
 // src/searchbar/Components/Chip/index.tsx
-init_cjs_shims();
-var import_react4 = __toESM(require("react"));
-var Chip = (0, import_react4.memo)((props) => {
+init_esm_shims();
+import React4, { memo } from "react";
+var Chip = memo((props) => {
   const { label, checked, onChange, name, value } = props;
-  return /* @__PURE__ */ import_react4.default.createElement(import_react4.default.Fragment, null, /* @__PURE__ */ import_react4.default.createElement("input", {
+  return /* @__PURE__ */ React4.createElement(React4.Fragment, null, /* @__PURE__ */ React4.createElement("input", {
     type: "checkbox",
     id: `${label}-${name}`,
     onChange,
     checked,
     name,
     value
-  }), /* @__PURE__ */ import_react4.default.createElement("label", {
+  }), /* @__PURE__ */ React4.createElement("label", {
     htmlFor: `${label}-${name}`
   }, label, " "));
 });
 
 // src/searchbar/tokenSearch/SearchFiltersNetworkSelectors.tsx
 var FilterNetworkAll = () => {
-  const dispatch = (0, import_react_redux4.useDispatch)();
-  const { exchangeMap, networkMap } = (0, import_react_redux4.useSelector)((state) => state);
+  const dispatch = useDispatch3();
+  const { exchangeMap, networkMap } = useSelector3((state) => state);
   const networkAll = Object.values((0, import_lodash3.omitBy)(networkMap, (b) => !b)).length === 0;
   const exchangeNamesActive = Object.keys((0, import_lodash3.omitBy)(exchangeMap, (b) => !b));
-  return /* @__PURE__ */ import_react5.default.createElement(Chip, {
+  return /* @__PURE__ */ React5.createElement(Chip, {
     name: "AllNetworks",
     label: "All",
     checked: networkAll,
@@ -7538,10 +7537,10 @@ var FilterNetworkAll = () => {
   });
 };
 var FilterNetworkSelectors = () => {
-  const dispatch = (0, import_react_redux4.useDispatch)();
-  const { networkMap } = (0, import_react_redux4.useSelector)((state) => state);
+  const dispatch = useDispatch3();
+  const { networkMap } = useSelector3((state) => state);
   const networkElement = (networkName) => {
-    return /* @__PURE__ */ import_react5.default.createElement(Chip, {
+    return /* @__PURE__ */ React5.createElement(Chip, {
       key: networkName,
       name: networkName,
       label: networkName,
@@ -7549,20 +7548,20 @@ var FilterNetworkSelectors = () => {
       onChange: (e) => dispatch(setNetworkMap({ networkName, checked: e.target.checked }))
     });
   };
-  return /* @__PURE__ */ import_react5.default.createElement(import_react5.default.Fragment, null, networkNames.map((networkName) => networkElement(networkName)));
+  return /* @__PURE__ */ React5.createElement(React5.Fragment, null, networkNames.map((networkName) => networkElement(networkName)));
 };
 
 // src/searchbar/tokenSearch/SearchFiltersExchangeSelectors.tsx
-init_cjs_shims();
-var import_react6 = __toESM(require("react"));
+init_esm_shims();
 var import_lodash4 = __toESM(require_lodash());
-var import_react_redux5 = require("react-redux");
+import React6 from "react";
+import { useDispatch as useDispatch4, useSelector as useSelector4 } from "react-redux";
 var FilterExchangeAll = () => {
-  const dispatch = (0, import_react_redux5.useDispatch)();
-  const { exchangeMap, networkMap } = (0, import_react_redux5.useSelector)((state) => state);
+  const dispatch = useDispatch4();
+  const { exchangeMap, networkMap } = useSelector4((state) => state);
   const exchangeAll = Object.values((0, import_lodash4.omitBy)(exchangeMap, (b) => !b)).length === 0;
   const exchangeNamesActive = exchangeNames(Object.keys((0, import_lodash4.omitBy)(networkMap, (b) => !b)));
-  return /* @__PURE__ */ import_react6.default.createElement(Chip, {
+  return /* @__PURE__ */ React6.createElement(Chip, {
     name: "AllExchanges",
     label: "All",
     checked: exchangeAll,
@@ -7570,11 +7569,11 @@ var FilterExchangeAll = () => {
   });
 };
 var FilterExchangeSelectors = () => {
-  const dispatch = (0, import_react_redux5.useDispatch)();
-  const { networkMap, exchangeMap } = (0, import_react_redux5.useSelector)((state) => state);
+  const dispatch = useDispatch4();
+  const { networkMap, exchangeMap } = useSelector4((state) => state);
   const exchangeNamesActive = exchangeNames(Object.keys((0, import_lodash4.omitBy)(networkMap, (b) => !b)));
   const exchangeElement = (exchangeName) => {
-    return /* @__PURE__ */ import_react6.default.createElement(Chip, {
+    return /* @__PURE__ */ React6.createElement(Chip, {
       key: exchangeName,
       name: exchangeName,
       label: exchangeName,
@@ -7582,25 +7581,25 @@ var FilterExchangeSelectors = () => {
       onChange: (e) => dispatch(setExchangeMap({ exchangeName, checked: e.target.checked }))
     });
   };
-  return /* @__PURE__ */ import_react6.default.createElement(import_react6.default.Fragment, null, exchangeNamesActive.map((exchangeName) => exchangeElement(exchangeName)));
+  return /* @__PURE__ */ React6.createElement(React6.Fragment, null, exchangeNamesActive.map((exchangeName) => exchangeElement(exchangeName)));
 };
 
 // src/searchbar/tokenSearch/SearchFilters.tsx
 var SearchFilters = () => {
-  const { isSelecting, networkMap } = (0, import_react_redux6.useSelector)((state) => state);
+  const { isSelecting, networkMap } = useSelector5((state) => state);
   const exchangesActive = Object.values(networkMap).filter((b) => b).length !== 0;
-  return /* @__PURE__ */ import_react7.default.createElement(import_react_accessible_accordion.Accordion, {
+  return /* @__PURE__ */ React7.createElement(Accordion, {
     allowZeroExpanded: true
-  }, /* @__PURE__ */ import_react7.default.createElement(import_react_accessible_accordion.AccordionItem, null, /* @__PURE__ */ import_react7.default.createElement(import_react_accessible_accordion.AccordionItemHeading, null, /* @__PURE__ */ import_react7.default.createElement(import_react_accessible_accordion.AccordionItemButton, null, "Filter Networks: search")), /* @__PURE__ */ import_react7.default.createElement(import_react_accessible_accordion.AccordionItemPanel, null, /* @__PURE__ */ import_react7.default.createElement(FilterNetworkAll, null), /* @__PURE__ */ import_react7.default.createElement(FilterNetworkSelectors, null)), /* @__PURE__ */ import_react7.default.createElement(import_react_accessible_accordion.AccordionItemPanel, null, exchangesActive && /* @__PURE__ */ import_react7.default.createElement(FilterExchangeAll, null), exchangesActive && /* @__PURE__ */ import_react7.default.createElement(FilterExchangeSelectors, null))));
+  }, /* @__PURE__ */ React7.createElement(AccordionItem, null, /* @__PURE__ */ React7.createElement(AccordionItemHeading, null, /* @__PURE__ */ React7.createElement(AccordionItemButton, null, "Filter Networks: search")), /* @__PURE__ */ React7.createElement(AccordionItemPanel, null, /* @__PURE__ */ React7.createElement(FilterNetworkAll, null), /* @__PURE__ */ React7.createElement(FilterNetworkSelectors, null)), /* @__PURE__ */ React7.createElement(AccordionItemPanel, null, exchangesActive && /* @__PURE__ */ React7.createElement(FilterExchangeAll, null), exchangesActive && /* @__PURE__ */ React7.createElement(FilterExchangeSelectors, null))));
 };
 var SearchFilters_default = SearchFilters;
 
 // src/searchbar/tokenSearch/index.tsx
 var TokenSearch = () => {
-  const dispatch = (0, import_react_redux7.useDispatch)();
-  const { isSelecting, isLoading } = (0, import_react_redux7.useSelector)((state) => state);
-  const searchRef = (0, import_react8.useRef)();
-  (0, import_react8.useEffect)(() => {
+  const dispatch = useDispatch5();
+  const { isSelecting, isLoading } = useSelector6((state) => state);
+  const searchRef = useRef();
+  useEffect2(() => {
     window.onmousedown = (e) => {
       var _a;
       if (!((_a = searchRef == null ? void 0 : searchRef.current) == null ? void 0 : _a.contains(e.target))) {
@@ -7608,9 +7607,9 @@ var TokenSearch = () => {
       }
     };
   }, [dispatch]);
-  return /* @__PURE__ */ import_react8.default.createElement("div", {
+  return /* @__PURE__ */ React8.createElement("div", {
     ref: searchRef
-  }, /* @__PURE__ */ import_react8.default.createElement(SearchInput_default, null), /* @__PURE__ */ import_react8.default.createElement(SearchFilters_default, null), isSelecting && /* @__PURE__ */ import_react8.default.createElement(SearchResult_default, {
+  }, /* @__PURE__ */ React8.createElement(SearchInput_default, null), /* @__PURE__ */ React8.createElement(SearchFilters_default, null), isSelecting && /* @__PURE__ */ React8.createElement(SearchResult_default, {
     loading: isLoading
   }));
 };
@@ -7618,18 +7617,17 @@ var tokenSearch_default = TokenSearch;
 
 // src/searchbar/index.tsx
 function SearchBar() {
-  return /* @__PURE__ */ import_react9.default.createElement("div", {
+  return /* @__PURE__ */ React9.createElement("div", {
     className: "App"
-  }, /* @__PURE__ */ import_react9.default.createElement(import_react_redux8.Provider, {
+  }, /* @__PURE__ */ React9.createElement(Provider, {
     store
-  }, /* @__PURE__ */ import_react9.default.createElement("br", null), /* @__PURE__ */ import_react9.default.createElement("br", null), /* @__PURE__ */ import_react9.default.createElement("br", null), /* @__PURE__ */ import_react9.default.createElement("br", null), /* @__PURE__ */ import_react9.default.createElement("br", null), /* @__PURE__ */ import_react9.default.createElement("br", null), /* @__PURE__ */ import_react9.default.createElement("br", null), /* @__PURE__ */ import_react9.default.createElement("br", null), /* @__PURE__ */ import_react9.default.createElement("div", {
+  }, /* @__PURE__ */ React9.createElement("br", null), /* @__PURE__ */ React9.createElement("br", null), /* @__PURE__ */ React9.createElement("br", null), /* @__PURE__ */ React9.createElement("br", null), /* @__PURE__ */ React9.createElement("br", null), /* @__PURE__ */ React9.createElement("br", null), /* @__PURE__ */ React9.createElement("br", null), /* @__PURE__ */ React9.createElement("br", null), /* @__PURE__ */ React9.createElement("div", {
     style: { width: "500px", margin: "auto", border: "solid" }
-  }, /* @__PURE__ */ import_react9.default.createElement(tokenSearch_default, null))));
+  }, /* @__PURE__ */ React9.createElement(tokenSearch_default, null))));
 }
-// Annotate the CommonJS export names for ESM import in node:
-0 && (module.exports = {
+export {
   SearchBar
-});
+};
 /**
  * @license
  * Lodash <https://lodash.com/>
@@ -7638,4 +7636,4 @@ function SearchBar() {
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=index.mjs.map
