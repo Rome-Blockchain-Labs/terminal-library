@@ -3,7 +3,7 @@ import './style.css';
 
 
 export const Chip = memo(
-  (props) => {
+  (props:any) => {
     const {label, checked, onChange, name, value} = props
     return (
       <>
