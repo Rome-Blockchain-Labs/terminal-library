@@ -5463,6 +5463,11 @@ var require_lodash = __commonJS({
 // src/index.tsx
 var src_exports = {};
 __export(src_exports, {
+  Accordion: () => import_react_accessible_accordion2.Accordion,
+  AccordionItem: () => import_react_accessible_accordion2.AccordionItem,
+  AccordionItemButton: () => import_react_accessible_accordion2.AccordionItemButton,
+  AccordionItemHeading: () => import_react_accessible_accordion2.AccordionItemHeading,
+  AccordionItemPanel: () => import_react_accessible_accordion2.AccordionItemPanel,
   SearchBar: () => SearchBar
 });
 module.exports = __toCommonJS(src_exports);
@@ -7626,8 +7631,17 @@ function SearchBar() {
     style: { width: "500px", margin: "auto", border: "solid" }
   }, /* @__PURE__ */ import_react9.default.createElement(tokenSearch_default, null))));
 }
+
+// src/types.ts
+init_cjs_shims();
+var import_react_accessible_accordion2 = require("react-accessible-accordion");
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
+  Accordion,
+  AccordionItem,
+  AccordionItemButton,
+  AccordionItemHeading,
+  AccordionItemPanel,
   SearchBar
 });
 /**
