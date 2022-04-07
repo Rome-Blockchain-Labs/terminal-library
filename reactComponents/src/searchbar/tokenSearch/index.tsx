@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import 'twin.macro';
+import 'styled-components/macro'
 import { stopSelecting } from '../redux/tokenSearchSlice';
 import SearchInput from "./SearchInput";
 import SearchResult from "./SearchResult";
@@ -21,7 +23,7 @@ export const TokenSearch = () => {
   }, [dispatch]);
 
   return (
-    <div ref={searchRef}>
+    <div tw="m-10" ref={searchRef}>
       <SearchInput />
       <SearchFilters />
       {isSelecting && <SearchResult loading={isLoading} />}

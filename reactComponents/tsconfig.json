@@ -28,5 +28,6 @@
     "strict": false,
     "target": "ES2020"
   },
+  "include": ["src/**/*", "src/custom.d.ts"],
   "exclude": ["**/*.d.ts", "**/dist/*"]
 }
