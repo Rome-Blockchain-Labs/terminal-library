@@ -8,9 +8,9 @@ const commonConfig = {
 };
 export default defineConfig([
   {
-    entry: ["./src/index.tsx"],
+    entry: ["./src/index.ts"],
     ...commonConfig,
-    format: ["cjs"],
+    format: ["cjs", "esm", "iife"],
     outDir: "dist/",
   },
 ]);

@@ -1,12 +1,32 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "module": "commonjs",
+    "outDir": "./dist",
+    "allowJs": false,
+    "alwaysStrict": true,
     "declaration": true,
-    "jsx": "react",
+    "declarationMap": true,
+    "emitDecoratorMetadata": true,
     "esModuleInterop": true,
-    "outDir": "dist"
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "jsx": "react",
+    "lib": ["ES2020", "dom"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": false,
+    "noLib": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "removeComments": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "strictNullChecks": true,
+    "strictBindCallApply": true,
+    "sourceMap": true,
+    "strict": false,
+    "target": "ES2020"
   },
-  "include": ["src/**/*", "src/custom.d.ts"],
-  "exclude": ["node_modules","src/__tests__"]
+  "exclude": ["**/*.d.ts", "**/dist/*"]
 }
