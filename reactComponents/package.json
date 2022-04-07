@@ -1,6 +1,6 @@
 {
-  "name": "rome-react-components",
-  "version": "1.0.0",
+  "name": "@romeblockchain/react-components",
+  "version": "0.0.1",
   "description": "Library of react components for the Rome Terminal",
   "main": "./dist/index.js",
   "type": "module",
@@ -10,18 +10,17 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "clean": "rm -Rf ./dist && rm -Rf *.tgz",
-    "prebuild": "yarn run clean",
+    "prebuild": "npm run clean",
     "build:tsup": "tsup",
-    "build": "yarn run build:tsup",
-    "publish": "yarn run build && npm pack"
+    "build": "npm run build:tsup",
+    "publish": "npm run build && npm publish --access public"
   },
   "author": "Rome Blockchain Labs",
   "license": "ISC",
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.1",
-    "@types/graphql": "^14.5.0",
-    "@types/react-redux": "^7.1.23",
     "async-retry": "^1.3.3",
+    "bignumber.js": "^9.0.2",
     "flatted": "^3.2.5",
     "graphql-request": "^4.2.0",
     "postcss": "^8.4.12",
@@ -29,10 +28,16 @@
     "react-accessible-accordion": "^4.0.0",
     "react-dom": "^17.0.0",
     "react-redux": "^7.2.8",
+    "react-select": "^5.2.2",
     "react-virtualized": "^9.22.3",
     "reactstrap": "^9.0.1",
     "styled-components": "^5.3.5",
     "tsc": "^2.0.4",
     "typescript": "^4.6.3"
+  },
+  "devDependencies": {
+    "tsup": "^5.12.4",
+    "@types/graphql": "^14.5.0",
+    "@types/react-redux": "^7.1.23"
   }
 }
