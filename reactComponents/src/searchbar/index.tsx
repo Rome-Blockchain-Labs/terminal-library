@@ -1,4 +1,6 @@
 import React from "react"
+import 'twin.macro';
+import 'styled-components/macro'
 import './App.css';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
@@ -6,13 +8,9 @@ import TokenSearch from "./tokenSearch";
 
 export function SearchBar() {
   return (
-    <div className="App">
-      <Provider store={store}>
-      <br/><br/><br/><br/><br/><br/>
-      <br/><br/>
-      <div style={{width:"500px", margin:"auto", border:"solid"}}>
+  <div tw="container mx-auto m-4">
+      <Provider store={store}>      
         <TokenSearch />
-      </div>
       </Provider>
     </div>
   );

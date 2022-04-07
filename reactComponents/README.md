@@ -13,3 +13,8 @@ import {HelloWorldComponent} from "@rbl/terminal-library/reactComponents/dist"
 </div>
 ```
 
+### ADD into .env for search-bar
+REACT_APP_SEARCH_ASYNC_DELAY=300
+REACT_APP_SEARCH_ASYNC_DATASET_LENGTH_MAXIMUM=500
+REACT_APP_SEARCH_INPUT_LENGTH_MINIMUM=3
+

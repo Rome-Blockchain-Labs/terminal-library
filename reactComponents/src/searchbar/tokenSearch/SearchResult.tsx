@@ -1,10 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { AutoSizer, List } from 'react-virtualized';
-import styled from 'styled-components';
+import 'twin.macro';
+import {styled} from 'styled-components/macro'
 
-import SearchResultRow from './SearchResultRow';
 import {RootState} from "../redux/store";
+import TokenPairDetail from './TokenPairDetail'
 
 const NilFoundContainer = styled.div`
   width: 50%;
@@ -24,7 +24,7 @@ const NilFoundContainer = styled.div`
   justify-content: center;
 `;
 
-const SearchDropdown = (props) => {
+const SearchResult = (props) => {
   const {suggestions, searchText} = useSelector(
     (state:RootState) => state
   );
@@ -41,29 +41,16 @@ const SearchDropdown = (props) => {
   }
 
   return (
-    <div style={{ display: 'flex', height: '240px', marginTop: '20px' }}>
-      <div style={{ flex: '1 1 auto' }}>
-        <AutoSizer>
-          {({ height, width }) => {
-            return (
-              <List
-                height={height}
-                overscanRowCount={3}
-                rowCount={filteredSuggestions.length}
-                rowHeight={40}
-                rowRenderer={(props) => (
-                  <SearchResultRow
-                    suggestions={filteredSuggestions}
-                    {...props}
-                  />
-                )}
-                width={width}
-              />
-            );
-          }}
-        </AutoSizer>
-      </div>
-    </div>
+    <div tw="h-60 overflow-y-auto pl-4 border-solid">    
+    {
+      filteredSuggestions.map((suggestions, index) => 
+      <TokenPairDetail
+        suggestions={filteredSuggestions}
+        index={index}
+      />
+      )
+    }  
+  </div>    
   );
 };
-export default SearchDropdown;
+export default SearchResult;
