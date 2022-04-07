@@ -1,5 +1,5 @@
 {
-  "name": "@ian/terminal-library",
+  "name": "@rbl/terminal-library",
   "version": "1.0.1",
   "description": "The common library for Rome terminal Project",
   "main": "index.js",
