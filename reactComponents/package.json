@@ -9,8 +9,11 @@
   ],
   "types": "./dist/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsup"
+    "clean": "rm -Rf ./dist && rm -Rf *.tgz",
+    "prebuild": "yarn run clean",
+    "build:tsup": "tsup",
+    "build": "yarn run build:tsup",
+    "publish": "yarn run build && npm pack"
   },
   "author": "Rome Blockchain Labs",
   "license": "ISC",
