@@ -1,5 +1,5 @@
 {
-  "name": "@romeblockchain/react-components",
+  "name": "@rbl/react-components",
   "version": "0.0.1",
   "description": "Library of react components for the Rome Terminal",
   "main": "./dist/index.js",

@@ -1,5 +1,5 @@
 {
-  "name": "@rome/bridge",
+  "name": "@rbl/bridge",
   "version": "0.0.1",
   "description": "widget-parent & widget-widget communication inside Rome Terminal",
   "main": "./dist/index.js",
