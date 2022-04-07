@@ -520,31 +520,18 @@ var TokenPairDetail = (props) => {
 var TokenPairDetail_default = TokenPairDetail;
 
 // src/searchbar/tokenSearch/SearchResult.tsx
-var NilFoundContainer = import_macro2.styled.div`
-  width: 50%;
-  margin-left: 25%;
-  margin-right: 25%;
-  margin-top: -5px;
-  position: relative;
-  background-color: #1c646c;
-  z-index: 100;
-  color: rgba(0, 0, 0, 0.87);
-  height: 60px;
-  text-align: center;
-  color: white;
-  font-weight: bolder;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
 var SearchResult = (props) => {
   const { suggestions, searchText } = (0, import_react_redux2.useSelector)((state) => state);
   const filteredSuggestions = suggestions.slice().sort((pair1, pair2) => pair2.volumeUSD - pair1.volumeUSD);
   if (props.loading) {
-    return /* @__PURE__ */ import_react3.default.createElement(NilFoundContainer, null, "Loading...");
+    return /* @__PURE__ */ import_react3.default.createElement("div", {
+      tw: "relative flex bg-white justify-center items-center"
+    }, "Loading...");
   }
   if (!!searchText && !filteredSuggestions.length) {
-    return /* @__PURE__ */ import_react3.default.createElement(NilFoundContainer, null, "No pairs found...");
+    return /* @__PURE__ */ import_react3.default.createElement("div", {
+      tw: "relative flex bg-white justify-center items-center"
+    }, "No pairs found...");
   }
   return /* @__PURE__ */ import_react3.default.createElement("div", {
     tw: "h-60 overflow-y-auto pl-4 border-solid"
