@@ -1,20 +1,22 @@
 ### npm install dependency in package.json
+
 ```
 
     "@rbl/terminal-library": "git+https://github.com/Rome-Blockchain-Labs/terminal-library.git#8dda04858acb1c45437325857eff56c60afca5ee"
 ```
 
 ### import and use the react react component
+
 import {HelloWorldComponent} from "@rbl/terminal-library/reactComponents/dist"
 
 ```
 <div>
-    <HelloWorldComponent/>    
+    <HelloWorldComponent/>
 </div>
 ```
 
-### ADD into .env for search-bar
-REACT_APP_SEARCH_ASYNC_DELAY=300
-REACT_APP_SEARCH_ASYNC_DATASET_LENGTH_MAXIMUM=500
-REACT_APP_SEARCH_INPUT_LENGTH_MINIMUM=3
+### Publishing Instructions
 
+1. Go to `react-virtuazlied/dist/es/WindowScroller/utils/onScroll.js`
+2. Delete the last line `import { bpfrpt_proptype_WindowScroller } from "../WindowScroller.js";`
+3. `npm run publish`

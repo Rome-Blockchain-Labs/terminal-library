@@ -8,8 +8,8 @@ import TokenSearch from "./tokenSearch";
 
 export function SearchBar() {
   return (
-  <div tw="container mx-auto m-4">
-      <Provider store={store}>      
+  <div>
+      <Provider store={store}>
         <TokenSearch />
       </Provider>
     </div>
