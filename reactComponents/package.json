@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Library of react components for the Rome Terminal",
   "main": "dist/index.js",
-  "types": "dist/TODO",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsup"
