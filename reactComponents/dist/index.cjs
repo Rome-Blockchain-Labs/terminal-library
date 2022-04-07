@@ -5868,7 +5868,7 @@ var SearchInput_default = SearchInput;
 init_cjs_shims();
 var import_react3 = __toESM(require("react"), 1);
 var import_react_redux3 = require("react-redux");
-var import_react_virtualized = require("react-virtualized");
+var import_react_virtualized = require("@romeblockchain/react-virtualized");
 var import_styled_components3 = __toESM(require("styled-components"), 1);
 
 // src/searchbar/tokenSearch/SearchResultRow.tsx

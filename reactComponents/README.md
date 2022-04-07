@@ -14,9 +14,3 @@ import {HelloWorldComponent} from "@rbl/terminal-library/reactComponents/dist"
     <HelloWorldComponent/>
 </div>
 ```
-
-### Publishing Instructions
-
-1. Go to `react-virtuazlied/dist/es/WindowScroller/utils/onScroll.js`
-2. Delete the last line `import { bpfrpt_proptype_WindowScroller } from "../WindowScroller.js";`
-3. `npm run publish`

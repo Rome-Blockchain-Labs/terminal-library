@@ -1,10 +1,10 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { AutoSizer, List } from 'react-virtualized';
-import styled from 'styled-components';
+import React from "react";
+import { useSelector } from "react-redux";
+import { AutoSizer, List } from "@romeblockchain/react-virtualized";
+import styled from "styled-components";
 
-import SearchResultRow from './SearchResultRow';
-import {RootState} from "../redux/store";
+import SearchResultRow from "./SearchResultRow";
+import { RootState } from "../redux/store";
 
 const NilFoundContainer = styled.div`
   width: 50%;
@@ -25,9 +25,7 @@ const NilFoundContainer = styled.div`
 `;
 
 const SearchDropdown = (props) => {
-  const {suggestions, searchText} = useSelector(
-    (state:RootState) => state
-  );
+  const { suggestions, searchText } = useSelector((state: RootState) => state);
   const filteredSuggestions = suggestions
     .slice()
     .sort((pair1, pair2) => pair2.volumeUSD - pair1.volumeUSD);
@@ -41,8 +39,8 @@ const SearchDropdown = (props) => {
   }
 
   return (
-    <div style={{ display: 'flex', height: '240px', marginTop: '20px' }}>
-      <div style={{ flex: '1 1 auto' }}>
+    <div style={{ display: "flex", height: "240px", marginTop: "20px" }}>
+      <div style={{ flex: "1 1 auto" }}>
         <AutoSizer>
           {({ height, width }) => {
             return (

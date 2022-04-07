@@ -5856,7 +5856,7 @@ var SearchInput_default = SearchInput;
 init_esm_shims();
 import React3 from "react";
 import { useSelector as useSelector2 } from "react-redux";
-import { AutoSizer, List } from "react-virtualized";
+import { AutoSizer, List } from "@romeblockchain/react-virtualized";
 import styled3 from "styled-components";
 
 // src/searchbar/tokenSearch/SearchResultRow.tsx
