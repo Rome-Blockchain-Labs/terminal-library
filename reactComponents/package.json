@@ -7,7 +7,6 @@
   "files": [
     "dist/"
   ],
-  "types": "./dist/index.d.ts",
   "scripts": {
     "clean": "rm -Rf ./dist && rm -Rf *.tgz",
     "prebuild": "npm run clean",
