@@ -1,6 +1,6 @@
 {
-  "name": "@rbl/terminal-library",
-  "version": "1.0.0",
+  "name": "@ian/terminal-library",
+  "version": "1.0.1",
   "description": "The common library for Rome terminal Project",
   "main": "index.js",
   "devDependencies": {},
@@ -11,7 +11,6 @@
     "type": "git",
     "url": "git+https://github.com/Rome-Blockchain-Labs/terminal-library.git"
   },
-  "workspaces": ["reactComponents","romeBridge"],
   "author": "",
   "license": "ISC",
   "bugs": {
