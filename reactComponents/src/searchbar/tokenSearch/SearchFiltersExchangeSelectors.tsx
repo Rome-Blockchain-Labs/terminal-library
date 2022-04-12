@@ -3,9 +3,8 @@ import { omitBy } from "lodash"
 import { useDispatch, useSelector } from 'react-redux';
 import { setExchangeMap, setExchangeMapAll } from "../redux/tokenSearchSlice"
 import { exchangeNames } from "./helpers/config";
-import { Chip } from "../Components/Chip";
-import {RootState} from "../redux/store";
-
+import { Chip } from "./Chip"
+import { RootState } from "../redux/store";
 
 export const FilterExchangeAll = () => {
   const dispatch = useDispatch();
@@ -44,5 +43,5 @@ export const FilterExchangeSelectors = () => {
 
 
   // RENDERING.
-  return <>{exchangeNamesActive.map(exchangeName => exchangeElement(exchangeName))}</>
+  return exchangeNamesActive.map(exchangeName => exchangeElement(exchangeName));
 };

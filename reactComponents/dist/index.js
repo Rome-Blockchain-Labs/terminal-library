@@ -49,9 +49,7 @@ __export(src_exports, {
 module.exports = __toCommonJS(src_exports);
 
 // src/searchbar/index.tsx
-var import_react9 = __toESM(require("react"));
-var import_twin5 = require("twin.macro");
-var import_macro5 = require("styled-components/macro");
+var import_react10 = __toESM(require("react"));
 var import_react_redux7 = require("react-redux");
 
 // src/searchbar/redux/store.ts
@@ -354,50 +352,80 @@ var store = (0, import_toolkit2.configureStore)({
 });
 
 // src/searchbar/tokenSearch/index.tsx
-var import_react8 = __toESM(require("react"));
+var import_react9 = __toESM(require("react"));
 var import_react_redux6 = require("react-redux");
-var import_twin4 = require("twin.macro");
-var import_macro4 = require("styled-components/macro");
+var import_macro = require("styled-components/macro");
 
 // src/searchbar/tokenSearch/SearchInput.tsx
-var import_react = __toESM(require("react"));
+var import_react2 = __toESM(require("react"));
 var import_react_redux = require("react-redux");
 var import_styled_components = __toESM(require("styled-components"));
-var import_lodash3 = __toESM(require("lodash.debounce"));
 
 // src/searchbar/tokenSearch/icon-search.svg
 var icon_search_default = "./icon-search-AYYIN6AJ.svg";
 
 // src/searchbar/tokenSearch/SearchInput.tsx
-var PairField = import_styled_components.default.div`
-  display: block;
+var import_lodash3 = __toESM(require("lodash.debounce"));
+
+// src/searchbar/Context/TokenSearch.tsx
+var import_react = require("react");
+var TokenSearchContext = (0, import_react.createContext)({});
+var TokenSearch_default = TokenSearchContext;
+
+// src/searchbar/tokenSearch/SearchInput.tsx
+var StyledInput = import_styled_components.default.input`
+  width: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.width) || "-webkit-fill-available";
+}};
+  border: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.border) || "none";
+}}; 
+  background-color: inherit;
+  color: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.color) || "#FFF";
+}};
+  display: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.display) || "block";
+}}; 
   margin-left: auto;
   margin-right: auto;
   position: relative;
-  border-color: #067c82;
-  border-style: solid;
-  border-width: 2px;
-  border-radius: 30px;
-  background: #08333c;
-  padding: 11px 15px;
-  font-size: 15px;
-  color: #ffffff;
-  font-family: 'Fira Code', monospace;
-
-  @media only screen and (max-width: 990px) {
-    width: 100%;
-  }
-
-  @media only screen and (max-width: 769px) {
-    width: 100%;
-  }
-`;
-var StyledInput = import_styled_components.default.input`
-  width: 100%;
-  border: none;
-  background-color: inherit;
-  color: #ffffff;
-  //width: auto;
+  border-color: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.borderColor) || "#067c82";
+}};  
+  border-style: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.borderStyle) || "solid";
+}};  
+  border-width: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.borderWidth) || "1px";
+}};  
+  border-radius: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.borderRadius) || "0";
+}};  
+  background: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.background) || "#08333c";
+}};   
+  padding: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.padding) || "11px 15px";
+}};    
+  font-size: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.fontSize) || "15px";
+}};      
+  font-family: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.fontFamily) || "'Fira Code', monospace";
+}};
 `;
 var HideOnSmallScreen = import_styled_components.default.img`
   width: 30px;
@@ -412,8 +440,10 @@ var HideOnSmallScreen = import_styled_components.default.img`
 `;
 var SearchInput = () => {
   const dispatch = (0, import_react_redux.useDispatch)();
+  const renderProps = (0, import_react2.useContext)(TokenSearch_default);
+  const { customSearchInput } = renderProps;
   const { searchText, networkMap, exchangeMap } = (0, import_react_redux.useSelector)((state) => state);
-  (0, import_react.useEffect)(() => {
+  (0, import_react2.useEffect)(() => {
     if (searchText.length >= minStringSearch) {
       dispatch(searchTokenPairs(searchText));
     }
@@ -422,14 +452,16 @@ var SearchInput = () => {
     const value = event.target.value;
     dispatch(setSearchText(value));
   };
-  const debounceChangeHandler = (0, import_react.useCallback)((0, import_lodash3.default)(onChangeFilter, 350), [searchText]);
-  return /* @__PURE__ */ import_react.default.createElement(PairField, {
+  const debounceChangeHandler = (0, import_react2.useCallback)((0, import_lodash3.default)(onChangeFilter, 350), [searchText]);
+  const placeholder = (customSearchInput == null ? void 0 : customSearchInput.placeholder) ? customSearchInput == null ? void 0 : customSearchInput.placeholder : "Please input token name or address.";
+  return /* @__PURE__ */ import_react2.default.createElement("div", {
     onClick: () => dispatch(startSelecting())
-  }, /* @__PURE__ */ import_react.default.createElement(StyledInput, {
-    placeholder: "Select a token pair",
+  }, /* @__PURE__ */ import_react2.default.createElement(StyledInput, {
+    placeholder,
     autocomplete: "off",
-    onChange: debounceChangeHandler
-  }), /* @__PURE__ */ import_react.default.createElement(HideOnSmallScreen, {
+    onChange: debounceChangeHandler,
+    styles: customSearchInput == null ? void 0 : customSearchInput.styles
+  }), /* @__PURE__ */ import_react2.default.createElement(HideOnSmallScreen, {
     alt: "",
     src: icon_search_default,
     onClick: () => dispatch(toggleSelecting())
@@ -438,15 +470,13 @@ var SearchInput = () => {
 var SearchInput_default = SearchInput;
 
 // src/searchbar/tokenSearch/SearchResult.tsx
-var import_react3 = __toESM(require("react"));
+var import_react4 = __toESM(require("react"));
+var import_styled_components3 = __toESM(require("styled-components"));
 var import_react_redux2 = require("react-redux");
-var import_twin2 = require("twin.macro");
-var import_macro2 = require("styled-components/macro");
 
 // src/searchbar/tokenSearch/TokenPairDetail.tsx
-var import_react2 = __toESM(require("react"));
-var import_twin = require("twin.macro");
-var import_macro = require("styled-components/macro");
+var import_react3 = __toESM(require("react"));
+var import_styled_components2 = __toESM(require("styled-components"));
 var import_react_accessible_accordion = require("react-accessible-accordion");
 
 // src/searchbar/tokenSearch/helpers/firstAndLast.ts
@@ -474,98 +504,279 @@ function intToWords(int) {
 
 // src/searchbar/tokenSearch/TokenPairDetail.tsx
 var imageSize = 26;
+var DetailWrapper = import_styled_components2.default.div`
+  .accordion__button: hover {
+    cursor: pointer;
+  }
+`;
+var StyledHeader = import_styled_components2.default.div`
+  display: grid;
+  grid-auto-flow: column;
+  gap: 10px;
+  padding: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.padding) || "10px";
+}};
+  color: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.color) || "black";
+}};
+  background: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.background) || "green";
+}};
+  '&:hover': {
+
+  }
+`;
+var StyeldPanel = import_styled_components2.default.div`
+  display: grid;
+  grid-auto-flow: column;
+  gap: 10px;
+  padding: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.padding) || "10px";
+}};
+  color: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.color) || "black";
+}};
+  background: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.background) || "white";
+}};  
+`;
+var StyledActionWrapper = import_styled_components2.default.div`
+  display: flex;  
+  margin-top: 10px;  
+`;
+var StyledAction = import_styled_components2.default.div`
+  cursor: pointer;
+  padding: 10;
+`;
+var Action = (props) => {
+  const { component, detail } = props;
+  const Component = component;
+  return /* @__PURE__ */ import_react3.default.createElement(StyledAction, null, /* @__PURE__ */ import_react3.default.createElement(Component, {
+    detail
+  }));
+};
 var TokenPairDetail = (props) => {
+  var _a, _b;
   const { index, suggestions } = props;
+  const renderProps = (0, import_react3.useContext)(TokenSearch_default);
+  const { customTokenDetail, customActions } = renderProps;
   const selectedPair = suggestions[index];
   const tokenImage = (token) => {
-    return (token == null ? void 0 : token.image) && /* @__PURE__ */ import_react2.default.createElement("img", {
+    return (token == null ? void 0 : token.image) && /* @__PURE__ */ import_react3.default.createElement("img", {
       alt: token == null ? void 0 : token.symbol,
       src: token == null ? void 0 : token.image,
       style: { borderRadius: "50%" },
       width: imageSize
     });
   };
-  return /* @__PURE__ */ import_react2.default.createElement(import_react_accessible_accordion.Accordion, {
+  return /* @__PURE__ */ import_react3.default.createElement(DetailWrapper, null, /* @__PURE__ */ import_react3.default.createElement(import_react_accessible_accordion.Accordion, {
     allowZeroExpanded: true
-  }, /* @__PURE__ */ import_react2.default.createElement(import_react_accessible_accordion.AccordionItem, {
+  }, /* @__PURE__ */ import_react3.default.createElement(import_react_accessible_accordion.AccordionItem, {
     key: selectedPair.id
-  }, /* @__PURE__ */ import_react2.default.createElement(import_react_accessible_accordion.AccordionItemHeading, null, /* @__PURE__ */ import_react2.default.createElement(import_react_accessible_accordion.AccordionItemButton, {
-    tw: "cursor-pointer"
-  }, /* @__PURE__ */ import_react2.default.createElement("div", {
-    tw: "grid grid-flow-col hover:border-dotted p-4 gap-4"
-  }, /* @__PURE__ */ import_react2.default.createElement("div", {
-    tw: "row-span-2 text-gray-900"
-  }, /* @__PURE__ */ import_react2.default.createElement("div", null, selectedPair.network.toUpperCase(), " - ", capitalizeFirstLetter(selectedPair.exchange), " - "), /* @__PURE__ */ import_react2.default.createElement("div", {
-    tw: "text-[12px]"
-  }, "Volume: ", intToWords(selectedPair.volumeUSD))), /* @__PURE__ */ import_react2.default.createElement("div", {
-    tw: "row-span-1 pl-2 font-bold"
-  }, tokenImage(selectedPair.token0), selectedPair.token0.name, " -", tokenImage(selectedPair.token1), selectedPair.token1.name)))), /* @__PURE__ */ import_react2.default.createElement(import_react_accessible_accordion.AccordionItemPanel, null, /* @__PURE__ */ import_react2.default.createElement("div", {
-    tw: "grid grid-rows-3 grid-flow-col gap-4 m-4"
-  }, /* @__PURE__ */ import_react2.default.createElement("div", {
-    tw: "row-span-3"
-  }, /* @__PURE__ */ import_react2.default.createElement("div", null, /* @__PURE__ */ import_react2.default.createElement("span", {
-    tw: "font-bold"
-  }, "Pair Address:"), " ", selectedPair.id), /* @__PURE__ */ import_react2.default.createElement("div", null, /* @__PURE__ */ import_react2.default.createElement("span", {
-    tw: "font-bold"
-  }, tokenImage(selectedPair.token0), " token0 address: "), firstAndLast(selectedPair.token0.address)), /* @__PURE__ */ import_react2.default.createElement("div", null, /* @__PURE__ */ import_react2.default.createElement("span", {
-    tw: "font-bold"
-  }, tokenImage(selectedPair.token1), " token1 address: "), firstAndLast(selectedPair.token1.address))), /* @__PURE__ */ import_react2.default.createElement("div", {
-    tw: "row-span-2"
-  }, /* @__PURE__ */ import_react2.default.createElement("div", {
-    tw: "font-bold"
-  }, selectedPair.network.toUpperCase()), /* @__PURE__ */ import_react2.default.createElement("div", {
-    tw: "font-bold"
-  }, capitalizeFirstLetter(selectedPair.exchange), " "))))));
+  }, /* @__PURE__ */ import_react3.default.createElement(import_react_accessible_accordion.AccordionItemHeading, null, /* @__PURE__ */ import_react3.default.createElement(import_react_accessible_accordion.AccordionItemButton, null, /* @__PURE__ */ import_react3.default.createElement(StyledHeader, {
+    styles: (_a = customTokenDetail == null ? void 0 : customTokenDetail.styles) == null ? void 0 : _a.header
+  }, /* @__PURE__ */ import_react3.default.createElement("div", null, /* @__PURE__ */ import_react3.default.createElement("div", null, selectedPair.network.toUpperCase(), " - ", capitalizeFirstLetter(selectedPair.exchange), " - "), /* @__PURE__ */ import_react3.default.createElement("div", null, "Volume: ", intToWords(selectedPair.volumeUSD))), /* @__PURE__ */ import_react3.default.createElement("div", null, tokenImage(selectedPair.token0), selectedPair.token0.name, " -", tokenImage(selectedPair.token1), selectedPair.token1.name)))), /* @__PURE__ */ import_react3.default.createElement(import_react_accessible_accordion.AccordionItemPanel, null, /* @__PURE__ */ import_react3.default.createElement(StyeldPanel, {
+    styles: (_b = customTokenDetail == null ? void 0 : customTokenDetail.styles) == null ? void 0 : _b.panel
+  }, /* @__PURE__ */ import_react3.default.createElement("div", null, /* @__PURE__ */ import_react3.default.createElement("div", null, /* @__PURE__ */ import_react3.default.createElement("b", null, "Pair Address:"), " ", selectedPair.id), /* @__PURE__ */ import_react3.default.createElement("div", null, /* @__PURE__ */ import_react3.default.createElement("b", null, tokenImage(selectedPair.token0), " token0 address: "), firstAndLast(selectedPair.token0.address)), /* @__PURE__ */ import_react3.default.createElement("div", null, /* @__PURE__ */ import_react3.default.createElement("b", null, tokenImage(selectedPair.token1), " token1 address: "), firstAndLast(selectedPair.token1.address))), /* @__PURE__ */ import_react3.default.createElement("div", null, /* @__PURE__ */ import_react3.default.createElement("div", null, /* @__PURE__ */ import_react3.default.createElement("b", null, selectedPair.network.toUpperCase())), /* @__PURE__ */ import_react3.default.createElement("div", null, /* @__PURE__ */ import_react3.default.createElement("b", null, capitalizeFirstLetter(selectedPair.exchange))), /* @__PURE__ */ import_react3.default.createElement(StyledActionWrapper, null, customActions.map((action) => /* @__PURE__ */ import_react3.default.createElement(Action, {
+    key: `action-${action.index}`,
+    component: action.component,
+    detail: selectedPair
+  })))))))));
 };
 var TokenPairDetail_default = TokenPairDetail;
 
 // src/searchbar/tokenSearch/SearchResult.tsx
+var StyledResult = import_styled_components3.default.div`
+  width: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.width) || "auto";
+}};
+  height: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.height) || "300px";
+}};
+  border: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.border) || "1px solid grey";
+}}; 
+  background-color: inherit;
+  color: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.color) || "#FFF";
+}};
+  display: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.display) || "block";
+}}; 
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  border-color: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.borderColor) || "#067c82";
+}};  
+  border-style: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.borderStyle) || "solid";
+}};  
+  border-width: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.borderWidth) || "1px";
+}};  
+  border-radius: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.borderRadius) || "0";
+}};  
+  background: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.background) || "#08333c";
+}};   
+  padding: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.padding) || "0";
+}};    
+  font-size: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.fontSize) || "15px";
+}};      
+  font-family: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.fontFamily) || "'Fira Code', monospace";
+}};
+  overflow: auto;
+`;
+var StyledLoading = import_styled_components3.default.div`
+  position: relative;
+  display: flex;
+  justify-content: center;  
+  margin: 10px;
+  color: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.color) || "black";
+}};
+  font-size: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.fontSize) || "15px";
+}};      
+`;
 var SearchResult = (props) => {
+  const renderProps = (0, import_react4.useContext)(TokenSearch_default);
+  const { customResult, customLoading } = renderProps;
   const { suggestions, searchText } = (0, import_react_redux2.useSelector)((state) => state);
   const filteredSuggestions = suggestions.slice().sort((pair1, pair2) => pair2.volumeUSD - pair1.volumeUSD);
   if (props.loading) {
-    return /* @__PURE__ */ import_react3.default.createElement("div", {
-      tw: "relative flex bg-white justify-center items-center"
-    }, "Loading...");
+    const loadingTitle = (customLoading == null ? void 0 : customLoading.loadingTitle) ? customLoading.loadingTitle : "Loading...";
+    return /* @__PURE__ */ import_react4.default.createElement(StyledLoading, {
+      styles: customLoading == null ? void 0 : customLoading.styles
+    }, loadingTitle);
   }
   if (!!searchText && !filteredSuggestions.length) {
-    return /* @__PURE__ */ import_react3.default.createElement("div", {
-      tw: "relative flex bg-white justify-center items-center"
-    }, "No pairs found...");
+    const notFoundTitle = (customLoading == null ? void 0 : customLoading.notFoundTitle) ? customLoading.notFoundTitle : "No pairs found...";
+    return /* @__PURE__ */ import_react4.default.createElement(StyledLoading, {
+      styles: customLoading == null ? void 0 : customLoading.styles
+    }, notFoundTitle);
   }
-  return /* @__PURE__ */ import_react3.default.createElement("div", {
-    tw: "h-60 overflow-y-auto pl-4 border-solid"
-  }, filteredSuggestions.map((suggestions2, index) => /* @__PURE__ */ import_react3.default.createElement(TokenPairDetail_default, {
+  return /* @__PURE__ */ import_react4.default.createElement(StyledResult, {
+    styles: customResult == null ? void 0 : customResult.styles
+  }, filteredSuggestions.map((suggestions2, index) => /* @__PURE__ */ import_react4.default.createElement(TokenPairDetail_default, {
     suggestions: filteredSuggestions,
-    index
+    index,
+    key: `token-detail-${index}`
   })));
 };
 var SearchResult_default = SearchResult;
 
 // src/searchbar/tokenSearch/SearchFilters.tsx
-var import_react7 = __toESM(require("react"));
+var import_react8 = __toESM(require("react"));
 var import_react_redux5 = require("react-redux");
-var import_twin3 = require("twin.macro");
-var import_macro3 = require("styled-components/macro");
+var import_styled_components5 = __toESM(require("styled-components"));
 var import_react_accessible_accordion2 = require("react-accessible-accordion");
 
 // src/searchbar/tokenSearch/SearchFiltersNetworkSelectors.tsx
-var import_react5 = __toESM(require("react"));
+var import_react6 = __toESM(require("react"));
 var import_react_redux3 = require("react-redux");
 var import_lodash4 = require("lodash");
 
-// src/searchbar/Components/Chip/index.tsx
-var import_react4 = __toESM(require("react"));
-var Chip = (0, import_react4.memo)((props) => {
+// src/searchbar/tokenSearch/Chip.tsx
+var import_react5 = __toESM(require("react"));
+var import_styled_components4 = __toESM(require("styled-components"));
+var StyledChip = import_styled_components4.default.div`
+  > input {
+    display: none;
+  }
+
+  > input + label {
+    -webkit-transition: all 500ms ease;
+    transition: all 500ms ease;
+    font-size: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.fontSize) || "14px";
+}};  
+    cursor: pointer;
+    border-radius: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.borderRadius) || "5px";
+}};  
+    background-color: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.backgroundColor) || "#FFF";
+}};  
+    border: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.border) || "solid 2px #7d7d7d";
+}};   
+    padding: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.padding) || "0.1rem 0.3rem";
+}};   
+    display: inline-block;
+    -moz-user-select: -moz-none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    margin: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.margin) || "5px";
+}};   
+  }
+
+  > input:checked + label {
+    -webkit-transition: all 500ms ease;
+    transition: all 500ms ease;    
+    border-color: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.checkedColor) || "#666699";
+}};    
+    color: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.checkedColor) || "white";
+}};   
+    background-color: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.checkedBackgroundColor) || "#666699";
+}};  
+  }
+`;
+var Chip = (0, import_react5.memo)((props) => {
+  const renderProps = (0, import_react5.useContext)(TokenSearch_default);
   const { label, checked, onChange, name, value } = props;
-  return /* @__PURE__ */ import_react4.default.createElement(import_react4.default.Fragment, null, /* @__PURE__ */ import_react4.default.createElement("input", {
+  const { customChip } = renderProps;
+  return /* @__PURE__ */ import_react5.default.createElement(StyledChip, {
+    styles: customChip == null ? void 0 : customChip.styles
+  }, /* @__PURE__ */ import_react5.default.createElement("input", {
     type: "checkbox",
     id: `${label}-${name}`,
     onChange,
     checked,
     name,
     value
-  }), /* @__PURE__ */ import_react4.default.createElement("label", {
+  }), /* @__PURE__ */ import_react5.default.createElement("label", {
     htmlFor: `${label}-${name}`
   }, label, " "));
 });
@@ -576,7 +787,7 @@ var FilterNetworkAll = () => {
   const { exchangeMap, networkMap } = (0, import_react_redux3.useSelector)((state) => state);
   const networkAll = Object.values((0, import_lodash4.omitBy)(networkMap, (b) => !b)).length === 0;
   const exchangeNamesActive = Object.keys((0, import_lodash4.omitBy)(exchangeMap, (b) => !b));
-  return /* @__PURE__ */ import_react5.default.createElement(Chip, {
+  return /* @__PURE__ */ import_react6.default.createElement(Chip, {
     name: "AllNetworks",
     label: "All",
     checked: networkAll,
@@ -590,7 +801,7 @@ var FilterNetworkSelectors = () => {
   const dispatch = (0, import_react_redux3.useDispatch)();
   const { networkMap } = (0, import_react_redux3.useSelector)((state) => state);
   const networkElement = (networkName) => {
-    return /* @__PURE__ */ import_react5.default.createElement(Chip, {
+    return /* @__PURE__ */ import_react6.default.createElement(Chip, {
       key: networkName,
       name: networkName,
       label: networkName,
@@ -598,11 +809,11 @@ var FilterNetworkSelectors = () => {
       onChange: (e) => dispatch(setNetworkMap({ networkName, checked: e.target.checked }))
     });
   };
-  return /* @__PURE__ */ import_react5.default.createElement(import_react5.default.Fragment, null, networkNames.map((networkName) => networkElement(networkName)));
+  return /* @__PURE__ */ import_react6.default.createElement(import_react6.default.Fragment, null, networkNames.map((networkName) => networkElement(networkName)));
 };
 
 // src/searchbar/tokenSearch/SearchFiltersExchangeSelectors.tsx
-var import_react6 = __toESM(require("react"));
+var import_react7 = __toESM(require("react"));
 var import_lodash5 = require("lodash");
 var import_react_redux4 = require("react-redux");
 var FilterExchangeAll = () => {
@@ -610,7 +821,7 @@ var FilterExchangeAll = () => {
   const { exchangeMap, networkMap } = (0, import_react_redux4.useSelector)((state) => state);
   const exchangeAll = Object.values((0, import_lodash5.omitBy)(exchangeMap, (b) => !b)).length === 0;
   const exchangeNamesActive = exchangeNames(Object.keys((0, import_lodash5.omitBy)(networkMap, (b) => !b)));
-  return /* @__PURE__ */ import_react6.default.createElement(Chip, {
+  return /* @__PURE__ */ import_react7.default.createElement(Chip, {
     name: "AllExchanges",
     label: "All",
     checked: exchangeAll,
@@ -622,7 +833,7 @@ var FilterExchangeSelectors = () => {
   const { networkMap, exchangeMap } = (0, import_react_redux4.useSelector)((state) => state);
   const exchangeNamesActive = exchangeNames(Object.keys((0, import_lodash5.omitBy)(networkMap, (b) => !b)));
   const exchangeElement = (exchangeName) => {
-    return /* @__PURE__ */ import_react6.default.createElement(Chip, {
+    return /* @__PURE__ */ import_react7.default.createElement(Chip, {
       key: exchangeName,
       name: exchangeName,
       label: exchangeName,
@@ -630,35 +841,185 @@ var FilterExchangeSelectors = () => {
       onChange: (e) => dispatch(setExchangeMap({ exchangeName, checked: e.target.checked }))
     });
   };
-  return /* @__PURE__ */ import_react6.default.createElement(import_react6.default.Fragment, null, exchangeNamesActive.map((exchangeName) => exchangeElement(exchangeName)));
+  return exchangeNamesActive.map((exchangeName) => exchangeElement(exchangeName));
 };
 
 // src/searchbar/tokenSearch/SearchFilters.tsx
+var FilterWrapper = import_styled_components5.default.div`  
+  .accordion__button {
+    position: relative;
+  }
+
+  .accordion__button:first-child:after {
+    display: block;    
+    content: '';
+    height: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.toggleHeight) || "10px";
+}};
+    width: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.toggleWidth) || "10px";
+}};
+    margin-right: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.toggleMarginRight) || "25px";
+}};
+    position: absolute;
+    top: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.toggleMarginRight) || "20px";
+}};
+    right: 0;
+    border-bottom: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.toggleBorderBottom) || "2px solid currentColor";
+}}; 
+    border-right: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.toggleBorderRight) || "2px solid currentColor";
+}}; 
+    transform: rotate(-45deg);
+  }
+
+  .accordion__button[aria-expanded='true']:first-child:after,
+  .accordion__button[aria-selected='true']:first-child:after {
+    transform: rotate(45deg);
+  }
+
+  .accordion__panel {
+    border: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.contentBorder) || "0";
+}}; 
+    border-top-style: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.contentBorderTop) || "none";
+}}; 
+    border-right-style: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.contentBorderRight) || "none";
+}}; 
+    border-bottom-style: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.contentBorderBottom) || "none";
+}}; 
+    border-left-style: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.contentBorderLeft) || "none";
+}}; 
+    border-radius: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.borderRadius) || "0";
+}}; 
+    margin:  ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.margin) || "0 10px";
+}};       
+  }
+`;
+var StyledFilterHeader = import_styled_components5.default.div`  
+  display: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.display) || "inline";
+}};
+  width: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.width) || "auto";
+}};
+  border: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.border) || "none";
+}}; 
+  background-color: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.backgroundColor) || "#f4f4f4";
+}}; 
+  color: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.color) || "#444";
+}};
+  display: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.display) || "block";
+}}; 
+  cursor: pointer;
+  padding: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.padding) || "18px";
+}};   
+  text-align: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.textAlign) || "left";
+}};     
+  margin: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.margin) || "5px";
+}};     
+  border-radius: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.borderRadius) || "0";
+}};     
+  &:hover {
+    background-color: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.hoverColor) || "#ddd";
+}};
+  }
+`;
+var StyledFilterContent = import_styled_components5.default.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.justifyContent) || "center";
+}};
+  align-items: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.alignItems) || "center";
+}};  
+  padding:  ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.padding) || "5px 10px";
+}};       
+  background-color: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.backgroundColor) || "#ddd";
+}};
+  border-radius: ${(props) => {
+  var _a;
+  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.borderRadius) || "0";
+}};     
+`;
 var SearchFilters = () => {
   const { networkMap, exchangeMap } = (0, import_react_redux5.useSelector)((state) => state);
+  const renderProps = (0, import_react8.useContext)(TokenSearch_default);
+  const { customSearchFilter } = renderProps;
   const exchangesActive = Object.values(networkMap).filter((b) => b).length !== 0;
   const networkCount = Object.values(networkMap).filter((b) => b).length;
   const exchangeCount = Object.values(exchangeMap).filter((b) => b).length;
-  return /* @__PURE__ */ import_react7.default.createElement(import_react_accessible_accordion2.Accordion, {
+  const title = (customSearchFilter == null ? void 0 : customSearchFilter.title) || "Filter Networks";
+  const description = networkCount === 0 && exchangeCount === 0 ? "Searching all networks and exchanges" : (customSearchFilter == null ? void 0 : customSearchFilter.description(networkCount, exchangeCount)) || `Searching {networkCount} networks and {exchangeCount} exchanges`;
+  return /* @__PURE__ */ import_react8.default.createElement(FilterWrapper, {
+    styles: customSearchFilter == null ? void 0 : customSearchFilter.wrapperStyles
+  }, /* @__PURE__ */ import_react8.default.createElement(import_react_accessible_accordion2.Accordion, {
     allowZeroExpanded: true
-  }, /* @__PURE__ */ import_react7.default.createElement(import_react_accessible_accordion2.AccordionItem, null, /* @__PURE__ */ import_react7.default.createElement(import_react_accessible_accordion2.AccordionItemHeading, null, /* @__PURE__ */ import_react7.default.createElement(import_react_accessible_accordion2.AccordionItemButton, null, /* @__PURE__ */ import_react7.default.createElement("div", {
-    tw: "p-4 flex"
-  }, /* @__PURE__ */ import_react7.default.createElement("div", {
-    tw: "font-bold"
-  }, "Filter Networks:"), "  \xA0 Searching ", networkCount, " networks and ", exchangeCount, " exchanges"))), /* @__PURE__ */ import_react7.default.createElement(import_react_accessible_accordion2.AccordionItemPanel, null, /* @__PURE__ */ import_react7.default.createElement(FilterNetworkAll, null), /* @__PURE__ */ import_react7.default.createElement(FilterNetworkSelectors, null)), /* @__PURE__ */ import_react7.default.createElement(import_react_accessible_accordion2.AccordionItemPanel, null, /* @__PURE__ */ import_react7.default.createElement("div", {
-    tw: "flex justify-center items-center m-2"
-  }, /* @__PURE__ */ import_react7.default.createElement(FilterNetworkAll, null), /* @__PURE__ */ import_react7.default.createElement(FilterNetworkSelectors, null))), /* @__PURE__ */ import_react7.default.createElement(import_react_accessible_accordion2.AccordionItemPanel, null, /* @__PURE__ */ import_react7.default.createElement("div", {
-    tw: "flex flex-wrap justify-center m-2"
-  }, exchangesActive && /* @__PURE__ */ import_react7.default.createElement(FilterExchangeAll, null), exchangesActive && /* @__PURE__ */ import_react7.default.createElement(FilterExchangeSelectors, null)))));
+  }, /* @__PURE__ */ import_react8.default.createElement(import_react_accessible_accordion2.AccordionItem, null, /* @__PURE__ */ import_react8.default.createElement(import_react_accessible_accordion2.AccordionItemHeading, null, /* @__PURE__ */ import_react8.default.createElement(import_react_accessible_accordion2.AccordionItemButton, null, /* @__PURE__ */ import_react8.default.createElement(StyledFilterHeader, {
+    styles: customSearchFilter == null ? void 0 : customSearchFilter.headerStyles
+  }, /* @__PURE__ */ import_react8.default.createElement("b", null, title, ":"), "  \xA0 ", description))), /* @__PURE__ */ import_react8.default.createElement(import_react_accessible_accordion2.AccordionItemPanel, null, /* @__PURE__ */ import_react8.default.createElement(StyledFilterContent, {
+    styles: customSearchFilter == null ? void 0 : customSearchFilter.networkStyles
+  }, /* @__PURE__ */ import_react8.default.createElement(FilterNetworkAll, null), /* @__PURE__ */ import_react8.default.createElement(FilterNetworkSelectors, null))), /* @__PURE__ */ import_react8.default.createElement(import_react_accessible_accordion2.AccordionItemPanel, null, /* @__PURE__ */ import_react8.default.createElement(StyledFilterContent, {
+    styles: customSearchFilter == null ? void 0 : customSearchFilter.exchangeStyles
+  }, exchangesActive && /* @__PURE__ */ import_react8.default.createElement(FilterExchangeAll, null), exchangesActive && /* @__PURE__ */ import_react8.default.createElement(FilterExchangeSelectors, null))))));
 };
 var SearchFilters_default = SearchFilters;
 
 // src/searchbar/tokenSearch/index.tsx
-var TokenSearch = () => {
+var TokenSearch = (renderProps) => {
   const dispatch = (0, import_react_redux6.useDispatch)();
   const { isSelecting, isLoading } = (0, import_react_redux6.useSelector)((state) => state);
-  const searchRef = (0, import_react8.useRef)();
-  (0, import_react8.useEffect)(() => {
+  const searchRef = (0, import_react9.useRef)();
+  (0, import_react9.useEffect)(() => {
     window.onmousedown = (e) => {
       var _a;
       if (!((_a = searchRef == null ? void 0 : searchRef.current) == null ? void 0 : _a.contains(e.target))) {
@@ -666,22 +1027,29 @@ var TokenSearch = () => {
       }
     };
   }, [dispatch]);
-  return /* @__PURE__ */ import_react8.default.createElement("div", {
-    tw: "m-10",
+  return /* @__PURE__ */ import_react9.default.createElement(TokenSearch_default.Provider, {
+    value: renderProps
+  }, /* @__PURE__ */ import_react9.default.createElement("div", {
     ref: searchRef
-  }, /* @__PURE__ */ import_react8.default.createElement(SearchInput_default, null), /* @__PURE__ */ import_react8.default.createElement(SearchFilters_default, null), isSelecting && /* @__PURE__ */ import_react8.default.createElement(SearchResult_default, {
+  }, /* @__PURE__ */ import_react9.default.createElement(SearchInput_default, null), /* @__PURE__ */ import_react9.default.createElement(SearchFilters_default, null), isSelecting && /* @__PURE__ */ import_react9.default.createElement(SearchResult_default, {
     loading: isLoading
-  }));
+  })));
 };
 var tokenSearch_default = TokenSearch;
 
 // src/searchbar/index.tsx
-function SearchBar() {
-  return /* @__PURE__ */ import_react9.default.createElement("div", {
-    tw: "container mx-auto m-4"
-  }, /* @__PURE__ */ import_react9.default.createElement(import_react_redux7.Provider, {
+function SearchBar(renderProps) {
+  return /* @__PURE__ */ import_react10.default.createElement(import_react_redux7.Provider, {
     store
-  }, /* @__PURE__ */ import_react9.default.createElement(tokenSearch_default, null)));
+  }, /* @__PURE__ */ import_react10.default.createElement(tokenSearch_default, {
+    customSearchInput: renderProps == null ? void 0 : renderProps.customSearchInput,
+    customSearchFilter: renderProps == null ? void 0 : renderProps.customSearchFilter,
+    customChip: renderProps == null ? void 0 : renderProps.customChip,
+    customResult: renderProps == null ? void 0 : renderProps.customResult,
+    customTokenDetail: renderProps == null ? void 0 : renderProps.customTokenDetail,
+    customLoading: renderProps == null ? void 0 : renderProps.customLoading,
+    customActions: renderProps == null ? void 0 : renderProps.customActions
+  }));
 }
 
 // src/types.ts

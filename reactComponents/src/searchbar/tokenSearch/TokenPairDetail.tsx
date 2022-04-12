@@ -1,7 +1,6 @@
 
-import React from "react"
-import 'twin.macro';
-import 'styled-components/macro'
+import React, { useContext } from 'react';
+import styled from 'styled-components'
  
 import {
   Accordion,
@@ -12,11 +11,59 @@ import {
 } from 'react-accessible-accordion';
 import { firstAndLast, capitalizeFirstLetter } from './helpers/firstAndLast';
 import { intToWords } from './helpers/intToWords';
+import TokenSearchContext from '../Context/TokenSearch';
 const imageSize = 26;
 
+const DetailWrapper = styled.div`
+  .accordion__button: hover {
+    cursor: pointer;
+  }
+`;
+
+const StyledHeader = styled.div`
+  display: grid;
+  grid-auto-flow: column;
+  gap: 10px;
+  padding: ${ props => props?.styles?.padding || "10px" };
+  color: ${ props => props?.styles?.color || "black" };
+  background: ${ props => props?.styles?.background || "green" };
+  '&:hover': {
+
+  }
+`
+const StyeldPanel = styled.div`
+  display: grid;
+  grid-auto-flow: column;
+  gap: 10px;
+  padding: ${ props => props?.styles?.padding || "10px" };
+  color: ${ props => props?.styles?.color || "black" };
+  background: ${ props => props?.styles?.background || "white" };  
+`
+
+const StyledActionWrapper = styled.div`
+  display: flex;  
+  margin-top: 10px;  
+`
+
+const StyledAction = styled.div`
+  cursor: pointer;
+  padding: 10;
+`
+const Action = (props) => {
+  const { component, detail } = props
+  const Component = component
+  return (
+    <StyledAction>
+      <Component detail={detail}/>
+    </StyledAction>
+  )
+    
+}
 export const TokenPairDetail = (props) => {
   const { index, suggestions } = props;
-    
+  const renderProps = useContext(TokenSearchContext);  
+  const { customTokenDetail, customActions } = renderProps;
+
   const selectedPair = suggestions[index];
    const tokenImage = (token) => {
     return token?.image && (
@@ -29,38 +76,44 @@ export const TokenPairDetail = (props) => {
     )
   } 
   return (
+  <DetailWrapper>
     <Accordion allowZeroExpanded>
       <AccordionItem key={selectedPair.id}>
         <AccordionItemHeading>
-          <AccordionItemButton tw="cursor-pointer">
-            <div tw="grid grid-flow-col hover:border-dotted p-4 gap-4">
-              <div tw="row-span-2 text-gray-900">
+          <AccordionItemButton>
+            <StyledHeader styles={customTokenDetail?.styles?.header}>
+              <div>
                 <div>{selectedPair.network.toUpperCase()} - {capitalizeFirstLetter(selectedPair.exchange)} - </div>
-                <div tw="text-[12px]">Volume: {intToWords(selectedPair.volumeUSD)}</div>
+                <div>Volume: {intToWords(selectedPair.volumeUSD)}</div>
               </div>
-              <div tw="row-span-1 pl-2 font-bold">
+              <div>
                 {tokenImage(selectedPair.token0)}{selectedPair.token0.name} - 
                 {tokenImage(selectedPair.token1)}{selectedPair.token1.name}
               </div>
-            </div>
+            </StyledHeader>
           </AccordionItemButton>
         </AccordionItemHeading>
         <AccordionItemPanel>          
-          <div tw="grid grid-rows-3 grid-flow-col gap-4 m-4">
-            <div tw="row-span-3">
-              <div><span tw="font-bold">Pair Address:</span> {selectedPair.id}</div>
-              <div><span tw="font-bold">{tokenImage(selectedPair.token0)} token0 address: </span>{firstAndLast(selectedPair.token0.address)}</div>
-              <div><span tw="font-bold">{tokenImage(selectedPair.token1)} token1 address: </span>{firstAndLast(selectedPair.token1.address)}</div>
+          <StyeldPanel styles={customTokenDetail?.styles?.panel}>
+            <div>
+              <div><b>Pair Address:</b> {selectedPair.id}</div>
+              <div><b>{tokenImage(selectedPair.token0)} token0 address: </b>{firstAndLast(selectedPair.token0.address)}</div>
+              <div><b>{tokenImage(selectedPair.token1)} token1 address: </b>{firstAndLast(selectedPair.token1.address)}</div>
             </div>
-            <div tw="row-span-2">
-              <div tw="font-bold">{selectedPair.network.toUpperCase()}</div>
-              <div tw="font-bold">{capitalizeFirstLetter(selectedPair.exchange)} </div>
+            <div>
+              <div><b>{selectedPair.network.toUpperCase()}</b></div>
+              <div><b>{capitalizeFirstLetter(selectedPair.exchange)}</b></div>
+              <StyledActionWrapper>
+                {
+                  customActions.map((action) => <Action key={`action-${action.index}`} component={action.component} detail={selectedPair}></Action>)
+                }
+              </StyledActionWrapper>
             </div>            
-          </div>
-          
+          </StyeldPanel>          
         </AccordionItemPanel>        
       </AccordionItem>
     </Accordion>
+    </DetailWrapper>
   );
 }
 export default TokenPairDetail

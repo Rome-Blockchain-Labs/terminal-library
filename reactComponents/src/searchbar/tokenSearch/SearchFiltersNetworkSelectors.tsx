@@ -3,9 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { omitBy } from "lodash"
 import { setNetworkMap, setNetworkMapAll, setExchangeMapAll } from "../redux/tokenSearchSlice"
 import { networkNames } from "./helpers/config";
-import { Chip } from "../Components/Chip";
+import { Chip } from "./Chip"
 import {RootState} from "../redux/store";
-
 
 export const FilterNetworkAll = () => {
   const dispatch = useDispatch();

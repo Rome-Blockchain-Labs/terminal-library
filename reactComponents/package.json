@@ -1,6 +1,6 @@
 {
   "name": "@romeblockchain/react-components",
-  "version": "0.0.3",
+  "version": "0.0.6",
   "description": "Library of react components for the Rome Terminal",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -9,8 +9,7 @@
     "prebuild": "npm run clean",
     "build:tsup": "tsup",
     "build": "npm run build:tsup",
-    "publish": "npm run build && npm publish --access public",
-    "start": "react-scripts start"
+    "publish": "npm run build && npm publish --access public"    
   },
   "author": "Rome Blockchain Labs",
   "license": "ISC",
@@ -32,18 +31,11 @@
     "react-dom": "^17.0.0",
     "react-redux": "^7.2.8",    
     "reactstrap": "^9.0.1",
-    "styled-components": "^5.3.5",
-    "tailwindcss": "^3.0.23",    
-    "tsup": "^5.12.4",
-    "twin.macro": "^2.8.2",
+    "styled-components": "^5.3.5",    
+    "tsup": "^5.12.4",    
     "typescript": "^4.6.3",
     "web-vitals": "^2.1.4"
-  },
-  "babelMacros": {
-    "twin": {
-      "preset": "styled-components"
-    }
-  },
+  },  
   "devDependencies": {
     "babel-plugin-macros": "^3.1.0",
     "tsc": "^2.0.4"

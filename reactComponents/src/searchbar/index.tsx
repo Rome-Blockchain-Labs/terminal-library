@@ -1,17 +1,22 @@
 import React from "react"
-import 'twin.macro';
-import 'styled-components/macro'
 import './App.css';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
 import TokenSearch from "./tokenSearch";
 
-export function SearchBar() {
-  return (
-  <div tw="container mx-auto m-4">
-      <Provider store={store}>      
-        <TokenSearch />
-      </Provider>
-    </div>
+export function SearchBar(renderProps) {
+  
+  return (  
+    <Provider store={store}>      
+      <TokenSearch 
+        customSearchInput={renderProps?.customSearchInput}
+        customSearchFilter={renderProps?.customSearchFilter}
+        customChip={renderProps?.customChip}
+        customResult={renderProps?.customResult}
+        customTokenDetail={renderProps?.customTokenDetail}
+        customLoading={renderProps?.customLoading}
+        customActions={renderProps?.customActions}
+      />
+    </Provider>    
   );
 }
