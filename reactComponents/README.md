@@ -26,134 +26,134 @@ import { SearchBar } from '@romeblockchain/react-components';
 const customSearchInput = {
     styles: {
         input: {
-            width: "-webkit-fill-available",
-            border: "none",
-            color: "#FFF",
-            display: "block",
-            borderColor: "#067c82",
-            borderStyle: "solid",
-            borderWidth: "1px",
-            borderRadius: "0",
-            background: "#08333c",
-            padding: "11px 15px",
-            fontSize: "15px",
-            fontFamily: "'Fira Code', monospace"
+            width: '-webkit-fill-available',
+            border: 'none',
+            color: '#FFF',
+            display: 'block',
+            borderColor: '#067c82',
+            borderStyle: 'solid',
+            borderWidth: '1px',
+            borderRadius: '0',
+            background: '#08333c',
+            padding: '11px 15px',
+            fontSize: '15px',
+            fontFamily: ''Fira Code', monospace'
         },
         search: {
-            activeColor: "#FFF",
-            color: "#025234",
+            activeColor: '#FFF',
+            color: '#025234',
             height: 14,
             width: 14
         }
     },
-    placeholder: "You can search by token pairs here."
+    placeholder: 'You can search by token pairs here.'
 }
 
 
 const customSearchFilter = {
-    title: "You can filter",
+    title: 'You can filter',
     description: (c1, c2) => {
         return `Awesome! ${c1} networks and ${c2} exchanges`
     },    
     styles: {
         wrapper: {
-            toogleHeight: "10px",
-            toggleWidth: "10px",
-            toggleMarginRight: "25px",
-            toggleTop: "20px",
-            toggleBorderBottom: "2px solid currentColor",
-            toggleBorderRight: "2px solid currentColor",
-            contentBorder: "0",
-            contentBorderTop: "none",
-            contentBorderRight: "none",
-            contentBorderBottom: "none",
-            contentBorderLeft: "none",
-            borderRadius: "0",
-            margin: "0 10px"
+            toogleHeight: '10px',
+            toggleWidth: '10px',
+            toggleMarginRight: '25px',
+            toggleTop: '20px',
+            toggleBorderBottom: '2px solid currentColor',
+            toggleBorderRight: '2px solid currentColor',
+            contentBorder: '0',
+            contentBorderTop: 'none',
+            contentBorderRight: 'none',
+            contentBorderBottom: 'none',
+            contentBorderLeft: 'none',
+            borderRadius: '0',
+            margin: '0 10px'
         },
         header: {
-            display: "inline",
-            width: "auto",
-            border: "none",
-            backgroundColor: "#f4f4f4", 
-            color: "#444",
-            display: "block",         
-            padding: "18px",   
-            textAlign: "left",     
-            margin: "5px",     
-            borderRadius: "0",     
-            hoverColor: "#ddd"
+            display: 'inline',
+            width: 'auto',
+            border: 'none',
+            backgroundColor: '#f4f4f4', 
+            color: '#444',
+            display: 'block',         
+            padding: '18px',   
+            textAlign: 'left',     
+            margin: '5px',     
+            borderRadius: '0',     
+            hoverColor: '#ddd'
         },
         network: {
-            justifyContent: "center",
-            alignItems: "center",
-            padding:  "5px 10px",
-            backgroundColor: "#ddd",
-            borderRadius: "0"
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding:  '5px 10px',
+            backgroundColor: '#ddd',
+            borderRadius: '0'
         },
         exchange: {
-            justifyContent: "center",
-            alignItems: "center",
-            padding:  "5px 10px",
-            backgroundColor: "#ddd",
-            borderRadius: "0"
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding:  '5px 10px',
+            backgroundColor: '#ddd',
+            borderRadius: '0'
         }
     }
 }
 
 const customChip = {
     styles: {
-        fontSize: "14px",    
-        borderRadius: "5px",
-        backgroundColor: "#FFF",
-        border: "solid 2px #7d7d7d",
-        padding: "0.1rem 0.3rem",       
-        margin:"5px",   
-        defaultColor: "white",
-        checkedColor: "#666699",
-        checkedBackgroundColor: "black",
-        width: "auto",
-        height: "auto",
-        textAlign: "center",
+        fontSize: '14px',    
+        borderRadius: '5px',
+        backgroundColor: '#FFF',
+        border: 'solid 2px #7d7d7d',
+        padding: '0.1rem 0.3rem',       
+        margin:'5px',   
+        defaultColor: 'white',
+        checkedColor: '#666699',
+        checkedBackgroundColor: 'black',
+        width: 'auto',
+        height: 'auto',
+        textAlign: 'center',
   }
 }
 
 const customLoading = {
     styles: {
-        color: "black",
-        fontSize: "15px"
+        color: 'black',
+        fontSize: '15px'
     }
 }
 
 const customResult = {
     styles: {
-        width: "auto",
-        height: "300px",
-        border: "1px solid grey",
-        color: "#FFF",
-        display: "block",
-        borderColor: "#067c82",
-        borderStyle: "solid",
-        borderWidth: "1px",
-        borderRadius: "0",
-        background: "#08333c",
-        padding: "0",
-        fontSize: "15px",
-        fontFamily: "'Fira Code', monospace"
+        width: 'auto',
+        height: '300px',
+        border: '1px solid grey',
+        color: '#FFF',
+        display: 'block',
+        borderColor: '#067c82',
+        borderStyle: 'solid',
+        borderWidth: '1px',
+        borderRadius: '0',
+        background: '#08333c',
+        padding: '0',
+        fontSize: '15px',
+        fontFamily: ''Fira Code', monospace'
     }
 }
 
 const customTokenDetail = {
     styles: {
         header: {
-            padding: "10px",
-            color: "black",
-            background: "green"
+            padding: '10px',
+            color: 'black',
+            background: 'green'
         },
         panel: {
-            padding: "10px",
-            color: "black",
-            background: "white"
+            padding: '10px',
+            color: 'black',
+            background: 'white'
         }
     }
 }
