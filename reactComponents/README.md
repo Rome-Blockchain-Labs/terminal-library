@@ -16,13 +16,13 @@ import { SearchBar } from "@rbl/terminal-library/reactComponents/dist"
 ```
 
 ### SearchBar Props Options
-customSearchInput      // JSON format for input style
-customSearchFilter     // JSON format for filter wrapper
-customChip             // JSON format for network and change filter style
-customLoading          // JSON format for lading style
-customResult           // JSON format for result wrapper 
-customTokenDetail      // JSON format for token detail style
-customActions          // Component List
+ - customSearchInput      // JSON format for input style
+ - customSearchFilter     // JSON format for filter wrapper
+ - customChip             // JSON format for network and change filter style
+ - customLoading          // JSON format for lading style
+ - customResult           // JSON format for result wrapper 
+ - customTokenDetail      // JSON format for token detail style
+ - customActions          // Component List
 
 ### Props attribute descrption
 ```
