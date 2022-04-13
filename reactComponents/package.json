@@ -1,6 +1,6 @@
 {
-  "name": "@romeblockchain/react-components",
-  "version": "0.0.6",
+  "name": "@rbl/react-components",
+  "version": "0.0.7",
   "description": "Library of react components for the Rome Terminal",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

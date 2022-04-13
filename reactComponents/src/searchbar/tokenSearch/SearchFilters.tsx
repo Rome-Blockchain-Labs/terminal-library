@@ -89,24 +89,24 @@ export const SearchFilters = () => {
 
   // RENDERING.
   return (
-    <FilterWrapper styles={customSearchFilter?.wrapperStyles}>
+    <FilterWrapper styles={customSearchFilter?.styles.wrapper}>
       <Accordion allowZeroExpanded>
         <AccordionItem>
           <AccordionItemHeading>
             <AccordionItemButton>
-              <StyledFilterHeader styles={customSearchFilter?.headerStyles}>
+              <StyledFilterHeader styles={customSearchFilter?.styles.header}>
                 <b>{title}:</b>  &nbsp; {description}
               </StyledFilterHeader>            
             </AccordionItemButton>
           </AccordionItemHeading>
           <AccordionItemPanel>
-            <StyledFilterContent styles={customSearchFilter?.networkStyles}>
+            <StyledFilterContent styles={customSearchFilter?.styles.network}>
               <FilterNetworkAll />
               <FilterNetworkSelectors />
             </StyledFilterContent>            
           </AccordionItemPanel>
           <AccordionItemPanel>
-            <StyledFilterContent styles={customSearchFilter?.exchangeStyles}>
+            <StyledFilterContent styles={customSearchFilter?.styles.exchange}>
             {
               exchangesActive &&
               <FilterExchangeAll />
