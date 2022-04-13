@@ -19,7 +19,7 @@ var __spreadValues = (a, b) => {
 var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
 
 // src/searchbar/index.tsx
-import React10 from "react";
+import React11 from "react";
 import { Provider } from "react-redux";
 
 // src/searchbar/redux/store.ts
@@ -325,17 +325,38 @@ var store = configureStore({
 });
 
 // src/searchbar/tokenSearch/index.tsx
-import React9, { useEffect as useEffect2, useRef } from "react";
+import React10, { useEffect as useEffect2, useRef } from "react";
 import { useDispatch as useDispatch4, useSelector as useSelector6 } from "react-redux";
 import "styled-components/macro";
 
 // src/searchbar/tokenSearch/SearchInput.tsx
-import React2, { useEffect, useCallback, useContext } from "react";
+import React3, { useEffect, useCallback, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components";
+import styled2 from "styled-components";
 
-// src/searchbar/tokenSearch/icon-search.svg
-var icon_search_default = "./icon-search-AYYIN6AJ.svg";
+// src/searchbar/tokenSearch/SearchIcon.tsx
+import React, { memo } from "react";
+import styled from "styled-components";
+var StyledSVG = styled.svg`
+  '&:hover': {     
+      ${({ hoverColor }) => `stroke: ${hoverColor};`}
+     
+  }
+`;
+var SearchIcon = memo(({ active, activeColor, color, height, width }) => /* @__PURE__ */ React.createElement(StyledSVG, {
+  height: height != null ? height : 19.519,
+  hoverColor: activeColor,
+  viewBox: "0 0 19.519 19.519",
+  width: width != null ? width : 19.519,
+  xmlns: "http://www.w3.org/2000/svg"
+}, /* @__PURE__ */ React.createElement("path", {
+  d: "M1427.667,779.6l-5.554-5.555a7.774,7.774,0,1,0-1.061,1.06l5.554,5.555a.75.75,0,0,0,1.061-1.06Zm-17.8-10.482a6.258,6.258,0,1,1,6.258,6.257A6.265,6.265,0,0,1,1409.868,769.119Z",
+  "data-name": "Search icon",
+  stroke: active ? activeColor : color,
+  id: "Search_icon",
+  transform: "translate(-1408.368 -761.362)"
+})));
+var SearchIcon_default = SearchIcon;
 
 // src/searchbar/tokenSearch/SearchInput.tsx
 import debounce from "lodash.debounce";
@@ -346,72 +367,47 @@ var TokenSearchContext = createContext({});
 var TokenSearch_default = TokenSearchContext;
 
 // src/searchbar/tokenSearch/SearchInput.tsx
-var StyledInput = styled.input`
-  width: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.width) || "-webkit-fill-available";
-}};
-  border: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.border) || "none";
-}}; 
+var StyledInput = styled2.input`
   background-color: inherit;
-  color: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.color) || "#FFF";
-}};
-  display: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.display) || "block";
-}}; 
   margin-left: auto;
   margin-right: auto;
   position: relative;
-  border-color: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.borderColor) || "#067c82";
-}};  
-  border-style: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.borderStyle) || "solid";
-}};  
-  border-width: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.borderWidth) || "1px";
-}};  
-  border-radius: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.borderRadius) || "0";
-}};  
-  background: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.background) || "#08333c";
-}};   
-  padding: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.padding) || "11px 15px";
-}};    
-  font-size: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.fontSize) || "15px";
-}};      
-  font-family: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.fontFamily) || "'Fira Code', monospace";
-}};
+
+  ${({ props }) => {
+  var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l;
+  return `
+    width: ${((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.width) || "-webkit-fill-available"};
+    border: ${((_b = props == null ? void 0 : props.styles) == null ? void 0 : _b.border) || "none"};   
+    color: ${((_c = props == null ? void 0 : props.styles) == null ? void 0 : _c.color) || "#FFF"};
+    display: ${((_d = props == null ? void 0 : props.styles) == null ? void 0 : _d.display) || "block"};   
+    border-color: ${((_e = props == null ? void 0 : props.styles) == null ? void 0 : _e.borderColor) || "#067c82"};  
+    border-style: ${((_f = props == null ? void 0 : props.styles) == null ? void 0 : _f.borderStyle) || "solid"};  
+    border-width: ${((_g = props == null ? void 0 : props.styles) == null ? void 0 : _g.borderWidth) || "1px"};  
+    border-radius: ${((_h = props == null ? void 0 : props.styles) == null ? void 0 : _h.borderRadius) || "0"};  
+    background: ${((_i = props == null ? void 0 : props.styles) == null ? void 0 : _i.background) || "#08333c"};   
+    padding: ${((_j = props == null ? void 0 : props.styles) == null ? void 0 : _j.padding) || "11px 15px"};    
+    font-size: ${((_k = props == null ? void 0 : props.styles) == null ? void 0 : _k.fontSize) || "15px"};      
+    font-family: ${((_l = props == null ? void 0 : props.styles) == null ? void 0 : _l.fontFamily) || "'Fira Code', monospace"};
+  `;
+}}  
 `;
-var HideOnSmallScreen = styled.img`
-  width: 30px;
+var StyledSearchIconWrapper = styled2.div`  
   cursor: pointer;
   float: right;
   position: absolute;
-  right: 22px;
-  top: 9px;
-  @media only screen and (max-width: 990px) {
-    display: none;
-  }
+  ${({ props }) => {
+  var _a, _b;
+  return `
+    right: ${((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.right) || "15px"};      
+    top: ${((_b = props == null ? void 0 : props.styles) == null ? void 0 : _b.top) || "12px"};        
+  `;
+}}    
+`;
+var StyledWrapper = styled2.div`
+  position: relative;
 `;
 var SearchInput = () => {
+  var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r;
   const dispatch = useDispatch();
   const renderProps = useContext(TokenSearch_default);
   const { customSearchInput } = renderProps;
@@ -427,29 +423,36 @@ var SearchInput = () => {
   };
   const debounceChangeHandler = useCallback(debounce(onChangeFilter, 350), [searchText]);
   const placeholder = (customSearchInput == null ? void 0 : customSearchInput.placeholder) ? customSearchInput == null ? void 0 : customSearchInput.placeholder : "Please input token name or address.";
-  return /* @__PURE__ */ React2.createElement("div", {
+  const activeColor = ((_b = (_a = customSearchInput == null ? void 0 : customSearchInput.styles) == null ? void 0 : _a.search) == null ? void 0 : _b.activeColor) ? (_d = (_c = customSearchInput == null ? void 0 : customSearchInput.styles) == null ? void 0 : _c.search) == null ? void 0 : _d.activeColor : "#666699";
+  const color = ((_f = (_e = customSearchInput == null ? void 0 : customSearchInput.styles) == null ? void 0 : _e.search) == null ? void 0 : _f.color) ? (_h = (_g = customSearchInput == null ? void 0 : customSearchInput.styles) == null ? void 0 : _g.search) == null ? void 0 : _h.color : "#FFF";
+  const height = ((_j = (_i = customSearchInput == null ? void 0 : customSearchInput.styles) == null ? void 0 : _i.search) == null ? void 0 : _j.height) ? (_l = (_k = customSearchInput == null ? void 0 : customSearchInput.styles) == null ? void 0 : _k.search) == null ? void 0 : _l.height : 14;
+  const width = ((_n = (_m = customSearchInput == null ? void 0 : customSearchInput.styles) == null ? void 0 : _m.search) == null ? void 0 : _n.width) ? (_p = (_o = customSearchInput == null ? void 0 : customSearchInput.styles) == null ? void 0 : _o.search) == null ? void 0 : _p.width : 14;
+  return /* @__PURE__ */ React3.createElement(StyledWrapper, {
     onClick: () => dispatch(startSelecting())
-  }, /* @__PURE__ */ React2.createElement(StyledInput, {
+  }, /* @__PURE__ */ React3.createElement(StyledInput, {
     placeholder,
     autocomplete: "off",
     onChange: debounceChangeHandler,
-    styles: customSearchInput == null ? void 0 : customSearchInput.styles
-  }), /* @__PURE__ */ React2.createElement(HideOnSmallScreen, {
-    alt: "",
-    src: icon_search_default,
-    onClick: () => dispatch(toggleSelecting())
-  }));
+    styles: (_q = customSearchInput == null ? void 0 : customSearchInput.styles) == null ? void 0 : _q.input
+  }), /* @__PURE__ */ React3.createElement(StyledSearchIconWrapper, {
+    styles: (_r = customSearchInput == null ? void 0 : customSearchInput.styles) == null ? void 0 : _r.search
+  }, /* @__PURE__ */ React3.createElement(SearchIcon_default, {
+    activeColor,
+    color,
+    height,
+    width
+  })));
 };
 var SearchInput_default = SearchInput;
 
 // src/searchbar/tokenSearch/SearchResult.tsx
-import React4, { useContext as useContext3 } from "react";
-import styled3 from "styled-components";
+import React5, { useContext as useContext3 } from "react";
+import styled4 from "styled-components";
 import { useSelector as useSelector2 } from "react-redux";
 
 // src/searchbar/tokenSearch/TokenPairDetail.tsx
-import React3, { useContext as useContext2 } from "react";
-import styled2 from "styled-components";
+import React4, { useContext as useContext2 } from "react";
+import styled3 from "styled-components";
 import {
   Accordion,
   AccordionItem,
@@ -483,60 +486,50 @@ function intToWords(int) {
 
 // src/searchbar/tokenSearch/TokenPairDetail.tsx
 var imageSize = 26;
-var DetailWrapper = styled2.div`
+var DetailWrapper = styled3.div`
   .accordion__button: hover {
     cursor: pointer;
   }
 `;
-var StyledHeader = styled2.div`
+var StyledHeader = styled3.div`
   display: grid;
   grid-auto-flow: column;
   gap: 10px;
-  padding: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.padding) || "10px";
-}};
-  color: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.color) || "black";
-}};
-  background: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.background) || "green";
-}};
-  '&:hover': {
-
-  }
+  
+  ${({ props }) => {
+  var _a, _b, _c;
+  return `
+    padding: ${((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.padding) || "10px"};
+    color: ${((_b = props == null ? void 0 : props.styles) == null ? void 0 : _b.color) || "black"};
+    background: ${((_c = props == null ? void 0 : props.styles) == null ? void 0 : _c.background) || "green"};
+  `;
+}}  
 `;
-var StyeldPanel = styled2.div`
+var StyeldPanel = styled3.div`
   display: grid;
   grid-auto-flow: column;
   gap: 10px;
-  padding: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.padding) || "10px";
-}};
-  color: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.color) || "black";
-}};
-  background: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.background) || "white";
-}};  
+  ${({ props }) => {
+  var _a, _b, _c;
+  return `
+    padding: ${((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.padding) || "10px"};
+    color: ${((_b = props == null ? void 0 : props.styles) == null ? void 0 : _b.color) || "black"};
+    background: ${((_c = props == null ? void 0 : props.styles) == null ? void 0 : _c.background) || "white"};  
+  `;
+}}    
 `;
-var StyledActionWrapper = styled2.div`
+var StyledActionWrapper = styled3.div`
   display: flex;  
   margin-top: 10px;  
 `;
-var StyledAction = styled2.div`
+var StyledAction = styled3.div`
   cursor: pointer;
   padding: 10;
 `;
 var Action = (props) => {
   const { component, detail } = props;
   const Component = component;
-  return /* @__PURE__ */ React3.createElement(StyledAction, null, /* @__PURE__ */ React3.createElement(Component, {
+  return /* @__PURE__ */ React4.createElement(StyledAction, null, /* @__PURE__ */ React4.createElement(Component, {
     detail
   }));
 };
@@ -547,22 +540,22 @@ var TokenPairDetail = (props) => {
   const { customTokenDetail, customActions } = renderProps;
   const selectedPair = suggestions[index];
   const tokenImage = (token) => {
-    return (token == null ? void 0 : token.image) && /* @__PURE__ */ React3.createElement("img", {
+    return (token == null ? void 0 : token.image) && /* @__PURE__ */ React4.createElement("img", {
       alt: token == null ? void 0 : token.symbol,
       src: token == null ? void 0 : token.image,
       style: { borderRadius: "50%" },
       width: imageSize
     });
   };
-  return /* @__PURE__ */ React3.createElement(DetailWrapper, null, /* @__PURE__ */ React3.createElement(Accordion, {
+  return /* @__PURE__ */ React4.createElement(DetailWrapper, null, /* @__PURE__ */ React4.createElement(Accordion, {
     allowZeroExpanded: true
-  }, /* @__PURE__ */ React3.createElement(AccordionItem, {
+  }, /* @__PURE__ */ React4.createElement(AccordionItem, {
     key: selectedPair.id
-  }, /* @__PURE__ */ React3.createElement(AccordionItemHeading, null, /* @__PURE__ */ React3.createElement(AccordionItemButton, null, /* @__PURE__ */ React3.createElement(StyledHeader, {
+  }, /* @__PURE__ */ React4.createElement(AccordionItemHeading, null, /* @__PURE__ */ React4.createElement(AccordionItemButton, null, /* @__PURE__ */ React4.createElement(StyledHeader, {
     styles: (_a = customTokenDetail == null ? void 0 : customTokenDetail.styles) == null ? void 0 : _a.header
-  }, /* @__PURE__ */ React3.createElement("div", null, /* @__PURE__ */ React3.createElement("div", null, selectedPair.network.toUpperCase(), " - ", capitalizeFirstLetter(selectedPair.exchange), " - "), /* @__PURE__ */ React3.createElement("div", null, "Volume: ", intToWords(selectedPair.volumeUSD))), /* @__PURE__ */ React3.createElement("div", null, tokenImage(selectedPair.token0), selectedPair.token0.name, " -", tokenImage(selectedPair.token1), selectedPair.token1.name)))), /* @__PURE__ */ React3.createElement(AccordionItemPanel, null, /* @__PURE__ */ React3.createElement(StyeldPanel, {
+  }, /* @__PURE__ */ React4.createElement("div", null, /* @__PURE__ */ React4.createElement("div", null, selectedPair.network.toUpperCase(), " - ", capitalizeFirstLetter(selectedPair.exchange), " - "), /* @__PURE__ */ React4.createElement("div", null, "Volume: ", intToWords(selectedPair.volumeUSD))), /* @__PURE__ */ React4.createElement("div", null, tokenImage(selectedPair.token0), selectedPair.token0.name, " -", tokenImage(selectedPair.token1), selectedPair.token1.name)))), /* @__PURE__ */ React4.createElement(AccordionItemPanel, null, /* @__PURE__ */ React4.createElement(StyeldPanel, {
     styles: (_b = customTokenDetail == null ? void 0 : customTokenDetail.styles) == null ? void 0 : _b.panel
-  }, /* @__PURE__ */ React3.createElement("div", null, /* @__PURE__ */ React3.createElement("div", null, /* @__PURE__ */ React3.createElement("b", null, "Pair Address:"), " ", selectedPair.id), /* @__PURE__ */ React3.createElement("div", null, /* @__PURE__ */ React3.createElement("b", null, tokenImage(selectedPair.token0), " token0 address: "), firstAndLast(selectedPair.token0.address)), /* @__PURE__ */ React3.createElement("div", null, /* @__PURE__ */ React3.createElement("b", null, tokenImage(selectedPair.token1), " token1 address: "), firstAndLast(selectedPair.token1.address))), /* @__PURE__ */ React3.createElement("div", null, /* @__PURE__ */ React3.createElement("div", null, /* @__PURE__ */ React3.createElement("b", null, selectedPair.network.toUpperCase())), /* @__PURE__ */ React3.createElement("div", null, /* @__PURE__ */ React3.createElement("b", null, capitalizeFirstLetter(selectedPair.exchange))), /* @__PURE__ */ React3.createElement(StyledActionWrapper, null, customActions.map((action) => /* @__PURE__ */ React3.createElement(Action, {
+  }, /* @__PURE__ */ React4.createElement("div", null, /* @__PURE__ */ React4.createElement("div", null, /* @__PURE__ */ React4.createElement("b", null, "Pair Address:"), " ", selectedPair.id), /* @__PURE__ */ React4.createElement("div", null, /* @__PURE__ */ React4.createElement("b", null, tokenImage(selectedPair.token0), " token0 address: "), firstAndLast(selectedPair.token0.address)), /* @__PURE__ */ React4.createElement("div", null, /* @__PURE__ */ React4.createElement("b", null, tokenImage(selectedPair.token1), " token1 address: "), firstAndLast(selectedPair.token1.address))), /* @__PURE__ */ React4.createElement("div", null, /* @__PURE__ */ React4.createElement("div", null, /* @__PURE__ */ React4.createElement("b", null, selectedPair.network.toUpperCase())), /* @__PURE__ */ React4.createElement("div", null, /* @__PURE__ */ React4.createElement("b", null, capitalizeFirstLetter(selectedPair.exchange))), /* @__PURE__ */ React4.createElement(StyledActionWrapper, null, customActions.map((action) => /* @__PURE__ */ React4.createElement(Action, {
     key: `action-${action.index}`,
     component: action.component,
     detail: selectedPair
@@ -571,78 +564,44 @@ var TokenPairDetail = (props) => {
 var TokenPairDetail_default = TokenPairDetail;
 
 // src/searchbar/tokenSearch/SearchResult.tsx
-var StyledResult = styled3.div`
-  width: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.width) || "auto";
-}};
-  height: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.height) || "300px";
-}};
-  border: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.border) || "1px solid grey";
-}}; 
+var StyledResult = styled4.div`
   background-color: inherit;
-  color: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.color) || "#FFF";
-}};
-  display: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.display) || "block";
-}}; 
   margin-left: auto;
   margin-right: auto;
   position: relative;
-  border-color: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.borderColor) || "#067c82";
-}};  
-  border-style: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.borderStyle) || "solid";
-}};  
-  border-width: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.borderWidth) || "1px";
-}};  
-  border-radius: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.borderRadius) || "0";
-}};  
-  background: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.background) || "#08333c";
-}};   
-  padding: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.padding) || "0";
-}};    
-  font-size: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.fontSize) || "15px";
-}};      
-  font-family: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.fontFamily) || "'Fira Code', monospace";
-}};
   overflow: auto;
+
+  ${({ props }) => {
+  var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m;
+  return `
+    width: ${((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.width) || "auto"};
+    height: ${((_b = props == null ? void 0 : props.styles) == null ? void 0 : _b.height) || "300px"};
+    border: ${((_c = props == null ? void 0 : props.styles) == null ? void 0 : _c.border) || "1px solid grey"};   
+    color: ${((_d = props == null ? void 0 : props.styles) == null ? void 0 : _d.color) || "#FFF"};
+    display: ${((_e = props == null ? void 0 : props.styles) == null ? void 0 : _e.display) || "block"};   
+    border-color: ${((_f = props == null ? void 0 : props.styles) == null ? void 0 : _f.borderColor) || "#067c82"};  
+    border-style: ${((_g = props == null ? void 0 : props.styles) == null ? void 0 : _g.borderStyle) || "solid"};  
+    border-width: ${((_h = props == null ? void 0 : props.styles) == null ? void 0 : _h.borderWidth) || "1px"};  
+    border-radius: ${((_i = props == null ? void 0 : props.styles) == null ? void 0 : _i.borderRadius) || "0"};  
+    background: ${((_j = props == null ? void 0 : props.styles) == null ? void 0 : _j.background) || "#08333c"};   
+    padding: ${((_k = props == null ? void 0 : props.styles) == null ? void 0 : _k.padding) || "0"};    
+    font-size: ${((_l = props == null ? void 0 : props.styles) == null ? void 0 : _l.fontSize) || "15px"};      
+    font-family: ${((_m = props == null ? void 0 : props.styles) == null ? void 0 : _m.fontFamily) || "'Fira Code', monospace"};  
+  `;
+}}  
 `;
-var StyledLoading = styled3.div`
+var StyledLoading = styled4.div`
   position: relative;
   display: flex;
   justify-content: center;  
   margin: 10px;
-  color: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.color) || "black";
-}};
-  font-size: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.fontSize) || "15px";
-}};      
+  ${({ props }) => {
+  var _a, _b;
+  return `
+    color: ${((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.color) || "black"};
+    font-size: ${((_b = props == null ? void 0 : props.styles) == null ? void 0 : _b.fontSize) || "15px"};      
+  `;
+}}    
 `;
 var SearchResult = (props) => {
   const renderProps = useContext3(TokenSearch_default);
@@ -651,19 +610,19 @@ var SearchResult = (props) => {
   const filteredSuggestions = suggestions.slice().sort((pair1, pair2) => pair2.volumeUSD - pair1.volumeUSD);
   if (props.loading) {
     const loadingTitle = (customLoading == null ? void 0 : customLoading.loadingTitle) ? customLoading.loadingTitle : "Loading...";
-    return /* @__PURE__ */ React4.createElement(StyledLoading, {
+    return /* @__PURE__ */ React5.createElement(StyledLoading, {
       styles: customLoading == null ? void 0 : customLoading.styles
     }, loadingTitle);
   }
   if (!!searchText && !filteredSuggestions.length) {
     const notFoundTitle = (customLoading == null ? void 0 : customLoading.notFoundTitle) ? customLoading.notFoundTitle : "No pairs found...";
-    return /* @__PURE__ */ React4.createElement(StyledLoading, {
+    return /* @__PURE__ */ React5.createElement(StyledLoading, {
       styles: customLoading == null ? void 0 : customLoading.styles
     }, notFoundTitle);
   }
-  return /* @__PURE__ */ React4.createElement(StyledResult, {
+  return /* @__PURE__ */ React5.createElement(StyledResult, {
     styles: customResult == null ? void 0 : customResult.styles
-  }, filteredSuggestions.map((suggestions2, index) => /* @__PURE__ */ React4.createElement(TokenPairDetail_default, {
+  }, filteredSuggestions.map((suggestions2, index) => /* @__PURE__ */ React5.createElement(TokenPairDetail_default, {
     suggestions: filteredSuggestions,
     index,
     key: `token-detail-${index}`
@@ -672,9 +631,9 @@ var SearchResult = (props) => {
 var SearchResult_default = SearchResult;
 
 // src/searchbar/tokenSearch/SearchFilters.tsx
-import React8, { useContext as useContext5 } from "react";
+import React9, { useContext as useContext5 } from "react";
 import { useSelector as useSelector5 } from "react-redux";
-import styled5 from "styled-components";
+import styled6 from "styled-components";
 import {
   Accordion as Accordion2,
   AccordionItem as AccordionItem2,
@@ -684,84 +643,71 @@ import {
 } from "react-accessible-accordion";
 
 // src/searchbar/tokenSearch/SearchFiltersNetworkSelectors.tsx
-import React6 from "react";
+import React7 from "react";
 import { useDispatch as useDispatch2, useSelector as useSelector3 } from "react-redux";
 import { omitBy as omitBy2 } from "lodash";
 
 // src/searchbar/tokenSearch/Chip.tsx
-import React5, { memo, useContext as useContext4 } from "react";
-import styled4 from "styled-components";
-var StyledChip = styled4.div`
+import React6, { memo as memo2, useContext as useContext4 } from "react";
+import styled5 from "styled-components";
+var StyledChip = styled5.div`
   > input {
     display: none;
   }
 
   > input + label {
     -webkit-transition: all 500ms ease;
-    transition: all 500ms ease;
-    font-size: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.fontSize) || "14px";
-}};  
-    cursor: pointer;
-    border-radius: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.borderRadius) || "5px";
-}};  
-    background-color: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.backgroundColor) || "#FFF";
-}};  
-    border: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.border) || "solid 2px #7d7d7d";
-}};   
-    padding: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.padding) || "0.1rem 0.3rem";
-}};   
+    transition: all 500ms ease;    
+    cursor: pointer;    
     display: inline-block;
     -moz-user-select: -moz-none;
     -webkit-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    margin: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.margin) || "5px";
-}};   
+    ${({ props }) => {
+  var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j;
+  return `
+        font-size: ${((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.fontSize) || "14px"};  
+        border-radius: ${((_b = props == null ? void 0 : props.styles) == null ? void 0 : _b.borderRadius) || "5px"};  
+        background-color: ${((_c = props == null ? void 0 : props.styles) == null ? void 0 : _c.backgroundColor) || "#FFF"};  
+        border: ${((_d = props == null ? void 0 : props.styles) == null ? void 0 : _d.border) || "solid 2px #7d7d7d"};   
+        padding: ${((_e = props == null ? void 0 : props.styles) == null ? void 0 : _e.padding) || "0.1rem 0.3rem"};   
+        margin: ${((_f = props == null ? void 0 : props.styles) == null ? void 0 : _f.margin) || "5px"};   
+        color: ${((_g = props == null ? void 0 : props.styles) == null ? void 0 : _g.defaultColor) || "black"};   
+        width: ${((_h = props == null ? void 0 : props.styles) == null ? void 0 : _h.width) || "100px"};   
+        height: ${((_i = props == null ? void 0 : props.styles) == null ? void 0 : _i.height) || "auto"};   
+        text-align: ${((_j = props == null ? void 0 : props.styles) == null ? void 0 : _j.textAlign) || "center"}; 
+      `;
+}}      
   }
 
   > input:checked + label {
     -webkit-transition: all 500ms ease;
-    transition: all 500ms ease;    
-    border-color: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.checkedColor) || "#666699";
-}};    
-    color: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.checkedColor) || "white";
-}};   
-    background-color: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.checkedBackgroundColor) || "#666699";
-}};  
+    transition: all 500ms ease;   
+    ${({ props }) => {
+  var _a, _b, _c;
+  return `
+        border-color: ${((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.checkedColor) || "#666699"};    
+        color: ${((_b = props == null ? void 0 : props.styles) == null ? void 0 : _b.checkedColor) || "white"};   
+        background-color: ${((_c = props == null ? void 0 : props.styles) == null ? void 0 : _c.checkedBackgroundColor) || "gray"};  
+      `;
+}}     
   }
 `;
-var Chip = memo((props) => {
+var Chip = memo2((props) => {
   const renderProps = useContext4(TokenSearch_default);
   const { label, checked, onChange, name, value } = props;
   const { customChip } = renderProps;
-  return /* @__PURE__ */ React5.createElement(StyledChip, {
+  return /* @__PURE__ */ React6.createElement(StyledChip, {
     styles: customChip == null ? void 0 : customChip.styles
-  }, /* @__PURE__ */ React5.createElement("input", {
+  }, /* @__PURE__ */ React6.createElement("input", {
     type: "checkbox",
     id: `${label}-${name}`,
     onChange,
     checked,
     name,
     value
-  }), /* @__PURE__ */ React5.createElement("label", {
+  }), /* @__PURE__ */ React6.createElement("label", {
     htmlFor: `${label}-${name}`
   }, label, " "));
 });
@@ -772,7 +718,7 @@ var FilterNetworkAll = () => {
   const { exchangeMap, networkMap } = useSelector3((state) => state);
   const networkAll = Object.values(omitBy2(networkMap, (b) => !b)).length === 0;
   const exchangeNamesActive = Object.keys(omitBy2(exchangeMap, (b) => !b));
-  return /* @__PURE__ */ React6.createElement(Chip, {
+  return /* @__PURE__ */ React7.createElement(Chip, {
     name: "AllNetworks",
     label: "All",
     checked: networkAll,
@@ -786,7 +732,7 @@ var FilterNetworkSelectors = () => {
   const dispatch = useDispatch2();
   const { networkMap } = useSelector3((state) => state);
   const networkElement = (networkName) => {
-    return /* @__PURE__ */ React6.createElement(Chip, {
+    return /* @__PURE__ */ React7.createElement(Chip, {
       key: networkName,
       name: networkName,
       label: networkName,
@@ -794,11 +740,11 @@ var FilterNetworkSelectors = () => {
       onChange: (e) => dispatch(setNetworkMap({ networkName, checked: e.target.checked }))
     });
   };
-  return /* @__PURE__ */ React6.createElement(React6.Fragment, null, networkNames.map((networkName) => networkElement(networkName)));
+  return /* @__PURE__ */ React7.createElement(React7.Fragment, null, networkNames.map((networkName) => networkElement(networkName)));
 };
 
 // src/searchbar/tokenSearch/SearchFiltersExchangeSelectors.tsx
-import React7 from "react";
+import React8 from "react";
 import { omitBy as omitBy3 } from "lodash";
 import { useDispatch as useDispatch3, useSelector as useSelector4 } from "react-redux";
 var FilterExchangeAll = () => {
@@ -806,7 +752,7 @@ var FilterExchangeAll = () => {
   const { exchangeMap, networkMap } = useSelector4((state) => state);
   const exchangeAll = Object.values(omitBy3(exchangeMap, (b) => !b)).length === 0;
   const exchangeNamesActive = exchangeNames(Object.keys(omitBy3(networkMap, (b) => !b)));
-  return /* @__PURE__ */ React7.createElement(Chip, {
+  return /* @__PURE__ */ React8.createElement(Chip, {
     name: "AllExchanges",
     label: "All",
     checked: exchangeAll,
@@ -818,7 +764,7 @@ var FilterExchangeSelectors = () => {
   const { networkMap, exchangeMap } = useSelector4((state) => state);
   const exchangeNamesActive = exchangeNames(Object.keys(omitBy3(networkMap, (b) => !b)));
   const exchangeElement = (exchangeName) => {
-    return /* @__PURE__ */ React7.createElement(Chip, {
+    return /* @__PURE__ */ React8.createElement(Chip, {
       key: exchangeName,
       name: exchangeName,
       label: exchangeName,
@@ -830,7 +776,7 @@ var FilterExchangeSelectors = () => {
 };
 
 // src/searchbar/tokenSearch/SearchFilters.tsx
-var FilterWrapper = styled5.div`  
+var FilterWrapper = styled6.div`  
   .accordion__button {
     position: relative;
   }
@@ -838,33 +784,21 @@ var FilterWrapper = styled5.div`
   .accordion__button:first-child:after {
     display: block;    
     content: '';
-    height: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.toggleHeight) || "10px";
-}};
-    width: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.toggleWidth) || "10px";
-}};
-    margin-right: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.toggleMarginRight) || "25px";
-}};
     position: absolute;
-    top: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.toggleMarginRight) || "20px";
-}};
     right: 0;
-    border-bottom: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.toggleBorderBottom) || "2px solid currentColor";
-}}; 
-    border-right: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.toggleBorderRight) || "2px solid currentColor";
-}}; 
     transform: rotate(-45deg);
+
+    ${({ props }) => {
+  var _a, _b, _c, _d, _e, _f;
+  return `
+      height: ${((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.toggleHeight) || "10px"};
+      width: ${((_b = props == null ? void 0 : props.styles) == null ? void 0 : _b.toggleWidth) || "10px"};
+      margin-right: ${((_c = props == null ? void 0 : props.styles) == null ? void 0 : _c.toggleMarginRight) || "25px"};    
+      top: ${((_d = props == null ? void 0 : props.styles) == null ? void 0 : _d.toggleTop) || "20px"};    
+      border-bottom: ${((_e = props == null ? void 0 : props.styles) == null ? void 0 : _e.toggleBorderBottom) || "2px solid currentColor"}; 
+      border-right: ${((_f = props == null ? void 0 : props.styles) == null ? void 0 : _f.toggleBorderRight) || "2px solid currentColor"}; 
+    `;
+}}
   }
 
   .accordion__button[aria-expanded='true']:first-child:after,
@@ -873,108 +807,55 @@ var FilterWrapper = styled5.div`
   }
 
   .accordion__panel {
-    border: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.contentBorder) || "0";
-}}; 
-    border-top-style: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.contentBorderTop) || "none";
-}}; 
-    border-right-style: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.contentBorderRight) || "none";
-}}; 
-    border-bottom-style: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.contentBorderBottom) || "none";
-}}; 
-    border-left-style: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.contentBorderLeft) || "none";
-}}; 
-    border-radius: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.borderRadius) || "0";
-}}; 
-    margin:  ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.margin) || "0 10px";
-}};       
+    ${({ props }) => {
+  var _a, _b, _c, _d, _e, _f, _g;
+  return `
+      border: ${((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.contentBorder) || "0"}; 
+      border-top-style: ${((_b = props == null ? void 0 : props.styles) == null ? void 0 : _b.contentBorderTop) || "none"}; 
+      border-right-style: ${((_c = props == null ? void 0 : props.styles) == null ? void 0 : _c.contentBorderRight) || "none"}; 
+      border-bottom-style: ${((_d = props == null ? void 0 : props.styles) == null ? void 0 : _d.contentBorderBottom) || "none"}; 
+      border-left-style: ${((_e = props == null ? void 0 : props.styles) == null ? void 0 : _e.contentBorderLeft) || "none"}; 
+      border-radius: ${((_f = props == null ? void 0 : props.styles) == null ? void 0 : _f.borderRadius) || "0"}; 
+      margin:  ${((_g = props == null ? void 0 : props.styles) == null ? void 0 : _g.margin) || "0 10px"};       
+    `;
+}}    
   }
 `;
-var StyledFilterHeader = styled5.div`  
-  display: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.display) || "inline";
-}};
-  width: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.width) || "auto";
-}};
-  border: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.border) || "none";
-}}; 
-  background-color: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.backgroundColor) || "#f4f4f4";
-}}; 
-  color: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.color) || "#444";
-}};
-  display: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.display) || "block";
-}}; 
-  cursor: pointer;
-  padding: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.padding) || "18px";
-}};   
-  text-align: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.textAlign) || "left";
-}};     
-  margin: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.margin) || "5px";
-}};     
-  border-radius: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.borderRadius) || "0";
-}};     
-  &:hover {
-    background-color: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.hoverColor) || "#ddd";
-}};
-  }
+var StyledFilterHeader = styled6.div`  
+  ${({ props }) => {
+  var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k;
+  return `
+    display: ${((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.display) || "inline"};
+    width: ${((_b = props == null ? void 0 : props.styles) == null ? void 0 : _b.width) || "auto"};
+    border: ${((_c = props == null ? void 0 : props.styles) == null ? void 0 : _c.border) || "none"}; 
+    background-color: ${((_d = props == null ? void 0 : props.styles) == null ? void 0 : _d.backgroundColor) || "#f4f4f4"}; 
+    color: ${((_e = props == null ? void 0 : props.styles) == null ? void 0 : _e.color) || "#444"};
+    display: ${((_f = props == null ? void 0 : props.styles) == null ? void 0 : _f.display) || "block"}; 
+    cursor: pointer;
+    padding: ${((_g = props == null ? void 0 : props.styles) == null ? void 0 : _g.padding) || "18px"};   
+    text-align: ${((_h = props == null ? void 0 : props.styles) == null ? void 0 : _h.textAlign) || "left"};     
+    margin: ${((_i = props == null ? void 0 : props.styles) == null ? void 0 : _i.margin) || "5px"};     
+    border-radius: ${((_j = props == null ? void 0 : props.styles) == null ? void 0 : _j.borderRadius) || "0"};     
+    &:hover {
+      background-color: ${((_k = props == null ? void 0 : props.styles) == null ? void 0 : _k.hoverColor) || "#ddd"};
+    }
+  `;
+}}      
 `;
-var StyledFilterContent = styled5.div`
+var StyledFilterContent = styled6.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.justifyContent) || "center";
-}};
-  align-items: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.alignItems) || "center";
-}};  
-  padding:  ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.padding) || "5px 10px";
-}};       
-  background-color: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.backgroundColor) || "#ddd";
-}};
-  border-radius: ${(props) => {
-  var _a;
-  return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.borderRadius) || "0";
-}};     
+
+  ${({ props }) => {
+  var _a, _b, _c, _d, _e;
+  return `
+    justify-content: ${((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.justifyContent) || "center"};
+    align-items: ${((_b = props == null ? void 0 : props.styles) == null ? void 0 : _b.alignItems) || "center"};  
+    padding:  ${((_c = props == null ? void 0 : props.styles) == null ? void 0 : _c.padding) || "5px 10px"};       
+    background-color: ${((_d = props == null ? void 0 : props.styles) == null ? void 0 : _d.backgroundColor) || "#ddd"};
+    border-radius: ${((_e = props == null ? void 0 : props.styles) == null ? void 0 : _e.borderRadius) || "0"};     
+  `;
+}}      
 `;
 var SearchFilters = () => {
   const { networkMap, exchangeMap } = useSelector5((state) => state);
@@ -985,17 +866,17 @@ var SearchFilters = () => {
   const exchangeCount = Object.values(exchangeMap).filter((b) => b).length;
   const title = (customSearchFilter == null ? void 0 : customSearchFilter.title) || "Filter Networks";
   const description = networkCount === 0 && exchangeCount === 0 ? "Searching all networks and exchanges" : (customSearchFilter == null ? void 0 : customSearchFilter.description(networkCount, exchangeCount)) || `Searching {networkCount} networks and {exchangeCount} exchanges`;
-  return /* @__PURE__ */ React8.createElement(FilterWrapper, {
+  return /* @__PURE__ */ React9.createElement(FilterWrapper, {
     styles: customSearchFilter == null ? void 0 : customSearchFilter.styles.wrapper
-  }, /* @__PURE__ */ React8.createElement(Accordion2, {
+  }, /* @__PURE__ */ React9.createElement(Accordion2, {
     allowZeroExpanded: true
-  }, /* @__PURE__ */ React8.createElement(AccordionItem2, null, /* @__PURE__ */ React8.createElement(AccordionItemHeading2, null, /* @__PURE__ */ React8.createElement(AccordionItemButton2, null, /* @__PURE__ */ React8.createElement(StyledFilterHeader, {
+  }, /* @__PURE__ */ React9.createElement(AccordionItem2, null, /* @__PURE__ */ React9.createElement(AccordionItemHeading2, null, /* @__PURE__ */ React9.createElement(AccordionItemButton2, null, /* @__PURE__ */ React9.createElement(StyledFilterHeader, {
     styles: customSearchFilter == null ? void 0 : customSearchFilter.styles.header
-  }, /* @__PURE__ */ React8.createElement("b", null, title, ":"), "  \xA0 ", description))), /* @__PURE__ */ React8.createElement(AccordionItemPanel2, null, /* @__PURE__ */ React8.createElement(StyledFilterContent, {
+  }, /* @__PURE__ */ React9.createElement("b", null, title, ":"), "  \xA0 ", description))), /* @__PURE__ */ React9.createElement(AccordionItemPanel2, null, /* @__PURE__ */ React9.createElement(StyledFilterContent, {
     styles: customSearchFilter == null ? void 0 : customSearchFilter.styles.network
-  }, /* @__PURE__ */ React8.createElement(FilterNetworkAll, null), /* @__PURE__ */ React8.createElement(FilterNetworkSelectors, null))), /* @__PURE__ */ React8.createElement(AccordionItemPanel2, null, /* @__PURE__ */ React8.createElement(StyledFilterContent, {
+  }, /* @__PURE__ */ React9.createElement(FilterNetworkAll, null), /* @__PURE__ */ React9.createElement(FilterNetworkSelectors, null))), /* @__PURE__ */ React9.createElement(AccordionItemPanel2, null, /* @__PURE__ */ React9.createElement(StyledFilterContent, {
     styles: customSearchFilter == null ? void 0 : customSearchFilter.styles.exchange
-  }, exchangesActive && /* @__PURE__ */ React8.createElement(FilterExchangeAll, null), exchangesActive && /* @__PURE__ */ React8.createElement(FilterExchangeSelectors, null))))));
+  }, exchangesActive && /* @__PURE__ */ React9.createElement(FilterExchangeAll, null), exchangesActive && /* @__PURE__ */ React9.createElement(FilterExchangeSelectors, null))))));
 };
 var SearchFilters_default = SearchFilters;
 
@@ -1012,11 +893,11 @@ var TokenSearch = (renderProps) => {
       }
     };
   }, [dispatch]);
-  return /* @__PURE__ */ React9.createElement(TokenSearch_default.Provider, {
+  return /* @__PURE__ */ React10.createElement(TokenSearch_default.Provider, {
     value: renderProps
-  }, /* @__PURE__ */ React9.createElement("div", {
+  }, /* @__PURE__ */ React10.createElement("div", {
     ref: searchRef
-  }, /* @__PURE__ */ React9.createElement(SearchInput_default, null), /* @__PURE__ */ React9.createElement(SearchFilters_default, null), isSelecting && /* @__PURE__ */ React9.createElement(SearchResult_default, {
+  }, /* @__PURE__ */ React10.createElement(SearchInput_default, null), /* @__PURE__ */ React10.createElement(SearchFilters_default, null), isSelecting && /* @__PURE__ */ React10.createElement(SearchResult_default, {
     loading: isLoading
   })));
 };
@@ -1024,9 +905,9 @@ var tokenSearch_default = TokenSearch;
 
 // src/searchbar/index.tsx
 function SearchBar(renderProps) {
-  return /* @__PURE__ */ React10.createElement(Provider, {
+  return /* @__PURE__ */ React11.createElement(Provider, {
     store
-  }, /* @__PURE__ */ React10.createElement(tokenSearch_default, {
+  }, /* @__PURE__ */ React11.createElement(tokenSearch_default, {
     customSearchInput: renderProps == null ? void 0 : renderProps.customSearchInput,
     customSearchFilter: renderProps == null ? void 0 : renderProps.customSearchFilter,
     customChip: renderProps == null ? void 0 : renderProps.customChip,

@@ -1315,7 +1315,7 @@
             }
             return false;
           }
-          function memo2(type, compare2) {
+          function memo3(type, compare2) {
             {
               if (!isValidElementType2(type)) {
                 error("memo: The first argument must be a component. Instead received: %s", type === null ? "null" : typeof type);
@@ -1948,7 +1948,7 @@
           exports.forwardRef = forwardRef;
           exports.isValidElement = isValidElement;
           exports.lazy = lazy;
-          exports.memo = memo2;
+          exports.memo = memo3;
           exports.useCallback = useCallback2;
           exports.useContext = useContext10;
           exports.useDebugValue = useDebugValue2;
@@ -10985,11 +10985,11 @@
       if (process.env.NODE_ENV !== "production") {
         (function() {
           "use strict";
-          var React14 = require_react();
+          var React15 = require_react();
           var _assign = require_object_assign();
           var Scheduler = require_scheduler();
           var tracing = require_tracing();
-          var ReactSharedInternals = React14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React15.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           function warn(format) {
             {
               for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -11021,7 +11021,7 @@
               Function.prototype.apply.call(console[level], console, argsWithFormat);
             }
           }
-          if (!React14) {
+          if (!React15) {
             {
               throw Error("ReactDOM was loaded before React. Make sure you load the React package before loading ReactDOM.");
             }
@@ -12237,7 +12237,7 @@
           var didWarnInvalidChild = false;
           function flattenChildren(children) {
             var content = "";
-            React14.Children.forEach(children, function(child) {
+            React15.Children.forEach(children, function(child) {
               if (child == null) {
                 return;
               }
@@ -12248,7 +12248,7 @@
           function validateProps(element, props) {
             {
               if (typeof props.children === "object" && props.children !== null) {
-                React14.Children.forEach(props.children, function(child) {
+                React15.Children.forEach(props.children, function(child) {
                   if (child == null) {
                     return;
                   }
@@ -19441,7 +19441,7 @@
           }
           var fakeInternalInstance = {};
           var isArray = Array.isArray;
-          var emptyRefsObject = new React14.Component().refs;
+          var emptyRefsObject = new React15.Component().refs;
           var didWarnAboutStateAssignmentForComponent;
           var didWarnAboutUninitializedState;
           var didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate;
@@ -50920,7 +50920,7 @@ spurious results.`);
   });
 
   // src/searchbar/index.tsx
-  var import_react19 = __toESM(require_react());
+  var import_react20 = __toESM(require_react());
 
   // node_modules/react-redux/es/components/Provider.js
   var import_react3 = __toESM(require_react());
@@ -54889,10 +54889,10 @@ spurious results.`);
   });
 
   // src/searchbar/tokenSearch/index.tsx
-  var import_react18 = __toESM(require_react());
+  var import_react19 = __toESM(require_react());
 
   // src/searchbar/tokenSearch/SearchInput.tsx
-  var import_react10 = __toESM(require_react());
+  var import_react11 = __toESM(require_react());
 
   // node_modules/styled-components/dist/styled-components.esm.js
   var import_react_is2 = __toESM(require_react_is4());
@@ -56105,89 +56105,84 @@ spurious results.`);
   process.env.NODE_ENV !== "production" && typeof navigator != "undefined" && navigator.product === "ReactNative" && console.warn("It looks like you've imported 'styled-components' on React Native.\nPerhaps you're looking to import 'styled-components/native'?\nRead more about this at https://www.styled-components.com/docs/basics#react-native"), process.env.NODE_ENV !== "production" && process.env.NODE_ENV !== "test" && typeof window != "undefined" && (window["__styled-components-init__"] = window["__styled-components-init__"] || 0, window["__styled-components-init__"] === 1 && console.warn("It looks like there are several instances of 'styled-components' initialized in this application. This may cause dynamic styles to not render properly, errors during the rehydration process, a missing theme prop, and makes your application bigger without good reason.\n\nSee https://s-c.sh/2BAXzed for more info."), window["__styled-components-init__"] += 1);
   var styled_components_esm_default = qe;
 
-  // src/searchbar/tokenSearch/icon-search.svg
-  var icon_search_default = "./icon-search-AYYIN6AJ.svg";
+  // src/searchbar/tokenSearch/SearchIcon.tsx
+  var import_react9 = __toESM(require_react());
+  var StyledSVG = styled_components_esm_default.svg`
+  '&:hover': {     
+      ${({ hoverColor }) => `stroke: ${hoverColor};`}
+     
+  }
+`;
+  var SearchIcon = (0, import_react9.memo)(({ active, activeColor, color, height, width }) => /* @__PURE__ */ import_react9.default.createElement(StyledSVG, {
+    height: height != null ? height : 19.519,
+    hoverColor: activeColor,
+    viewBox: "0 0 19.519 19.519",
+    width: width != null ? width : 19.519,
+    xmlns: "http://www.w3.org/2000/svg"
+  }, /* @__PURE__ */ import_react9.default.createElement("path", {
+    d: "M1427.667,779.6l-5.554-5.555a7.774,7.774,0,1,0-1.061,1.06l5.554,5.555a.75.75,0,0,0,1.061-1.06Zm-17.8-10.482a6.258,6.258,0,1,1,6.258,6.257A6.265,6.265,0,0,1,1409.868,769.119Z",
+    "data-name": "Search icon",
+    stroke: active ? activeColor : color,
+    id: "Search_icon",
+    transform: "translate(-1408.368 -761.362)"
+  })));
+  var SearchIcon_default = SearchIcon;
 
   // src/searchbar/tokenSearch/SearchInput.tsx
   var import_lodash3 = __toESM(require_lodash2());
 
   // src/searchbar/Context/TokenSearch.tsx
-  var import_react9 = __toESM(require_react());
-  var TokenSearchContext = (0, import_react9.createContext)({});
+  var import_react10 = __toESM(require_react());
+  var TokenSearchContext = (0, import_react10.createContext)({});
   var TokenSearch_default = TokenSearchContext;
 
   // src/searchbar/tokenSearch/SearchInput.tsx
   var StyledInput = styled_components_esm_default.input`
-  width: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.width) || "-webkit-fill-available";
-  }};
-  border: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.border) || "none";
-  }}; 
   background-color: inherit;
-  color: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.color) || "#FFF";
-  }};
-  display: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.display) || "block";
-  }}; 
   margin-left: auto;
   margin-right: auto;
   position: relative;
-  border-color: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.borderColor) || "#067c82";
-  }};  
-  border-style: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.borderStyle) || "solid";
-  }};  
-  border-width: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.borderWidth) || "1px";
-  }};  
-  border-radius: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.borderRadius) || "0";
-  }};  
-  background: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.background) || "#08333c";
-  }};   
-  padding: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.padding) || "11px 15px";
-  }};    
-  font-size: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.fontSize) || "15px";
-  }};      
-  font-family: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.fontFamily) || "'Fira Code', monospace";
-  }};
+
+  ${({ props }) => {
+    var _a, _b, _c, _d, _e2, _f, _g, _h, _i, _j, _k, _l;
+    return `
+    width: ${((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.width) || "-webkit-fill-available"};
+    border: ${((_b = props == null ? void 0 : props.styles) == null ? void 0 : _b.border) || "none"};   
+    color: ${((_c = props == null ? void 0 : props.styles) == null ? void 0 : _c.color) || "#FFF"};
+    display: ${((_d = props == null ? void 0 : props.styles) == null ? void 0 : _d.display) || "block"};   
+    border-color: ${((_e2 = props == null ? void 0 : props.styles) == null ? void 0 : _e2.borderColor) || "#067c82"};  
+    border-style: ${((_f = props == null ? void 0 : props.styles) == null ? void 0 : _f.borderStyle) || "solid"};  
+    border-width: ${((_g = props == null ? void 0 : props.styles) == null ? void 0 : _g.borderWidth) || "1px"};  
+    border-radius: ${((_h = props == null ? void 0 : props.styles) == null ? void 0 : _h.borderRadius) || "0"};  
+    background: ${((_i = props == null ? void 0 : props.styles) == null ? void 0 : _i.background) || "#08333c"};   
+    padding: ${((_j = props == null ? void 0 : props.styles) == null ? void 0 : _j.padding) || "11px 15px"};    
+    font-size: ${((_k = props == null ? void 0 : props.styles) == null ? void 0 : _k.fontSize) || "15px"};      
+    font-family: ${((_l = props == null ? void 0 : props.styles) == null ? void 0 : _l.fontFamily) || "'Fira Code', monospace"};
+  `;
+  }}  
 `;
-  var HideOnSmallScreen = styled_components_esm_default.img`
-  width: 30px;
+  var StyledSearchIconWrapper = styled_components_esm_default.div`  
   cursor: pointer;
   float: right;
   position: absolute;
-  right: 22px;
-  top: 9px;
-  @media only screen and (max-width: 990px) {
-    display: none;
-  }
+  ${({ props }) => {
+    var _a, _b;
+    return `
+    right: ${((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.right) || "15px"};      
+    top: ${((_b = props == null ? void 0 : props.styles) == null ? void 0 : _b.top) || "12px"};        
+  `;
+  }}    
+`;
+  var StyledWrapper = styled_components_esm_default.div`
+  position: relative;
 `;
   var SearchInput = () => {
+    var _a, _b, _c, _d, _e2, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r;
     const dispatch = useDispatch();
-    const renderProps = (0, import_react10.useContext)(TokenSearch_default);
+    const renderProps = (0, import_react11.useContext)(TokenSearch_default);
     const { customSearchInput } = renderProps;
     const { searchText, networkMap, exchangeMap } = useSelector((state) => state);
-    (0, import_react10.useEffect)(() => {
+    (0, import_react11.useEffect)(() => {
       if (searchText.length >= minStringSearch) {
         dispatch(searchTokenPairs(searchText));
       }
@@ -56196,31 +56191,38 @@ spurious results.`);
       const value = event.target.value;
       dispatch(setSearchText(value));
     };
-    const debounceChangeHandler = (0, import_react10.useCallback)((0, import_lodash3.default)(onChangeFilter, 350), [searchText]);
+    const debounceChangeHandler = (0, import_react11.useCallback)((0, import_lodash3.default)(onChangeFilter, 350), [searchText]);
     const placeholder = (customSearchInput == null ? void 0 : customSearchInput.placeholder) ? customSearchInput == null ? void 0 : customSearchInput.placeholder : "Please input token name or address.";
-    return /* @__PURE__ */ import_react10.default.createElement("div", {
+    const activeColor = ((_b = (_a = customSearchInput == null ? void 0 : customSearchInput.styles) == null ? void 0 : _a.search) == null ? void 0 : _b.activeColor) ? (_d = (_c = customSearchInput == null ? void 0 : customSearchInput.styles) == null ? void 0 : _c.search) == null ? void 0 : _d.activeColor : "#666699";
+    const color = ((_f = (_e2 = customSearchInput == null ? void 0 : customSearchInput.styles) == null ? void 0 : _e2.search) == null ? void 0 : _f.color) ? (_h = (_g = customSearchInput == null ? void 0 : customSearchInput.styles) == null ? void 0 : _g.search) == null ? void 0 : _h.color : "#FFF";
+    const height = ((_j = (_i = customSearchInput == null ? void 0 : customSearchInput.styles) == null ? void 0 : _i.search) == null ? void 0 : _j.height) ? (_l = (_k = customSearchInput == null ? void 0 : customSearchInput.styles) == null ? void 0 : _k.search) == null ? void 0 : _l.height : 14;
+    const width = ((_n = (_m = customSearchInput == null ? void 0 : customSearchInput.styles) == null ? void 0 : _m.search) == null ? void 0 : _n.width) ? (_p = (_o = customSearchInput == null ? void 0 : customSearchInput.styles) == null ? void 0 : _o.search) == null ? void 0 : _p.width : 14;
+    return /* @__PURE__ */ import_react11.default.createElement(StyledWrapper, {
       onClick: () => dispatch(startSelecting())
-    }, /* @__PURE__ */ import_react10.default.createElement(StyledInput, {
+    }, /* @__PURE__ */ import_react11.default.createElement(StyledInput, {
       placeholder,
       autocomplete: "off",
       onChange: debounceChangeHandler,
-      styles: customSearchInput == null ? void 0 : customSearchInput.styles
-    }), /* @__PURE__ */ import_react10.default.createElement(HideOnSmallScreen, {
-      alt: "",
-      src: icon_search_default,
-      onClick: () => dispatch(toggleSelecting())
-    }));
+      styles: (_q = customSearchInput == null ? void 0 : customSearchInput.styles) == null ? void 0 : _q.input
+    }), /* @__PURE__ */ import_react11.default.createElement(StyledSearchIconWrapper, {
+      styles: (_r = customSearchInput == null ? void 0 : customSearchInput.styles) == null ? void 0 : _r.search
+    }, /* @__PURE__ */ import_react11.default.createElement(SearchIcon_default, {
+      activeColor,
+      color,
+      height,
+      width
+    })));
   };
   var SearchInput_default = SearchInput;
 
   // src/searchbar/tokenSearch/SearchResult.tsx
-  var import_react13 = __toESM(require_react());
+  var import_react14 = __toESM(require_react());
 
   // src/searchbar/tokenSearch/TokenPairDetail.tsx
-  var import_react12 = __toESM(require_react());
+  var import_react13 = __toESM(require_react());
 
   // node_modules/react-accessible-accordion/dist/es/index.js
-  var import_react11 = __toESM(require_react());
+  var import_react12 = __toESM(require_react());
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
       throw new TypeError("Cannot call a class as a function");
@@ -56545,7 +56547,7 @@ spurious results.`);
     this.allowMultipleExpanded = allowMultipleExpanded;
     this.allowZeroExpanded = allowZeroExpanded;
   };
-  var Context = /* @__PURE__ */ (0, import_react11.createContext)(null);
+  var Context = /* @__PURE__ */ (0, import_react12.createContext)(null);
   var Provider2 = /* @__PURE__ */ function(_React$PureComponent) {
     _inherits(Provider4, _React$PureComponent);
     var _super = _createSuper(Provider4);
@@ -56591,7 +56593,7 @@ spurious results.`);
       key: "render",
       value: function render() {
         var _this$state = this.state, allowZeroExpanded = _this$state.allowZeroExpanded, allowMultipleExpanded = _this$state.allowMultipleExpanded;
-        return /* @__PURE__ */ (0, import_react11.createElement)(Context.Provider, {
+        return /* @__PURE__ */ (0, import_react12.createElement)(Context.Provider, {
           value: {
             allowMultipleExpanded,
             allowZeroExpanded,
@@ -56606,7 +56608,7 @@ spurious results.`);
       }
     }]);
     return Provider4;
-  }(import_react11.PureComponent);
+  }(import_react12.PureComponent);
   _defineProperty2(Provider2, "defaultProps", {
     allowMultipleExpanded: false,
     allowZeroExpanded: false
@@ -56629,19 +56631,19 @@ spurious results.`);
     _createClass(Consumer3, [{
       key: "render",
       value: function render() {
-        return /* @__PURE__ */ (0, import_react11.createElement)(Context.Consumer, null, this.renderChildren);
+        return /* @__PURE__ */ (0, import_react12.createElement)(Context.Consumer, null, this.renderChildren);
       }
     }]);
     return Consumer3;
-  }(import_react11.PureComponent);
+  }(import_react12.PureComponent);
   var Accordion = function Accordion2(_ref) {
     var _ref$className = _ref.className, className = _ref$className === void 0 ? "accordion" : _ref$className, allowMultipleExpanded = _ref.allowMultipleExpanded, allowZeroExpanded = _ref.allowZeroExpanded, onChange = _ref.onChange, preExpanded = _ref.preExpanded, rest = _objectWithoutProperties(_ref, ["className", "allowMultipleExpanded", "allowZeroExpanded", "onChange", "preExpanded"]);
-    return /* @__PURE__ */ (0, import_react11.createElement)(Provider2, {
+    return /* @__PURE__ */ (0, import_react12.createElement)(Provider2, {
       preExpanded,
       allowMultipleExpanded,
       allowZeroExpanded,
       onChange
-    }, /* @__PURE__ */ (0, import_react11.createElement)("div", _extends2({
+    }, /* @__PURE__ */ (0, import_react12.createElement)("div", _extends2({
       "data-accordion-component": "Accordion",
       className
     }, rest)));
@@ -56670,7 +56672,7 @@ spurious results.`);
     }
     return true;
   }
-  var Context$1 = /* @__PURE__ */ (0, import_react11.createContext)(null);
+  var Context$1 = /* @__PURE__ */ (0, import_react12.createContext)(null);
   var Provider$1 = function Provider3(_ref) {
     var children = _ref.children, uuid = _ref.uuid, accordionContext = _ref.accordionContext, dangerouslySetExpanded = _ref.dangerouslySetExpanded;
     var toggleExpanded = function toggleExpanded2() {
@@ -56682,7 +56684,7 @@ spurious results.`);
       var panelAttributes = accordionContext2.getPanelAttributes(uuid, dangerouslySetExpanded);
       var headingAttributes = accordionContext2.getHeadingAttributes(uuid);
       var buttonAttributes = accordionContext2.getButtonAttributes(uuid, dangerouslySetExpanded);
-      return /* @__PURE__ */ (0, import_react11.createElement)(Context$1.Provider, {
+      return /* @__PURE__ */ (0, import_react12.createElement)(Context$1.Provider, {
         value: {
           uuid,
           expanded,
@@ -56694,11 +56696,11 @@ spurious results.`);
         }
       }, children);
     };
-    return /* @__PURE__ */ (0, import_react11.createElement)(Consumer, null, renderChildren);
+    return /* @__PURE__ */ (0, import_react12.createElement)(Consumer, null, renderChildren);
   };
   var ProviderWrapper = function ProviderWrapper2(props) {
-    return /* @__PURE__ */ (0, import_react11.createElement)(Consumer, null, function(accordionContext) {
-      return /* @__PURE__ */ (0, import_react11.createElement)(Provider$1, _extends2({}, props, {
+    return /* @__PURE__ */ (0, import_react12.createElement)(Consumer, null, function(accordionContext) {
+      return /* @__PURE__ */ (0, import_react12.createElement)(Provider$1, _extends2({}, props, {
         accordionContext
       }));
     });
@@ -56708,16 +56710,16 @@ spurious results.`);
     var renderChildren = function renderChildren2(container) {
       return container ? children(container) : null;
     };
-    return /* @__PURE__ */ (0, import_react11.createElement)(Context$1.Consumer, null, renderChildren);
+    return /* @__PURE__ */ (0, import_react12.createElement)(Context$1.Consumer, null, renderChildren);
   };
   var AccordionItem = function AccordionItem2(_ref) {
     var customUuid = _ref.uuid, dangerouslySetExpanded = _ref.dangerouslySetExpanded, _ref$className = _ref.className, className = _ref$className === void 0 ? "accordion__item" : _ref$className, activeClassName = _ref.activeClassName, rest = _objectWithoutProperties(_ref, ["uuid", "dangerouslySetExpanded", "className", "activeClassName"]);
-    var _useState = (0, import_react11.useState)(nextUuid()), _useState2 = _slicedToArray(_useState, 1), instanceUuid = _useState2[0];
+    var _useState = (0, import_react12.useState)(nextUuid()), _useState2 = _slicedToArray(_useState, 1), instanceUuid = _useState2[0];
     var uuid = customUuid !== null && customUuid !== void 0 ? customUuid : instanceUuid;
     var renderChildren = function renderChildren2(itemContext) {
       var expanded = itemContext.expanded;
       var cx = expanded && activeClassName ? activeClassName : className;
-      return /* @__PURE__ */ (0, import_react11.createElement)("div", _extends2({
+      return /* @__PURE__ */ (0, import_react12.createElement)("div", _extends2({
         "data-accordion-component": "AccordionItem",
         className: cx
       }, rest));
@@ -56726,10 +56728,10 @@ spurious results.`);
     if (rest.id) {
       assertValidHtmlId(rest.id);
     }
-    return /* @__PURE__ */ (0, import_react11.createElement)(ProviderWrapper, {
+    return /* @__PURE__ */ (0, import_react12.createElement)(ProviderWrapper, {
       uuid,
       dangerouslySetExpanded
-    }, /* @__PURE__ */ (0, import_react11.createElement)(Consumer$1, null, renderChildren));
+    }, /* @__PURE__ */ (0, import_react12.createElement)(Consumer$1, null, renderChildren));
   };
   AccordionItem.displayName = DisplayName$1.AccordionItem;
   function getClosestAccordion(el) {
@@ -56822,7 +56824,7 @@ spurious results.`);
     if (rest.id) {
       assertValidHtmlId(rest.id);
     }
-    return /* @__PURE__ */ (0, import_react11.createElement)("div", _extends2({
+    return /* @__PURE__ */ (0, import_react12.createElement)("div", _extends2({
       className
     }, rest, {
       role: "button",
@@ -56833,9 +56835,9 @@ spurious results.`);
     }));
   };
   var AccordionItemButtonWrapper = function AccordionItemButtonWrapper2(props) {
-    return /* @__PURE__ */ (0, import_react11.createElement)(Consumer$1, null, function(itemContext) {
+    return /* @__PURE__ */ (0, import_react12.createElement)(Consumer$1, null, function(itemContext) {
       var toggleExpanded = itemContext.toggleExpanded, buttonAttributes = itemContext.buttonAttributes;
-      return /* @__PURE__ */ (0, import_react11.createElement)(AccordionItemButton, _extends2({
+      return /* @__PURE__ */ (0, import_react12.createElement)(AccordionItemButton, _extends2({
         toggleExpanded
       }, props, buttonAttributes));
     });
@@ -56874,7 +56876,7 @@ spurious results.`);
     }, {
       key: "render",
       value: function render() {
-        return /* @__PURE__ */ (0, import_react11.createElement)("div", _extends2({
+        return /* @__PURE__ */ (0, import_react12.createElement)("div", _extends2({
           "data-accordion-component": "AccordionItemHeading"
         }, this.props, {
           ref: this.setRef
@@ -56892,15 +56894,15 @@ spurious results.`);
       }
     }]);
     return AccordionItemHeading2;
-  }(import_react11.PureComponent);
+  }(import_react12.PureComponent);
   _defineProperty2(AccordionItemHeading, "defaultProps", defaultProps);
   var AccordionItemHeadingWrapper = function AccordionItemHeadingWrapper2(props) {
-    return /* @__PURE__ */ (0, import_react11.createElement)(Consumer$1, null, function(itemContext) {
+    return /* @__PURE__ */ (0, import_react12.createElement)(Consumer$1, null, function(itemContext) {
       var headingAttributes = itemContext.headingAttributes;
       if (props.id) {
         assertValidHtmlId(props.id);
       }
-      return /* @__PURE__ */ (0, import_react11.createElement)(AccordionItemHeading, _extends2({}, props, headingAttributes));
+      return /* @__PURE__ */ (0, import_react12.createElement)(AccordionItemHeading, _extends2({}, props, headingAttributes));
     });
   };
   AccordionItemHeadingWrapper.displayName = DisplayName$1.AccordionItemHeading;
@@ -56914,14 +56916,14 @@ spurious results.`);
       var attrs = _objectSpread22(_objectSpread22({}, panelAttributes), {}, {
         "aria-labelledby": region ? panelAttributes["aria-labelledby"] : void 0
       });
-      return /* @__PURE__ */ (0, import_react11.createElement)("div", _extends2({
+      return /* @__PURE__ */ (0, import_react12.createElement)("div", _extends2({
         "data-accordion-component": "AccordionItemPanel",
         className
       }, rest, attrs, {
         role: region ? "region" : void 0
       }));
     };
-    return /* @__PURE__ */ (0, import_react11.createElement)(Consumer$1, null, renderChildren);
+    return /* @__PURE__ */ (0, import_react12.createElement)(Consumer$1, null, renderChildren);
   };
 
   // src/searchbar/tokenSearch/helpers/firstAndLast.ts
@@ -56958,38 +56960,28 @@ spurious results.`);
   display: grid;
   grid-auto-flow: column;
   gap: 10px;
-  padding: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.padding) || "10px";
-  }};
-  color: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.color) || "black";
-  }};
-  background: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.background) || "green";
-  }};
-  '&:hover': {
-
-  }
+  
+  ${({ props }) => {
+    var _a, _b, _c;
+    return `
+    padding: ${((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.padding) || "10px"};
+    color: ${((_b = props == null ? void 0 : props.styles) == null ? void 0 : _b.color) || "black"};
+    background: ${((_c = props == null ? void 0 : props.styles) == null ? void 0 : _c.background) || "green"};
+  `;
+  }}  
 `;
   var StyeldPanel = styled_components_esm_default.div`
   display: grid;
   grid-auto-flow: column;
   gap: 10px;
-  padding: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.padding) || "10px";
-  }};
-  color: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.color) || "black";
-  }};
-  background: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.background) || "white";
-  }};  
+  ${({ props }) => {
+    var _a, _b, _c;
+    return `
+    padding: ${((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.padding) || "10px"};
+    color: ${((_b = props == null ? void 0 : props.styles) == null ? void 0 : _b.color) || "black"};
+    background: ${((_c = props == null ? void 0 : props.styles) == null ? void 0 : _c.background) || "white"};  
+  `;
+  }}    
 `;
   var StyledActionWrapper = styled_components_esm_default.div`
   display: flex;  
@@ -57002,33 +56994,33 @@ spurious results.`);
   var Action = (props) => {
     const { component, detail } = props;
     const Component = component;
-    return /* @__PURE__ */ import_react12.default.createElement(StyledAction, null, /* @__PURE__ */ import_react12.default.createElement(Component, {
+    return /* @__PURE__ */ import_react13.default.createElement(StyledAction, null, /* @__PURE__ */ import_react13.default.createElement(Component, {
       detail
     }));
   };
   var TokenPairDetail = (props) => {
     var _a, _b;
     const { index, suggestions } = props;
-    const renderProps = (0, import_react12.useContext)(TokenSearch_default);
+    const renderProps = (0, import_react13.useContext)(TokenSearch_default);
     const { customTokenDetail, customActions } = renderProps;
     const selectedPair = suggestions[index];
     const tokenImage = (token) => {
-      return (token == null ? void 0 : token.image) && /* @__PURE__ */ import_react12.default.createElement("img", {
+      return (token == null ? void 0 : token.image) && /* @__PURE__ */ import_react13.default.createElement("img", {
         alt: token == null ? void 0 : token.symbol,
         src: token == null ? void 0 : token.image,
         style: { borderRadius: "50%" },
         width: imageSize
       });
     };
-    return /* @__PURE__ */ import_react12.default.createElement(DetailWrapper, null, /* @__PURE__ */ import_react12.default.createElement(Accordion, {
+    return /* @__PURE__ */ import_react13.default.createElement(DetailWrapper, null, /* @__PURE__ */ import_react13.default.createElement(Accordion, {
       allowZeroExpanded: true
-    }, /* @__PURE__ */ import_react12.default.createElement(AccordionItem, {
+    }, /* @__PURE__ */ import_react13.default.createElement(AccordionItem, {
       key: selectedPair.id
-    }, /* @__PURE__ */ import_react12.default.createElement(AccordionItemHeadingWrapper, null, /* @__PURE__ */ import_react12.default.createElement(AccordionItemButtonWrapper, null, /* @__PURE__ */ import_react12.default.createElement(StyledHeader, {
+    }, /* @__PURE__ */ import_react13.default.createElement(AccordionItemHeadingWrapper, null, /* @__PURE__ */ import_react13.default.createElement(AccordionItemButtonWrapper, null, /* @__PURE__ */ import_react13.default.createElement(StyledHeader, {
       styles: (_a = customTokenDetail == null ? void 0 : customTokenDetail.styles) == null ? void 0 : _a.header
-    }, /* @__PURE__ */ import_react12.default.createElement("div", null, /* @__PURE__ */ import_react12.default.createElement("div", null, selectedPair.network.toUpperCase(), " - ", capitalizeFirstLetter(selectedPair.exchange), " - "), /* @__PURE__ */ import_react12.default.createElement("div", null, "Volume: ", intToWords(selectedPair.volumeUSD))), /* @__PURE__ */ import_react12.default.createElement("div", null, tokenImage(selectedPair.token0), selectedPair.token0.name, " -", tokenImage(selectedPair.token1), selectedPair.token1.name)))), /* @__PURE__ */ import_react12.default.createElement(AccordionItemPanel, null, /* @__PURE__ */ import_react12.default.createElement(StyeldPanel, {
+    }, /* @__PURE__ */ import_react13.default.createElement("div", null, /* @__PURE__ */ import_react13.default.createElement("div", null, selectedPair.network.toUpperCase(), " - ", capitalizeFirstLetter(selectedPair.exchange), " - "), /* @__PURE__ */ import_react13.default.createElement("div", null, "Volume: ", intToWords(selectedPair.volumeUSD))), /* @__PURE__ */ import_react13.default.createElement("div", null, tokenImage(selectedPair.token0), selectedPair.token0.name, " -", tokenImage(selectedPair.token1), selectedPair.token1.name)))), /* @__PURE__ */ import_react13.default.createElement(AccordionItemPanel, null, /* @__PURE__ */ import_react13.default.createElement(StyeldPanel, {
       styles: (_b = customTokenDetail == null ? void 0 : customTokenDetail.styles) == null ? void 0 : _b.panel
-    }, /* @__PURE__ */ import_react12.default.createElement("div", null, /* @__PURE__ */ import_react12.default.createElement("div", null, /* @__PURE__ */ import_react12.default.createElement("b", null, "Pair Address:"), " ", selectedPair.id), /* @__PURE__ */ import_react12.default.createElement("div", null, /* @__PURE__ */ import_react12.default.createElement("b", null, tokenImage(selectedPair.token0), " token0 address: "), firstAndLast(selectedPair.token0.address)), /* @__PURE__ */ import_react12.default.createElement("div", null, /* @__PURE__ */ import_react12.default.createElement("b", null, tokenImage(selectedPair.token1), " token1 address: "), firstAndLast(selectedPair.token1.address))), /* @__PURE__ */ import_react12.default.createElement("div", null, /* @__PURE__ */ import_react12.default.createElement("div", null, /* @__PURE__ */ import_react12.default.createElement("b", null, selectedPair.network.toUpperCase())), /* @__PURE__ */ import_react12.default.createElement("div", null, /* @__PURE__ */ import_react12.default.createElement("b", null, capitalizeFirstLetter(selectedPair.exchange))), /* @__PURE__ */ import_react12.default.createElement(StyledActionWrapper, null, customActions.map((action) => /* @__PURE__ */ import_react12.default.createElement(Action, {
+    }, /* @__PURE__ */ import_react13.default.createElement("div", null, /* @__PURE__ */ import_react13.default.createElement("div", null, /* @__PURE__ */ import_react13.default.createElement("b", null, "Pair Address:"), " ", selectedPair.id), /* @__PURE__ */ import_react13.default.createElement("div", null, /* @__PURE__ */ import_react13.default.createElement("b", null, tokenImage(selectedPair.token0), " token0 address: "), firstAndLast(selectedPair.token0.address)), /* @__PURE__ */ import_react13.default.createElement("div", null, /* @__PURE__ */ import_react13.default.createElement("b", null, tokenImage(selectedPair.token1), " token1 address: "), firstAndLast(selectedPair.token1.address))), /* @__PURE__ */ import_react13.default.createElement("div", null, /* @__PURE__ */ import_react13.default.createElement("div", null, /* @__PURE__ */ import_react13.default.createElement("b", null, selectedPair.network.toUpperCase())), /* @__PURE__ */ import_react13.default.createElement("div", null, /* @__PURE__ */ import_react13.default.createElement("b", null, capitalizeFirstLetter(selectedPair.exchange))), /* @__PURE__ */ import_react13.default.createElement(StyledActionWrapper, null, customActions.map((action) => /* @__PURE__ */ import_react13.default.createElement(Action, {
       key: `action-${action.index}`,
       component: action.component,
       detail: selectedPair
@@ -57038,98 +57030,64 @@ spurious results.`);
 
   // src/searchbar/tokenSearch/SearchResult.tsx
   var StyledResult = styled_components_esm_default.div`
-  width: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.width) || "auto";
-  }};
-  height: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.height) || "300px";
-  }};
-  border: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.border) || "1px solid grey";
-  }}; 
   background-color: inherit;
-  color: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.color) || "#FFF";
-  }};
-  display: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.display) || "block";
-  }}; 
   margin-left: auto;
   margin-right: auto;
   position: relative;
-  border-color: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.borderColor) || "#067c82";
-  }};  
-  border-style: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.borderStyle) || "solid";
-  }};  
-  border-width: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.borderWidth) || "1px";
-  }};  
-  border-radius: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.borderRadius) || "0";
-  }};  
-  background: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.background) || "#08333c";
-  }};   
-  padding: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.padding) || "0";
-  }};    
-  font-size: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.fontSize) || "15px";
-  }};      
-  font-family: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.fontFamily) || "'Fira Code', monospace";
-  }};
   overflow: auto;
+
+  ${({ props }) => {
+    var _a, _b, _c, _d, _e2, _f, _g, _h, _i, _j, _k, _l, _m;
+    return `
+    width: ${((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.width) || "auto"};
+    height: ${((_b = props == null ? void 0 : props.styles) == null ? void 0 : _b.height) || "300px"};
+    border: ${((_c = props == null ? void 0 : props.styles) == null ? void 0 : _c.border) || "1px solid grey"};   
+    color: ${((_d = props == null ? void 0 : props.styles) == null ? void 0 : _d.color) || "#FFF"};
+    display: ${((_e2 = props == null ? void 0 : props.styles) == null ? void 0 : _e2.display) || "block"};   
+    border-color: ${((_f = props == null ? void 0 : props.styles) == null ? void 0 : _f.borderColor) || "#067c82"};  
+    border-style: ${((_g = props == null ? void 0 : props.styles) == null ? void 0 : _g.borderStyle) || "solid"};  
+    border-width: ${((_h = props == null ? void 0 : props.styles) == null ? void 0 : _h.borderWidth) || "1px"};  
+    border-radius: ${((_i = props == null ? void 0 : props.styles) == null ? void 0 : _i.borderRadius) || "0"};  
+    background: ${((_j = props == null ? void 0 : props.styles) == null ? void 0 : _j.background) || "#08333c"};   
+    padding: ${((_k = props == null ? void 0 : props.styles) == null ? void 0 : _k.padding) || "0"};    
+    font-size: ${((_l = props == null ? void 0 : props.styles) == null ? void 0 : _l.fontSize) || "15px"};      
+    font-family: ${((_m = props == null ? void 0 : props.styles) == null ? void 0 : _m.fontFamily) || "'Fira Code', monospace"};  
+  `;
+  }}  
 `;
   var StyledLoading = styled_components_esm_default.div`
   position: relative;
   display: flex;
   justify-content: center;  
   margin: 10px;
-  color: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.color) || "black";
-  }};
-  font-size: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.fontSize) || "15px";
-  }};      
+  ${({ props }) => {
+    var _a, _b;
+    return `
+    color: ${((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.color) || "black"};
+    font-size: ${((_b = props == null ? void 0 : props.styles) == null ? void 0 : _b.fontSize) || "15px"};      
+  `;
+  }}    
 `;
   var SearchResult = (props) => {
-    const renderProps = (0, import_react13.useContext)(TokenSearch_default);
+    const renderProps = (0, import_react14.useContext)(TokenSearch_default);
     const { customResult, customLoading } = renderProps;
     const { suggestions, searchText } = useSelector((state) => state);
     const filteredSuggestions = suggestions.slice().sort((pair1, pair2) => pair2.volumeUSD - pair1.volumeUSD);
     if (props.loading) {
       const loadingTitle = (customLoading == null ? void 0 : customLoading.loadingTitle) ? customLoading.loadingTitle : "Loading...";
-      return /* @__PURE__ */ import_react13.default.createElement(StyledLoading, {
+      return /* @__PURE__ */ import_react14.default.createElement(StyledLoading, {
         styles: customLoading == null ? void 0 : customLoading.styles
       }, loadingTitle);
     }
     if (!!searchText && !filteredSuggestions.length) {
       const notFoundTitle = (customLoading == null ? void 0 : customLoading.notFoundTitle) ? customLoading.notFoundTitle : "No pairs found...";
-      return /* @__PURE__ */ import_react13.default.createElement(StyledLoading, {
+      return /* @__PURE__ */ import_react14.default.createElement(StyledLoading, {
         styles: customLoading == null ? void 0 : customLoading.styles
       }, notFoundTitle);
     }
-    return /* @__PURE__ */ import_react13.default.createElement(StyledResult, {
+    return /* @__PURE__ */ import_react14.default.createElement(StyledResult, {
       styles: customResult == null ? void 0 : customResult.styles
-    }, filteredSuggestions.map((suggestions2, index) => /* @__PURE__ */ import_react13.default.createElement(TokenPairDetail_default, {
+    }, filteredSuggestions.map((suggestions2, index) => /* @__PURE__ */ import_react14.default.createElement(TokenPairDetail_default, {
       suggestions: filteredSuggestions,
       index,
       key: `token-detail-${index}`
@@ -57138,14 +57096,14 @@ spurious results.`);
   var SearchResult_default = SearchResult;
 
   // src/searchbar/tokenSearch/SearchFilters.tsx
-  var import_react17 = __toESM(require_react());
+  var import_react18 = __toESM(require_react());
 
   // src/searchbar/tokenSearch/SearchFiltersNetworkSelectors.tsx
-  var import_react15 = __toESM(require_react());
+  var import_react16 = __toESM(require_react());
   var import_lodash4 = __toESM(require_lodash());
 
   // src/searchbar/tokenSearch/Chip.tsx
-  var import_react14 = __toESM(require_react());
+  var import_react15 = __toESM(require_react());
   var StyledChip = styled_components_esm_default.div`
   > input {
     display: none;
@@ -57153,70 +57111,57 @@ spurious results.`);
 
   > input + label {
     -webkit-transition: all 500ms ease;
-    transition: all 500ms ease;
-    font-size: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.fontSize) || "14px";
-  }};  
-    cursor: pointer;
-    border-radius: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.borderRadius) || "5px";
-  }};  
-    background-color: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.backgroundColor) || "#FFF";
-  }};  
-    border: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.border) || "solid 2px #7d7d7d";
-  }};   
-    padding: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.padding) || "0.1rem 0.3rem";
-  }};   
+    transition: all 500ms ease;    
+    cursor: pointer;    
     display: inline-block;
     -moz-user-select: -moz-none;
     -webkit-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    margin: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.margin) || "5px";
-  }};   
+    ${({ props }) => {
+    var _a, _b, _c, _d, _e2, _f, _g, _h, _i, _j;
+    return `
+        font-size: ${((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.fontSize) || "14px"};  
+        border-radius: ${((_b = props == null ? void 0 : props.styles) == null ? void 0 : _b.borderRadius) || "5px"};  
+        background-color: ${((_c = props == null ? void 0 : props.styles) == null ? void 0 : _c.backgroundColor) || "#FFF"};  
+        border: ${((_d = props == null ? void 0 : props.styles) == null ? void 0 : _d.border) || "solid 2px #7d7d7d"};   
+        padding: ${((_e2 = props == null ? void 0 : props.styles) == null ? void 0 : _e2.padding) || "0.1rem 0.3rem"};   
+        margin: ${((_f = props == null ? void 0 : props.styles) == null ? void 0 : _f.margin) || "5px"};   
+        color: ${((_g = props == null ? void 0 : props.styles) == null ? void 0 : _g.defaultColor) || "black"};   
+        width: ${((_h = props == null ? void 0 : props.styles) == null ? void 0 : _h.width) || "100px"};   
+        height: ${((_i = props == null ? void 0 : props.styles) == null ? void 0 : _i.height) || "auto"};   
+        text-align: ${((_j = props == null ? void 0 : props.styles) == null ? void 0 : _j.textAlign) || "center"}; 
+      `;
+  }}      
   }
 
   > input:checked + label {
     -webkit-transition: all 500ms ease;
-    transition: all 500ms ease;    
-    border-color: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.checkedColor) || "#666699";
-  }};    
-    color: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.checkedColor) || "white";
-  }};   
-    background-color: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.checkedBackgroundColor) || "#666699";
-  }};  
+    transition: all 500ms ease;   
+    ${({ props }) => {
+    var _a, _b, _c;
+    return `
+        border-color: ${((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.checkedColor) || "#666699"};    
+        color: ${((_b = props == null ? void 0 : props.styles) == null ? void 0 : _b.checkedColor) || "white"};   
+        background-color: ${((_c = props == null ? void 0 : props.styles) == null ? void 0 : _c.checkedBackgroundColor) || "gray"};  
+      `;
+  }}     
   }
 `;
-  var Chip = (0, import_react14.memo)((props) => {
-    const renderProps = (0, import_react14.useContext)(TokenSearch_default);
+  var Chip = (0, import_react15.memo)((props) => {
+    const renderProps = (0, import_react15.useContext)(TokenSearch_default);
     const { label, checked, onChange, name, value } = props;
     const { customChip } = renderProps;
-    return /* @__PURE__ */ import_react14.default.createElement(StyledChip, {
+    return /* @__PURE__ */ import_react15.default.createElement(StyledChip, {
       styles: customChip == null ? void 0 : customChip.styles
-    }, /* @__PURE__ */ import_react14.default.createElement("input", {
+    }, /* @__PURE__ */ import_react15.default.createElement("input", {
       type: "checkbox",
       id: `${label}-${name}`,
       onChange,
       checked,
       name,
       value
-    }), /* @__PURE__ */ import_react14.default.createElement("label", {
+    }), /* @__PURE__ */ import_react15.default.createElement("label", {
       htmlFor: `${label}-${name}`
     }, label, " "));
   });
@@ -57227,7 +57172,7 @@ spurious results.`);
     const { exchangeMap, networkMap } = useSelector((state) => state);
     const networkAll = Object.values((0, import_lodash4.omitBy)(networkMap, (b3) => !b3)).length === 0;
     const exchangeNamesActive = Object.keys((0, import_lodash4.omitBy)(exchangeMap, (b3) => !b3));
-    return /* @__PURE__ */ import_react15.default.createElement(Chip, {
+    return /* @__PURE__ */ import_react16.default.createElement(Chip, {
       name: "AllNetworks",
       label: "All",
       checked: networkAll,
@@ -57241,7 +57186,7 @@ spurious results.`);
     const dispatch = useDispatch();
     const { networkMap } = useSelector((state) => state);
     const networkElement = (networkName) => {
-      return /* @__PURE__ */ import_react15.default.createElement(Chip, {
+      return /* @__PURE__ */ import_react16.default.createElement(Chip, {
         key: networkName,
         name: networkName,
         label: networkName,
@@ -57249,18 +57194,18 @@ spurious results.`);
         onChange: (e3) => dispatch(setNetworkMap({ networkName, checked: e3.target.checked }))
       });
     };
-    return /* @__PURE__ */ import_react15.default.createElement(import_react15.default.Fragment, null, networkNames.map((networkName) => networkElement(networkName)));
+    return /* @__PURE__ */ import_react16.default.createElement(import_react16.default.Fragment, null, networkNames.map((networkName) => networkElement(networkName)));
   };
 
   // src/searchbar/tokenSearch/SearchFiltersExchangeSelectors.tsx
-  var import_react16 = __toESM(require_react());
+  var import_react17 = __toESM(require_react());
   var import_lodash5 = __toESM(require_lodash());
   var FilterExchangeAll = () => {
     const dispatch = useDispatch();
     const { exchangeMap, networkMap } = useSelector((state) => state);
     const exchangeAll = Object.values((0, import_lodash5.omitBy)(exchangeMap, (b3) => !b3)).length === 0;
     const exchangeNamesActive = exchangeNames(Object.keys((0, import_lodash5.omitBy)(networkMap, (b3) => !b3)));
-    return /* @__PURE__ */ import_react16.default.createElement(Chip, {
+    return /* @__PURE__ */ import_react17.default.createElement(Chip, {
       name: "AllExchanges",
       label: "All",
       checked: exchangeAll,
@@ -57272,7 +57217,7 @@ spurious results.`);
     const { networkMap, exchangeMap } = useSelector((state) => state);
     const exchangeNamesActive = exchangeNames(Object.keys((0, import_lodash5.omitBy)(networkMap, (b3) => !b3)));
     const exchangeElement = (exchangeName) => {
-      return /* @__PURE__ */ import_react16.default.createElement(Chip, {
+      return /* @__PURE__ */ import_react17.default.createElement(Chip, {
         key: exchangeName,
         name: exchangeName,
         label: exchangeName,
@@ -57292,33 +57237,21 @@ spurious results.`);
   .accordion__button:first-child:after {
     display: block;    
     content: '';
-    height: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.toggleHeight) || "10px";
-  }};
-    width: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.toggleWidth) || "10px";
-  }};
-    margin-right: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.toggleMarginRight) || "25px";
-  }};
     position: absolute;
-    top: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.toggleMarginRight) || "20px";
-  }};
     right: 0;
-    border-bottom: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.toggleBorderBottom) || "2px solid currentColor";
-  }}; 
-    border-right: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.toggleBorderRight) || "2px solid currentColor";
-  }}; 
     transform: rotate(-45deg);
+
+    ${({ props }) => {
+    var _a, _b, _c, _d, _e2, _f;
+    return `
+      height: ${((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.toggleHeight) || "10px"};
+      width: ${((_b = props == null ? void 0 : props.styles) == null ? void 0 : _b.toggleWidth) || "10px"};
+      margin-right: ${((_c = props == null ? void 0 : props.styles) == null ? void 0 : _c.toggleMarginRight) || "25px"};    
+      top: ${((_d = props == null ? void 0 : props.styles) == null ? void 0 : _d.toggleTop) || "20px"};    
+      border-bottom: ${((_e2 = props == null ? void 0 : props.styles) == null ? void 0 : _e2.toggleBorderBottom) || "2px solid currentColor"}; 
+      border-right: ${((_f = props == null ? void 0 : props.styles) == null ? void 0 : _f.toggleBorderRight) || "2px solid currentColor"}; 
+    `;
+  }}
   }
 
   .accordion__button[aria-expanded='true']:first-child:after,
@@ -57327,129 +57260,76 @@ spurious results.`);
   }
 
   .accordion__panel {
-    border: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.contentBorder) || "0";
-  }}; 
-    border-top-style: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.contentBorderTop) || "none";
-  }}; 
-    border-right-style: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.contentBorderRight) || "none";
-  }}; 
-    border-bottom-style: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.contentBorderBottom) || "none";
-  }}; 
-    border-left-style: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.contentBorderLeft) || "none";
-  }}; 
-    border-radius: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.borderRadius) || "0";
-  }}; 
-    margin:  ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.margin) || "0 10px";
-  }};       
+    ${({ props }) => {
+    var _a, _b, _c, _d, _e2, _f, _g;
+    return `
+      border: ${((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.contentBorder) || "0"}; 
+      border-top-style: ${((_b = props == null ? void 0 : props.styles) == null ? void 0 : _b.contentBorderTop) || "none"}; 
+      border-right-style: ${((_c = props == null ? void 0 : props.styles) == null ? void 0 : _c.contentBorderRight) || "none"}; 
+      border-bottom-style: ${((_d = props == null ? void 0 : props.styles) == null ? void 0 : _d.contentBorderBottom) || "none"}; 
+      border-left-style: ${((_e2 = props == null ? void 0 : props.styles) == null ? void 0 : _e2.contentBorderLeft) || "none"}; 
+      border-radius: ${((_f = props == null ? void 0 : props.styles) == null ? void 0 : _f.borderRadius) || "0"}; 
+      margin:  ${((_g = props == null ? void 0 : props.styles) == null ? void 0 : _g.margin) || "0 10px"};       
+    `;
+  }}    
   }
 `;
   var StyledFilterHeader = styled_components_esm_default.div`  
-  display: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.display) || "inline";
-  }};
-  width: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.width) || "auto";
-  }};
-  border: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.border) || "none";
-  }}; 
-  background-color: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.backgroundColor) || "#f4f4f4";
-  }}; 
-  color: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.color) || "#444";
-  }};
-  display: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.display) || "block";
-  }}; 
-  cursor: pointer;
-  padding: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.padding) || "18px";
-  }};   
-  text-align: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.textAlign) || "left";
-  }};     
-  margin: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.margin) || "5px";
-  }};     
-  border-radius: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.borderRadius) || "0";
-  }};     
-  &:hover {
-    background-color: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.hoverColor) || "#ddd";
-  }};
-  }
+  ${({ props }) => {
+    var _a, _b, _c, _d, _e2, _f, _g, _h, _i, _j, _k;
+    return `
+    display: ${((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.display) || "inline"};
+    width: ${((_b = props == null ? void 0 : props.styles) == null ? void 0 : _b.width) || "auto"};
+    border: ${((_c = props == null ? void 0 : props.styles) == null ? void 0 : _c.border) || "none"}; 
+    background-color: ${((_d = props == null ? void 0 : props.styles) == null ? void 0 : _d.backgroundColor) || "#f4f4f4"}; 
+    color: ${((_e2 = props == null ? void 0 : props.styles) == null ? void 0 : _e2.color) || "#444"};
+    display: ${((_f = props == null ? void 0 : props.styles) == null ? void 0 : _f.display) || "block"}; 
+    cursor: pointer;
+    padding: ${((_g = props == null ? void 0 : props.styles) == null ? void 0 : _g.padding) || "18px"};   
+    text-align: ${((_h = props == null ? void 0 : props.styles) == null ? void 0 : _h.textAlign) || "left"};     
+    margin: ${((_i = props == null ? void 0 : props.styles) == null ? void 0 : _i.margin) || "5px"};     
+    border-radius: ${((_j = props == null ? void 0 : props.styles) == null ? void 0 : _j.borderRadius) || "0"};     
+    &:hover {
+      background-color: ${((_k = props == null ? void 0 : props.styles) == null ? void 0 : _k.hoverColor) || "#ddd"};
+    }
+  `;
+  }}      
 `;
   var StyledFilterContent = styled_components_esm_default.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.justifyContent) || "center";
-  }};
-  align-items: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.alignItems) || "center";
-  }};  
-  padding:  ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.padding) || "5px 10px";
-  }};       
-  background-color: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.backgroundColor) || "#ddd";
-  }};
-  border-radius: ${(props) => {
-    var _a;
-    return ((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.borderRadius) || "0";
-  }};     
+
+  ${({ props }) => {
+    var _a, _b, _c, _d, _e2;
+    return `
+    justify-content: ${((_a = props == null ? void 0 : props.styles) == null ? void 0 : _a.justifyContent) || "center"};
+    align-items: ${((_b = props == null ? void 0 : props.styles) == null ? void 0 : _b.alignItems) || "center"};  
+    padding:  ${((_c = props == null ? void 0 : props.styles) == null ? void 0 : _c.padding) || "5px 10px"};       
+    background-color: ${((_d = props == null ? void 0 : props.styles) == null ? void 0 : _d.backgroundColor) || "#ddd"};
+    border-radius: ${((_e2 = props == null ? void 0 : props.styles) == null ? void 0 : _e2.borderRadius) || "0"};     
+  `;
+  }}      
 `;
   var SearchFilters = () => {
     const { networkMap, exchangeMap } = useSelector((state) => state);
-    const renderProps = (0, import_react17.useContext)(TokenSearch_default);
+    const renderProps = (0, import_react18.useContext)(TokenSearch_default);
     const { customSearchFilter } = renderProps;
     const exchangesActive = Object.values(networkMap).filter((b3) => b3).length !== 0;
     const networkCount = Object.values(networkMap).filter((b3) => b3).length;
     const exchangeCount = Object.values(exchangeMap).filter((b3) => b3).length;
     const title = (customSearchFilter == null ? void 0 : customSearchFilter.title) || "Filter Networks";
     const description = networkCount === 0 && exchangeCount === 0 ? "Searching all networks and exchanges" : (customSearchFilter == null ? void 0 : customSearchFilter.description(networkCount, exchangeCount)) || `Searching {networkCount} networks and {exchangeCount} exchanges`;
-    return /* @__PURE__ */ import_react17.default.createElement(FilterWrapper, {
+    return /* @__PURE__ */ import_react18.default.createElement(FilterWrapper, {
       styles: customSearchFilter == null ? void 0 : customSearchFilter.styles.wrapper
-    }, /* @__PURE__ */ import_react17.default.createElement(Accordion, {
+    }, /* @__PURE__ */ import_react18.default.createElement(Accordion, {
       allowZeroExpanded: true
-    }, /* @__PURE__ */ import_react17.default.createElement(AccordionItem, null, /* @__PURE__ */ import_react17.default.createElement(AccordionItemHeadingWrapper, null, /* @__PURE__ */ import_react17.default.createElement(AccordionItemButtonWrapper, null, /* @__PURE__ */ import_react17.default.createElement(StyledFilterHeader, {
+    }, /* @__PURE__ */ import_react18.default.createElement(AccordionItem, null, /* @__PURE__ */ import_react18.default.createElement(AccordionItemHeadingWrapper, null, /* @__PURE__ */ import_react18.default.createElement(AccordionItemButtonWrapper, null, /* @__PURE__ */ import_react18.default.createElement(StyledFilterHeader, {
       styles: customSearchFilter == null ? void 0 : customSearchFilter.styles.header
-    }, /* @__PURE__ */ import_react17.default.createElement("b", null, title, ":"), "  \xA0 ", description))), /* @__PURE__ */ import_react17.default.createElement(AccordionItemPanel, null, /* @__PURE__ */ import_react17.default.createElement(StyledFilterContent, {
+    }, /* @__PURE__ */ import_react18.default.createElement("b", null, title, ":"), "  \xA0 ", description))), /* @__PURE__ */ import_react18.default.createElement(AccordionItemPanel, null, /* @__PURE__ */ import_react18.default.createElement(StyledFilterContent, {
       styles: customSearchFilter == null ? void 0 : customSearchFilter.styles.network
-    }, /* @__PURE__ */ import_react17.default.createElement(FilterNetworkAll, null), /* @__PURE__ */ import_react17.default.createElement(FilterNetworkSelectors, null))), /* @__PURE__ */ import_react17.default.createElement(AccordionItemPanel, null, /* @__PURE__ */ import_react17.default.createElement(StyledFilterContent, {
+    }, /* @__PURE__ */ import_react18.default.createElement(FilterNetworkAll, null), /* @__PURE__ */ import_react18.default.createElement(FilterNetworkSelectors, null))), /* @__PURE__ */ import_react18.default.createElement(AccordionItemPanel, null, /* @__PURE__ */ import_react18.default.createElement(StyledFilterContent, {
       styles: customSearchFilter == null ? void 0 : customSearchFilter.styles.exchange
-    }, exchangesActive && /* @__PURE__ */ import_react17.default.createElement(FilterExchangeAll, null), exchangesActive && /* @__PURE__ */ import_react17.default.createElement(FilterExchangeSelectors, null))))));
+    }, exchangesActive && /* @__PURE__ */ import_react18.default.createElement(FilterExchangeAll, null), exchangesActive && /* @__PURE__ */ import_react18.default.createElement(FilterExchangeSelectors, null))))));
   };
   var SearchFilters_default = SearchFilters;
 
@@ -57457,8 +57337,8 @@ spurious results.`);
   var TokenSearch = (renderProps) => {
     const dispatch = useDispatch();
     const { isSelecting, isLoading } = useSelector((state) => state);
-    const searchRef = (0, import_react18.useRef)();
-    (0, import_react18.useEffect)(() => {
+    const searchRef = (0, import_react19.useRef)();
+    (0, import_react19.useEffect)(() => {
       window.onmousedown = (e3) => {
         var _a;
         if (!((_a = searchRef == null ? void 0 : searchRef.current) == null ? void 0 : _a.contains(e3.target))) {
@@ -57466,11 +57346,11 @@ spurious results.`);
         }
       };
     }, [dispatch]);
-    return /* @__PURE__ */ import_react18.default.createElement(TokenSearch_default.Provider, {
+    return /* @__PURE__ */ import_react19.default.createElement(TokenSearch_default.Provider, {
       value: renderProps
-    }, /* @__PURE__ */ import_react18.default.createElement("div", {
+    }, /* @__PURE__ */ import_react19.default.createElement("div", {
       ref: searchRef
-    }, /* @__PURE__ */ import_react18.default.createElement(SearchInput_default, null), /* @__PURE__ */ import_react18.default.createElement(SearchFilters_default, null), isSelecting && /* @__PURE__ */ import_react18.default.createElement(SearchResult_default, {
+    }, /* @__PURE__ */ import_react19.default.createElement(SearchInput_default, null), /* @__PURE__ */ import_react19.default.createElement(SearchFilters_default, null), isSelecting && /* @__PURE__ */ import_react19.default.createElement(SearchResult_default, {
       loading: isLoading
     })));
   };
@@ -57478,9 +57358,9 @@ spurious results.`);
 
   // src/searchbar/index.tsx
   function SearchBar(renderProps) {
-    return /* @__PURE__ */ import_react19.default.createElement(Provider_default, {
+    return /* @__PURE__ */ import_react20.default.createElement(Provider_default, {
       store
-    }, /* @__PURE__ */ import_react19.default.createElement(tokenSearch_default, {
+    }, /* @__PURE__ */ import_react20.default.createElement(tokenSearch_default, {
       customSearchInput: renderProps == null ? void 0 : renderProps.customSearchInput,
       customSearchFilter: renderProps == null ? void 0 : renderProps.customSearchFilter,
       customChip: renderProps == null ? void 0 : renderProps.customChip,
