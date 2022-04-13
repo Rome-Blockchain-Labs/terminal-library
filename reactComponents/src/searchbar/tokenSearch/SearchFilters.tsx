@@ -21,15 +21,18 @@ const FilterWrapper = styled.div`
   .accordion__button:first-child:after {
     display: block;    
     content: '';
-    height: ${ props => props?.styles?.toggleHeight || "10px" };
-    width: ${ props => props?.styles?.toggleWidth || "10px" };
-    margin-right: ${ props => props?.styles?.toggleMarginRight || "25px" };
     position: absolute;
-    top: ${ props => props?.styles?.toggleMarginRight || "20px" };
     right: 0;
-    border-bottom: ${ props => props?.styles?.toggleBorderBottom || "2px solid currentColor" }; 
-    border-right: ${ props => props?.styles?.toggleBorderRight || "2px solid currentColor" }; 
     transform: rotate(-45deg);
+
+    ${({props}) => `
+      height: ${ props?.styles?.toggleHeight || "10px" };
+      width: ${ props?.styles?.toggleWidth || "10px" };
+      margin-right: ${ props?.styles?.toggleMarginRight || "25px" };    
+      top: ${ props?.styles?.toggleTop || "20px" };    
+      border-bottom: ${ props?.styles?.toggleBorderBottom || "2px solid currentColor" }; 
+      border-right: ${ props?.styles?.toggleBorderRight || "2px solid currentColor" }; 
+    `}
   }
 
   .accordion__button[aria-expanded='true']:first-child:after,
@@ -38,41 +41,48 @@ const FilterWrapper = styled.div`
   }
 
   .accordion__panel {
-    border: ${ props => props?.styles?.contentBorder || "0" }; 
-    border-top-style: ${ props => props?.styles?.contentBorderTop || "none" }; 
-    border-right-style: ${ props => props?.styles?.contentBorderRight || "none" }; 
-    border-bottom-style: ${ props => props?.styles?.contentBorderBottom || "none" }; 
-    border-left-style: ${ props => props?.styles?.contentBorderLeft || "none" }; 
-    border-radius: ${ props => props?.styles?.borderRadius || "0" }; 
-    margin:  ${ props => props?.styles?.margin || "0 10px" };       
+    ${({props}) => `
+      border: ${ props?.styles?.contentBorder || "0" }; 
+      border-top-style: ${ props?.styles?.contentBorderTop || "none" }; 
+      border-right-style: ${ props?.styles?.contentBorderRight || "none" }; 
+      border-bottom-style: ${ props?.styles?.contentBorderBottom || "none" }; 
+      border-left-style: ${ props?.styles?.contentBorderLeft || "none" }; 
+      border-radius: ${ props?.styles?.borderRadius || "0" }; 
+      margin:  ${ props?.styles?.margin || "0 10px" };       
+    `}    
   }
 `;
 
 const StyledFilterHeader = styled.div`  
-  display: ${ props => props?.styles?.display || "inline" };
-  width: ${ props => props?.styles?.width || "auto" };
-  border: ${ props => props?.styles?.border || "none" }; 
-  background-color: ${ props => props?.styles?.backgroundColor || "#f4f4f4" }; 
-  color: ${ props => props?.styles?.color || "#444" };
-  display: ${ props => props?.styles?.display || "block" }; 
-  cursor: pointer;
-  padding: ${ props => props?.styles?.padding || "18px" };   
-  text-align: ${ props => props?.styles?.textAlign || "left" };     
-  margin: ${ props => props?.styles?.margin || "5px" };     
-  border-radius: ${ props => props?.styles?.borderRadius || "0" };     
-  &:hover {
-    background-color: ${ props => props?.styles?.hoverColor || "#ddd" };
-  }
+  ${({props}) => `
+    display: ${ props?.styles?.display || "inline" };
+    width: ${ props?.styles?.width || "auto" };
+    border: ${ props?.styles?.border || "none" }; 
+    background-color: ${ props?.styles?.backgroundColor || "#f4f4f4" }; 
+    color: ${ props?.styles?.color || "#444" };
+    display: ${ props?.styles?.display || "block" }; 
+    cursor: pointer;
+    padding: ${ props?.styles?.padding || "18px" };   
+    text-align: ${ props?.styles?.textAlign || "left" };     
+    margin: ${ props?.styles?.margin || "5px" };     
+    border-radius: ${ props?.styles?.borderRadius || "0" };     
+    &:hover {
+      background-color: ${ props?.styles?.hoverColor || "#ddd" };
+    }
+  `}      
 `; 
 
 const StyledFilterContent = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: ${ props => props?.styles?.justifyContent || "center" };
-  align-items: ${ props => props?.styles?.alignItems || "center" };  
-  padding:  ${ props => props?.styles?.padding || "5px 10px" };       
-  background-color: ${ props => props?.styles?.backgroundColor || "#ddd" };
-  border-radius: ${ props => props?.styles?.borderRadius || "0" };     
+
+  ${({props}) => `
+    justify-content: ${ props?.styles?.justifyContent || "center" };
+    align-items: ${ props?.styles?.alignItems || "center" };  
+    padding:  ${ props?.styles?.padding || "5px 10px" };       
+    background-color: ${ props?.styles?.backgroundColor || "#ddd" };
+    border-radius: ${ props?.styles?.borderRadius || "0" };     
+  `}      
 `;
 
 export const SearchFilters = () => {

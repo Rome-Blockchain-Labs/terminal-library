@@ -13,7 +13,6 @@ import { firstAndLast, capitalizeFirstLetter } from './helpers/firstAndLast';
 import { intToWords } from './helpers/intToWords';
 import TokenSearchContext from '../Context/TokenSearch';
 const imageSize = 26;
-
 const DetailWrapper = styled.div`
   .accordion__button: hover {
     cursor: pointer;
@@ -24,20 +23,22 @@ const StyledHeader = styled.div`
   display: grid;
   grid-auto-flow: column;
   gap: 10px;
-  padding: ${ props => props?.styles?.padding || "10px" };
-  color: ${ props => props?.styles?.color || "black" };
-  background: ${ props => props?.styles?.background || "green" };
-  '&:hover': {
-
-  }
+  
+  ${({props}) => `
+    padding: ${ props?.styles?.padding || "10px" };
+    color: ${ props?.styles?.color || "black" };
+    background: ${ props?.styles?.background || "green" };
+  `}  
 `
 const StyeldPanel = styled.div`
   display: grid;
   grid-auto-flow: column;
   gap: 10px;
-  padding: ${ props => props?.styles?.padding || "10px" };
-  color: ${ props => props?.styles?.color || "black" };
-  background: ${ props => props?.styles?.background || "white" };  
+  ${({props}) => `
+    padding: ${ props?.styles?.padding || "10px" };
+    color: ${ props?.styles?.color || "black" };
+    background: ${ props?.styles?.background || "white" };  
+  `}    
 `
 
 const StyledActionWrapper = styled.div`
@@ -49,6 +50,7 @@ const StyledAction = styled.div`
   cursor: pointer;
   padding: 10;
 `
+
 const Action = (props) => {
   const { component, detail } = props
   const Component = component

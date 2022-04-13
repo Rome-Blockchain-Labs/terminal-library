@@ -2,6 +2,7 @@ import React, { memo, useContext } from 'react';
 import styled from 'styled-components';
 import TokenSearchContext from '../Context/TokenSearch';
 
+
 const StyledChip = styled.div`
   > input {
     display: none;
@@ -9,27 +10,39 @@ const StyledChip = styled.div`
 
   > input + label {
     -webkit-transition: all 500ms ease;
-    transition: all 500ms ease;
-    font-size: ${ props => props?.styles?.fontSize || "14px" };  
-    cursor: pointer;
-    border-radius: ${ props => props?.styles?.borderRadius || "5px" };  
-    background-color: ${ props => props?.styles?.backgroundColor || "#FFF" };  
-    border: ${ props => props?.styles?.border || "solid 2px #7d7d7d" };   
-    padding: ${ props => props?.styles?.padding || "0.1rem 0.3rem" };   
+    transition: all 500ms ease;    
+    cursor: pointer;    
     display: inline-block;
     -moz-user-select: -moz-none;
     -webkit-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    margin: ${ props => props?.styles?.margin || "5px" };   
+    ${
+      ({props}) => `
+        font-size: ${ props?.styles?.fontSize || "14px" };  
+        border-radius: ${ props?.styles?.borderRadius || "5px" };  
+        background-color: ${ props?.styles?.backgroundColor || "#FFF" };  
+        border: ${ props?.styles?.border || "solid 2px #7d7d7d" };   
+        padding: ${ props?.styles?.padding || "0.1rem 0.3rem" };   
+        margin: ${ props?.styles?.margin || "5px" };   
+        color: ${ props?.styles?.defaultColor || "black" };   
+        width: ${ props?.styles?.width || "100px" };   
+        height: ${ props?.styles?.height || "auto" };   
+        text-align: ${ props?.styles?.textAlign || "center" }; 
+      `
+    }      
   }
 
   > input:checked + label {
     -webkit-transition: all 500ms ease;
-    transition: all 500ms ease;    
-    border-color: ${ props => props?.styles?.checkedColor || "#666699" };    
-    color: ${ props => props?.styles?.checkedColor || "white" };   
-    background-color: ${ props => props?.styles?.checkedBackgroundColor || "#666699" };  
+    transition: all 500ms ease;   
+    ${
+      ({props}) => `
+        border-color: ${ props?.styles?.checkedColor || "#666699" };    
+        color: ${ props?.styles?.checkedColor || "white" };   
+        background-color: ${ props?.styles?.checkedBackgroundColor || "gray" };  
+      `
+    }     
   }
 `;
 

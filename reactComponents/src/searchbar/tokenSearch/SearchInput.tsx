@@ -1,42 +1,47 @@
 import React, { useEffect, useCallback, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { searchTokenPairs, startSelecting, toggleSelecting, setSearchText } from '../redux/tokenSearchSlice';
-import magnifyingGlass from './icon-search.svg';
+import { searchTokenPairs, startSelecting, setSearchText } from '../redux/tokenSearchSlice';
+import SearchIcon from './SearchIcon';
 import {minStringSearch} from "./helpers/config";
 import debounce from 'lodash.debounce';
 import TokenSearchContext from '../Context/TokenSearch';
 import {RootState} from "../redux/store";
 
 const StyledInput = styled.input`
-  width: ${ props => props?.styles?.width || "-webkit-fill-available" };
-  border: ${ props => props?.styles?.border || "none" }; 
   background-color: inherit;
-  color: ${ props => props?.styles?.color || "#FFF" };
-  display: ${ props => props?.styles?.display || "block" }; 
   margin-left: auto;
   margin-right: auto;
   position: relative;
-  border-color: ${ props => props?.styles?.borderColor || "#067c82" };  
-  border-style: ${ props => props?.styles?.borderStyle || "solid" };  
-  border-width: ${ props => props?.styles?.borderWidth || "1px" };  
-  border-radius: ${ props => props?.styles?.borderRadius || "0" };  
-  background: ${ props => props?.styles?.background || "#08333c" };   
-  padding: ${ props => props?.styles?.padding || "11px 15px" };    
-  font-size: ${ props => props?.styles?.fontSize || "15px" };      
-  font-family: ${ props => props?.styles?.fontFamily || "'Fira Code', monospace" };
+
+  ${({props}) => `
+    width: ${ props?.styles?.width || "-webkit-fill-available" };
+    border: ${ props?.styles?.border || "none" };   
+    color: ${ props?.styles?.color || "#FFF" };
+    display: ${ props?.styles?.display || "block" };   
+    border-color: ${ props?.styles?.borderColor || "#067c82" };  
+    border-style: ${ props?.styles?.borderStyle || "solid" };  
+    border-width: ${ props?.styles?.borderWidth || "1px" };  
+    border-radius: ${ props?.styles?.borderRadius || "0" };  
+    background: ${ props?.styles?.background || "#08333c" };   
+    padding: ${ props?.styles?.padding || "11px 15px" };    
+    font-size: ${ props?.styles?.fontSize || "15px" };      
+    font-family: ${ props?.styles?.fontFamily || "'Fira Code', monospace" };
+  `}  
 `;
 
-const HideOnSmallScreen = styled.img`
-  width: 30px;
+const StyledSearchIconWrapper = styled.div`  
   cursor: pointer;
   float: right;
   position: absolute;
-  right: 22px;
-  top: 9px;
-  @media only screen and (max-width: 990px) {
-    display: none;
-  }
+  ${({props}) => `
+    right: ${ props?.styles?.right || "15px" };      
+    top: ${ props?.styles?.top || "12px" };        
+  `}    
+`;
+
+const StyledWrapper = styled.div`
+  position: relative;
 `;
 
 const SearchInput = () => {
@@ -64,22 +69,29 @@ const SearchInput = () => {
   const debounceChangeHandler = useCallback( debounce(onChangeFilter, 350), [searchText])
   
   const placeholder = customSearchInput?.placeholder ?  customSearchInput?.placeholder : 'Please input token name or address.'
+  const activeColor = customSearchInput?.styles?.search?.activeColor ? customSearchInput?.styles?.search?.activeColor : '#666699'
+  const color  = customSearchInput?.styles?.search?.color ? customSearchInput?.styles?.search?.color : '#FFF'
+  const height = customSearchInput?.styles?.search?.height ? customSearchInput?.styles?.search?.height : 14
+  const width = customSearchInput?.styles?.search?.width ? customSearchInput?.styles?.search?.width : 14
+
   // RENDERING.
   return (
-    <div onClick={() => dispatch(startSelecting())}>
+    <StyledWrapper onClick={() => dispatch(startSelecting())}>
       <StyledInput 
         placeholder={placeholder}
         autocomplete={'off'}
         onChange={debounceChangeHandler}
-        styles={customSearchInput?.styles}
+        styles={customSearchInput?.styles?.input}
       />
-       
-      <HideOnSmallScreen
-        alt={''}
-        src={magnifyingGlass}
-        onClick={() => dispatch(toggleSelecting())}
-      />
-    </div>
+      <StyledSearchIconWrapper styles={customSearchInput?.styles?.search}>
+       <SearchIcon
+            activeColor={activeColor}
+            color={color}
+            height={height}
+            width={width}
+          />
+        </StyledSearchIconWrapper>
+    </StyledWrapper>
   );
 };
 export default SearchInput;

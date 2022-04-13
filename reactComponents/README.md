@@ -25,18 +25,26 @@ import { SearchBar } from '@romeblockchain/react-components';
 ```
 const customSearchInput = {
     styles: {
-        width: "-webkit-fill-available",
-        border: "none",
-        color: "#FFF",
-        display: "block",
-        borderColor: "#067c82",
-        borderStyle: "solid",
-        borderWidth: "1px",
-        borderRadius: "0",
-        background: "#08333c",
-        padding: "11px 15px",
-        fontSize: "15px",
-        fontFamily: "'Fira Code', monospace"
+        input: {
+            width: "-webkit-fill-available",
+            border: "none",
+            color: "#FFF",
+            display: "block",
+            borderColor: "#067c82",
+            borderStyle: "solid",
+            borderWidth: "1px",
+            borderRadius: "0",
+            background: "#08333c",
+            padding: "11px 15px",
+            fontSize: "15px",
+            fontFamily: "'Fira Code', monospace"
+        },
+        search: {
+            activeColor: "#FFF",
+            color: "#025234",
+            height: 14,
+            width: 14
+        }
     },
     placeholder: "You can search by token pairs here."
 }
@@ -103,7 +111,10 @@ const customChip = {
         margin:"5px",   
         defaultColor: "white",
         checkedColor: "#666699",
-        checkedBackgroundColor: "black"
+        checkedBackgroundColor: "black",
+        width: "auto",
+        height: "auto",
+        textAlign: "center",
   }
 }
 
