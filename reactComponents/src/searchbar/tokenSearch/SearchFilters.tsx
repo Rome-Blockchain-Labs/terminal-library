@@ -12,14 +12,26 @@ import {
 } from 'react-accessible-accordion';
 import { FilterNetworkAll, FilterNetworkSelectors } from "./SearchFiltersNetworkSelectors";
 import { FilterExchangeAll, FilterExchangeSelectors } from "./SearchFiltersExchangeSelectors";
-import {RootState} from "../redux/store";
+import { RootState } from "../redux/store";
+
+
+const networkCount = networkMap => {
+  let count = Object.values(networkMap).filter(b => b).length;
+
+  return count === 0 ? 'all' : count;
+};
+
+const exchangeCount = exchangeMap => {
+  let count = Object.values(exchangeMap).filter(b => b).length;
+
+  return count === 0 ? 'all' : count;
+};
+
 
 export const SearchFilters = () => {
-  const { networkMap, exchangeMap  } = useSelector((state:RootState) => state);
-  
-  const exchangesActive = Object.values(networkMap).filter(b => b).length !== 0;
-  const networkCount = Object.values(networkMap).filter(b=>b).length
-  const exchangeCount = Object.values(exchangeMap).filter(b=>b).length
+  const { networkMap, exchangeMap } = useSelector((state: RootState) => state);
+  const exchangesActive = Object.values(networkMap).some(b => b);
+
 
   // RENDERING.
   return (
@@ -28,7 +40,11 @@ export const SearchFilters = () => {
         <AccordionItemHeading>
           <AccordionItemButton >
             <div tw="p-4 flex">
-              <div tw="font-bold">Filter Networks:</div>  &nbsp; Searching {networkCount} networks and {exchangeCount} exchanges
+              <div tw="font-bold">Filter Networks:</div>&nbsp;Searching {
+                networkCount(exchangeMap)
+              } networks and {
+                exchangeCount(exchangeMap)
+              } exchanges
             </div>
           </AccordionItemButton>
         </AccordionItemHeading>
@@ -42,17 +58,17 @@ export const SearchFilters = () => {
             <FilterNetworkSelectors />
           </div>
         </AccordionItemPanel>
-        <AccordionItemPanel>          
+        <AccordionItemPanel>
           <div tw="flex flex-wrap justify-center m-2">
-          {
-            exchangesActive &&
-            <FilterExchangeAll />
-          }
-          {
-            exchangesActive &&
-            <FilterExchangeSelectors />
-          }    
-          </div>      
+            {
+              exchangesActive &&
+              <FilterExchangeAll />
+            }
+            {
+              exchangesActive &&
+              <FilterExchangeSelectors />
+            }
+          </div>
         </AccordionItemPanel>
       </AccordionItem>
     </Accordion>

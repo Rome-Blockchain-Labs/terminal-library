@@ -2,16 +2,16 @@ import React from "react"
 import { omitBy } from "lodash"
 import { useDispatch, useSelector } from 'react-redux';
 import { setExchangeMap, setExchangeMapAll } from "../redux/tokenSearchSlice"
-import { exchangeNames } from "./helpers/config";
 import { Chip } from "../Components/Chip";
-import {RootState} from "../redux/store";
+import { RootState } from "../redux/store";
+import { filterActiveAll, filterValidExchangeNames } from './helpers/filters.js';
 
 
 export const FilterExchangeAll = () => {
   const dispatch = useDispatch();
-  const { exchangeMap, networkMap } = useSelector((state:RootState) => state);
-  const exchangeAll = Object.values(omitBy(exchangeMap, b => !b)).length === 0;
-  const exchangeNamesActive = exchangeNames(Object.keys(omitBy(networkMap, b => !b)));
+  const { exchangeMap, networkMap } = useSelector((state: RootState) => state);
+  const exchangeAll = filterActiveAll(exchangeMap);
+  const exchangeNamesActive = filterValidExchangeNames(networkMap);
 
 
   // RENDERING.
@@ -26,8 +26,8 @@ export const FilterExchangeAll = () => {
 
 export const FilterExchangeSelectors = () => {
   const dispatch = useDispatch();
-  const { networkMap, exchangeMap } = useSelector((state:RootState) => state);
-  const exchangeNamesActive = exchangeNames(Object.keys(omitBy(networkMap, b => !b)));
+  const { networkMap, exchangeMap } = useSelector((state: RootState) => state);
+  const exchangeNamesActive = filterValidExchangeNames(networkMap);
 
 
   // Function generating the HTML element of the network.

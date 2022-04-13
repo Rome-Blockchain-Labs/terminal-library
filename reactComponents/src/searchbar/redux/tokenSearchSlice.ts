@@ -4,11 +4,11 @@ import { stringify } from 'flatted';
 import { searchTokensAsync } from "../tokenSearch/helpers/async";
 import { uniq, omitBy } from "lodash"
 import { networkExchangePairs } from '../tokenSearch/helpers/config';
-import {TokenSearchState} from "./types";
+import { TokenSearchState } from "./types";
 
 export const setPair = createAsyncThunk(
   'token/setPair',
-  async ({ selectedPair }:any) => {
+  async ({ selectedPair }: any) => {
     console.log("setPair")
     return selectedPair;
   }
@@ -16,7 +16,7 @@ export const setPair = createAsyncThunk(
 
 export const resetSearchOnNewExchange = createAsyncThunk(
   'token/searchReset',
-  async (searchString:any, thunkAPI:any) => {
+  async (searchString: any, thunkAPI: any) => {
     console.log("resetSearchOnNewExchange")
     thunkAPI.dispatch(searchTokenPairs(''));
   }
@@ -25,7 +25,7 @@ export const resetSearchOnNewExchange = createAsyncThunk(
 //todo no need for this to be a thunk
 const setPairSearchTimestamp = createAsyncThunk(
   'token/saveTime',
-  async (timestamp:any) => {
+  async (timestamp: any) => {
     return timestamp;
   }
 );
@@ -72,7 +72,7 @@ const valueCleaner = (networkMap, exchangeMap) => {
 
 export const searchTokenPairs = createAsyncThunk(
   'token/search',
-  async (searchString:any, thunkAPI:any) => {
+  async (searchString: any, thunkAPI: any) => {
     try {
       let { networkMap, exchangeMap } = thunkAPI.getState();
       let processedNetworks;
@@ -178,6 +178,9 @@ export const tokenSearchSlice = createSlice({
     setSearchText: (state, action) => {
       state.searchText = action.payload;
     },
+    setSearchToken: (state, action) => {
+      state.searchToken = action.payload;
+    },
     startSelecting: (state) => {
       state.isSelecting = true;
     },
@@ -233,6 +236,6 @@ export const tokenSearchSlice = createSlice({
   },
 });
 
-export const { setSearchText, startSelecting, stopSelecting, toggleSelecting, setExchangeMap, setExchangeMapAll, setNetworkMap, setNetworkMapAll } =
+export const { setSearchText, startSelecting, stopSelecting, toggleSelecting, setExchangeMap, setExchangeMapAll, setNetworkMap, setNetworkMapAll, setSearchToken } =
   tokenSearchSlice.actions;
 export default tokenSearchSlice.reducer;
