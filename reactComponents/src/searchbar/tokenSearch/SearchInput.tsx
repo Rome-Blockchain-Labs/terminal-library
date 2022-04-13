@@ -139,6 +139,7 @@ const SearchInput = () => {
       <StyledInput
         placeholder={'Select a token pair'}
         autocomplete={'off'}
+        maxLength="48"
         onChange={debounceChangeHandler}
       />
       <HideOnSmallScreen
