@@ -1977,9 +1977,9 @@
     }
   });
 
-  // node_modules/react-is/cjs/react-is.production.min.js
+  // node_modules/prop-types/node_modules/react-is/cjs/react-is.production.min.js
   var require_react_is_production_min = __commonJS({
-    "node_modules/react-is/cjs/react-is.production.min.js"(exports) {
+    "node_modules/prop-types/node_modules/react-is/cjs/react-is.production.min.js"(exports) {
       "use strict";
       var b3 = typeof Symbol === "function" && Symbol.for;
       var c3 = b3 ? Symbol.for("react.element") : 60103;
@@ -2090,9 +2090,9 @@
     }
   });
 
-  // node_modules/react-is/cjs/react-is.development.js
+  // node_modules/prop-types/node_modules/react-is/cjs/react-is.development.js
   var require_react_is_development = __commonJS({
-    "node_modules/react-is/cjs/react-is.development.js"(exports) {
+    "node_modules/prop-types/node_modules/react-is/cjs/react-is.development.js"(exports) {
       "use strict";
       if (process.env.NODE_ENV !== "production") {
         (function() {
@@ -2244,9 +2244,9 @@
     }
   });
 
-  // node_modules/react-is/index.js
+  // node_modules/prop-types/node_modules/react-is/index.js
   var require_react_is = __commonJS({
-    "node_modules/react-is/index.js"(exports, module) {
+    "node_modules/prop-types/node_modules/react-is/index.js"(exports, module) {
       "use strict";
       if (process.env.NODE_ENV === "production") {
         module.exports = require_react_is_production_min();
@@ -2828,11 +2828,290 @@
     }
   });
 
+  // node_modules/hoist-non-react-statics/node_modules/react-is/cjs/react-is.production.min.js
+  var require_react_is_production_min2 = __commonJS({
+    "node_modules/hoist-non-react-statics/node_modules/react-is/cjs/react-is.production.min.js"(exports) {
+      "use strict";
+      var b3 = typeof Symbol === "function" && Symbol.for;
+      var c3 = b3 ? Symbol.for("react.element") : 60103;
+      var d3 = b3 ? Symbol.for("react.portal") : 60106;
+      var e3 = b3 ? Symbol.for("react.fragment") : 60107;
+      var f2 = b3 ? Symbol.for("react.strict_mode") : 60108;
+      var g3 = b3 ? Symbol.for("react.profiler") : 60114;
+      var h2 = b3 ? Symbol.for("react.provider") : 60109;
+      var k3 = b3 ? Symbol.for("react.context") : 60110;
+      var l3 = b3 ? Symbol.for("react.async_mode") : 60111;
+      var m3 = b3 ? Symbol.for("react.concurrent_mode") : 60111;
+      var n3 = b3 ? Symbol.for("react.forward_ref") : 60112;
+      var p2 = b3 ? Symbol.for("react.suspense") : 60113;
+      var q3 = b3 ? Symbol.for("react.suspense_list") : 60120;
+      var r3 = b3 ? Symbol.for("react.memo") : 60115;
+      var t3 = b3 ? Symbol.for("react.lazy") : 60116;
+      var v3 = b3 ? Symbol.for("react.block") : 60121;
+      var w3 = b3 ? Symbol.for("react.fundamental") : 60117;
+      var x3 = b3 ? Symbol.for("react.responder") : 60118;
+      var y3 = b3 ? Symbol.for("react.scope") : 60119;
+      function z3(a3) {
+        if (typeof a3 === "object" && a3 !== null) {
+          var u3 = a3.$$typeof;
+          switch (u3) {
+            case c3:
+              switch (a3 = a3.type, a3) {
+                case l3:
+                case m3:
+                case e3:
+                case g3:
+                case f2:
+                case p2:
+                  return a3;
+                default:
+                  switch (a3 = a3 && a3.$$typeof, a3) {
+                    case k3:
+                    case n3:
+                    case t3:
+                    case r3:
+                    case h2:
+                      return a3;
+                    default:
+                      return u3;
+                  }
+              }
+            case d3:
+              return u3;
+          }
+        }
+      }
+      function A2(a3) {
+        return z3(a3) === m3;
+      }
+      exports.AsyncMode = l3;
+      exports.ConcurrentMode = m3;
+      exports.ContextConsumer = k3;
+      exports.ContextProvider = h2;
+      exports.Element = c3;
+      exports.ForwardRef = n3;
+      exports.Fragment = e3;
+      exports.Lazy = t3;
+      exports.Memo = r3;
+      exports.Portal = d3;
+      exports.Profiler = g3;
+      exports.StrictMode = f2;
+      exports.Suspense = p2;
+      exports.isAsyncMode = function(a3) {
+        return A2(a3) || z3(a3) === l3;
+      };
+      exports.isConcurrentMode = A2;
+      exports.isContextConsumer = function(a3) {
+        return z3(a3) === k3;
+      };
+      exports.isContextProvider = function(a3) {
+        return z3(a3) === h2;
+      };
+      exports.isElement = function(a3) {
+        return typeof a3 === "object" && a3 !== null && a3.$$typeof === c3;
+      };
+      exports.isForwardRef = function(a3) {
+        return z3(a3) === n3;
+      };
+      exports.isFragment = function(a3) {
+        return z3(a3) === e3;
+      };
+      exports.isLazy = function(a3) {
+        return z3(a3) === t3;
+      };
+      exports.isMemo = function(a3) {
+        return z3(a3) === r3;
+      };
+      exports.isPortal = function(a3) {
+        return z3(a3) === d3;
+      };
+      exports.isProfiler = function(a3) {
+        return z3(a3) === g3;
+      };
+      exports.isStrictMode = function(a3) {
+        return z3(a3) === f2;
+      };
+      exports.isSuspense = function(a3) {
+        return z3(a3) === p2;
+      };
+      exports.isValidElementType = function(a3) {
+        return typeof a3 === "string" || typeof a3 === "function" || a3 === e3 || a3 === m3 || a3 === g3 || a3 === f2 || a3 === p2 || a3 === q3 || typeof a3 === "object" && a3 !== null && (a3.$$typeof === t3 || a3.$$typeof === r3 || a3.$$typeof === h2 || a3.$$typeof === k3 || a3.$$typeof === n3 || a3.$$typeof === w3 || a3.$$typeof === x3 || a3.$$typeof === y3 || a3.$$typeof === v3);
+      };
+      exports.typeOf = z3;
+    }
+  });
+
+  // node_modules/hoist-non-react-statics/node_modules/react-is/cjs/react-is.development.js
+  var require_react_is_development2 = __commonJS({
+    "node_modules/hoist-non-react-statics/node_modules/react-is/cjs/react-is.development.js"(exports) {
+      "use strict";
+      if (process.env.NODE_ENV !== "production") {
+        (function() {
+          "use strict";
+          var hasSymbol = typeof Symbol === "function" && Symbol.for;
+          var REACT_ELEMENT_TYPE = hasSymbol ? Symbol.for("react.element") : 60103;
+          var REACT_PORTAL_TYPE = hasSymbol ? Symbol.for("react.portal") : 60106;
+          var REACT_FRAGMENT_TYPE = hasSymbol ? Symbol.for("react.fragment") : 60107;
+          var REACT_STRICT_MODE_TYPE = hasSymbol ? Symbol.for("react.strict_mode") : 60108;
+          var REACT_PROFILER_TYPE = hasSymbol ? Symbol.for("react.profiler") : 60114;
+          var REACT_PROVIDER_TYPE = hasSymbol ? Symbol.for("react.provider") : 60109;
+          var REACT_CONTEXT_TYPE = hasSymbol ? Symbol.for("react.context") : 60110;
+          var REACT_ASYNC_MODE_TYPE = hasSymbol ? Symbol.for("react.async_mode") : 60111;
+          var REACT_CONCURRENT_MODE_TYPE = hasSymbol ? Symbol.for("react.concurrent_mode") : 60111;
+          var REACT_FORWARD_REF_TYPE = hasSymbol ? Symbol.for("react.forward_ref") : 60112;
+          var REACT_SUSPENSE_TYPE = hasSymbol ? Symbol.for("react.suspense") : 60113;
+          var REACT_SUSPENSE_LIST_TYPE = hasSymbol ? Symbol.for("react.suspense_list") : 60120;
+          var REACT_MEMO_TYPE = hasSymbol ? Symbol.for("react.memo") : 60115;
+          var REACT_LAZY_TYPE = hasSymbol ? Symbol.for("react.lazy") : 60116;
+          var REACT_BLOCK_TYPE = hasSymbol ? Symbol.for("react.block") : 60121;
+          var REACT_FUNDAMENTAL_TYPE = hasSymbol ? Symbol.for("react.fundamental") : 60117;
+          var REACT_RESPONDER_TYPE = hasSymbol ? Symbol.for("react.responder") : 60118;
+          var REACT_SCOPE_TYPE = hasSymbol ? Symbol.for("react.scope") : 60119;
+          function isValidElementType2(type) {
+            return typeof type === "string" || typeof type === "function" || type === REACT_FRAGMENT_TYPE || type === REACT_CONCURRENT_MODE_TYPE || type === REACT_PROFILER_TYPE || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || type === REACT_SUSPENSE_LIST_TYPE || typeof type === "object" && type !== null && (type.$$typeof === REACT_LAZY_TYPE || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_PROVIDER_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE || type.$$typeof === REACT_FUNDAMENTAL_TYPE || type.$$typeof === REACT_RESPONDER_TYPE || type.$$typeof === REACT_SCOPE_TYPE || type.$$typeof === REACT_BLOCK_TYPE);
+          }
+          function typeOf(object2) {
+            if (typeof object2 === "object" && object2 !== null) {
+              var $$typeof = object2.$$typeof;
+              switch ($$typeof) {
+                case REACT_ELEMENT_TYPE:
+                  var type = object2.type;
+                  switch (type) {
+                    case REACT_ASYNC_MODE_TYPE:
+                    case REACT_CONCURRENT_MODE_TYPE:
+                    case REACT_FRAGMENT_TYPE:
+                    case REACT_PROFILER_TYPE:
+                    case REACT_STRICT_MODE_TYPE:
+                    case REACT_SUSPENSE_TYPE:
+                      return type;
+                    default:
+                      var $$typeofType = type && type.$$typeof;
+                      switch ($$typeofType) {
+                        case REACT_CONTEXT_TYPE:
+                        case REACT_FORWARD_REF_TYPE:
+                        case REACT_LAZY_TYPE:
+                        case REACT_MEMO_TYPE:
+                        case REACT_PROVIDER_TYPE:
+                          return $$typeofType;
+                        default:
+                          return $$typeof;
+                      }
+                  }
+                case REACT_PORTAL_TYPE:
+                  return $$typeof;
+              }
+            }
+            return void 0;
+          }
+          var AsyncMode = REACT_ASYNC_MODE_TYPE;
+          var ConcurrentMode = REACT_CONCURRENT_MODE_TYPE;
+          var ContextConsumer = REACT_CONTEXT_TYPE;
+          var ContextProvider = REACT_PROVIDER_TYPE;
+          var Element = REACT_ELEMENT_TYPE;
+          var ForwardRef = REACT_FORWARD_REF_TYPE;
+          var Fragment2 = REACT_FRAGMENT_TYPE;
+          var Lazy = REACT_LAZY_TYPE;
+          var Memo = REACT_MEMO_TYPE;
+          var Portal = REACT_PORTAL_TYPE;
+          var Profiler = REACT_PROFILER_TYPE;
+          var StrictMode = REACT_STRICT_MODE_TYPE;
+          var Suspense = REACT_SUSPENSE_TYPE;
+          var hasWarnedAboutDeprecatedIsAsyncMode = false;
+          function isAsyncMode(object2) {
+            {
+              if (!hasWarnedAboutDeprecatedIsAsyncMode) {
+                hasWarnedAboutDeprecatedIsAsyncMode = true;
+                console["warn"]("The ReactIs.isAsyncMode() alias has been deprecated, and will be removed in React 17+. Update your code to use ReactIs.isConcurrentMode() instead. It has the exact same API.");
+              }
+            }
+            return isConcurrentMode(object2) || typeOf(object2) === REACT_ASYNC_MODE_TYPE;
+          }
+          function isConcurrentMode(object2) {
+            return typeOf(object2) === REACT_CONCURRENT_MODE_TYPE;
+          }
+          function isContextConsumer2(object2) {
+            return typeOf(object2) === REACT_CONTEXT_TYPE;
+          }
+          function isContextProvider(object2) {
+            return typeOf(object2) === REACT_PROVIDER_TYPE;
+          }
+          function isElement(object2) {
+            return typeof object2 === "object" && object2 !== null && object2.$$typeof === REACT_ELEMENT_TYPE;
+          }
+          function isForwardRef(object2) {
+            return typeOf(object2) === REACT_FORWARD_REF_TYPE;
+          }
+          function isFragment(object2) {
+            return typeOf(object2) === REACT_FRAGMENT_TYPE;
+          }
+          function isLazy(object2) {
+            return typeOf(object2) === REACT_LAZY_TYPE;
+          }
+          function isMemo(object2) {
+            return typeOf(object2) === REACT_MEMO_TYPE;
+          }
+          function isPortal(object2) {
+            return typeOf(object2) === REACT_PORTAL_TYPE;
+          }
+          function isProfiler(object2) {
+            return typeOf(object2) === REACT_PROFILER_TYPE;
+          }
+          function isStrictMode(object2) {
+            return typeOf(object2) === REACT_STRICT_MODE_TYPE;
+          }
+          function isSuspense(object2) {
+            return typeOf(object2) === REACT_SUSPENSE_TYPE;
+          }
+          exports.AsyncMode = AsyncMode;
+          exports.ConcurrentMode = ConcurrentMode;
+          exports.ContextConsumer = ContextConsumer;
+          exports.ContextProvider = ContextProvider;
+          exports.Element = Element;
+          exports.ForwardRef = ForwardRef;
+          exports.Fragment = Fragment2;
+          exports.Lazy = Lazy;
+          exports.Memo = Memo;
+          exports.Portal = Portal;
+          exports.Profiler = Profiler;
+          exports.StrictMode = StrictMode;
+          exports.Suspense = Suspense;
+          exports.isAsyncMode = isAsyncMode;
+          exports.isConcurrentMode = isConcurrentMode;
+          exports.isContextConsumer = isContextConsumer2;
+          exports.isContextProvider = isContextProvider;
+          exports.isElement = isElement;
+          exports.isForwardRef = isForwardRef;
+          exports.isFragment = isFragment;
+          exports.isLazy = isLazy;
+          exports.isMemo = isMemo;
+          exports.isPortal = isPortal;
+          exports.isProfiler = isProfiler;
+          exports.isStrictMode = isStrictMode;
+          exports.isSuspense = isSuspense;
+          exports.isValidElementType = isValidElementType2;
+          exports.typeOf = typeOf;
+        })();
+      }
+    }
+  });
+
+  // node_modules/hoist-non-react-statics/node_modules/react-is/index.js
+  var require_react_is2 = __commonJS({
+    "node_modules/hoist-non-react-statics/node_modules/react-is/index.js"(exports, module) {
+      "use strict";
+      if (process.env.NODE_ENV === "production") {
+        module.exports = require_react_is_production_min2();
+      } else {
+        module.exports = require_react_is_development2();
+      }
+    }
+  });
+
   // node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js
   var require_hoist_non_react_statics_cjs = __commonJS({
     "node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js"(exports, module) {
       "use strict";
-      var reactIs = require_react_is();
+      var reactIs = require_react_is2();
       var REACT_STATICS = {
         childContextTypes: true,
         contextType: true,
@@ -2917,7 +3196,7 @@
   });
 
   // node_modules/react-redux/node_modules/react-is/cjs/react-is.production.min.js
-  var require_react_is_production_min2 = __commonJS({
+  var require_react_is_production_min3 = __commonJS({
     "node_modules/react-redux/node_modules/react-is/cjs/react-is.production.min.js"(exports) {
       "use strict";
       var b3 = 60103;
@@ -3055,7 +3334,7 @@
   });
 
   // node_modules/react-redux/node_modules/react-is/cjs/react-is.development.js
-  var require_react_is_development2 = __commonJS({
+  var require_react_is_development3 = __commonJS({
     "node_modules/react-redux/node_modules/react-is/cjs/react-is.development.js"(exports) {
       "use strict";
       if (process.env.NODE_ENV !== "production") {
@@ -3247,13 +3526,13 @@
   });
 
   // node_modules/react-redux/node_modules/react-is/index.js
-  var require_react_is2 = __commonJS({
+  var require_react_is3 = __commonJS({
     "node_modules/react-redux/node_modules/react-is/index.js"(exports, module) {
       "use strict";
       if (process.env.NODE_ENV === "production") {
-        module.exports = require_react_is_production_min2();
+        module.exports = require_react_is_production_min3();
       } else {
-        module.exports = require_react_is_development2();
+        module.exports = require_react_is_development3();
       }
     }
   });
@@ -50173,6 +50452,303 @@ spurious results.`);
     }
   });
 
+  // node_modules/react-is/cjs/react-is.production.min.js
+  var require_react_is_production_min4 = __commonJS({
+    "node_modules/react-is/cjs/react-is.production.min.js"(exports) {
+      "use strict";
+      var b3 = Symbol.for("react.element");
+      var c3 = Symbol.for("react.portal");
+      var d3 = Symbol.for("react.fragment");
+      var e3 = Symbol.for("react.strict_mode");
+      var f2 = Symbol.for("react.profiler");
+      var g3 = Symbol.for("react.provider");
+      var h2 = Symbol.for("react.context");
+      var k3 = Symbol.for("react.server_context");
+      var l3 = Symbol.for("react.forward_ref");
+      var m3 = Symbol.for("react.suspense");
+      var n3 = Symbol.for("react.suspense_list");
+      var p2 = Symbol.for("react.memo");
+      var q3 = Symbol.for("react.lazy");
+      var t3 = Symbol.for("react.offscreen");
+      var u3 = Symbol.for("react.module.reference");
+      function v3(a3) {
+        if (typeof a3 === "object" && a3 !== null) {
+          var r3 = a3.$$typeof;
+          switch (r3) {
+            case b3:
+              switch (a3 = a3.type, a3) {
+                case d3:
+                case f2:
+                case e3:
+                case m3:
+                case n3:
+                  return a3;
+                default:
+                  switch (a3 = a3 && a3.$$typeof, a3) {
+                    case k3:
+                    case h2:
+                    case l3:
+                    case q3:
+                    case p2:
+                    case g3:
+                      return a3;
+                    default:
+                      return r3;
+                  }
+              }
+            case c3:
+              return r3;
+          }
+        }
+      }
+      exports.ContextConsumer = h2;
+      exports.ContextProvider = g3;
+      exports.Element = b3;
+      exports.ForwardRef = l3;
+      exports.Fragment = d3;
+      exports.Lazy = q3;
+      exports.Memo = p2;
+      exports.Portal = c3;
+      exports.Profiler = f2;
+      exports.StrictMode = e3;
+      exports.Suspense = m3;
+      exports.SuspenseList = n3;
+      exports.isAsyncMode = function() {
+        return false;
+      };
+      exports.isConcurrentMode = function() {
+        return false;
+      };
+      exports.isContextConsumer = function(a3) {
+        return v3(a3) === h2;
+      };
+      exports.isContextProvider = function(a3) {
+        return v3(a3) === g3;
+      };
+      exports.isElement = function(a3) {
+        return typeof a3 === "object" && a3 !== null && a3.$$typeof === b3;
+      };
+      exports.isForwardRef = function(a3) {
+        return v3(a3) === l3;
+      };
+      exports.isFragment = function(a3) {
+        return v3(a3) === d3;
+      };
+      exports.isLazy = function(a3) {
+        return v3(a3) === q3;
+      };
+      exports.isMemo = function(a3) {
+        return v3(a3) === p2;
+      };
+      exports.isPortal = function(a3) {
+        return v3(a3) === c3;
+      };
+      exports.isProfiler = function(a3) {
+        return v3(a3) === f2;
+      };
+      exports.isStrictMode = function(a3) {
+        return v3(a3) === e3;
+      };
+      exports.isSuspense = function(a3) {
+        return v3(a3) === m3;
+      };
+      exports.isSuspenseList = function(a3) {
+        return v3(a3) === n3;
+      };
+      exports.isValidElementType = function(a3) {
+        return typeof a3 === "string" || typeof a3 === "function" || a3 === d3 || a3 === f2 || a3 === e3 || a3 === m3 || a3 === n3 || a3 === t3 || typeof a3 === "object" && a3 !== null && (a3.$$typeof === q3 || a3.$$typeof === p2 || a3.$$typeof === g3 || a3.$$typeof === h2 || a3.$$typeof === l3 || a3.$$typeof === u3 || a3.getModuleId !== void 0) ? true : false;
+      };
+      exports.typeOf = v3;
+    }
+  });
+
+  // node_modules/react-is/cjs/react-is.development.js
+  var require_react_is_development4 = __commonJS({
+    "node_modules/react-is/cjs/react-is.development.js"(exports) {
+      "use strict";
+      if (process.env.NODE_ENV !== "production") {
+        (function() {
+          "use strict";
+          var REACT_ELEMENT_TYPE = Symbol.for("react.element");
+          var REACT_PORTAL_TYPE = Symbol.for("react.portal");
+          var REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
+          var REACT_STRICT_MODE_TYPE = Symbol.for("react.strict_mode");
+          var REACT_PROFILER_TYPE = Symbol.for("react.profiler");
+          var REACT_PROVIDER_TYPE = Symbol.for("react.provider");
+          var REACT_CONTEXT_TYPE = Symbol.for("react.context");
+          var REACT_SERVER_CONTEXT_TYPE = Symbol.for("react.server_context");
+          var REACT_FORWARD_REF_TYPE = Symbol.for("react.forward_ref");
+          var REACT_SUSPENSE_TYPE = Symbol.for("react.suspense");
+          var REACT_SUSPENSE_LIST_TYPE = Symbol.for("react.suspense_list");
+          var REACT_MEMO_TYPE = Symbol.for("react.memo");
+          var REACT_LAZY_TYPE = Symbol.for("react.lazy");
+          var REACT_OFFSCREEN_TYPE = Symbol.for("react.offscreen");
+          var enableScopeAPI = false;
+          var enableCacheElement = false;
+          var enableTransitionTracing = false;
+          var enableLegacyHidden = false;
+          var enableDebugTracing = false;
+          var REACT_MODULE_REFERENCE = Symbol.for("react.module.reference");
+          function isValidElementType2(type) {
+            if (typeof type === "string" || typeof type === "function") {
+              return true;
+            }
+            if (type === REACT_FRAGMENT_TYPE || type === REACT_PROFILER_TYPE || enableDebugTracing || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || type === REACT_SUSPENSE_LIST_TYPE || enableLegacyHidden || type === REACT_OFFSCREEN_TYPE || enableScopeAPI || enableCacheElement || enableTransitionTracing) {
+              return true;
+            }
+            if (typeof type === "object" && type !== null) {
+              if (type.$$typeof === REACT_LAZY_TYPE || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_PROVIDER_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE || type.$$typeof === REACT_MODULE_REFERENCE || type.getModuleId !== void 0) {
+                return true;
+              }
+            }
+            return false;
+          }
+          function typeOf(object2) {
+            if (typeof object2 === "object" && object2 !== null) {
+              var $$typeof = object2.$$typeof;
+              switch ($$typeof) {
+                case REACT_ELEMENT_TYPE:
+                  var type = object2.type;
+                  switch (type) {
+                    case REACT_FRAGMENT_TYPE:
+                    case REACT_PROFILER_TYPE:
+                    case REACT_STRICT_MODE_TYPE:
+                    case REACT_SUSPENSE_TYPE:
+                    case REACT_SUSPENSE_LIST_TYPE:
+                      return type;
+                    default:
+                      var $$typeofType = type && type.$$typeof;
+                      switch ($$typeofType) {
+                        case REACT_SERVER_CONTEXT_TYPE:
+                        case REACT_CONTEXT_TYPE:
+                        case REACT_FORWARD_REF_TYPE:
+                        case REACT_LAZY_TYPE:
+                        case REACT_MEMO_TYPE:
+                        case REACT_PROVIDER_TYPE:
+                          return $$typeofType;
+                        default:
+                          return $$typeof;
+                      }
+                  }
+                case REACT_PORTAL_TYPE:
+                  return $$typeof;
+              }
+            }
+            return void 0;
+          }
+          var ContextConsumer = REACT_CONTEXT_TYPE;
+          var ContextProvider = REACT_PROVIDER_TYPE;
+          var Element = REACT_ELEMENT_TYPE;
+          var ForwardRef = REACT_FORWARD_REF_TYPE;
+          var Fragment2 = REACT_FRAGMENT_TYPE;
+          var Lazy = REACT_LAZY_TYPE;
+          var Memo = REACT_MEMO_TYPE;
+          var Portal = REACT_PORTAL_TYPE;
+          var Profiler = REACT_PROFILER_TYPE;
+          var StrictMode = REACT_STRICT_MODE_TYPE;
+          var Suspense = REACT_SUSPENSE_TYPE;
+          var SuspenseList = REACT_SUSPENSE_LIST_TYPE;
+          var hasWarnedAboutDeprecatedIsAsyncMode = false;
+          var hasWarnedAboutDeprecatedIsConcurrentMode = false;
+          function isAsyncMode(object2) {
+            {
+              if (!hasWarnedAboutDeprecatedIsAsyncMode) {
+                hasWarnedAboutDeprecatedIsAsyncMode = true;
+                console["warn"]("The ReactIs.isAsyncMode() alias has been deprecated, and will be removed in React 18+.");
+              }
+            }
+            return false;
+          }
+          function isConcurrentMode(object2) {
+            {
+              if (!hasWarnedAboutDeprecatedIsConcurrentMode) {
+                hasWarnedAboutDeprecatedIsConcurrentMode = true;
+                console["warn"]("The ReactIs.isConcurrentMode() alias has been deprecated, and will be removed in React 18+.");
+              }
+            }
+            return false;
+          }
+          function isContextConsumer2(object2) {
+            return typeOf(object2) === REACT_CONTEXT_TYPE;
+          }
+          function isContextProvider(object2) {
+            return typeOf(object2) === REACT_PROVIDER_TYPE;
+          }
+          function isElement(object2) {
+            return typeof object2 === "object" && object2 !== null && object2.$$typeof === REACT_ELEMENT_TYPE;
+          }
+          function isForwardRef(object2) {
+            return typeOf(object2) === REACT_FORWARD_REF_TYPE;
+          }
+          function isFragment(object2) {
+            return typeOf(object2) === REACT_FRAGMENT_TYPE;
+          }
+          function isLazy(object2) {
+            return typeOf(object2) === REACT_LAZY_TYPE;
+          }
+          function isMemo(object2) {
+            return typeOf(object2) === REACT_MEMO_TYPE;
+          }
+          function isPortal(object2) {
+            return typeOf(object2) === REACT_PORTAL_TYPE;
+          }
+          function isProfiler(object2) {
+            return typeOf(object2) === REACT_PROFILER_TYPE;
+          }
+          function isStrictMode(object2) {
+            return typeOf(object2) === REACT_STRICT_MODE_TYPE;
+          }
+          function isSuspense(object2) {
+            return typeOf(object2) === REACT_SUSPENSE_TYPE;
+          }
+          function isSuspenseList(object2) {
+            return typeOf(object2) === REACT_SUSPENSE_LIST_TYPE;
+          }
+          exports.ContextConsumer = ContextConsumer;
+          exports.ContextProvider = ContextProvider;
+          exports.Element = Element;
+          exports.ForwardRef = ForwardRef;
+          exports.Fragment = Fragment2;
+          exports.Lazy = Lazy;
+          exports.Memo = Memo;
+          exports.Portal = Portal;
+          exports.Profiler = Profiler;
+          exports.StrictMode = StrictMode;
+          exports.Suspense = Suspense;
+          exports.SuspenseList = SuspenseList;
+          exports.isAsyncMode = isAsyncMode;
+          exports.isConcurrentMode = isConcurrentMode;
+          exports.isContextConsumer = isContextConsumer2;
+          exports.isContextProvider = isContextProvider;
+          exports.isElement = isElement;
+          exports.isForwardRef = isForwardRef;
+          exports.isFragment = isFragment;
+          exports.isLazy = isLazy;
+          exports.isMemo = isMemo;
+          exports.isPortal = isPortal;
+          exports.isProfiler = isProfiler;
+          exports.isStrictMode = isStrictMode;
+          exports.isSuspense = isSuspense;
+          exports.isSuspenseList = isSuspenseList;
+          exports.isValidElementType = isValidElementType2;
+          exports.typeOf = typeOf;
+        })();
+      }
+    }
+  });
+
+  // node_modules/react-is/index.js
+  var require_react_is4 = __commonJS({
+    "node_modules/react-is/index.js"(exports, module) {
+      "use strict";
+      if (process.env.NODE_ENV === "production") {
+        module.exports = require_react_is_production_min4();
+      } else {
+        module.exports = require_react_is_development4();
+      }
+    }
+  });
+
   // node_modules/shallowequal/index.js
   var require_shallowequal = __commonJS({
     "node_modules/shallowequal/index.js"(exports, module) {
@@ -50530,7 +51106,7 @@ spurious results.`);
   // node_modules/react-redux/es/components/connectAdvanced.js
   var import_hoist_non_react_statics = __toESM(require_hoist_non_react_statics_cjs());
   var import_react4 = __toESM(require_react());
-  var import_react_is = __toESM(require_react_is2());
+  var import_react_is = __toESM(require_react_is3());
 
   // node_modules/react-redux/es/hooks/useStore.js
   var import_react6 = __toESM(require_react());
@@ -54319,7 +54895,7 @@ spurious results.`);
   var import_react10 = __toESM(require_react());
 
   // node_modules/styled-components/dist/styled-components.esm.js
-  var import_react_is2 = __toESM(require_react_is());
+  var import_react_is2 = __toESM(require_react_is4());
   var import_react8 = __toESM(require_react());
   var import_shallowequal = __toESM(require_shallowequal());
 
@@ -56940,6 +57516,24 @@ object-assign
  * Released under MIT license <https://lodash.com/license>
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ */
+/**
+ * @license React
+ * react-is.development.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+/**
+ * @license React
+ * react-is.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 /**
  * Checks if an event is supported in the current execution environment.

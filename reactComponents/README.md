@@ -1,15 +1,12 @@
-## npm install dependency in package.json
+# Search Bar Token Pair Centric Widget
+## npm install
 ```
-    "@rbl/terminal-library": "git+https://github.com/Rome-Blockchain-Labs/terminal-library.git#8dda04858acb1c45437325857eff56c60afca5ee"
-```
-## OR
-```
- npm i @rbl/react-components
+ npm i @romeblockchain/react-components
 ```
 ## How to use the search bar component
-import { SearchBar } from "@rbl/terminal-library/reactComponents/dist"
-
 ```
+import { SearchBar } from '@romeblockchain/react-components';
+
 <div>
     <SearchBar />    
 </div>
