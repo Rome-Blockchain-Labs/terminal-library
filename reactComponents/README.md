@@ -132,14 +132,14 @@ const customResult = {
         border: "1px solid grey",
         color: "#FFF",
         display: "block",
-        border-color: "#067c82",
-        border-style: "solid",
-        border-width: "1px",
-        border-radius: "0",
+        borderColor: "#067c82",
+        borderStyle: "solid",
+        borderWidth: "1px",
+        borderRadius: "0",
         background: "#08333c",
         padding: "0",
-        font-size: "15px",
-        font-family: "'Fira Code', monospace"
+        fontSize: "15px",
+        fontFamily: "'Fira Code', monospace"
     }
 }
 
