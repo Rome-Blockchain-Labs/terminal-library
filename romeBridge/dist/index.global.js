@@ -61,7 +61,44 @@
     init() {
       this.subscribe(TerminalBridgeReadyEvent.TYPE, (data) => {
         this.widgetId = data.payload.widgetId;
+        this.namespaceCookiesStorage(data.payload.widgetName);
       });
+    }
+    namespaceCookiesStorage(prefix) {
+      const widgetNamespace = `${prefix}-`;
+      const set = window.localStorage.setItem;
+      const get = window.localStorage.getItem;
+      Storage.prototype.setItem = function() {
+        arguments[0] = widgetNamespace + arguments[0];
+        set.apply(this, arguments);
+      };
+      Storage.prototype.getItem = function() {
+        arguments[0] = widgetNamespace + arguments[0];
+        return get.apply(this, arguments);
+      };
+      var cookieDesc = Object.getOwnPropertyDescriptor(Document.prototype, "cookie") || Object.getOwnPropertyDescriptor(HTMLDocument.prototype, "cookie");
+      if (cookieDesc && cookieDesc.configurable) {
+        Object.defineProperty(document, "cookie", {
+          get: function() {
+            const cookiesStr = cookieDesc.get.call(document);
+            const nameSpacedCookiesArr = cookiesStr.split(";").filter((s) => s.trim().startsWith(widgetNamespace));
+            const cookiesArr = nameSpacedCookiesArr.map((s) => s.trim().slice(widgetNamespace.length));
+            return cookiesArr.join(";");
+          },
+          set: function(cookieStr) {
+            const attributes = cookieStr.split(";");
+            const keyVal = attributes.filter((att) => !["expires=", "path=", "domain=", "max-age=", "secure", "samesite", "__Secure", "__Host"].some((arg) => att.trim().startsWith(arg)))[0];
+            if (!keyVal)
+              throw new Error("Trying to set invalid cookie" + cookieStr);
+            const [key, val] = keyVal.split("=");
+            const replacement = `${widgetNamespace}${key}=${val}`;
+            const newCookie = cookieStr.replace(keyVal, replacement);
+            cookieDesc.set.call(document, newCookie);
+          },
+          enumerable: true,
+          configurable: true
+        });
+      }
     }
     emit(type, payload) {
       window.parent.postMessage({ payload, type, widgetId: this.widgetId }, "*");

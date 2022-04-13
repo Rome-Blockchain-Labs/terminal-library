@@ -4,8 +4,7 @@ import { Provider } from 'react-redux';
 import { store } from './redux/store';
 import TokenSearch from "./tokenSearch";
 
-export function SearchBar(renderProps) {
-  
+export function SearchBar(renderProps) {  
   return (  
     <Provider store={store}>      
       <TokenSearch 

@@ -10,7 +10,7 @@ export default defineConfig([
   {
     entry: ["./src/index.tsx"],
     ...commonConfig,
-    format: ["cjs"],
+    format: ["cjs", "esm", "iife"],
     outDir: "dist/",
   },
 ]);
