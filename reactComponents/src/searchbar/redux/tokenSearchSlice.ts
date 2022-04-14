@@ -8,16 +8,14 @@ import {TokenSearchState} from "./types";
 
 export const setPair = createAsyncThunk(
   'token/setPair',
-  async ({ selectedPair }:any) => {
-    console.log("setPair")
+  async ({ selectedPair }:any) => {    
     return selectedPair;
   }
 );
 
 export const resetSearchOnNewExchange = createAsyncThunk(
   'token/searchReset',
-  async (searchString:any, thunkAPI:any) => {
-    console.log("resetSearchOnNewExchange")
+  async (searchString:any, thunkAPI:any) => {    
     thunkAPI.dispatch(searchTokenPairs(''));
   }
 );
@@ -108,8 +106,6 @@ export const searchTokenPairs = createAsyncThunk(
       // Loading the data.
       const data = await retry(() => searchTokensAsync(searchString, processedNetworks, processedExchanges), { retries: 1 });
 
-      // console.log("data", data);
-      console.log("data", data.length);
       return { data, pairSearchTimestamp };
     }
     catch (e) {
