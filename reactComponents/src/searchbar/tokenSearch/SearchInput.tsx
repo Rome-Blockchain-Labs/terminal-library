@@ -68,11 +68,11 @@ const SearchInput = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debounceChangeHandler = useCallback( debounce(onChangeFilter, 350), [searchText])
   
-  const placeholder = customSearchInput?.placeholder ?  customSearchInput?.placeholder : 'Please input token name or address.'
-  const activeColor = customSearchInput?.styles?.search?.activeColor ? customSearchInput?.styles?.search?.activeColor : '#666699'
-  const color  = customSearchInput?.styles?.search?.color ? customSearchInput?.styles?.search?.color : '#FFF'
-  const height = customSearchInput?.styles?.search?.height ? customSearchInput?.styles?.search?.height : 14
-  const width = customSearchInput?.styles?.search?.width ? customSearchInput?.styles?.search?.width : 14
+  const placeholder = customSearchInput?.placeholder || 'Please input token name or address.'
+  const activeColor = customSearchInput?.styles?.search?.activeColor || '#666699'
+  const color  = customSearchInput?.styles?.search?.color || '#FFF'
+  const height = customSearchInput?.styles?.search?.height || 14
+  const width = customSearchInput?.styles?.search?.width || 14
 
   // RENDERING.
   return (
