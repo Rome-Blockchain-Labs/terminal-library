@@ -1,13 +1,12 @@
 {
-  "name": "@romeblockchain/react-components",
-  "version": "0.0.3",
+  "name": "guillaume-react-components",
+  "version": "0.0.5-d",
   "description": "Library of react components for the Rome Terminal",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist/"
   ],
-  "types": "./dist/index.d.ts",
   "scripts": {
     "clean": "rm -Rf ./dist && rm -Rf *.tgz",
     "prebuild": "npm run clean",

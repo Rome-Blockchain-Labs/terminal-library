@@ -1,17 +1,17 @@
 import React from "react"
 import { useDispatch, useSelector } from 'react-redux';
-import { omitBy } from "lodash"
 import { setNetworkMap, setNetworkMapAll, setExchangeMapAll } from "../redux/tokenSearchSlice"
 import { networkNames } from "./helpers/config";
 import { Chip } from "../Components/Chip";
-import {RootState} from "../redux/store";
+import { RootState } from "../redux/store";
+import { filterActiveAll, filterActiveNames } from './helpers/filters';
 
 
 export const FilterNetworkAll = () => {
   const dispatch = useDispatch();
-  const { exchangeMap, networkMap } = useSelector((state:RootState) => state);
-  const networkAll = Object.values(omitBy(networkMap, b => !b)).length === 0;
-  const exchangeNamesActive = Object.keys(omitBy(exchangeMap, b => !b));
+  const { exchangeMap, networkMap } = useSelector((state: RootState) => state);
+  const networkAll = filterActiveAll(networkMap);
+  const exchangeNamesActive = filterActiveNames(exchangeMap);
 
 
   // RENDERING.
@@ -31,7 +31,7 @@ export const FilterNetworkAll = () => {
 
 export const FilterNetworkSelectors = () => {
   const dispatch = useDispatch();
-  const { networkMap } = useSelector((state:RootState) => state);
+  const { networkMap } = useSelector((state: RootState) => state);
 
 
   // Function generating the HTML element of the network.
@@ -48,5 +48,5 @@ export const FilterNetworkSelectors = () => {
 
 
   // RENDERING.
-  return <>{networkNames.map((networkName:any) => networkElement(networkName))}</>
+  return <>{networkNames.map((networkName: any) => networkElement(networkName))}</>
 };

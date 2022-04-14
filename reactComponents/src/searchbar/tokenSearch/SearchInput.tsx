@@ -2,10 +2,10 @@ import React, { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import debounce from 'lodash.debounce';
-import { searchTokenPairs, startSelecting, toggleSelecting, setSearchText } from '../redux/tokenSearchSlice';
+import { searchTokenPairs, startSelecting, toggleSelecting, setSearchText, setSearchToken } from '../redux/tokenSearchSlice';
 import magnifyingGlass from './icon-search.svg'
-import {RootState} from "../redux/store";
-import {minStringSearch} from "./helpers/config";
+import { RootState } from "../redux/store";
+import { mutatorTextToken } from "./helpers/mutatorTextToken";
 
 const PairField = styled.div`
   display: block;
@@ -54,29 +54,26 @@ const HideOnSmallScreen = styled.img`
 
 const SearchInput = () => {
   const dispatch = useDispatch();
-  const { searchText, networkMap, exchangeMap } = useSelector((state:RootState) => state);
-  
+  const { searchText, networkMap, exchangeMap, searchToken } = useSelector((state: RootState) => state);
+
+
   // Updates the datasets of the results.
-  useEffect(() => {
-    // Ensure that the search text fulfills the minimum lenght requirement.
-    if (searchText.length >= minStringSearch) {
-      dispatch(searchTokenPairs(searchText));
-    }
-  }, [dispatch, searchText, networkMap, exchangeMap]);
+  useEffect(() => { dispatch(searchTokenPairs(searchText)); }, [dispatch, searchText, networkMap, exchangeMap]);
 
 
-  const onChangeFilter = (event) => {    
-    const value = event.target.value    
-    dispatch(setSearchText(value))
+  const onChangeFilter = (event) => {
+    const value = mutatorTextToken(event.target, searchToken, dispatch);
+    dispatch(setSearchText(value));
   }
 
-  const debounceChangeHandler = useCallback( debounce(onChangeFilter, 350), [searchText])  
+  const debounceChangeHandler = useCallback(debounce(onChangeFilter, 350), [searchText])
   // RENDERING.
   return (
     <PairField onClick={() => dispatch(startSelecting())}>
       <StyledInput
         placeholder={'Select a token pair'}
         autocomplete={'off'}
+        maxLength="48"
         onChange={debounceChangeHandler}
       />
       <HideOnSmallScreen
