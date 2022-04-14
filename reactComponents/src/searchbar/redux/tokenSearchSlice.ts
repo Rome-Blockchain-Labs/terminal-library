@@ -92,6 +92,7 @@ const initialState: TokenSearchState = {
   isSelecting: false,
   pairSearchTimestamp: initialTimestamp,
   searchText: '',
+  searchToken: false,
   selectedPair: undefined,
   serializedTradeEstimator: '',
   suggestions: [],
