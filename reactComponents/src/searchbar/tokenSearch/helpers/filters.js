@@ -1,7 +1,5 @@
-import { networkExchangePairs } from "./config";
+export const filterActiveAll = data => !Object.values(data).some(b => b);
 
-export const filterActiveAll = filteredData => !Object.values(filteredData).some(b => b);
+export const filterActiveNames = data => Object.entries(data).filter(entry => entry[1]).map(entry => entry[0]);
 
-export const filterActiveNames = filteredData => Object.entries(filteredData).filter(entry => entry[1]).map(entry => entry[0]);
-
-export const filterValidExchangeNames = networkNames => [...new Set(networkExchangePairs.filter(network => filterActiveNames(networkNames).includes(network[0])).map(network => network[1]))];
+export const filterValidExchangeNames = (data, source) => [...new Set(source.filter(entry => filterActiveNames(data).includes(entry[0])).map(entry => entry[1]))];
