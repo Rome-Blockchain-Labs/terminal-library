@@ -1,6 +1,6 @@
 {
   "name": "guillaume-react-components",
-  "version": "0.0.5",
+  "version": "0.0.5a",
   "description": "Library of react components for the Rome Terminal",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
