@@ -2,7 +2,7 @@ import BN from 'bignumber.js';
 import { stringify } from 'flatted';
 import { gql } from 'graphql-request';
 import { romePairsClient } from './graphqlClients';
-import {maxHits} from "./config";
+import { maxHits } from "./config";
 
 
 const getRomeSearchTokenQuery = (networks) => {
@@ -74,7 +74,7 @@ export const searchTokensAsync = async (searchString, searchNetworks, searchExch
   const parameters = searchTokenAsync_Parameters(searchText, searchExchanges);
   const query = getRomeSearchTokenQuery(searchNetworks);
 
-  
+
   // IMPORTANT!!!
   // IMPORTANT!!!
   // Fun fact, we are injecting ALL active exchanges for ANY network, wheter it is support or not.
@@ -94,7 +94,7 @@ export const searchTokensAsync = async (searchString, searchNetworks, searchExch
   const mappedPairs = Object
     // Loading an array from each data set comprised of [{networkName},{networkResults}].
     .entries(res)
-    .map((network:any) => {
+    .map((network: any) => {
       // Adding the network to the results so we can display this information to the user.
       network[1].map(result => result.network = network[0]);
 
@@ -103,8 +103,8 @@ export const searchTokensAsync = async (searchString, searchNetworks, searchExch
     })
     // Flattening all the data sets into one data set.
     .flat()
-    .filter((pair:any) => pair.token0 && pair.token1)
-    .map((pair:any) => {
+    .filter((pair: any) => pair.token0 && pair.token1)
+    .map((pair: any) => {
       const tokenPrices =
         pair.latest_token0_usd_price && pair.latest_token1_usd_price ?
           {

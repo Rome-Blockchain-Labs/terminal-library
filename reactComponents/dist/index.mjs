@@ -44,10 +44,7 @@ import { gql } from "graphql-request";
 import { GraphQLClient } from "graphql-request";
 
 // src/searchbar/tokenSearch/helpers/config.ts
-import { uniq } from "lodash";
 var romeTokenSyncUri = String(process.env.REACT_APP_HASURA_API_ENDPOINT_WS || "https://romenet.prod.velox.global/v1/graphql").replace("ws", "http");
-var maxHits = Number(process.env.REACT_APP_SEARCH_ASYNC_DATASET_LENGTH_MAXIMUM || 500);
-var minStringSearch = Number(process.env.REACT_APP_SEARCH_INPUT_LENGTH_MINIMUM || 3);
 var AvalanchePairs = [
   ["avalanche", "baguette"],
   ["avalanche", "canary"],
@@ -84,8 +81,8 @@ var moonriverPairs = [
   ["moonriver", "sushiswap"]
 ];
 var networkExchangePairs = [...BSCPairs, ...AvalanchePairs, ...moonbeamPairs, ...moonriverPairs];
-var networkNames = uniq(networkExchangePairs.map((pair) => pair[0]));
-var exchangeNames = (networkNames2) => uniq(networkExchangePairs.filter((pair) => networkNames2.includes(pair[0])).map((pair) => pair[1]));
+var networkNames = [...new Set(networkExchangePairs.map((pair) => pair[0]))];
+var maxHits = 500;
 
 // src/searchbar/tokenSearch/helpers/graphqlClients.ts
 var romePairsClient = new GraphQLClient(romeTokenSyncUri);
@@ -169,8 +166,12 @@ var searchTokensAsync = async (searchString, searchNetworks, searchExchanges) =>
   return mappedPairs;
 };
 
+// src/searchbar/tokenSearch/helpers/filters.ts
+var filterActiveAll = (data) => !Object.values(data).some((b) => b);
+var filterActiveNames = (data) => Object.entries(data).filter((entry) => entry[1]).map((entry) => entry[0]);
+var filterValidExchangeNames = (data, source) => [...new Set(source.filter((entry) => filterActiveNames(data).includes(entry[0])).map((entry) => entry[1]))];
+
 // src/searchbar/redux/tokenSearchSlice.ts
-import { uniq as uniq2, omitBy } from "lodash";
 var setPair = createAsyncThunk("token/setPair", async ({ selectedPair }) => {
   console.log("setPair");
   return selectedPair;
@@ -182,35 +183,22 @@ var resetSearchOnNewExchange = createAsyncThunk("token/searchReset", async (sear
 var setPairSearchTimestamp = createAsyncThunk("token/saveTime", async (timestamp) => {
   return timestamp;
 });
-var allValueHandler = (networkMap, exchangeMap) => {
-  let returnedNetworkMap = networkMap;
-  let returnedExchangeMap = exchangeMap;
-  if (networkMap.length === 0 || networkMap.includes("All")) {
-    returnedNetworkMap = uniq2(networkExchangePairs.map((pair) => pair[0]));
-  }
-  if (exchangeMap.length === 0 || exchangeMap.includes("All")) {
-    returnedExchangeMap = uniq2(networkExchangePairs.map((pair) => pair[1]));
-  }
-  return [returnedNetworkMap, returnedExchangeMap];
-};
-var valueCleaner = (networkMap, exchangeMap) => {
-  networkMap = Object.keys(omitBy(networkMap, (b) => !b));
-  exchangeMap = Object.keys(omitBy(exchangeMap, (b) => !b));
-  return [networkMap, exchangeMap];
-};
 var searchTokenPairs = createAsyncThunk("token/search", async (searchString, thunkAPI) => {
+  if (!searchString)
+    return;
   try {
     let { networkMap, exchangeMap } = thunkAPI.getState();
-    let processedNetworks;
-    let processedExchanges;
     const pairSearchTimestamp = new Date().getTime();
+    console.log("Search sent");
     thunkAPI.dispatch(setPairSearchTimestamp(pairSearchTimestamp));
-    [processedNetworks, processedExchanges] = valueCleaner(networkMap, exchangeMap);
-    [processedNetworks, processedExchanges] = allValueHandler(processedNetworks, processedExchanges);
-    processedExchanges = processedExchanges.filter((exchange) => networkExchangePairs.filter((pair) => processedNetworks.includes(pair[0]) && pair[1] === exchange).length >= 1);
-    processedNetworks = processedNetworks.filter((network) => networkExchangePairs.filter((pair) => pair[0] === network && processedExchanges.includes(pair[1])).length >= 1);
-    const data = await retry(() => searchTokensAsync(searchString, processedNetworks, processedExchanges), { retries: 1 });
-    console.log("data", data.length);
+    networkMap = filterActiveNames(networkMap);
+    exchangeMap = filterActiveNames(exchangeMap);
+    networkMap = filterActiveAll(networkMap) ? [...new Set(networkExchangePairs.map((pair) => pair[0]))] : networkMap;
+    exchangeMap = filterActiveAll(exchangeMap) ? [...new Set(networkExchangePairs.map((pair) => pair[1]))] : exchangeMap;
+    exchangeMap = exchangeMap.filter((exchange) => networkExchangePairs.filter((pair) => networkMap.includes(pair[0]) && pair[1] === exchange).length >= 1);
+    networkMap = networkMap.filter((network) => networkExchangePairs.filter((pair) => pair[0] === network && exchangeMap.includes(pair[1])).length >= 1);
+    const data = await retry(() => searchTokensAsync(searchString, networkMap, exchangeMap), { retries: 1 });
+    console.log(data.length + " results", new Date().getTime() - pairSearchTimestamp + "ms");
     return { data, pairSearchTimestamp };
   } catch (e) {
     console.log("err searchTokenPairs", e);
@@ -224,6 +212,7 @@ var initialState = {
   isSelecting: false,
   pairSearchTimestamp: initialTimestamp,
   searchText: "",
+  searchToken: false,
   selectedPair: void 0,
   serializedTradeEstimator: "",
   suggestions: [],
@@ -274,6 +263,9 @@ var tokenSearchSlice = createSlice({
     setSearchText: (state, action) => {
       state.searchText = action.payload;
     },
+    setSearchToken: (state, action) => {
+      state.searchToken = action.payload;
+    },
     startSelecting: (state) => {
       state.isSelecting = true;
     },
@@ -313,7 +305,7 @@ var tokenSearchSlice = createSlice({
     }
   }
 });
-var { setSearchText, startSelecting, stopSelecting, toggleSelecting, setExchangeMap, setExchangeMapAll, setNetworkMap, setNetworkMapAll } = tokenSearchSlice.actions;
+var { setSearchText, startSelecting, stopSelecting, toggleSelecting, setExchangeMap, setExchangeMapAll, setNetworkMap, setNetworkMapAll, setSearchToken } = tokenSearchSlice.actions;
 var tokenSearchSlice_default = tokenSearchSlice.reducer;
 
 // src/searchbar/redux/store.ts
@@ -340,6 +332,31 @@ import debounce from "lodash.debounce";
 
 // src/searchbar/tokenSearch/icon-search.svg
 var icon_search_default = "./icon-search-AYYIN6AJ.svg";
+
+// src/searchbar/tokenSearch/helpers/mutatorTextToken.ts
+var mutatorTextToken = (input, searchToken, dispatch) => {
+  let value = input.value;
+  const leadIsTokenLike = value.substr(0, 2).toLowerCase() === "0x";
+  const valueIsTokenLike = new RegExp(/^[0-9a-f]+$/i).test(value.substr(leadIsTokenLike ? 2 : 0));
+  const valueLength = value.length;
+  if (!leadIsTokenLike && valueIsTokenLike && valueLength >= 5) {
+    value = "0x" + value;
+    dispatch(setSearchToken(true));
+  } else if (searchToken)
+    if (leadIsTokenLike) {
+      if (valueLength < 7) {
+        value = value.substr(2);
+        dispatch(setSearchToken(false));
+      } else if (!valueIsTokenLike) {
+        value = value.substr(2);
+        dispatch(setSearchToken(false));
+      }
+    } else
+      dispatch(setSearchToken(false));
+  if (!!value)
+    input.value = value;
+  return value;
+};
 
 // src/searchbar/tokenSearch/SearchInput.tsx
 var PairField = styled.div`
@@ -385,14 +402,12 @@ var HideOnSmallScreen = styled.img`
 `;
 var SearchInput = () => {
   const dispatch = useDispatch();
-  const { searchText, networkMap, exchangeMap } = useSelector((state) => state);
+  const { searchText, networkMap, exchangeMap, searchToken } = useSelector((state) => state);
   useEffect(() => {
-    if (searchText.length >= minStringSearch) {
-      dispatch(searchTokenPairs(searchText));
-    }
+    dispatch(searchTokenPairs(searchText));
   }, [dispatch, searchText, networkMap, exchangeMap]);
   const onChangeFilter = (event) => {
-    const value = event.target.value;
+    const value = mutatorTextToken(event.target, searchToken, dispatch);
     dispatch(setSearchText(value));
   };
   const debounceChangeHandler = useCallback(debounce(onChangeFilter, 350), [searchText]);
@@ -401,6 +416,7 @@ var SearchInput = () => {
   }, /* @__PURE__ */ React.createElement(StyledInput, {
     placeholder: "Select a token pair",
     autocomplete: "off",
+    maxLength: "48",
     onChange: debounceChangeHandler
   }), /* @__PURE__ */ React.createElement(HideOnSmallScreen, {
     alt: "",
@@ -537,7 +553,6 @@ import {
 // src/searchbar/tokenSearch/SearchFiltersNetworkSelectors.tsx
 import React5 from "react";
 import { useDispatch as useDispatch2, useSelector as useSelector3 } from "react-redux";
-import { omitBy as omitBy2 } from "lodash";
 
 // src/searchbar/Components/Chip/index.tsx
 import React4, { memo } from "react";
@@ -559,8 +574,8 @@ var Chip = memo((props) => {
 var FilterNetworkAll = () => {
   const dispatch = useDispatch2();
   const { exchangeMap, networkMap } = useSelector3((state) => state);
-  const networkAll = Object.values(omitBy2(networkMap, (b) => !b)).length === 0;
-  const exchangeNamesActive = Object.keys(omitBy2(exchangeMap, (b) => !b));
+  const networkAll = filterActiveAll(networkMap);
+  const exchangeNamesActive = filterActiveNames(exchangeMap);
   return /* @__PURE__ */ React5.createElement(Chip, {
     name: "AllNetworks",
     label: "All",
@@ -588,13 +603,12 @@ var FilterNetworkSelectors = () => {
 
 // src/searchbar/tokenSearch/SearchFiltersExchangeSelectors.tsx
 import React6 from "react";
-import { omitBy as omitBy3 } from "lodash";
 import { useDispatch as useDispatch3, useSelector as useSelector4 } from "react-redux";
 var FilterExchangeAll = () => {
   const dispatch = useDispatch3();
   const { exchangeMap, networkMap } = useSelector4((state) => state);
-  const exchangeAll = Object.values(omitBy3(exchangeMap, (b) => !b)).length === 0;
-  const exchangeNamesActive = exchangeNames(Object.keys(omitBy3(networkMap, (b) => !b)));
+  const exchangeAll = filterActiveAll(exchangeMap);
+  const exchangeNamesActive = filterValidExchangeNames(networkMap, networkExchangePairs);
   return /* @__PURE__ */ React6.createElement(Chip, {
     name: "AllExchanges",
     label: "All",
@@ -605,7 +619,7 @@ var FilterExchangeAll = () => {
 var FilterExchangeSelectors = () => {
   const dispatch = useDispatch3();
   const { networkMap, exchangeMap } = useSelector4((state) => state);
-  const exchangeNamesActive = exchangeNames(Object.keys(omitBy3(networkMap, (b) => !b)));
+  const exchangeNamesActive = filterValidExchangeNames(networkMap, networkExchangePairs);
   const exchangeElement = (exchangeName) => {
     return /* @__PURE__ */ React6.createElement(Chip, {
       key: exchangeName,

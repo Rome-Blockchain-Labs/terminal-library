@@ -40,3 +40,4 @@ const moonriverPairs = [
 ]
 export const networkExchangePairs = [...BSCPairs, ...AvalanchePairs, ...moonbeamPairs, ...moonriverPairs];
 export const networkNames = [...new Set(networkExchangePairs.map(pair => pair[0]))];
+export const maxHits = 500;
