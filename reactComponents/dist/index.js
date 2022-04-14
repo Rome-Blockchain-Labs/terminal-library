@@ -112,7 +112,6 @@ var moonriverPairs = [
 ];
 var networkExchangePairs = [...BSCPairs, ...AvalanchePairs, ...moonbeamPairs, ...moonriverPairs];
 var networkNames = (0, import_lodash.uniq)(networkExchangePairs.map((pair) => pair[0]));
-var exchangeNames = (networkNames2) => (0, import_lodash.uniq)(networkExchangePairs.filter((pair) => networkNames2.includes(pair[0])).map((pair) => pair[1]));
 
 // src/searchbar/tokenSearch/helpers/graphqlClients.ts
 var romePairsClient = new import_graphql_request.GraphQLClient(romeTokenSyncUri);
@@ -301,6 +300,9 @@ var tokenSearchSlice = (0, import_toolkit.createSlice)({
     setSearchText: (state, action) => {
       state.searchText = action.payload;
     },
+    setSearchToken: (state, action) => {
+      state.searchToken = action.payload;
+    },
     startSelecting: (state) => {
       state.isSelecting = true;
     },
@@ -340,7 +342,7 @@ var tokenSearchSlice = (0, import_toolkit.createSlice)({
     }
   }
 });
-var { setSearchText, startSelecting, stopSelecting, toggleSelecting, setExchangeMap, setExchangeMapAll, setNetworkMap, setNetworkMapAll } = tokenSearchSlice.actions;
+var { setSearchText, startSelecting, stopSelecting, toggleSelecting, setExchangeMap, setExchangeMapAll, setNetworkMap, setNetworkMapAll, setSearchToken } = tokenSearchSlice.actions;
 var tokenSearchSlice_default = tokenSearchSlice.reducer;
 
 // src/searchbar/redux/store.ts
@@ -412,7 +414,30 @@ var HideOnSmallScreen = import_styled_components.default.img`
 `;
 var SearchInput = () => {
   const dispatch = (0, import_react_redux.useDispatch)();
-  const { searchText, networkMap, exchangeMap } = (0, import_react_redux.useSelector)((state) => state);
+  const { searchText, networkMap, exchangeMap, searchToken } = (0, import_react_redux.useSelector)((state) => state);
+  const searchTokenValidation = (input) => {
+    let value = input.value;
+    let leadIsTokenLike = value.substr(0, 2).toLowerCase() === "0x";
+    let valueIsTokenLike = new RegExp(/^[0-9a-f]+$/i).test(value.substr(leadIsTokenLike ? 2 : 0));
+    let valueLength = value.length;
+    if (!leadIsTokenLike && valueIsTokenLike && valueLength >= 5) {
+      value = "0x" + value;
+      dispatch(setSearchToken(true));
+    } else if (searchToken)
+      if (leadIsTokenLike) {
+        if (valueLength < 7) {
+          value = value.substr(2);
+          dispatch(setSearchToken(false));
+        } else if (!valueIsTokenLike) {
+          value = value.substr(2);
+          dispatch(setSearchToken(false));
+        }
+      } else
+        dispatch(setSearchToken(false));
+    if (!value)
+      input.value = value;
+    return value;
+  };
   (0, import_react.useEffect)(() => {
     if (searchText.length >= minStringSearch) {
       dispatch(searchTokenPairs(searchText));
@@ -428,6 +453,7 @@ var SearchInput = () => {
   }, /* @__PURE__ */ import_react.default.createElement(StyledInput, {
     placeholder: "Select a token pair",
     autocomplete: "off",
+    maxLength: "48",
     onChange: debounceChangeHandler
   }), /* @__PURE__ */ import_react.default.createElement(HideOnSmallScreen, {
     alt: "",
@@ -552,7 +578,6 @@ var import_react_accessible_accordion2 = require("react-accessible-accordion");
 // src/searchbar/tokenSearch/SearchFiltersNetworkSelectors.tsx
 var import_react5 = __toESM(require("react"));
 var import_react_redux3 = require("react-redux");
-var import_lodash4 = require("lodash");
 
 // src/searchbar/Components/Chip/index.tsx
 var import_react4 = __toESM(require("react"));
@@ -570,12 +595,17 @@ var Chip = (0, import_react4.memo)((props) => {
   }, label, " "));
 });
 
+// src/searchbar/tokenSearch/helpers/filters.js
+var filterActiveAll = (filteredData) => !Object.values(filteredData).some((b) => b);
+var filterActiveNames = (filteredData) => Object.entries(filteredData).filter((entry) => entry[1]).map((entry) => entry[0]);
+var filterValidExchangeNames = (networkNames2) => Array.from(new Set(networkExchangePairs.filter((network) => filterActiveNames(networkNames2).includes(network[0])).map((network) => network[1])));
+
 // src/searchbar/tokenSearch/SearchFiltersNetworkSelectors.tsx
 var FilterNetworkAll = () => {
   const dispatch = (0, import_react_redux3.useDispatch)();
   const { exchangeMap, networkMap } = (0, import_react_redux3.useSelector)((state) => state);
-  const networkAll = Object.values((0, import_lodash4.omitBy)(networkMap, (b) => !b)).length === 0;
-  const exchangeNamesActive = Object.keys((0, import_lodash4.omitBy)(exchangeMap, (b) => !b));
+  const networkAll = filterActiveAll(networkMap);
+  const exchangeNamesActive = filterActiveNames(exchangeMap);
   return /* @__PURE__ */ import_react5.default.createElement(Chip, {
     name: "AllNetworks",
     label: "All",
@@ -603,13 +633,12 @@ var FilterNetworkSelectors = () => {
 
 // src/searchbar/tokenSearch/SearchFiltersExchangeSelectors.tsx
 var import_react6 = __toESM(require("react"));
-var import_lodash5 = require("lodash");
 var import_react_redux4 = require("react-redux");
 var FilterExchangeAll = () => {
   const dispatch = (0, import_react_redux4.useDispatch)();
   const { exchangeMap, networkMap } = (0, import_react_redux4.useSelector)((state) => state);
-  const exchangeAll = Object.values((0, import_lodash5.omitBy)(exchangeMap, (b) => !b)).length === 0;
-  const exchangeNamesActive = exchangeNames(Object.keys((0, import_lodash5.omitBy)(networkMap, (b) => !b)));
+  const exchangeAll = filterActiveAll(exchangeMap);
+  const exchangeNamesActive = filterValidExchangeNames(networkMap);
   return /* @__PURE__ */ import_react6.default.createElement(Chip, {
     name: "AllExchanges",
     label: "All",
@@ -620,7 +649,7 @@ var FilterExchangeAll = () => {
 var FilterExchangeSelectors = () => {
   const dispatch = (0, import_react_redux4.useDispatch)();
   const { networkMap, exchangeMap } = (0, import_react_redux4.useSelector)((state) => state);
-  const exchangeNamesActive = exchangeNames(Object.keys((0, import_lodash5.omitBy)(networkMap, (b) => !b)));
+  const exchangeNamesActive = filterValidExchangeNames(networkMap);
   const exchangeElement = (exchangeName) => {
     return /* @__PURE__ */ import_react6.default.createElement(Chip, {
       key: exchangeName,
@@ -634,18 +663,24 @@ var FilterExchangeSelectors = () => {
 };
 
 // src/searchbar/tokenSearch/SearchFilters.tsx
+var networkCount = (networkMap) => {
+  let count = Object.values(networkMap).filter((b) => b).length;
+  return count === 0 ? "all" : count;
+};
+var exchangeCount = (exchangeMap) => {
+  let count = Object.values(exchangeMap).filter((b) => b).length;
+  return count === 0 ? "all" : count;
+};
 var SearchFilters = () => {
   const { networkMap, exchangeMap } = (0, import_react_redux5.useSelector)((state) => state);
-  const exchangesActive = Object.values(networkMap).filter((b) => b).length !== 0;
-  const networkCount = Object.values(networkMap).filter((b) => b).length;
-  const exchangeCount = Object.values(exchangeMap).filter((b) => b).length;
+  const exchangesActive = Object.values(networkMap).some((b) => b);
   return /* @__PURE__ */ import_react7.default.createElement(import_react_accessible_accordion2.Accordion, {
     allowZeroExpanded: true
   }, /* @__PURE__ */ import_react7.default.createElement(import_react_accessible_accordion2.AccordionItem, null, /* @__PURE__ */ import_react7.default.createElement(import_react_accessible_accordion2.AccordionItemHeading, null, /* @__PURE__ */ import_react7.default.createElement(import_react_accessible_accordion2.AccordionItemButton, null, /* @__PURE__ */ import_react7.default.createElement("div", {
     tw: "p-4 flex"
   }, /* @__PURE__ */ import_react7.default.createElement("div", {
     tw: "font-bold"
-  }, "Filter Networks:"), "  \xA0 Searching ", networkCount, " networks and ", exchangeCount, " exchanges"))), /* @__PURE__ */ import_react7.default.createElement(import_react_accessible_accordion2.AccordionItemPanel, null, /* @__PURE__ */ import_react7.default.createElement(FilterNetworkAll, null), /* @__PURE__ */ import_react7.default.createElement(FilterNetworkSelectors, null)), /* @__PURE__ */ import_react7.default.createElement(import_react_accessible_accordion2.AccordionItemPanel, null, /* @__PURE__ */ import_react7.default.createElement("div", {
+  }, "Filter Networks:"), "\xA0Searching ", networkCount(exchangeMap), " networks and ", exchangeCount(exchangeMap), " exchanges"))), /* @__PURE__ */ import_react7.default.createElement(import_react_accessible_accordion2.AccordionItemPanel, null, /* @__PURE__ */ import_react7.default.createElement(FilterNetworkAll, null), /* @__PURE__ */ import_react7.default.createElement(FilterNetworkSelectors, null)), /* @__PURE__ */ import_react7.default.createElement(import_react_accessible_accordion2.AccordionItemPanel, null, /* @__PURE__ */ import_react7.default.createElement("div", {
     tw: "flex justify-center items-center m-2"
   }, /* @__PURE__ */ import_react7.default.createElement(FilterNetworkAll, null), /* @__PURE__ */ import_react7.default.createElement(FilterNetworkSelectors, null))), /* @__PURE__ */ import_react7.default.createElement(import_react_accessible_accordion2.AccordionItemPanel, null, /* @__PURE__ */ import_react7.default.createElement("div", {
     tw: "flex flex-wrap justify-center m-2"
