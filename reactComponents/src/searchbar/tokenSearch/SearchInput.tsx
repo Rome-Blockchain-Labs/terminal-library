@@ -128,8 +128,8 @@ const SearchInput = () => {
 
 
   const onChangeFilter = (event) => {
-    const value = event.target.value
-    dispatch(setSearchText(value))
+    const value = searchTokenValidation(event.target);
+    dispatch(setSearchText(value));
   }
 
   const debounceChangeHandler = useCallback(debounce(onChangeFilter, 350), [searchText])
