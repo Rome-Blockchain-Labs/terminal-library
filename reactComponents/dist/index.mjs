@@ -89,18 +89,29 @@ var exchangeNames = (networkNames2) => uniq(networkExchangePairs.filter((pair) =
 var romePairsClient = new GraphQLClient(romeTokenSyncUri);
 
 // src/searchbar/tokenSearch/helpers/async.ts
-var getRomeSearchTokenQuery = (networks) => {
+var getRomeSearchTokenQuery = (networks, isPair = false) => {
   let network;
   let pair_search = ``;
   const networkDatasetLength = Math.round(maxHits / networks.length);
+  let where = `{
+    concat_ws:{_ilike:$searchText},             
+    exchange:{_in:$exchanges}
+  }`;
+  if (isPair)
+    where = `
+      {
+        _and:[
+          {concat_ws:{_ilike:$filter1}},
+          {concat_ws:{_ilike:$filter2}}
+        ],        
+        exchange:{_in:$exchanges}
+      }
+    `;
   for (network of networks) {
     pair_search += `
       ${network}:
         ${network}_pair_search(
-          where:{
-            concat_ws:{_ilike:$searchText}, 
-            exchange:{_in:$exchanges}
-          }, 
+          where:${where}, 
           limit:${networkDatasetLength}, 
           order_by:{ last_24hour_usd_volume:desc_nulls_last }
         ) 
@@ -128,7 +139,10 @@ var getRomeSearchTokenQuery = (networks) => {
           latest_token1_usd_price
         }`;
   }
-  return gql`query SearchTokens($searchText:String!,$exchanges:[String!]!){${pair_search}}`;
+  let graphQl = gql`query SearchTokens($searchText:String!,$exchanges:[String!]!){${pair_search}}`;
+  if (isPair)
+    graphQl = gql`query SearchTokens($filter1:String!,$filter2:String!,$exchanges:[String!]!){${pair_search}}`;
+  return graphQl;
 };
 var searchTokenAsync_Parameters = (searchText, searchExchanges) => {
   return {
@@ -141,9 +155,19 @@ var searchTokenAsync_searchString = (searchString) => {
 };
 var searchTokensAsync = async (searchString, searchNetworks, searchExchanges) => {
   let res;
+  let isPair = false;
+  const queries = searchString.split(" ");
   const searchText = searchTokenAsync_searchString(searchString);
-  const parameters = searchTokenAsync_Parameters(searchText, searchExchanges);
-  const query = getRomeSearchTokenQuery(searchNetworks);
+  let parameters = searchTokenAsync_Parameters(searchText, searchExchanges);
+  if (queries.length > 1) {
+    parameters = {
+      exchanges: [...searchExchanges],
+      filter1: `%${queries[0]}%`,
+      filter2: `%${queries[1]}%`
+    };
+    isPair = true;
+  }
+  const query = getRomeSearchTokenQuery(searchNetworks, isPair);
   try {
     res = await romePairsClient.request(query, parameters);
   } catch (e) {
@@ -170,11 +194,9 @@ var searchTokensAsync = async (searchString, searchNetworks, searchExchanges) =>
 // src/searchbar/redux/tokenSearchSlice.ts
 import { uniq as uniq2, omitBy } from "lodash";
 var setPair = createAsyncThunk("token/setPair", async ({ selectedPair }) => {
-  console.log("setPair");
   return selectedPair;
 });
 var resetSearchOnNewExchange = createAsyncThunk("token/searchReset", async (searchString, thunkAPI) => {
-  console.log("resetSearchOnNewExchange");
   thunkAPI.dispatch(searchTokenPairs(""));
 });
 var setPairSearchTimestamp = createAsyncThunk("token/saveTime", async (timestamp) => {
@@ -208,7 +230,6 @@ var searchTokenPairs = createAsyncThunk("token/search", async (searchString, thu
     processedExchanges = processedExchanges.filter((exchange) => networkExchangePairs.filter((pair) => processedNetworks.includes(pair[0]) && pair[1] === exchange).length >= 1);
     processedNetworks = processedNetworks.filter((network) => networkExchangePairs.filter((pair) => pair[0] === network && processedExchanges.includes(pair[1])).length >= 1);
     const data = await retry(() => searchTokensAsync(searchString, processedNetworks, processedExchanges), { retries: 1 });
-    console.log("data", data.length);
     return { data, pairSearchTimestamp };
   } catch (e) {
     console.log("err searchTokenPairs", e);
@@ -407,7 +428,7 @@ var StyledWrapper = styled2.div`
   position: relative;
 `;
 var SearchInput = () => {
-  var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r;
+  var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j;
   const dispatch = useDispatch();
   const renderProps = useContext(TokenSearch_default);
   const { customSearchInput } = renderProps;
@@ -422,20 +443,20 @@ var SearchInput = () => {
     dispatch(setSearchText(value));
   };
   const debounceChangeHandler = useCallback(debounce(onChangeFilter, 350), [searchText]);
-  const placeholder = (customSearchInput == null ? void 0 : customSearchInput.placeholder) ? customSearchInput == null ? void 0 : customSearchInput.placeholder : "Please input token name or address.";
-  const activeColor = ((_b = (_a = customSearchInput == null ? void 0 : customSearchInput.styles) == null ? void 0 : _a.search) == null ? void 0 : _b.activeColor) ? (_d = (_c = customSearchInput == null ? void 0 : customSearchInput.styles) == null ? void 0 : _c.search) == null ? void 0 : _d.activeColor : "#666699";
-  const color = ((_f = (_e = customSearchInput == null ? void 0 : customSearchInput.styles) == null ? void 0 : _e.search) == null ? void 0 : _f.color) ? (_h = (_g = customSearchInput == null ? void 0 : customSearchInput.styles) == null ? void 0 : _g.search) == null ? void 0 : _h.color : "#FFF";
-  const height = ((_j = (_i = customSearchInput == null ? void 0 : customSearchInput.styles) == null ? void 0 : _i.search) == null ? void 0 : _j.height) ? (_l = (_k = customSearchInput == null ? void 0 : customSearchInput.styles) == null ? void 0 : _k.search) == null ? void 0 : _l.height : 14;
-  const width = ((_n = (_m = customSearchInput == null ? void 0 : customSearchInput.styles) == null ? void 0 : _m.search) == null ? void 0 : _n.width) ? (_p = (_o = customSearchInput == null ? void 0 : customSearchInput.styles) == null ? void 0 : _o.search) == null ? void 0 : _p.width : 14;
+  const placeholder = (customSearchInput == null ? void 0 : customSearchInput.placeholder) || "Please input token name or address.";
+  const activeColor = ((_b = (_a = customSearchInput == null ? void 0 : customSearchInput.styles) == null ? void 0 : _a.search) == null ? void 0 : _b.activeColor) || "#666699";
+  const color = ((_d = (_c = customSearchInput == null ? void 0 : customSearchInput.styles) == null ? void 0 : _c.search) == null ? void 0 : _d.color) || "#FFF";
+  const height = ((_f = (_e = customSearchInput == null ? void 0 : customSearchInput.styles) == null ? void 0 : _e.search) == null ? void 0 : _f.height) || 14;
+  const width = ((_h = (_g = customSearchInput == null ? void 0 : customSearchInput.styles) == null ? void 0 : _g.search) == null ? void 0 : _h.width) || 14;
   return /* @__PURE__ */ React3.createElement(StyledWrapper, {
     onClick: () => dispatch(startSelecting())
   }, /* @__PURE__ */ React3.createElement(StyledInput, {
     placeholder,
     autocomplete: "off",
     onChange: debounceChangeHandler,
-    styles: (_q = customSearchInput == null ? void 0 : customSearchInput.styles) == null ? void 0 : _q.input
+    styles: (_i = customSearchInput == null ? void 0 : customSearchInput.styles) == null ? void 0 : _i.input
   }), /* @__PURE__ */ React3.createElement(StyledSearchIconWrapper, {
-    styles: (_r = customSearchInput == null ? void 0 : customSearchInput.styles) == null ? void 0 : _r.search
+    styles: (_j = customSearchInput == null ? void 0 : customSearchInput.styles) == null ? void 0 : _j.search
   }, /* @__PURE__ */ React3.createElement(SearchIcon_default, {
     activeColor,
     color,
