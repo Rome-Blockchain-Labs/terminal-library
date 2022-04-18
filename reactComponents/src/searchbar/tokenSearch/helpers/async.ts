@@ -5,21 +5,33 @@ import { romePairsClient } from './graphqlClients';
 import {maxHits} from "./config";
 
 
-const getRomeSearchTokenQuery = (networks) => {
+const getRomeSearchTokenQuery = (networks, isPair = false) => {
   let network;
   let pair_search = ``;
   const networkDatasetLength = Math.round(maxHits / networks.length);
 
+  let where = `{
+    concat_ws:{_ilike:$searchText},             
+    exchange:{_in:$exchanges}
+  }`
+
+  if (isPair)
+    where = `
+      {
+        _and:[
+          {concat_ws:{_ilike:$filter1}},
+          {concat_ws:{_ilike:$filter2}}
+        ],        
+        exchange:{_in:$exchanges}
+      }
+    `
 
   // Looping through all networks.
   for (network of networks) {
     pair_search += `
       ${network}:
         ${network}_pair_search(
-          where:{
-            concat_ws:{_ilike:$searchText}, 
-            exchange:{_in:$exchanges}
-          }, 
+          where:${where}, 
           limit:${networkDatasetLength}, 
           order_by:{ last_24hour_usd_volume:desc_nulls_last }
         ) 
@@ -48,7 +60,12 @@ const getRomeSearchTokenQuery = (networks) => {
         }`;
   }
 
-  return gql`query SearchTokens($searchText:String!,$exchanges:[String!]!){${pair_search}}`;
+  let graphQl = gql`query SearchTokens($searchText:String!,$exchanges:[String!]!){${pair_search}}`;
+
+  if (isPair)
+    graphQl = gql`query SearchTokens($filter1:String!,$filter2:String!,$exchanges:[String!]!){${pair_search}}`;
+  
+  return graphQl
 };
 
 // Function that prepares the parameters of the GraphQL query.
@@ -70,10 +87,22 @@ const searchTokenAsync_searchString = searchString => {
 // Function that creates the actual async token.
 export const searchTokensAsync = async (searchString, searchNetworks, searchExchanges) => {//, config = { nilVolumeOkay:false }) => {
   let res;
-  const searchText = searchTokenAsync_searchString(searchString);
-  const parameters = searchTokenAsync_Parameters(searchText, searchExchanges);
-  const query = getRomeSearchTokenQuery(searchNetworks);
+  let isPair = false
+  const queries = searchString.split(' ')
 
+  const searchText = searchTokenAsync_searchString(searchString);
+  let parameters: any = searchTokenAsync_Parameters(searchText, searchExchanges);
+  
+  if (queries.length > 1) {
+    parameters = {
+      exchanges: [...searchExchanges],
+      filter1: `%${queries[0]}%`,
+      filter2: `%${queries[1]}%`,
+    };
+    isPair = true
+  }
+
+  const query = getRomeSearchTokenQuery(searchNetworks, isPair);
   
   // IMPORTANT!!!
   // IMPORTANT!!!
