@@ -27,6 +27,7 @@ const customSearchInput = {
     styles: {
         input: {
             width: '-webkit-fill-available',
+            height: '32px',
             border: 'none',
             color: '#FFF',
             display: 'block',
