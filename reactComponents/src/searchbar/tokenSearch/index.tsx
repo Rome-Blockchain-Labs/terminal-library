@@ -1,17 +1,30 @@
-import React, { useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import 'styled-components/macro'
+import React, { useEffect, useRef, FC } from 'react';
+import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
+import styled from 'styled-components';
 import { stopSelecting } from '../redux/tokenSearchSlice';
 import SearchInput from "./SearchInput";
 import SearchResult from "./SearchResult";
 import SearchFilters from "./SearchFilters";
-import {RootState} from "../redux/store";
 import TokenSearchContext from '../Context/TokenSearch'
+import { RenderProps } from '../../types';
 
-export const TokenSearch = (renderProps: any) => {
+const StyledWrapper = styled.div`
+  ${({styles}) => `
+    min-width: 540px;
+    overflow-x: auto;
+    background-color: ${ styles?.backgroundColor || "#474F5C" };  
+    border-color: ${ styles?.borderColor || "#474F5C" };  
+    border-style: ${ styles?.borderStyle || "solid" };  
+    border-width: ${ styles?.borderWidth || "4px" };  
+    border-radius: ${ styles?.borderRadius || "4px" };  
+  `}  
+`
+
+export const TokenSearch: FC<RenderProps> = (renderProps: RenderProps) => {
+  const { customWrapper } = renderProps
   const dispatch = useDispatch();
-  const { isSelecting, isLoading } = useSelector((state:RootState) => state);
-  const searchRef = useRef<HTMLInputElement>();
+  const { isSelecting, isLoading } = useSelector((state: RootStateOrAny) => state);
+  const searchRef = useRef<HTMLDivElement>();
 
   useEffect(() => {
     window.onmousedown = (e) => {
@@ -23,12 +36,12 @@ export const TokenSearch = (renderProps: any) => {
 
   return (
     <TokenSearchContext.Provider value={renderProps}>
-      <div ref={searchRef}>
+      <StyledWrapper ref={searchRef} styles={customWrapper}>
         <SearchInput />
-        <SearchFilters />
+        <SearchFilters />      
         {isSelecting && <SearchResult loading={isLoading} />}
-      </div>
-      </TokenSearchContext.Provider>
+      </StyledWrapper>
+    </TokenSearchContext.Provider>
   );
 };
 

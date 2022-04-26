@@ -1,42 +1,41 @@
-import React, { useEffect, useCallback, useContext } from 'react';
+import React, { useEffect, useCallback, useContext, FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { searchTokenPairs, startSelecting, setSearchText } from '../redux/tokenSearchSlice';
-import SearchIcon from './SearchIcon';
-import {minStringSearch} from "./helpers/config";
+import SearchIcon from '../icons/SearchIcon';
 import debounce from 'lodash.debounce';
 import TokenSearchContext from '../Context/TokenSearch';
-import {RootState} from "../redux/store";
+import {RootState} from '../redux/store';
+import config from '../config';
 
 const StyledInput = styled.input`
-  background-color: inherit;
-  margin-left: auto;
-  margin-right: auto;
-  position: relative;
-
-  ${({props}) => `
-    width: ${ props?.styles?.width || "-webkit-fill-available" };
-    border: ${ props?.styles?.border || "none" };   
-    color: ${ props?.styles?.color || "#FFF" };
-    display: ${ props?.styles?.display || "block" };   
-    border-color: ${ props?.styles?.borderColor || "#067c82" };  
-    border-style: ${ props?.styles?.borderStyle || "solid" };  
-    border-width: ${ props?.styles?.borderWidth || "1px" };  
-    border-radius: ${ props?.styles?.borderRadius || "0" };  
-    background: ${ props?.styles?.background || "#08333c" };   
-    padding: ${ props?.styles?.padding || "11px 15px" };    
-    font-size: ${ props?.styles?.fontSize || "15px" };      
-    font-family: ${ props?.styles?.fontFamily || "'Fira Code', monospace" };
+  ${({styles}) => `    
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    width: ${ styles?.width || "-webkit-fill-available" };
+    height: ${ styles?.height || "auto" };
+    border: ${ styles?.border || "none" };   
+    color: ${ styles?.color || "#7A808A" };
+    display: ${ styles?.display || "block" };   
+    border-color: ${ styles?.borderColor || "#474F5C" };  
+    border-style: ${ styles?.borderStyle || "none" };  
+    border-width: ${ styles?.borderWidth || "0" };  
+    border-radius: ${ styles?.borderRadius || "4px" };  
+    background: ${ styles?.background || "#00070E" };   
+    padding: ${ styles?.padding || "10px 14px" };    
+    font-size: ${ styles?.fontSize || "8px" };      
+    font-family: ${ styles?.fontFamily || "'Fira Code', monospace" };
   `}  
 `;
 
-const StyledSearchIconWrapper = styled.div`  
-  cursor: pointer;
-  float: right;
-  position: absolute;
-  ${({props}) => `
-    right: ${ props?.styles?.right || "15px" };      
-    top: ${ props?.styles?.top || "12px" };        
+const StyledSearchIconWrapper = styled.div`    
+  ${({styles}) => `
+    cursor: pointer;
+    float: right;
+    position: absolute;
+    right: ${ styles?.right || "14px" };      
+    top: ${ styles?.top || "6px" };        
   `}    
 `;
 
@@ -54,10 +53,10 @@ const SearchInput = () => {
   // Updates the datasets of the results. 
   useEffect(() => {
     // Ensure that the search text fulfills the minimum lenght requirement.
-    if (searchText.length >= minStringSearch) {
+    if (searchText.length >= config.SEARCH_INPUT_LENGTH_MINIMUM) {
       dispatch(searchTokenPairs(searchText));
     }
-  }, [dispatch, searchText, networkMap, exchangeMap]); 
+  }, [dispatch, networkMap, exchangeMap, searchText]); 
   
 
   const onChangeFilter = (event) => {    
@@ -65,15 +64,15 @@ const SearchInput = () => {
     dispatch(setSearchText(value))
   }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const debounceChangeHandler = useCallback( debounce(onChangeFilter, 350), [searchText])
   
-  const placeholder = customSearchInput?.placeholder || 'Please input token name or address.'
-  const activeColor = customSearchInput?.styles?.search?.activeColor || '#666699'
-  const color  = customSearchInput?.styles?.search?.color || '#FFF'
-  const height = customSearchInput?.styles?.search?.height || 14
-  const width = customSearchInput?.styles?.search?.width || 14
+  const placeholder = customSearchInput?.placeholder ?  customSearchInput?.placeholder : 'Search pair by symbol, name, contract or token'
 
+  const activeColor = customSearchInput?.search?.activeColor ? customSearchInput?.search?.activeColor : '#FF0000'
+  const color  = customSearchInput?.search?.color ? customSearchInput?.search?.color : '#7A808A'
+  const height = customSearchInput?.search?.height ? customSearchInput?.search?.height : 14
+  const width = customSearchInput?.search?.width ? customSearchInput?.search?.width : 14
+ 
   // RENDERING.
   return (
     <StyledWrapper onClick={() => dispatch(startSelecting())}>
@@ -81,15 +80,15 @@ const SearchInput = () => {
         placeholder={placeholder}
         autocomplete={'off'}
         onChange={debounceChangeHandler}
-        styles={customSearchInput?.styles?.input}
+        styles={customSearchInput?.input}
       />
-      <StyledSearchIconWrapper styles={customSearchInput?.styles?.search}>
-       <SearchIcon
+      <StyledSearchIconWrapper styles={customSearchInput?.search}>       
+        <SearchIcon
             activeColor={activeColor}
             color={color}
             height={height}
             width={width}
-          />
+          />          
         </StyledSearchIconWrapper>
     </StyledWrapper>
   );

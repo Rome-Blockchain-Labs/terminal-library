@@ -10,9 +10,12 @@
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
-    "jsx": "react",
-    "lib": ["ES2020", "dom"],
-    "module": "commonjs",
+    "jsx": "react-jsx",
+    "lib": [
+      "ES2020",
+      "dom"
+    ],
+    "module": "esnext",
     "moduleResolution": "node",
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": false,
@@ -26,8 +29,15 @@
     "strictBindCallApply": true,
     "sourceMap": true,
     "strict": false,
-    "target": "ES2020"
+    "target": "ES2020",
+    "allowSyntheticDefaultImports": true,
+    "noEmit": true
   },
-  "include": ["src/**/*", "src/custom.d.ts"],
-  "exclude": ["**/*.d.ts", "**/dist/*"]
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "**/*.d.ts",
+    "**/dist/*"
+  ]
 }

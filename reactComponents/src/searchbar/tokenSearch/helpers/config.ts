@@ -9,8 +9,6 @@ export const romeTokenSyncUri = String(
 
 export const maxHits = Number(process.env.REACT_APP_SEARCH_ASYNC_DATASET_LENGTH_MAXIMUM || 500)
 
-export const minStringSearch = Number(process.env.REACT_APP_SEARCH_INPUT_LENGTH_MINIMUM || 3)
-
 const AvalanchePairs = [
   ["avalanche","baguette"],
   ["avalanche","canary"],
