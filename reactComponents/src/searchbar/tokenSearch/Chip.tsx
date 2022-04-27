@@ -30,13 +30,13 @@ const StyledChip = styled.div`
           background-color: ${styles?.backgroundColor || "#232B35"};  
           border: ${styles?.border || "solid 2px #232B35"};   
           padding: ${styles?.padding || "7px 5px"};   
-          margin: ${styles?.margin || "5px 5px 0"};   
+          margin: ${styles?.margin || "5px"};   
           color: ${styles?.defaultColor || "#B4BBC7"};   
           width: ${styles?.width || "122px"};   
           height: ${styles?.height || "auto"};   
-          text-align: ${styles?.textAlign || "center"}; 
+          text-align: ${styles?.textAlign || "left"}; 
           text-transform: ${styles?.textTransform || "uppercase"}; 
-          grid-template-columns: ${styles?.gridTemplateColumn || "20px 20px 70px"}; 
+          grid-template-columns: ${styles?.gridTemplateColumns || "25px 85px 10px"}; 
           >:last-child {      
             justify-self: ${styles?.justifySelf || "end"}; 
           }
@@ -45,7 +45,7 @@ const StyledChip = styled.div`
         > input:checked + label {   
           -webkit-transition: all 500ms ease;
           transition: all 500ms ease;   
-          border-color: ${styles?.checkedColor || "#474F5C"};    
+          border-color: ${styles?.checkedBorderColor || "#474F5C"};    
           color: ${styles?.checkedColor || "white"};   
           background-color: ${styles?.checkedBackgroundColor || "#474F5C"};   
         }    

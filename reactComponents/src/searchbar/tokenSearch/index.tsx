@@ -12,11 +12,9 @@ const StyledWrapper = styled.div`
   ${({styles}) => `
     min-width: 540px;
     overflow-x: auto;
-    background-color: ${ styles?.backgroundColor || "#474F5C" };  
-    border-color: ${ styles?.borderColor || "#474F5C" };  
-    border-style: ${ styles?.borderStyle || "solid" };  
-    border-width: ${ styles?.borderWidth || "4px" };  
+    background-color: ${ styles?.backgroundColor || "#474F5C" };          
     border-radius: ${ styles?.borderRadius || "4px" };  
+    border:  ${ styles?.border || "4px solid #474F5C" };  
   `}  
 `
 
@@ -38,8 +36,14 @@ export const TokenSearch: FC<RenderProps> = (renderProps: RenderProps) => {
     <TokenSearchContext.Provider value={renderProps}>
       <StyledWrapper ref={searchRef} styles={customWrapper}>
         <SearchInput />
-        <SearchFilters />      
-        {isSelecting && <SearchResult loading={isLoading} />}
+        
+        {isSelecting && (
+          <>
+            <SearchFilters />      
+            <SearchResult loading={isLoading} />
+          </>
+          )
+        }
       </StyledWrapper>
     </TokenSearchContext.Provider>
   );

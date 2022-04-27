@@ -15,32 +15,33 @@ const StyledResult = styled.div`
   position: relative;  
 `;
 
-const StyledLoading = styled.div`
-  position: relative;
-  display: flex;
-  justify-content: center;  
-  margin: 10px;
+const StyledLoading = styled.div`  
   ${({props}) => `
-    color: ${ props?.styles?.color || "black" };
-    font-size: ${ props?.styles?.fontSize || "15px" };      
+    position: relative;
+    display: flex;
+    justify-content: center;  
+    margin: 10px;
+    color: ${ props?.styles?.color || "white" };
+    font-size: ${ props?.styles?.fontSize || "12px" };      
   `}    
 `
 
 const StyledResultTitle = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
   ${({styles}) => `    
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     color: ${ styles?.color || "#B4BBC7" };
     font-size: ${ styles?.fontSize || "9px" };      
     padding: ${ styles?.padding || "4px 16px" };      
-    margin: ${ styles?.padding || "0" };      
+    margin: ${ styles?.margin || "0" };      
     > span {
-      font-size: ${ styles?.fontSize || "7px" };      
+      font-size: ${ styles?.fontSize2 || "7px" };      
     }
 
     > button {
+      display: flex;
+      align-items: center;
       border-color: ${ styles?.buttonBorderColor || "#232C38" };      
       background-color: ${ styles?.buttonBackColor || "#232C38" };      
       color: ${ styles?.buttonColor || "#7A808A" };      
@@ -111,23 +112,20 @@ const SearchResult: FC<Loading> = (props: Loading) => {
       const loadingTitle = customLoading?.loadingTitle ? customLoading.loadingTitle : 'Searching...'
       return <StyledLoading styles={customLoading?.styles}>{loadingTitle}</StyledLoading>;
     }
-  
-    if (!!searchText && !filteredSuggestions.length) {
-      const notFoundTitle = customLoading?.notFoundTitle ? customLoading.notFoundTitle : 'No pairs found...'    
-      return <StyledLoading styles={customLoading?.styles}>{notFoundTitle}</StyledLoading>;
-    }   
-  
+
+    const notFoundTitle = customLoading?.notFoundTitle ? customLoading.notFoundTitle : 'No results found'    
+      
     const handleClose = () => {
       dispatch(stopSelecting());
     }
      
     return (    
-      <StyledResult styles={customResult?.wrapper}>    
+      <StyledResult>    
         <StyledResultTitle styles={customResult?.title}>
           <div>
             Search Results <span>({filteredSuggestions.length} Results Found)</span>
           </div>
-          <button onClick={handleClose}>Close <UnCheckedIcon /></button>
+          <button onClick={handleClose}>Close&nbsp;<UnCheckedIcon /></button>
         </StyledResultTitle>      
         <StyledResultContent styles={customResult?.content}>
           <div className='header'>
@@ -147,6 +145,10 @@ const SearchResult: FC<Loading> = (props: Loading) => {
             />
             )
           }  
+          {
+            !!searchText && !filteredSuggestions.length &&
+            <StyledLoading styles={customLoading?.styles}>{notFoundTitle}</StyledLoading>
+          }
         </StyledResultContent>
       </StyledResult>        
     );

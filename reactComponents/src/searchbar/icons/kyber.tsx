@@ -4,8 +4,8 @@ import { IIconProps } from '.';
 const KyberIcon: FC<IIconProps> = memo(
   ({ active, activeColor, color, height, width }) => (
     <svg
-      height={height ?? 11}
-      width={width ?? 15}
+      height={height ?? 16}
+      width={width ?? 16}
       viewBox="0 0 11 15"        
       fill="none"
     >      

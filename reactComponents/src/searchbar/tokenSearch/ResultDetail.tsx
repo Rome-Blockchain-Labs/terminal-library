@@ -20,13 +20,13 @@ const StyledDetailList = styled.div`
     padding: ${ styles?.container?.padding || "5px 0" };    
     background: ${ styles?.container?.background || "#00070E" };
     border-bottom: ${ styles?.container?.borderbottom || "1px solid #474F5C" };    
-    grid-template-columns: ${styles?.container?.gridTemplateColumn || "18% 1% 18% 5% 6% 37% 10%"}; 
+    grid-template-columns: ${styles?.container?.gridTemplateColumns || "18% 1% 18% 5% 6% 37% 10%"}; 
 
     & .token {
       display: inherit;
       align-items: center;
       grid-template-columns: 20px 100px; 
-      color: ${ styles?.token?.background || "#B4BBC7" };
+      color: ${ styles?.token?.color || "#B4BBC7" };
       font-size: ${ styles?.token?.fontSize || "12px" };
       font-weight: ${ styles?.token?.fontWeight || "600" };      
       padding: 0 13px;
@@ -94,9 +94,9 @@ const StyledDetailContent = styled.div`
     & .details {
       display: grid;
       padding: 7px 0;
-      font-size: ${ styles?.content?.address?.fontSize || "10px" };
+      font-size: ${ styles?.content?.fontSize || "10px" };
 
-      grid-template-columns: ${styles?.content?.gridTemplateColumn || "52% 48% 1%"}; 
+      grid-template-columns: ${styles?.content?.gridTemplateColumns || "52% 48% 1%"}; 
 
       & .token {
         display: grid;
@@ -105,8 +105,8 @@ const StyledDetailContent = styled.div`
 
         & .name {
           align-self: center;          
-          font-size: ${ styles?.content?.token?.fontSize || "12px" };
-          font-weight: ${ styles?.content?.token?.fontWeight || "600" };
+          font-size: ${ styles?.token?.fontSize || "12px" };
+          font-weight: ${ styles?.token?.fontWeight || "600" };
           padding-left: 5px;
         }
     
@@ -116,7 +116,7 @@ const StyledDetailContent = styled.div`
           grid-row: 2;
           grid-column: 2;
           color: #B4BBC7;
-          font-size: ${ styles?.content?.address?.fontSize || "10px" };
+          font-size: ${ styles?.address?.fontSize || "10px" };
           padding-bottom: 10px;
           padding-left: 5px;
 
@@ -210,7 +210,7 @@ export type DetailType = {
 export const ResultDetail: FC<DetailType> = (props: DetailType) => {
   const { index, suggestions, handleDetail, currentIndex } = props;
   const renderProps = useContext(TokenSearchContext);  
-  const { customActions } = renderProps;
+  const { customActions, customTokenDetail } = renderProps;
 
   const selectedPair = suggestions[index];
   
@@ -230,7 +230,7 @@ export const ResultDetail: FC<DetailType> = (props: DetailType) => {
   return (
     <>     
     { currentIndex !== index && 
-      <StyledDetailList>              
+      <StyledDetailList styles={customTokenDetail?.list}>              
       <div className='token'>
         {tokenImage(selectedPair.token0)} <span>{selectedPair.token0.name}</span>
       </div>    
@@ -267,7 +267,7 @@ export const ResultDetail: FC<DetailType> = (props: DetailType) => {
     }
     {
       currentIndex === index && 
-      <StyledDetailContent>
+      <StyledDetailContent styles={customTokenDetail?.details}>
         <div className='details'>
           <div className='left'>
             <div className='token'>

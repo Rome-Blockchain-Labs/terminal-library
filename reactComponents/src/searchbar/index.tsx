@@ -13,10 +13,10 @@ export const SearchBar: FC<RenderProps> = (renderProps: RenderProps) => {
         customWrapper={renderProps?.customWrapper}
         customSearchInput={renderProps?.customSearchInput}
         customSearchFilter={renderProps?.customSearchFilter}
+        customLoading={renderProps?.customLoading}
         customChip={renderProps?.customChip}
         customResult={renderProps?.customResult}
-        customTokenDetail={renderProps?.customTokenDetail}
-        customLoading={renderProps?.customLoading}
+        customTokenDetail={renderProps?.customTokenDetail}        
         customActions={renderProps?.customActions}        
         customAllChip={renderProps?.customAllChip}
       />

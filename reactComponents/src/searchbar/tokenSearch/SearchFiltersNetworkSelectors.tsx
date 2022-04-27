@@ -29,7 +29,7 @@ export const FilterNetworkAll = () => {
     height: customAllChip?.height || "auto",
     textAlign: customAllChip?.textAlign || "center" ,
     textTransform: customAllChip?.textTransform || "inherit",
-    gridTemplateColumn: customAllChip?.gridTemplateColumn || "40px",
+    gridTemplateColumns: customAllChip?.gridTemplateColumns || "40px",
     justifySelf: customAllChip?.justifySelf || "center",    
   }
 

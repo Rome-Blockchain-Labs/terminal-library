@@ -27,6 +27,7 @@ import BeamSwapIcon from '../icons/beamswap';
 import SolarBeamIcon from '../icons/solarbeam';
 import StellaSwapIcon from '../icons/stellaswap';
 import SolarFlareIcon from '../icons/solar.flare'
+import MdexIcon from '../icons/mdex';
 
 type LogoType = {
   label: any;
@@ -57,7 +58,7 @@ export const Logo: FC<LogoType> = ({label, filter}) => {
       result = <TraderIcon />
         break
     case 'mdex':
-      result = <TraderIcon />
+      result = <MdexIcon />
         break
     case 'Select All':
       result = <></>

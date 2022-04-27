@@ -27,7 +27,7 @@ const FilterWrapper = styled.div`
       position: absolute;    
       transform: rotate(-45deg);  
       
-      color: ${ styles?.toggleHeight || "#B4BBC7" };
+      color: ${ styles?.toggleColor || "#B4BBC7" };
       height: ${ styles?.toggleHeight || "7px" };
       width: ${ styles?.toggleWidth || "7px" };
       margin-right: ${ styles?.toggleMarginRight || "0" };    
@@ -46,12 +46,8 @@ const FilterWrapper = styled.div`
     }
 
     .accordion__panel {    
-      border: ${ styles?.contentBorder || "0" }; 
-      border-top-style: ${ styles?.contentBorderTop || "none" }; 
-      border-right-style: ${ styles?.contentBorderRight || "none" }; 
-      border-bottom-style: ${ styles?.contentBorderBottom || "none" }; 
-      border-left-style: ${ styles?.contentBorderLeft || "none" }; 
-      border-radius: ${ styles?.borderRadius || "0" }; 
+      border: ${ styles?.contentBorder || "0" };       
+      border-radius: ${ styles?.contentBorderRadius || "0" }; 
       margin:  ${ styles?.margin || "0" };
     }
   `}  
@@ -74,7 +70,7 @@ const StyledFilterHeader = styled.div`
     font-size: ${ styles?.fontSize || "9px" };     
     font-weight: ${ styles?.fontWeight || "500" };     
     &:hover {
-      background-color: ${ styles?.hoverColor || "#474F5C" };
+      background-color: ${ styles?.hoverColor || "#232C38" };
     }
   `}      
 `; 
@@ -171,7 +167,7 @@ export const SearchFilters = () => {
               <StyledFilterContent styles={customSearchFilter?.network?.content}>                                         
                 <FilterNetworkSelectors />              
               </StyledFilterContent>                                        
-              <StyledDescription>
+              <StyledDescription styles={customSearchFilter?.network?.description}>
                 <SearchDescription 
                   networkCount={networkCount}
                   exchangeCount={exchangeCount}
@@ -197,8 +193,8 @@ export const SearchFilters = () => {
               <StyledFilterWrapper styles={customSearchFilter?.exchange?.wrapper}>
                 <StyledFilterContent styles={customSearchFilter?.exchange?.content}>                                         
                   <FilterExchangeSelectors />
-                </StyledFilterContent>                                        
-                <StyledDescription>
+                </StyledFilterContent>                                                        
+                <StyledDescription styles={customSearchFilter?.exchange?.description}>
                   <SearchDescription 
                     networkCount={networkCount}
                     exchangeCount={exchangeCount}

@@ -13,14 +13,12 @@ const StyledInput = styled.input`
     margin-left: auto;
     margin-right: auto;
     position: relative;
+    outline: 0;
     width: ${ styles?.width || "-webkit-fill-available" };
     height: ${ styles?.height || "auto" };
     border: ${ styles?.border || "none" };   
     color: ${ styles?.color || "#7A808A" };
-    display: ${ styles?.display || "block" };   
-    border-color: ${ styles?.borderColor || "#474F5C" };  
-    border-style: ${ styles?.borderStyle || "none" };  
-    border-width: ${ styles?.borderWidth || "0" };  
+    display: ${ styles?.display || "block" };           
     border-radius: ${ styles?.borderRadius || "4px" };  
     background: ${ styles?.background || "#00070E" };   
     padding: ${ styles?.padding || "10px 14px" };    
@@ -68,10 +66,10 @@ const SearchInput = () => {
   
   const placeholder = customSearchInput?.placeholder ?  customSearchInput?.placeholder : 'Search pair by symbol, name, contract or token'
 
-  const activeColor = customSearchInput?.search?.activeColor ? customSearchInput?.search?.activeColor : '#FF0000'
-  const color  = customSearchInput?.search?.color ? customSearchInput?.search?.color : '#7A808A'
-  const height = customSearchInput?.search?.height ? customSearchInput?.search?.height : 14
-  const width = customSearchInput?.search?.width ? customSearchInput?.search?.width : 14
+  const activeColor = customSearchInput?.icon?.activeColor ? customSearchInput?.icon?.activeColor : '#FF0000'
+  const color  = customSearchInput?.icon?.color ? customSearchInput?.icon?.color : '#7A808A'
+  const height = customSearchInput?.icon?.height ? customSearchInput?.icon?.height : 14
+  const width = customSearchInput?.icon?.width ? customSearchInput?.icon?.width : 14
  
   // RENDERING.
   return (
@@ -82,7 +80,7 @@ const SearchInput = () => {
         onChange={debounceChangeHandler}
         styles={customSearchInput?.input}
       />
-      <StyledSearchIconWrapper styles={customSearchInput?.search}>       
+      <StyledSearchIconWrapper styles={customSearchInput?.icon}>       
         <SearchIcon
             activeColor={activeColor}
             color={color}

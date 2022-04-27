@@ -4,8 +4,8 @@ import { IIconProps } from '.';
 const PangolinIcon: FC<IIconProps> = memo(
   ({ active, activeColor, color, height, width }) => (
     <svg
-      height={height ?? 14}
-      width={width ?? 12}
+      height={height ?? 16}
+      width={width ?? 16}
       viewBox="0 0 14 12"        
       fill="none"
     >      
