@@ -10,7 +10,7 @@ import { RenderProps } from '../../types';
 
 const StyledWrapper = styled.div`
   ${({styles}) => `
-    min-width: 540px;
+    min-width: 420px;
     overflow-x: auto;
     background-color: ${ styles?.backgroundColor || "#474F5C" };          
     border-radius: ${ styles?.borderRadius || "4px" };  

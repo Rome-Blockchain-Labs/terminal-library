@@ -152,7 +152,7 @@ export const SearchFilters = () => {
   // RENDERING.
   return (
     <FilterWrapper styles={customSearchFilter?.wrapper}>
-      <Accordion allowZeroExpanded>
+      <Accordion allowMultipleExpanded={false}>
         <AccordionItem>
           <AccordionItemHeading>
             <AccordionItemButton>
@@ -177,10 +177,7 @@ export const SearchFilters = () => {
             </StyledFilterWrapper>
           </AccordionItemPanel> 
         </AccordionItem>
-      </Accordion>
-      {exchangesActive && 
-        <Accordion allowZeroExpanded>
-          <AccordionItem>
+        { exchangesActive && <AccordionItem>
             <AccordionItemHeading>
               <AccordionItemButton>
                 <StyledFilterHeader styles={customSearchFilter?.exchange?.header}>
@@ -204,8 +201,8 @@ export const SearchFilters = () => {
               </StyledFilterWrapper>
             </AccordionItemPanel> 
           </AccordionItem>
-        </Accordion>
-  }
+      }
+      </Accordion>        
     </FilterWrapper>
   );
 }

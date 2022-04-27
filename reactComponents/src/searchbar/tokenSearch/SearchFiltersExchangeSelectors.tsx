@@ -17,12 +17,12 @@ export const FilterExchangeAll = () => {
   const { customAllChip } = renderProps
 
   const styles = {
-    fontSize: customAllChip?.fontSize || '9px',
-    fontWeight: customAllChip?.fontWeight || '100',
+    fontSize: customAllChip?.fontSize || '7px',
+    fontWeight: customAllChip?.fontWeight || '500',
     borderRadius: customAllChip?.borderRadius || "4px",
     backgroundColor: customAllChip?.backgroundColor || "#474F5C",
     border: customAllChip?.border || "0",
-    padding: customAllChip?.padding || "4px 10px",
+    padding: customAllChip?.padding || "3px 2px",
     margin: customAllChip?.margin || "0",
     defaultColor: customAllChip?.defaultColor || "#7A808A",   
     width: customAllChip?.width || "auto",
@@ -30,7 +30,7 @@ export const FilterExchangeAll = () => {
     textAlign: customAllChip?.textAlign || "center" ,
     textTransform: customAllChip?.textTransform || "inherit",
     gridTemplateColumns: customAllChip?.gridTemplateColumns || "40px",
-    justifySelf: customAllChip?.justifySelf || "center",
+    justifySelf: customAllChip?.justifySelf || "center",   
   }
 
   // RENDERING.

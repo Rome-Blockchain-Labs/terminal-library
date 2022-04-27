@@ -29,14 +29,14 @@ const StyledChip = styled.div`
           border-radius: ${styles?.borderRadius || "4px"};  
           background-color: ${styles?.backgroundColor || "#232B35"};  
           border: ${styles?.border || "solid 2px #232B35"};   
-          padding: ${styles?.padding || "7px 5px"};   
+          padding: ${styles?.padding || "2px 5px"};   
           margin: ${styles?.margin || "5px"};   
           color: ${styles?.defaultColor || "#B4BBC7"};   
-          width: ${styles?.width || "122px"};   
+          width: ${styles?.width || "108px"};   
           height: ${styles?.height || "auto"};   
           text-align: ${styles?.textAlign || "left"}; 
           text-transform: ${styles?.textTransform || "uppercase"}; 
-          grid-template-columns: ${styles?.gridTemplateColumns || "25px 85px 10px"}; 
+          grid-template-columns: ${styles?.gridTemplateColumns || "20px 75px 10px"}; 
           >:last-child {      
             justify-self: ${styles?.justifySelf || "end"}; 
           }
@@ -67,7 +67,7 @@ export const Chip: FC<any> = (props) => {
     >      
       <input type="checkbox" id={`${label}-${name}`} onChange={onChange} checked={checked} name={name} value={value} />
       <label htmlFor={`${label}-${name}`}>
-        <Logo label={label} filter={filter} />
+        <Logo label={label} filter={filter} width={16} height={16}/>
         <span>{label}</span>
         {label !== 'Select All' && checkedStatus}
       </label>

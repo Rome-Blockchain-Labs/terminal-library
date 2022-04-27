@@ -42,14 +42,16 @@ const StyledResultTitle = styled.div`
     > button {
       display: flex;
       align-items: center;
+      
       border-color: ${ styles?.buttonBorderColor || "#232C38" };      
       background-color: ${ styles?.buttonBackColor || "#232C38" };      
       color: ${ styles?.buttonColor || "#7A808A" };      
       border-radius: ${ styles?.buttonBorderRadius || "4px" };      
+      font-size: ${ styles?.buttonFontSize || "7px" };      
+      padding: ${ styles?.buttonPadding || "3px 6px" };      
       border-width: 0;      
       cursor: pointer;
-      padding: 3px 6px;
-
+      
       &:hover {
         background-color: ${ styles?.buttonHoverBackColor || "black" };      
       }
@@ -80,10 +82,10 @@ const StyledResultContent = styled.div`
 
   & .header {
     display: grid;
-    grid-template-columns: 40% 5% 6% 48%; 
+    grid-template-columns: 41% 5% 6% 49%; 
     border-bottom: 1px solid #474F5C; 
-    color: #7A808A;
-    font-size: 10px;
+    color: #B4BBC7;
+    font-size: 7px;
     font-weight: bold;
     padding-bottom: 10px; 
 
@@ -125,7 +127,7 @@ const SearchResult: FC<Loading> = (props: Loading) => {
           <div>
             Search Results <span>({filteredSuggestions.length} Results Found)</span>
           </div>
-          <button onClick={handleClose}>Close&nbsp;<UnCheckedIcon /></button>
+          <button onClick={handleClose}>Close&nbsp;<UnCheckedIcon width={7} height={7}/></button>
         </StyledResultTitle>      
         <StyledResultContent styles={customResult?.content}>
           <div className='header'>

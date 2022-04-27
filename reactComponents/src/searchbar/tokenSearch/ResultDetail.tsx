@@ -20,16 +20,16 @@ const StyledDetailList = styled.div`
     padding: ${ styles?.container?.padding || "5px 0" };    
     background: ${ styles?.container?.background || "#00070E" };
     border-bottom: ${ styles?.container?.borderbottom || "1px solid #474F5C" };    
-    grid-template-columns: ${styles?.container?.gridTemplateColumns || "18% 1% 18% 5% 6% 37% 10%"}; 
+    grid-template-columns: ${styles?.container?.gridTemplateColumns || "15% 1% 18% 4% 4% 35% 10%"}; 
 
     & .token {
       display: inherit;
       align-items: center;
-      grid-template-columns: 20px 100px; 
+      grid-template-columns: 16px 100px; 
       color: ${ styles?.token?.color || "#B4BBC7" };
-      font-size: ${ styles?.token?.fontSize || "12px" };
+      font-size: ${ styles?.token?.fontSize || "8px" };
       font-weight: ${ styles?.token?.fontWeight || "600" };      
-      padding: 0 13px;
+      padding: ${ styles?.token?.padding || "0 5px" };      
       
       > span {
         padding-left: 5px;
@@ -43,7 +43,7 @@ const StyledDetailList = styled.div`
 
     & .pair {
       color: ${ styles?.pair?.color || "#B4BBC7" };
-      font-size: ${ styles?.pair?.fontSize || "8px" };
+      font-size: ${ styles?.pair?.fontSize || "7px" };
 
       & .count {
         display: flex;
@@ -58,15 +58,16 @@ const StyledDetailList = styled.div`
       display: flex;
       align-items: center;
       justify-content: center;
-
+      justify-self: right;
       border-color: ${ styles?.button?.borderColor || "#474F5C" };      
       background-color: ${ styles?.button?.backgroundColor || "#474F5C" };      
       color: ${ styles?.button?.color || "#7A808A" };      
       border-radius: ${ styles?.button?.borderRadius || "4px" };      
-      font-size: ${ styles?.button?.fontSize || "10px" };
+      font-size: ${ styles?.button?.fontSize || "7px" };
       border-width: 0;      
       cursor: pointer;
       padding: ${ styles?.button?.padding || "3px" };
+      width: ${ styles?.button?.width || "40px" };
 
       &:hover {
         background-color: ${ styles?.button?.hoverBackColor || "#232C38" };      
@@ -84,7 +85,7 @@ const StyledDetailContent = styled.div`
   ${({styles}) => `
     display: ${ styles?.content?.display || "block" };    
     align-items: ${ styles?.content?.alignItems || "center" };    
-    padding: ${ styles?.content?.padding || "5px 13px" };    
+    padding: ${ styles?.content?.padding || "5px" };    
     margin: ${ styles?.content?.margin || "5px 0" };    
     background: ${ styles?.content?.background || "#474F5C" };
     border-bottom: ${ styles?.content?.borderbottom || "1px solid #474F5C" };    
@@ -94,20 +95,21 @@ const StyledDetailContent = styled.div`
     & .details {
       display: grid;
       padding: 7px 0;
-      font-size: ${ styles?.content?.fontSize || "10px" };
+      font-size: ${ styles?.content?.fontSize || "7px" };
 
-      grid-template-columns: ${styles?.content?.gridTemplateColumns || "52% 48% 1%"}; 
+      grid-template-columns: ${styles?.content?.gridTemplateColumns || "53% 45% 2%"}; 
 
       & .token {
-        display: grid;
-        gap: 5px;
+        display: grid;        
         grid-template-columns: 20px;
-
+        > span {
+          padding-left: 5px
+        }
+        
         & .name {
           align-self: center;          
-          font-size: ${ styles?.token?.fontSize || "12px" };
-          font-weight: ${ styles?.token?.fontWeight || "600" };
-          padding-left: 5px;
+          font-size: ${ styles?.token?.fontSize || "8px" };
+          font-weight: ${ styles?.token?.fontWeight || "600" };          
         }
     
         & .address {
@@ -116,28 +118,28 @@ const StyledDetailContent = styled.div`
           grid-row: 2;
           grid-column: 2;
           color: #B4BBC7;
-          font-size: ${ styles?.address?.fontSize || "10px" };
-          padding-bottom: 10px;
-          padding-left: 5px;
-
+          font-size: ${ styles?.address?.fontSize || "7px" };
+          padding-bottom: 5px;
+          
           > strong {
             color: white;
-            padding-left: 7px;
+            padding-left: 5px;
           }
         }
       } 
 
       & .left {
-        & .detail {
-          display: grid;
-          grid-template-columns: 85px 150px;
-          padding-left: 0;
+        & .pair {          
+          padding-left: 5px;
         }
       }
       
       & .detail {
         color: #B4BBC7;
-        font-size: ${ styles?.content?.detail?.fontSize || "10px" };
+        grid-template-columns: 40px 30px 50px;
+        display: grid;
+
+        font-size: ${ styles?.content?.detail?.fontSize || "7px" };
         > strong {
           color: white;
         }
@@ -150,8 +152,7 @@ const StyledDetailContent = styled.div`
       & .right {
         padding-top: 10px;
 
-        & .widgets {
-          padding-bottom: 8px;
+        & .widgets {          
           color: #B4BBC7;
         }
 
@@ -167,14 +168,14 @@ const StyledDetailContent = styled.div`
   
         & .info {
           display: grid;
-          grid-template-columns: 50% 50%;
-          padding: 1px 0;
+          grid-template-columns: 40% 55%;          
 
-          & .detail {
-            display: flex;
+          & .detail {           
             padding-right: 5px;
             align-items: center;
-
+            grid-template-columns: 40px 30px 50px;
+            display: grid;
+            
             & .logo {
               padding: 0 10px;
               margin-top: 2px;
@@ -239,10 +240,10 @@ export const ResultDetail: FC<DetailType> = (props: DetailType) => {
         {tokenImage(selectedPair.token1)} <span>{selectedPair.token1.name}</span>
       </div>     
       <div className='logo'>
-        <Logo label={selectedPair.network} />
+        <Logo label={selectedPair.network} width={12} height={12}/>
       </div>
       <div className='logo'>
-        <Logo label={selectedPair.exchange} />
+        <Logo label={selectedPair.exchange} width={12} height={12}/>
       </div>
       <div className='pair'>
         <div className='detail'>
@@ -251,16 +252,13 @@ export const ResultDetail: FC<DetailType> = (props: DetailType) => {
         <div className='count'>
           <div className='detail'>
             Volume: <strong>{intToWords(selectedPair.volumeUSD)}</strong>
-          </div>
-          <div className='detail'>
-            Holders: <strong><i>[Coming Soon]</i></strong>
-          </div>
+          </div>          
         </div>
       </div>
       <button onClick={() => handleDetail(currentIndex === index ? null : index)}>
         Details 
         <div className='icon'>
-          <DownIcon width={12} height={12} />
+          <DownIcon width={7} height={7} />
         </div>
       </button>
       </StyledDetailList>
@@ -280,8 +278,8 @@ export const ResultDetail: FC<DetailType> = (props: DetailType) => {
               <span className='name'>{selectedPair.token1.name}</span>
               <span className='address'>Address: <strong>{firstAndLast(selectedPair.token1.address)}</strong></span>
             </div>
-            <div className='detail'>
-              Pair Address: <strong>{firstAndLast(selectedPair.id)}</strong>
+            <div className='pair'>
+              <span>Pair Address: </span><strong>{firstAndLast(selectedPair.id)}</strong>
             </div>
           </div>
           <div className='right'>
@@ -295,31 +293,31 @@ export const ResultDetail: FC<DetailType> = (props: DetailType) => {
             </div>
             <div className='info'>
               <div className='detail'>
-                Volume : <strong>{intToWords(selectedPair.volumeUSD)}</strong>
+              <span>Volume :</span> <strong>{intToWords(selectedPair.volumeUSD)}</strong>
               </div>
               <div className='detail'>
-                Network: 
+                <span>Network: </span>
                 <div className='logo'>
-                  <Logo label={selectedPair.network} />
+                  <Logo label={selectedPair.network} width={10} height={10}/>
                 </div>
                 <strong>{selectedPair.network}</strong>
               </div>
             </div>
             <div className='info'>
               <div className='detail'>
-                Holders: <strong><i>[Coming Soon]</i></strong>
+                <span>Holders:</span> <strong></strong>
               </div>
               <div className='detail'>
-                Exchange: 
+                <span>Exchange: </span>
                 <div className='logo'>
-                  <Logo label={selectedPair.exchange} />
+                  <Logo label={selectedPair.exchange} width={10} height={10} />
                 </div>
                 <strong>{selectedPair.exchange}</strong>
               </div>
             </div>
           </div>          
           <div className='up' onClick={() => handleDetail(currentIndex === index ? null : index)}>
-            <UpIcon height={12} width={12} />
+            <UpIcon height={7} width={7} />
           </div>
         </div>        
       </StyledDetailContent>

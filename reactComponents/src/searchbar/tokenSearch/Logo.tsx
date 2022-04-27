@@ -32,102 +32,104 @@ import MdexIcon from '../icons/mdex';
 type LogoType = {
   label: any;
   filter?: any;
+  width?: number;
+  height?: number;
 }
 
-export const Logo: FC<LogoType> = ({label, filter}) => {  
+export const Logo: FC<LogoType> = ({label, width, height, filter}) => {  
   let result;
   switch(label) {
     // networks
     case 'bsc':
-      result = <BscIcon />
+      result = <BscIcon width={width} height={height} />
       break;
     case 'avalanche':
-      result = <AvalancheIcon />
+      result = <AvalancheIcon width={width} height={height} />
       break;
     
     case 'kyberdmm':
-      result = <KyberIcon />
+      result = <KyberIcon width={width} height={height} />
       break
     case 'pangolin':
-      result = <PangolinIcon />
+      result = <PangolinIcon width={width} height={height} />
         break
     case 'sushiswap':
-      result = <SushiIcon />
+      result = <SushiIcon width={width} height={height} />
         break
     case 'traderjoe':
-      result = <TraderIcon />
+      result = <TraderIcon width={width} height={height} />
         break
     case 'mdex':
-      result = <MdexIcon />
+      result = <MdexIcon width={width} height={height} />
         break
     case 'Select All':
       result = <></>
       break;
     case 'moonbeam':
-      result = <MoonBeamIcon />
+      result = <MoonBeamIcon width={width} height={height} />
       break;
     case 'moonriver':   
-      result = <MoonRiverIcon />
+      result = <MoonRiverIcon width={width} height={height} />
       break; 
     case 'apeswap':
-      result = <ApeSwapIcon />
+      result = <ApeSwapIcon width={width} height={height} />
       break;
     case 'babyswap':
-      result = <BabySwapIcon />
+      result = <BabySwapIcon width={width} height={height} />
       break;
     case 'biswap':
-      result = <BiSwapIcon />
+      result = <BiSwapIcon width={width} height={height} />
       break;
     case 'ellipsis.finance':
-      result = <EllipsisFinanceIcon />
+      result = <EllipsisFinanceIcon width={width} height={height} />
       break;
     case 'pancakeswap':
-      result = <PancakeIcon />
+      result = <PancakeIcon width={width} height={height} />
       break;
     case 'safeswap':
-      result = <SafeSwapIcon />
+      result = <SafeSwapIcon width={width} height={height} />
       break;
     case 'baguette':
-      result = <BaquetteIcon />
+      result = <BaquetteIcon width={width} height={height} />
       break;
     case 'canary':
-      result = <CanaryIcon />;
+      result = <CanaryIcon width={width} height={height} />;
       break;
     case 'complusnetwork':
-      result = <ComplusNetworkIcon />;
+      result = <ComplusNetworkIcon width={width} height={height} />;
       break;
     case 'elkfinance':
-      result = <ElkFinanceIcon />;
+      result = <ElkFinanceIcon width={width} height={height} />;
       break;
     case 'lydiafinance':
-      result = <LydiaFinanceIcon />;
+      result = <LydiaFinanceIcon width={width} height={height} />;
       break;
     case 'oliveswap':
-      result = <OliveSwapIcon />;
+      result = <OliveSwapIcon width={width} height={height} />;
       break;
     case 'pandaswap':
-      result = <PandaSwapIcon />;
+      result = <PandaSwapIcon width={width} height={height} />;
       break;
     case 'yetiswap':
-      result = <YetiSwapIcon />;
+      result = <YetiSwapIcon width={width} height={height} />;
       break;
     case 'zeroexchange':  
-      result = <ZeroExchangeIcon />;
+      result = <ZeroExchangeIcon width={width} height={height} />;
       break;     
     case 'beamswap':
-      result = <BeamSwapIcon />;
+      result = <BeamSwapIcon width={width} height={height} />;
       break;
     case 'solarflare':
-      result = <SolarFlareIcon />;
+      result = <SolarFlareIcon width={width} height={height} />;
       break;
     case 'stellaswap':
-      result = <StellaSwapIcon />;
+      result = <StellaSwapIcon width={width} height={height} />;
       break;
     case 'solarbeam':
-      result = <SolarBeamIcon />;
+      result = <SolarBeamIcon width={width} height={height} />;
       break;
     default:
-      result = <DefaultIcon />
+      result = <DefaultIcon width={width} height={height} />
       break;
   }
   

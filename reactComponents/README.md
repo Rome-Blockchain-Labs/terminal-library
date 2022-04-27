@@ -127,6 +127,8 @@ const customResult = {
         buttonColor: '#7A808A',      
         buttonBorderRadius: '4px',      
         buttonHoverBackColor: 'black'
+        buttonFontSize: '7px',      
+        buttonPadding: '3px 5px'      
     },
     content: {
         padding: '14px',
@@ -203,7 +205,8 @@ const customTokenDetail = {
         token: {
             color: '#B4BBC7',
             fontSize: '12px',
-            fontWeight: '600'
+            fontWeight: '600',
+            padding: '0 5px',
         },
 
         pair: {
@@ -222,7 +225,8 @@ const customTokenDetail = {
             borderRadius: '4px',
             fontSize: '10px',
             padding: '3px',
-            hoverBackColor: '#232C38'
+            hoverBackColor: '#232C38',
+            width: '40px'
         }
     },
     details: {
