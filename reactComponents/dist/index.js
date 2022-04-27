@@ -49,7 +49,7 @@ __export(src_exports, {
 module.exports = __toCommonJS(src_exports);
 
 // src/searchbar/index.tsx
-var import_react44 = __toESM(require("react"));
+var import_react45 = __toESM(require("react"));
 var import_react_redux7 = require("react-redux");
 
 // src/searchbar/redux/store.ts
@@ -372,7 +372,7 @@ var store = (0, import_toolkit2.configureStore)({
 });
 
 // src/searchbar/tokenSearch/index.tsx
-var import_react43 = __toESM(require("react"));
+var import_react44 = __toESM(require("react"));
 var import_react_redux6 = require("react-redux");
 var import_styled_components7 = __toESM(require("styled-components"));
 
@@ -433,14 +433,12 @@ var StyledInput = import_styled_components2.default.input`
     margin-left: auto;
     margin-right: auto;
     position: relative;
+    outline: 0;
     width: ${(styles == null ? void 0 : styles.width) || "-webkit-fill-available"};
     height: ${(styles == null ? void 0 : styles.height) || "auto"};
     border: ${(styles == null ? void 0 : styles.border) || "none"};   
     color: ${(styles == null ? void 0 : styles.color) || "#7A808A"};
-    display: ${(styles == null ? void 0 : styles.display) || "block"};   
-    border-color: ${(styles == null ? void 0 : styles.borderColor) || "#474F5C"};  
-    border-style: ${(styles == null ? void 0 : styles.borderStyle) || "none"};  
-    border-width: ${(styles == null ? void 0 : styles.borderWidth) || "0"};  
+    display: ${(styles == null ? void 0 : styles.display) || "block"};           
     border-radius: ${(styles == null ? void 0 : styles.borderRadius) || "4px"};  
     background: ${(styles == null ? void 0 : styles.background) || "#00070E"};   
     padding: ${(styles == null ? void 0 : styles.padding) || "10px 14px"};    
@@ -477,10 +475,10 @@ var SearchInput = () => {
   };
   const debounceChangeHandler = (0, import_react3.useCallback)((0, import_lodash3.default)(onChangeFilter, 350), [searchText]);
   const placeholder = (customSearchInput == null ? void 0 : customSearchInput.placeholder) ? customSearchInput == null ? void 0 : customSearchInput.placeholder : "Search pair by symbol, name, contract or token";
-  const activeColor = ((_a2 = customSearchInput == null ? void 0 : customSearchInput.search) == null ? void 0 : _a2.activeColor) ? (_b2 = customSearchInput == null ? void 0 : customSearchInput.search) == null ? void 0 : _b2.activeColor : "#FF0000";
-  const color = ((_c2 = customSearchInput == null ? void 0 : customSearchInput.search) == null ? void 0 : _c2.color) ? (_d = customSearchInput == null ? void 0 : customSearchInput.search) == null ? void 0 : _d.color : "#7A808A";
-  const height = ((_e = customSearchInput == null ? void 0 : customSearchInput.search) == null ? void 0 : _e.height) ? (_f = customSearchInput == null ? void 0 : customSearchInput.search) == null ? void 0 : _f.height : 14;
-  const width = ((_g = customSearchInput == null ? void 0 : customSearchInput.search) == null ? void 0 : _g.width) ? (_h = customSearchInput == null ? void 0 : customSearchInput.search) == null ? void 0 : _h.width : 14;
+  const activeColor = ((_a2 = customSearchInput == null ? void 0 : customSearchInput.icon) == null ? void 0 : _a2.activeColor) ? (_b2 = customSearchInput == null ? void 0 : customSearchInput.icon) == null ? void 0 : _b2.activeColor : "#FF0000";
+  const color = ((_c2 = customSearchInput == null ? void 0 : customSearchInput.icon) == null ? void 0 : _c2.color) ? (_d = customSearchInput == null ? void 0 : customSearchInput.icon) == null ? void 0 : _d.color : "#7A808A";
+  const height = ((_e = customSearchInput == null ? void 0 : customSearchInput.icon) == null ? void 0 : _e.height) ? (_f = customSearchInput == null ? void 0 : customSearchInput.icon) == null ? void 0 : _f.height : 14;
+  const width = ((_g = customSearchInput == null ? void 0 : customSearchInput.icon) == null ? void 0 : _g.width) ? (_h = customSearchInput == null ? void 0 : customSearchInput.icon) == null ? void 0 : _h.width : 14;
   return /* @__PURE__ */ import_react3.default.createElement(StyledWrapper, {
     onClick: () => dispatch(startSelecting())
   }, /* @__PURE__ */ import_react3.default.createElement(StyledInput, {
@@ -489,7 +487,7 @@ var SearchInput = () => {
     onChange: debounceChangeHandler,
     styles: customSearchInput == null ? void 0 : customSearchInput.input
   }), /* @__PURE__ */ import_react3.default.createElement(StyledSearchIconWrapper, {
-    styles: customSearchInput == null ? void 0 : customSearchInput.search
+    styles: customSearchInput == null ? void 0 : customSearchInput.icon
   }, /* @__PURE__ */ import_react3.default.createElement(SearchIcon_default, {
     activeColor,
     color,
@@ -500,7 +498,7 @@ var SearchInput = () => {
 var SearchInput_default = SearchInput;
 
 // src/searchbar/tokenSearch/SearchResult.tsx
-var import_react37 = __toESM(require("react"));
+var import_react38 = __toESM(require("react"));
 var import_styled_components4 = __toESM(require("styled-components"));
 var import_react_redux2 = require("react-redux");
 
@@ -535,7 +533,7 @@ var UnCheckedIcon = (0, import_react4.memo)(({ active, activeColor, color, heigh
 var unchecked_default = UnCheckedIcon;
 
 // src/searchbar/tokenSearch/ResultDetail.tsx
-var import_react36 = __toESM(require("react"));
+var import_react37 = __toESM(require("react"));
 var import_styled_components3 = __toESM(require("styled-components"));
 
 // src/searchbar/icons/default.tsx
@@ -554,13 +552,13 @@ var DefaultIcon = (0, import_react5.memo)(({ active, activeColor, color, height,
 var default_default = DefaultIcon;
 
 // src/searchbar/tokenSearch/Logo.tsx
-var import_react33 = __toESM(require("react"));
+var import_react34 = __toESM(require("react"));
 
 // src/searchbar/icons/kyber.tsx
 var import_react6 = __toESM(require("react"));
 var KyberIcon = (0, import_react6.memo)(({ active, activeColor, color, height, width }) => /* @__PURE__ */ import_react6.default.createElement("svg", {
-  height: height != null ? height : 11,
-  width: width != null ? width : 15,
+  height: height != null ? height : 16,
+  width: width != null ? width : 16,
   viewBox: "0 0 11 15",
   fill: "none"
 }, /* @__PURE__ */ import_react6.default.createElement("g", {
@@ -591,8 +589,8 @@ var kyber_default = KyberIcon;
 // src/searchbar/icons/pangolin.tsx
 var import_react7 = __toESM(require("react"));
 var PangolinIcon = (0, import_react7.memo)(({ active, activeColor, color, height, width }) => /* @__PURE__ */ import_react7.default.createElement("svg", {
-  height: height != null ? height : 14,
-  width: width != null ? width : 12,
+  height: height != null ? height : 16,
+  width: width != null ? width : 16,
   viewBox: "0 0 14 12",
   fill: "none"
 }, /* @__PURE__ */ import_react7.default.createElement("g", {
@@ -635,37 +633,75 @@ var pangolin_default = PangolinIcon;
 // src/searchbar/icons/sushi.tsx
 var import_react8 = __toESM(require("react"));
 var SushiIcon = (0, import_react8.memo)(({ active, activeColor, color, height, width }) => /* @__PURE__ */ import_react8.default.createElement("svg", {
-  height: height != null ? height : 13,
-  width: width != null ? width : 12,
-  viewBox: "0 0 13 12",
+  height: height != null ? height : 16,
+  width: width != null ? width : 16,
+  viewBox: "0 0 16.982 16.982",
   fill: "none"
 }, /* @__PURE__ */ import_react8.default.createElement("g", {
   transform: "translate(0)"
 }, /* @__PURE__ */ import_react8.default.createElement("g", {
-  clipPath: "url(#clip0_1021_1587)"
+  id: "Strategies_-_logo_-_SUSHI",
+  "data-name": "Strategies - logo - SUSHI",
+  transform: "translate(0.5 0.5)"
+}, /* @__PURE__ */ import_react8.default.createElement("g", {
+  id: "Group_216",
+  "data-name": "Group 216",
+  transform: "translate(0 0)"
+}, /* @__PURE__ */ import_react8.default.createElement("g", {
+  id: "Group_203",
+  "data-name": "Group 203",
+  transform: "translate(0 0)"
+}, /* @__PURE__ */ import_react8.default.createElement("ellipse", {
+  id: "Ellipse_16",
+  "data-name": "Ellipse 16",
+  cx: "7.991",
+  cy: "7.991",
+  rx: "7.991",
+  ry: "7.991",
+  transform: "translate(0)",
+  fill: "#08333c",
+  stroke: "#15b3b0",
+  strokeWidth: "1"
+})), /* @__PURE__ */ import_react8.default.createElement("rect", {
+  id: "Rectangle_60",
+  "data-name": "Rectangle 60",
+  width: "13.404",
+  height: "13.404",
+  transform: "translate(1.168 1.299)",
+  fill: "none"
+})), /* @__PURE__ */ import_react8.default.createElement("g", {
+  id: "Group_227",
+  "data-name": "Group 227",
+  transform: "translate(2.238 2.846)"
+}, /* @__PURE__ */ import_react8.default.createElement("g", {
+  id: "Group_226",
+  "data-name": "Group 226"
 }, /* @__PURE__ */ import_react8.default.createElement("path", {
-  d: "M9.12008 1.84998C6.39008 -0.0700237 3.50008 -0.550024 2.64008 0.679976L0.180081 4.25998H0.200081C-0.419919 5.31998 0.470081 7.09998 2.25008 8.73998C2.74008 8.61998 3.18008 8.33998 3.50008 7.94998C3.77008 7.64998 4.06008 7.37998 4.38008 7.13998C4.59008 6.94998 4.88008 6.84998 5.16008 6.87998C5.54008 6.87998 5.96008 7.25998 6.66008 8.16998C7.36008 9.07998 8.32008 9.34998 8.91008 8.86998C8.96008 8.81998 9.02008 8.81998 9.07008 8.75998C9.25008 8.62998 9.42008 8.46998 9.56008 8.29998C9.42008 8.25998 9.25008 8.20998 9.12008 8.16998C9.07008 8.16998 9.07008 8.11998 9.07008 8.05998C9.07008 7.99998 9.12008 8.00998 9.18008 8.00998C9.28008 8.03998 9.40008 8.07998 9.51008 8.10998L9.67008 8.15998C9.67008 8.15998 9.74008 8.06998 9.77008 8.00998C9.83008 7.91998 9.89008 7.82998 9.96008 7.70998C9.63008 7.63998 9.30008 7.54998 8.99008 7.42998C8.05008 7.07998 7.16008 6.60998 6.34008 6.02998C5.46008 5.43998 4.67008 4.73998 3.97008 3.93998C2.96008 2.74998 2.55008 1.61998 3.02008 0.949976C3.78008 -0.120024 6.40008 0.419976 8.90008 2.17998C10.2401 3.04998 11.3501 4.23998 12.1301 5.62998C12.2901 5.62998 12.4401 5.65998 12.5901 5.70998C12.8601 6.26998 12.8601 6.91998 12.5901 7.47998C13.3901 6.23998 11.8901 3.66998 9.11008 1.84998H9.12008ZM2.32008 1.84998C2.37008 1.79998 2.43008 1.84998 2.43008 1.89998C2.47008 2.01998 2.49008 2.14998 2.48008 2.27998C2.53008 2.32998 2.48008 2.38998 2.43008 2.38998C2.38008 2.43998 2.32008 2.38998 2.32008 2.33998C2.30008 2.20998 2.27008 2.07998 2.21008 1.95998C2.21008 1.90998 2.27008 1.90998 2.32008 1.84998V1.84998ZM6.12008 6.66998C6.07008 6.66998 6.01008 6.71998 5.96008 6.66998C4.77008 5.87998 3.75008 4.85998 2.98008 3.64998C2.81008 3.37998 2.66008 3.09998 2.54008 2.80998C2.54008 2.77664 2.55675 2.73998 2.59008 2.69998C2.64008 2.64998 2.70008 2.69998 2.70008 2.74998C2.85008 3.07998 3.03008 3.39998 3.23008 3.69998C3.99008 4.81998 4.98008 5.76998 6.12008 6.49998C6.12008 6.54998 6.18008 6.59998 6.12008 6.65998V6.66998Z",
-  fill: "#7A808A"
+  id: "Path_110",
+  "data-name": "Path 110",
+  d: "M2022.047,649.65c-2.451-1.73-5.046-2.162-5.815-1.057l-2.211,3.22.014.01c-.556.943.242,2.537,1.839,4.013a2.1,2.1,0,0,0,1.126-.706,5.673,5.673,0,0,1,.787-.724.955.955,0,0,1,.7-.237c.336,0,.721.336,1.346,1.153s1.49,1.057,2.018.625c.048-.048.1-.048.144-.1a2.451,2.451,0,0,0,.441-.412c-.129-.039-.276-.078-.393-.117-.048,0-.048-.048-.048-.1s.048-.048.1-.048c.089.029.2.059.3.089l.146.044c.029-.041.059-.084.091-.133.051-.078.107-.166.168-.268a6.452,6.452,0,0,1-.873-.25,10.216,10.216,0,0,1-2.376-1.26,10.928,10.928,0,0,1-2.125-1.877c-.9-1.067-1.277-2.085-.855-2.688l.006-.007c.679-.952,3.028-.47,5.281,1.112a8.78,8.78,0,0,1,2.9,3.1,1.539,1.539,0,0,1,.417.071,1.82,1.82,0,0,1,0,1.586C2025.892,653.59,2024.546,651.284,2022.047,649.65Zm-6.1,0c.048-.048.1,0,.1.048a.939.939,0,0,1,.048.336c.048.048,0,.1-.048.1-.048.048-.1,0-.1-.048a1.225,1.225,0,0,0-.1-.336C2015.848,649.7,2015.9,649.7,2015.944,649.65Zm3.412,4.325c-.048,0-.1.048-.144,0a9.146,9.146,0,0,1-2.676-2.708,6.158,6.158,0,0,1-.4-.752c0-.048,0-.048.048-.1s.1,0,.1.048a6.328,6.328,0,0,0,.478.851,8.921,8.921,0,0,0,2.6,2.513C2019.356,653.879,2019.4,653.927,2019.356,653.975Z",
+  transform: "translate(-2013.859 -647.985)",
+  fill: "#15b3b0"
 }), /* @__PURE__ */ import_react8.default.createElement("path", {
-  d: "M5.34008 2.51998C5.34008 2.51998 5.32008 2.53998 5.31008 2.54998C4.93008 3.08998 5.69008 4.20998 6.91008 5.06998C8.20008 5.92998 9.48008 6.18998 9.85008 5.65998C9.85008 5.64998 9.86008 5.63998 9.87008 5.62998C10.2001 5.07998 9.45008 3.98998 8.25008 3.14998C6.99008 2.30998 5.73008 2.03998 5.33008 2.52998L5.34008 2.51998Z",
-  fill: "#7A808A"
-}), /* @__PURE__ */ import_react8.default.createElement("path", {
-  d: "M12.6 5.71C12.45 5.66 12.29 5.64 12.14 5.63C12.44 6.11 12.48 6.71 12.25 7.23L12.23 7.26C11.86 7.79 11.02 7.93 9.96 7.71C9.89 7.82 9.83 7.92 9.77 8.01C9.73 8.06 9.7 8.11 9.67 8.16H9.71C9.76 8.17 9.76 8.23 9.76 8.28C9.76 8.33 9.71 8.33 9.65 8.33L9.56 8.3C9.42 8.47 9.25 8.63001 9.07 8.76C9.02 8.81 8.96 8.81 8.91 8.87C8.32 9.35 7.36 9.08 6.66 8.17C5.96 7.26 5.54 6.89 5.16 6.89C4.87 6.87 4.59 6.96 4.38 7.15C4.06 7.39 3.77 7.66 3.5 7.96C3.18 8.35 2.74 8.63 2.25 8.75C2.7 9.16 3.17 9.54001 3.67 9.89001C6.37 11.8 9.23 12.29 10.12 11.1L10.15 11.12L12.61 7.48C12.88 6.92 12.88 6.27 12.61 5.72L12.6 5.71ZM11.42 8.49C10.99 8.52 10.56 8.51 10.13 8.44C10.07 8.44 10.02 8.39 10.02 8.33C10.02 8.27 10.07 8.22001 10.13 8.22001C10.55 8.29001 10.99 8.31001 11.42 8.27001C11.48 8.27001 11.53 8.32 11.53 8.38C11.53 8.44 11.48 8.49 11.42 8.49V8.49Z",
-  fill: "#7A808A"
-})), /* @__PURE__ */ import_react8.default.createElement("defs", null, /* @__PURE__ */ import_react8.default.createElement("clipPath", {
-  id: "clip0_1021_1587"
-}, /* @__PURE__ */ import_react8.default.createElement("rect", {
-  width: "12.81",
-  height: "11.73",
-  fill: "white"
+  id: "Path_111",
+  "data-name": "Path 111",
+  d: "M2050.206,663.994c-.007.009-.016.016-.023.026-.336.481.336,1.49,1.442,2.259,1.153.769,2.306,1.009,2.643.529.006-.009.01-.019.016-.029.293-.491-.373-1.475-1.457-2.23C2051.7,663.795,2050.567,663.551,2050.206,663.994Z",
+  transform: "translate(-2045.407 -661.731)",
+  fill: "#15b3b0"
+})), /* @__PURE__ */ import_react8.default.createElement("path", {
+  id: "Path_112",
+  "data-name": "Path 112",
+  d: "M2038.732,687.115a1.54,1.54,0,0,0-.417-.071,1.55,1.55,0,0,1,.1,1.437c-.005.009-.01.018-.016.027-.335.479-1.087.6-2.037.4-.061.1-.116.191-.167.268-.032.048-.062.092-.091.133l.037.012c.048,0,.048.048.048.1s-.048.048-.1.048h0l-.085-.026a2.452,2.452,0,0,1-.441.412c-.048.048-.1.048-.144.1-.529.432-1.394.192-2.019-.625s-1.009-1.153-1.346-1.153a.954.954,0,0,0-.7.237,5.674,5.674,0,0,0-.787.724,2.093,2.093,0,0,1-1.126.706,12.5,12.5,0,0,0,1.271,1.024c2.427,1.713,4.994,2.153,5.79,1.089l.024.017,2.211-3.268A1.822,1.822,0,0,0,2038.732,687.115Zm-1.057,2.5a4.731,4.731,0,0,1-1.153-.048.1.1,0,1,1,0-.192,4.642,4.642,0,0,0,1.153.048.1.1,0,1,1,0,.192Z",
+  transform: "translate(-2027.421 -681.99)",
+  fill: "#15b3b0"
 }))))));
 var sushi_default = SushiIcon;
 
 // src/searchbar/icons/trader.tsx
 var import_react9 = __toESM(require("react"));
 var TraderIcon = (0, import_react9.memo)(({ active, activeColor, color, height, width }) => /* @__PURE__ */ import_react9.default.createElement("svg", {
-  height: height != null ? height : 11,
-  width: width != null ? width : 15,
+  height: height != null ? height : 16,
+  width: width != null ? width : 16,
   viewBox: "0 0 11 15",
   fill: "none"
 }, /* @__PURE__ */ import_react9.default.createElement("g", {
@@ -1197,8 +1233,8 @@ var baguette_default = BaquetteIcon;
 // src/searchbar/icons/pancake.tsx
 var import_react20 = __toESM(require("react"));
 var PancakeSwapIcon = (0, import_react20.memo)(({ active, activeColor, color, height, width }) => /* @__PURE__ */ import_react20.default.createElement("svg", {
-  height: height != null ? height : 12,
-  width: width != null ? width : 12,
+  height: height != null ? height : 16,
+  width: width != null ? width : 16,
   viewBox: "0 0 12 12",
   fill: "none"
 }, /* @__PURE__ */ import_react20.default.createElement("g", {
@@ -2564,102 +2600,207 @@ var SolarFlareIcon = (0, import_react32.memo)(({ active, activeColor, color, hei
 }))));
 var solar_flare_default = SolarFlareIcon;
 
+// src/searchbar/icons/mdex.tsx
+var import_react33 = __toESM(require("react"));
+var MdexIcon = (0, import_react33.memo)(({ active, activeColor, color, height, width }) => /* @__PURE__ */ import_react33.default.createElement("svg", {
+  height: height != null ? height : 16,
+  width: width != null ? width : 16,
+  viewBox: "0 0 12 11",
+  fill: "none"
+}, /* @__PURE__ */ import_react33.default.createElement("g", {
+  transform: "translate(0)"
+}, /* @__PURE__ */ import_react33.default.createElement("path", {
+  d: "M4.18999 3.23002C4.70999 3.71002 5.10999 4.08002 5.54999 4.49002C3.66999 5.76002 5.41999 7.81003 6.83999 6.61002C7.29999 6.20003 7.32999 5.49002 6.90999 5.04002C6.87999 5.00002 6.83999 4.97003 6.80999 4.94002C5.80999 4.02002 4.79999 3.10002 3.79999 2.18002C3.35999 1.69002 2.60999 1.66002 2.11999 2.10002C1.83999 2.35002 1.69999 2.73002 1.72999 3.10002C1.72999 5.50002 1.77999 7.91003 1.72999 10.31C0.899992 10.43 0.129992 9.86002 0.00999174 9.03002C-8.25524e-06 8.93002 -0.0100083 8.83002 -8.25524e-06 8.73002C0.00999174 6.77002 -0.0200083 4.81002 0.0199917 2.87002C0.0499917 1.26002 1.37999 -0.0299754 2.98999 2.45594e-05C3.72999 0.0100246 4.42999 0.300025 4.95999 0.810025C6.04999 1.83002 7.09999 2.89002 8.21999 3.86002C9.25999 5.07002 9.14999 6.88002 7.98999 7.96002C4.67999 10.68 0.949992 5.99002 4.18999 3.23002Z",
+  fill: "white"
+}), /* @__PURE__ */ import_react33.default.createElement("path", {
+  d: "M7.39996 2.54002C6.96996 2.15002 6.58996 1.81002 6.20996 1.46002C7.59996 -0.989979 11.76 -0.039979 11.72 2.83002C11.75 4.83002 11.72 6.82002 11.69 8.82002C11.68 9.63002 11.01 10.28 10.2 10.27C10.13 10.27 10.06 10.27 9.98996 10.25C9.98996 7.92002 9.99996 5.58002 10.03 3.25002C10.12 2.65002 9.79996 2.06002 9.23996 1.82002C8.44996 1.46002 7.92996 2.02002 7.38996 2.54002H7.39996Z",
+  fill: "white"
+}))));
+var mdex_default = MdexIcon;
+
 // src/searchbar/tokenSearch/Logo.tsx
-var Logo = ({ label, filter }) => {
+var Logo = ({ label, width, height, filter }) => {
   let result;
   switch (label) {
     case "bsc":
-      result = /* @__PURE__ */ import_react33.default.createElement(bsc_default, null);
+      result = /* @__PURE__ */ import_react34.default.createElement(bsc_default, {
+        width,
+        height
+      });
       break;
     case "avalanche":
-      result = /* @__PURE__ */ import_react33.default.createElement(avalanche_default, null);
+      result = /* @__PURE__ */ import_react34.default.createElement(avalanche_default, {
+        width,
+        height
+      });
       break;
     case "kyberdmm":
-      result = /* @__PURE__ */ import_react33.default.createElement(kyber_default, null);
+      result = /* @__PURE__ */ import_react34.default.createElement(kyber_default, {
+        width,
+        height
+      });
       break;
     case "pangolin":
-      result = /* @__PURE__ */ import_react33.default.createElement(pangolin_default, null);
+      result = /* @__PURE__ */ import_react34.default.createElement(pangolin_default, {
+        width,
+        height
+      });
       break;
     case "sushiswap":
-      result = /* @__PURE__ */ import_react33.default.createElement(sushi_default, null);
+      result = /* @__PURE__ */ import_react34.default.createElement(sushi_default, {
+        width,
+        height
+      });
       break;
     case "traderjoe":
-      result = /* @__PURE__ */ import_react33.default.createElement(trader_default, null);
+      result = /* @__PURE__ */ import_react34.default.createElement(trader_default, {
+        width,
+        height
+      });
       break;
     case "mdex":
-      result = /* @__PURE__ */ import_react33.default.createElement(trader_default, null);
+      result = /* @__PURE__ */ import_react34.default.createElement(mdex_default, {
+        width,
+        height
+      });
       break;
     case "Select All":
-      result = /* @__PURE__ */ import_react33.default.createElement(import_react33.default.Fragment, null);
+      result = /* @__PURE__ */ import_react34.default.createElement(import_react34.default.Fragment, null);
       break;
     case "moonbeam":
-      result = /* @__PURE__ */ import_react33.default.createElement(moonbeam_default, null);
+      result = /* @__PURE__ */ import_react34.default.createElement(moonbeam_default, {
+        width,
+        height
+      });
       break;
     case "moonriver":
-      result = /* @__PURE__ */ import_react33.default.createElement(moonriver_default, null);
+      result = /* @__PURE__ */ import_react34.default.createElement(moonriver_default, {
+        width,
+        height
+      });
       break;
     case "apeswap":
-      result = /* @__PURE__ */ import_react33.default.createElement(apeswap_default, null);
+      result = /* @__PURE__ */ import_react34.default.createElement(apeswap_default, {
+        width,
+        height
+      });
       break;
     case "babyswap":
-      result = /* @__PURE__ */ import_react33.default.createElement(babyswap_default, null);
+      result = /* @__PURE__ */ import_react34.default.createElement(babyswap_default, {
+        width,
+        height
+      });
       break;
     case "biswap":
-      result = /* @__PURE__ */ import_react33.default.createElement(biswap_default, null);
+      result = /* @__PURE__ */ import_react34.default.createElement(biswap_default, {
+        width,
+        height
+      });
       break;
     case "ellipsis.finance":
-      result = /* @__PURE__ */ import_react33.default.createElement(ellipsis_finance_default, null);
+      result = /* @__PURE__ */ import_react34.default.createElement(ellipsis_finance_default, {
+        width,
+        height
+      });
       break;
     case "pancakeswap":
-      result = /* @__PURE__ */ import_react33.default.createElement(pancake_default, null);
+      result = /* @__PURE__ */ import_react34.default.createElement(pancake_default, {
+        width,
+        height
+      });
       break;
     case "safeswap":
-      result = /* @__PURE__ */ import_react33.default.createElement(safeswap_default, null);
+      result = /* @__PURE__ */ import_react34.default.createElement(safeswap_default, {
+        width,
+        height
+      });
       break;
     case "baguette":
-      result = /* @__PURE__ */ import_react33.default.createElement(baguette_default, null);
+      result = /* @__PURE__ */ import_react34.default.createElement(baguette_default, {
+        width,
+        height
+      });
       break;
     case "canary":
-      result = /* @__PURE__ */ import_react33.default.createElement(canary_default, null);
+      result = /* @__PURE__ */ import_react34.default.createElement(canary_default, {
+        width,
+        height
+      });
       break;
     case "complusnetwork":
-      result = /* @__PURE__ */ import_react33.default.createElement(complus_network_default, null);
+      result = /* @__PURE__ */ import_react34.default.createElement(complus_network_default, {
+        width,
+        height
+      });
       break;
     case "elkfinance":
-      result = /* @__PURE__ */ import_react33.default.createElement(elk_finance_default, null);
+      result = /* @__PURE__ */ import_react34.default.createElement(elk_finance_default, {
+        width,
+        height
+      });
       break;
     case "lydiafinance":
-      result = /* @__PURE__ */ import_react33.default.createElement(lydia_finance_default, null);
+      result = /* @__PURE__ */ import_react34.default.createElement(lydia_finance_default, {
+        width,
+        height
+      });
       break;
     case "oliveswap":
-      result = /* @__PURE__ */ import_react33.default.createElement(oliveswap_default, null);
+      result = /* @__PURE__ */ import_react34.default.createElement(oliveswap_default, {
+        width,
+        height
+      });
       break;
     case "pandaswap":
-      result = /* @__PURE__ */ import_react33.default.createElement(pandaswap_default, null);
+      result = /* @__PURE__ */ import_react34.default.createElement(pandaswap_default, {
+        width,
+        height
+      });
       break;
     case "yetiswap":
-      result = /* @__PURE__ */ import_react33.default.createElement(yetiswap_default, null);
+      result = /* @__PURE__ */ import_react34.default.createElement(yetiswap_default, {
+        width,
+        height
+      });
       break;
     case "zeroexchange":
-      result = /* @__PURE__ */ import_react33.default.createElement(zero_exchange_default, null);
+      result = /* @__PURE__ */ import_react34.default.createElement(zero_exchange_default, {
+        width,
+        height
+      });
       break;
     case "beamswap":
-      result = /* @__PURE__ */ import_react33.default.createElement(beamswap_default, null);
+      result = /* @__PURE__ */ import_react34.default.createElement(beamswap_default, {
+        width,
+        height
+      });
       break;
     case "solarflare":
-      result = /* @__PURE__ */ import_react33.default.createElement(solar_flare_default, null);
+      result = /* @__PURE__ */ import_react34.default.createElement(solar_flare_default, {
+        width,
+        height
+      });
       break;
     case "stellaswap":
-      result = /* @__PURE__ */ import_react33.default.createElement(stellaswap_default, null);
+      result = /* @__PURE__ */ import_react34.default.createElement(stellaswap_default, {
+        width,
+        height
+      });
       break;
     case "solarbeam":
-      result = /* @__PURE__ */ import_react33.default.createElement(solarbeam_default, null);
+      result = /* @__PURE__ */ import_react34.default.createElement(solarbeam_default, {
+        width,
+        height
+      });
       break;
     default:
-      result = /* @__PURE__ */ import_react33.default.createElement(default_default, null);
+      result = /* @__PURE__ */ import_react34.default.createElement(default_default, {
+        width,
+        height
+      });
       break;
   }
-  return /* @__PURE__ */ import_react33.default.createElement("div", {
+  return /* @__PURE__ */ import_react34.default.createElement("div", {
     style: { filter: `grayscale(${filter})` }
   }, result);
 };
@@ -2685,14 +2826,14 @@ function intToWords(int) {
 }
 
 // src/searchbar/icons/down.tsx
-var import_react34 = __toESM(require("react"));
-var DownIcon = (0, import_react34.memo)(({ active, activeColor, color, height, width }) => /* @__PURE__ */ import_react34.default.createElement("svg", {
+var import_react35 = __toESM(require("react"));
+var DownIcon = (0, import_react35.memo)(({ active, activeColor, color, height, width }) => /* @__PURE__ */ import_react35.default.createElement("svg", {
   height: height != null ? height : 7,
   viewBox: "0 0 7 5",
   width: width != null ? width : 5,
   xmlns: "http://www.w3.org/2000/svg",
   fill: "none"
-}, /* @__PURE__ */ import_react34.default.createElement("path", {
+}, /* @__PURE__ */ import_react35.default.createElement("path", {
   d: "M1 1L3.49449 3.5L6 1",
   stroke: "#7A808A",
   strokeLinecap: "round",
@@ -2701,14 +2842,14 @@ var DownIcon = (0, import_react34.memo)(({ active, activeColor, color, height, w
 var down_default = DownIcon;
 
 // src/searchbar/icons/up.tsx
-var import_react35 = __toESM(require("react"));
-var UpIcon = (0, import_react35.memo)(({ active, activeColor, color, height, width }) => /* @__PURE__ */ import_react35.default.createElement("svg", {
+var import_react36 = __toESM(require("react"));
+var UpIcon = (0, import_react36.memo)(({ active, activeColor, color, height, width }) => /* @__PURE__ */ import_react36.default.createElement("svg", {
   height: height != null ? height : 7,
   viewBox: "0 0 7 4",
   width: width != null ? width : 4,
   xmlns: "http://www.w3.org/2000/svg",
   fill: "none"
-}, /* @__PURE__ */ import_react35.default.createElement("path", {
+}, /* @__PURE__ */ import_react36.default.createElement("path", {
   d: "M6 3.5L3.50551 1L1 3.5",
   stroke: "#7A808A",
   strokeLinecap: "round",
@@ -2720,7 +2861,7 @@ var up_default = UpIcon;
 var imageSize = 26;
 var StyledDetailList = import_styled_components3.default.div`  
   ${({ styles }) => {
-  var _a2, _b2, _c2, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s;
+  var _a2, _b2, _c2, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t, _u;
   return `
     display: ${((_a2 = styles == null ? void 0 : styles.container) == null ? void 0 : _a2.display) || "grid"};
     grid-gap: 5px;
@@ -2729,16 +2870,16 @@ var StyledDetailList = import_styled_components3.default.div`
     padding: ${((_c2 = styles == null ? void 0 : styles.container) == null ? void 0 : _c2.padding) || "5px 0"};    
     background: ${((_d = styles == null ? void 0 : styles.container) == null ? void 0 : _d.background) || "#00070E"};
     border-bottom: ${((_e = styles == null ? void 0 : styles.container) == null ? void 0 : _e.borderbottom) || "1px solid #474F5C"};    
-    grid-template-columns: ${((_f = styles == null ? void 0 : styles.container) == null ? void 0 : _f.gridTemplateColumn) || "18% 1% 18% 5% 6% 37% 10%"}; 
+    grid-template-columns: ${((_f = styles == null ? void 0 : styles.container) == null ? void 0 : _f.gridTemplateColumns) || "15% 1% 18% 4% 4% 35% 10%"}; 
 
     & .token {
       display: inherit;
       align-items: center;
-      grid-template-columns: 20px 100px; 
-      color: ${((_g = styles == null ? void 0 : styles.token) == null ? void 0 : _g.background) || "#B4BBC7"};
-      font-size: ${((_h = styles == null ? void 0 : styles.token) == null ? void 0 : _h.fontSize) || "12px"};
+      grid-template-columns: 16px 100px; 
+      color: ${((_g = styles == null ? void 0 : styles.token) == null ? void 0 : _g.color) || "#B4BBC7"};
+      font-size: ${((_h = styles == null ? void 0 : styles.token) == null ? void 0 : _h.fontSize) || "8px"};
       font-weight: ${((_i = styles == null ? void 0 : styles.token) == null ? void 0 : _i.fontWeight) || "600"};      
-      padding: 0 13px;
+      padding: ${((_j = styles == null ? void 0 : styles.token) == null ? void 0 : _j.padding) || "0 5px"};      
       
       > span {
         padding-left: 5px;
@@ -2751,8 +2892,8 @@ var StyledDetailList = import_styled_components3.default.div`
     }
 
     & .pair {
-      color: ${((_j = styles == null ? void 0 : styles.pair) == null ? void 0 : _j.color) || "#B4BBC7"};
-      font-size: ${((_k = styles == null ? void 0 : styles.pair) == null ? void 0 : _k.fontSize) || "8px"};
+      color: ${((_k = styles == null ? void 0 : styles.pair) == null ? void 0 : _k.color) || "#B4BBC7"};
+      font-size: ${((_l = styles == null ? void 0 : styles.pair) == null ? void 0 : _l.fontSize) || "7px"};
 
       & .count {
         display: flex;
@@ -2760,25 +2901,26 @@ var StyledDetailList = import_styled_components3.default.div`
     }
 
     & .detail {
-      padding: ${((_l = styles == null ? void 0 : styles.detail) == null ? void 0 : _l.padding) || "3px"};
+      padding: ${((_m = styles == null ? void 0 : styles.detail) == null ? void 0 : _m.padding) || "3px"};
     }
     
     > button {      
       display: flex;
       align-items: center;
       justify-content: center;
-
-      border-color: ${((_m = styles == null ? void 0 : styles.button) == null ? void 0 : _m.borderColor) || "#474F5C"};      
-      background-color: ${((_n = styles == null ? void 0 : styles.button) == null ? void 0 : _n.backgroundColor) || "#474F5C"};      
-      color: ${((_o = styles == null ? void 0 : styles.button) == null ? void 0 : _o.color) || "#7A808A"};      
-      border-radius: ${((_p = styles == null ? void 0 : styles.button) == null ? void 0 : _p.borderRadius) || "4px"};      
-      font-size: ${((_q = styles == null ? void 0 : styles.button) == null ? void 0 : _q.fontSize) || "10px"};
+      justify-self: right;
+      border-color: ${((_n = styles == null ? void 0 : styles.button) == null ? void 0 : _n.borderColor) || "#474F5C"};      
+      background-color: ${((_o = styles == null ? void 0 : styles.button) == null ? void 0 : _o.backgroundColor) || "#474F5C"};      
+      color: ${((_p = styles == null ? void 0 : styles.button) == null ? void 0 : _p.color) || "#7A808A"};      
+      border-radius: ${((_q = styles == null ? void 0 : styles.button) == null ? void 0 : _q.borderRadius) || "4px"};      
+      font-size: ${((_r = styles == null ? void 0 : styles.button) == null ? void 0 : _r.fontSize) || "7px"};
       border-width: 0;      
       cursor: pointer;
-      padding: ${((_r = styles == null ? void 0 : styles.button) == null ? void 0 : _r.padding) || "3px"};
+      padding: ${((_s = styles == null ? void 0 : styles.button) == null ? void 0 : _s.padding) || "3px"};
+      width: ${((_t = styles == null ? void 0 : styles.button) == null ? void 0 : _t.width) || "40px"};
 
       &:hover {
-        background-color: ${((_s = styles == null ? void 0 : styles.button) == null ? void 0 : _s.hoverBackColor) || "#232C38"};      
+        background-color: ${((_u = styles == null ? void 0 : styles.button) == null ? void 0 : _u.hoverBackColor) || "#232C38"};      
       }    
 
       & .icon {
@@ -2791,11 +2933,11 @@ var StyledDetailList = import_styled_components3.default.div`
 `;
 var StyledDetailContent = import_styled_components3.default.div`
   ${({ styles }) => {
-  var _a2, _b2, _c2, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r;
+  var _a2, _b2, _c2, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n;
   return `
     display: ${((_a2 = styles == null ? void 0 : styles.content) == null ? void 0 : _a2.display) || "block"};    
     align-items: ${((_b2 = styles == null ? void 0 : styles.content) == null ? void 0 : _b2.alignItems) || "center"};    
-    padding: ${((_c2 = styles == null ? void 0 : styles.content) == null ? void 0 : _c2.padding) || "5px 13px"};    
+    padding: ${((_c2 = styles == null ? void 0 : styles.content) == null ? void 0 : _c2.padding) || "5px"};    
     margin: ${((_d = styles == null ? void 0 : styles.content) == null ? void 0 : _d.margin) || "5px 0"};    
     background: ${((_e = styles == null ? void 0 : styles.content) == null ? void 0 : _e.background) || "#474F5C"};
     border-bottom: ${((_f = styles == null ? void 0 : styles.content) == null ? void 0 : _f.borderbottom) || "1px solid #474F5C"};    
@@ -2805,20 +2947,21 @@ var StyledDetailContent = import_styled_components3.default.div`
     & .details {
       display: grid;
       padding: 7px 0;
-      font-size: ${((_i = (_h = styles == null ? void 0 : styles.content) == null ? void 0 : _h.address) == null ? void 0 : _i.fontSize) || "10px"};
+      font-size: ${((_h = styles == null ? void 0 : styles.content) == null ? void 0 : _h.fontSize) || "7px"};
 
-      grid-template-columns: ${((_j = styles == null ? void 0 : styles.content) == null ? void 0 : _j.gridTemplateColumn) || "52% 48% 1%"}; 
+      grid-template-columns: ${((_i = styles == null ? void 0 : styles.content) == null ? void 0 : _i.gridTemplateColumns) || "53% 45% 2%"}; 
 
       & .token {
-        display: grid;
-        gap: 5px;
+        display: grid;        
         grid-template-columns: 20px;
-
+        > span {
+          padding-left: 5px
+        }
+        
         & .name {
           align-self: center;          
-          font-size: ${((_l = (_k = styles == null ? void 0 : styles.content) == null ? void 0 : _k.token) == null ? void 0 : _l.fontSize) || "12px"};
-          font-weight: ${((_n = (_m = styles == null ? void 0 : styles.content) == null ? void 0 : _m.token) == null ? void 0 : _n.fontWeight) || "600"};
-          padding-left: 5px;
+          font-size: ${((_j = styles == null ? void 0 : styles.token) == null ? void 0 : _j.fontSize) || "8px"};
+          font-weight: ${((_k = styles == null ? void 0 : styles.token) == null ? void 0 : _k.fontWeight) || "600"};          
         }
     
         & .address {
@@ -2827,28 +2970,28 @@ var StyledDetailContent = import_styled_components3.default.div`
           grid-row: 2;
           grid-column: 2;
           color: #B4BBC7;
-          font-size: ${((_p = (_o = styles == null ? void 0 : styles.content) == null ? void 0 : _o.address) == null ? void 0 : _p.fontSize) || "10px"};
-          padding-bottom: 10px;
-          padding-left: 5px;
-
+          font-size: ${((_l = styles == null ? void 0 : styles.address) == null ? void 0 : _l.fontSize) || "7px"};
+          padding-bottom: 5px;
+          
           > strong {
             color: white;
-            padding-left: 7px;
+            padding-left: 5px;
           }
         }
       } 
 
       & .left {
-        & .detail {
-          display: grid;
-          grid-template-columns: 85px 150px;
-          padding-left: 0;
+        & .pair {          
+          padding-left: 5px;
         }
       }
       
       & .detail {
         color: #B4BBC7;
-        font-size: ${((_r = (_q = styles == null ? void 0 : styles.content) == null ? void 0 : _q.detail) == null ? void 0 : _r.fontSize) || "10px"};
+        grid-template-columns: 40px 30px 50px;
+        display: grid;
+
+        font-size: ${((_n = (_m = styles == null ? void 0 : styles.content) == null ? void 0 : _m.detail) == null ? void 0 : _n.fontSize) || "7px"};
         > strong {
           color: white;
         }
@@ -2861,8 +3004,7 @@ var StyledDetailContent = import_styled_components3.default.div`
       & .right {
         padding-top: 10px;
 
-        & .widgets {
-          padding-bottom: 8px;
+        & .widgets {          
           color: #B4BBC7;
         }
 
@@ -2878,14 +3020,14 @@ var StyledDetailContent = import_styled_components3.default.div`
   
         & .info {
           display: grid;
-          grid-template-columns: 50% 50%;
-          padding: 1px 0;
+          grid-template-columns: 40% 55%;          
 
-          & .detail {
-            display: flex;
+          & .detail {           
             padding-right: 5px;
             align-items: center;
-
+            grid-template-columns: 40px 30px 50px;
+            display: grid;
+            
             & .logo {
               padding: 0 10px;
               margin-top: 2px;
@@ -2904,109 +3046,119 @@ var StyledAction = import_styled_components3.default.div`
 var Action = (props) => {
   const { component, detail } = props;
   const Component = component;
-  return /* @__PURE__ */ import_react36.default.createElement(StyledAction, null, /* @__PURE__ */ import_react36.default.createElement(Component, {
+  return /* @__PURE__ */ import_react37.default.createElement(StyledAction, null, /* @__PURE__ */ import_react37.default.createElement(Component, {
     detail
   }));
 };
 var ResultDetail = (props) => {
   const { index, suggestions, handleDetail, currentIndex } = props;
-  const renderProps = (0, import_react36.useContext)(TokenSearch_default);
-  const { customActions } = renderProps;
+  const renderProps = (0, import_react37.useContext)(TokenSearch_default);
+  const { customActions, customTokenDetail } = renderProps;
   const selectedPair = suggestions[index];
   const tokenImage = (token) => {
     if (token == null ? void 0 : token.image)
-      return /* @__PURE__ */ import_react36.default.createElement("img", {
+      return /* @__PURE__ */ import_react37.default.createElement("img", {
         alt: token == null ? void 0 : token.symbol,
         src: token == null ? void 0 : token.image,
         style: { borderRadius: "50%" },
         width: imageSize
       });
     else
-      return /* @__PURE__ */ import_react36.default.createElement(default_default, null);
+      return /* @__PURE__ */ import_react37.default.createElement(default_default, null);
   };
-  return /* @__PURE__ */ import_react36.default.createElement(import_react36.default.Fragment, null, currentIndex !== index && /* @__PURE__ */ import_react36.default.createElement(StyledDetailList, null, /* @__PURE__ */ import_react36.default.createElement("div", {
+  return /* @__PURE__ */ import_react37.default.createElement(import_react37.default.Fragment, null, currentIndex !== index && /* @__PURE__ */ import_react37.default.createElement(StyledDetailList, {
+    styles: customTokenDetail == null ? void 0 : customTokenDetail.list
+  }, /* @__PURE__ */ import_react37.default.createElement("div", {
     className: "token"
-  }, tokenImage(selectedPair.token0), " ", /* @__PURE__ */ import_react36.default.createElement("span", null, selectedPair.token0.name)), "/", /* @__PURE__ */ import_react36.default.createElement("div", {
+  }, tokenImage(selectedPair.token0), " ", /* @__PURE__ */ import_react37.default.createElement("span", null, selectedPair.token0.name)), "/", /* @__PURE__ */ import_react37.default.createElement("div", {
     className: "token"
-  }, tokenImage(selectedPair.token1), " ", /* @__PURE__ */ import_react36.default.createElement("span", null, selectedPair.token1.name)), /* @__PURE__ */ import_react36.default.createElement("div", {
+  }, tokenImage(selectedPair.token1), " ", /* @__PURE__ */ import_react37.default.createElement("span", null, selectedPair.token1.name)), /* @__PURE__ */ import_react37.default.createElement("div", {
     className: "logo"
-  }, /* @__PURE__ */ import_react36.default.createElement(Logo, {
-    label: selectedPair.network
-  })), /* @__PURE__ */ import_react36.default.createElement("div", {
-    className: "logo"
-  }, /* @__PURE__ */ import_react36.default.createElement(Logo, {
-    label: selectedPair.exchange
-  })), /* @__PURE__ */ import_react36.default.createElement("div", {
-    className: "pair"
-  }, /* @__PURE__ */ import_react36.default.createElement("div", {
-    className: "detail"
-  }, "Pair: ", /* @__PURE__ */ import_react36.default.createElement("strong", null, firstAndLast(selectedPair.id))), /* @__PURE__ */ import_react36.default.createElement("div", {
-    className: "count"
-  }, /* @__PURE__ */ import_react36.default.createElement("div", {
-    className: "detail"
-  }, "Volume: ", /* @__PURE__ */ import_react36.default.createElement("strong", null, intToWords(selectedPair.volumeUSD))), /* @__PURE__ */ import_react36.default.createElement("div", {
-    className: "detail"
-  }, "Holders: ", /* @__PURE__ */ import_react36.default.createElement("strong", null, /* @__PURE__ */ import_react36.default.createElement("i", null, "[Coming Soon]"))))), /* @__PURE__ */ import_react36.default.createElement("button", {
-    onClick: () => handleDetail(currentIndex === index ? null : index)
-  }, "Details", /* @__PURE__ */ import_react36.default.createElement("div", {
-    className: "icon"
-  }, /* @__PURE__ */ import_react36.default.createElement(down_default, {
+  }, /* @__PURE__ */ import_react37.default.createElement(Logo, {
+    label: selectedPair.network,
     width: 12,
     height: 12
-  })))), currentIndex === index && /* @__PURE__ */ import_react36.default.createElement(StyledDetailContent, null, /* @__PURE__ */ import_react36.default.createElement("div", {
-    className: "details"
-  }, /* @__PURE__ */ import_react36.default.createElement("div", {
-    className: "left"
-  }, /* @__PURE__ */ import_react36.default.createElement("div", {
-    className: "token"
-  }, tokenImage(selectedPair.token0), /* @__PURE__ */ import_react36.default.createElement("span", {
-    className: "name"
-  }, selectedPair.token0.name), /* @__PURE__ */ import_react36.default.createElement("span", {
-    className: "address"
-  }, "Address: ", /* @__PURE__ */ import_react36.default.createElement("strong", null, firstAndLast(selectedPair.token0.address)))), /* @__PURE__ */ import_react36.default.createElement("div", {
-    className: "token"
-  }, tokenImage(selectedPair.token1), /* @__PURE__ */ import_react36.default.createElement("span", {
-    className: "name"
-  }, selectedPair.token1.name), /* @__PURE__ */ import_react36.default.createElement("span", {
-    className: "address"
-  }, "Address: ", /* @__PURE__ */ import_react36.default.createElement("strong", null, firstAndLast(selectedPair.token1.address)))), /* @__PURE__ */ import_react36.default.createElement("div", {
+  })), /* @__PURE__ */ import_react37.default.createElement("div", {
+    className: "logo"
+  }, /* @__PURE__ */ import_react37.default.createElement(Logo, {
+    label: selectedPair.exchange,
+    width: 12,
+    height: 12
+  })), /* @__PURE__ */ import_react37.default.createElement("div", {
+    className: "pair"
+  }, /* @__PURE__ */ import_react37.default.createElement("div", {
     className: "detail"
-  }, "Pair Address: ", /* @__PURE__ */ import_react36.default.createElement("strong", null, firstAndLast(selectedPair.id)))), /* @__PURE__ */ import_react36.default.createElement("div", {
+  }, "Pair: ", /* @__PURE__ */ import_react37.default.createElement("strong", null, firstAndLast(selectedPair.id))), /* @__PURE__ */ import_react37.default.createElement("div", {
+    className: "count"
+  }, /* @__PURE__ */ import_react37.default.createElement("div", {
+    className: "detail"
+  }, "Volume: ", /* @__PURE__ */ import_react37.default.createElement("strong", null, intToWords(selectedPair.volumeUSD))))), /* @__PURE__ */ import_react37.default.createElement("button", {
+    onClick: () => handleDetail(currentIndex === index ? null : index)
+  }, "Details", /* @__PURE__ */ import_react37.default.createElement("div", {
+    className: "icon"
+  }, /* @__PURE__ */ import_react37.default.createElement(down_default, {
+    width: 7,
+    height: 7
+  })))), currentIndex === index && /* @__PURE__ */ import_react37.default.createElement(StyledDetailContent, {
+    styles: customTokenDetail == null ? void 0 : customTokenDetail.details
+  }, /* @__PURE__ */ import_react37.default.createElement("div", {
+    className: "details"
+  }, /* @__PURE__ */ import_react37.default.createElement("div", {
+    className: "left"
+  }, /* @__PURE__ */ import_react37.default.createElement("div", {
+    className: "token"
+  }, tokenImage(selectedPair.token0), /* @__PURE__ */ import_react37.default.createElement("span", {
+    className: "name"
+  }, selectedPair.token0.name), /* @__PURE__ */ import_react37.default.createElement("span", {
+    className: "address"
+  }, "Address: ", /* @__PURE__ */ import_react37.default.createElement("strong", null, firstAndLast(selectedPair.token0.address)))), /* @__PURE__ */ import_react37.default.createElement("div", {
+    className: "token"
+  }, tokenImage(selectedPair.token1), /* @__PURE__ */ import_react37.default.createElement("span", {
+    className: "name"
+  }, selectedPair.token1.name), /* @__PURE__ */ import_react37.default.createElement("span", {
+    className: "address"
+  }, "Address: ", /* @__PURE__ */ import_react37.default.createElement("strong", null, firstAndLast(selectedPair.token1.address)))), /* @__PURE__ */ import_react37.default.createElement("div", {
+    className: "pair"
+  }, /* @__PURE__ */ import_react37.default.createElement("span", null, "Pair Address: "), /* @__PURE__ */ import_react37.default.createElement("strong", null, firstAndLast(selectedPair.id)))), /* @__PURE__ */ import_react37.default.createElement("div", {
     className: "right"
-  }, /* @__PURE__ */ import_react36.default.createElement("div", {
+  }, /* @__PURE__ */ import_react37.default.createElement("div", {
     className: "widgets"
-  }, /* @__PURE__ */ import_react36.default.createElement("span", null, "Add a Widget:"), /* @__PURE__ */ import_react36.default.createElement("div", {
+  }, /* @__PURE__ */ import_react37.default.createElement("span", null, "Add a Widget:"), /* @__PURE__ */ import_react37.default.createElement("div", {
     className: "actions"
-  }, customActions && customActions.map((action) => /* @__PURE__ */ import_react36.default.createElement(Action, {
+  }, customActions && customActions.map((action) => /* @__PURE__ */ import_react37.default.createElement(Action, {
     key: `action-${action.index}`,
     component: action.component,
     detail: selectedPair
-  })))), /* @__PURE__ */ import_react36.default.createElement("div", {
+  })))), /* @__PURE__ */ import_react37.default.createElement("div", {
     className: "info"
-  }, /* @__PURE__ */ import_react36.default.createElement("div", {
+  }, /* @__PURE__ */ import_react37.default.createElement("div", {
     className: "detail"
-  }, "Volume : ", /* @__PURE__ */ import_react36.default.createElement("strong", null, intToWords(selectedPair.volumeUSD))), /* @__PURE__ */ import_react36.default.createElement("div", {
+  }, /* @__PURE__ */ import_react37.default.createElement("span", null, "Volume :"), " ", /* @__PURE__ */ import_react37.default.createElement("strong", null, intToWords(selectedPair.volumeUSD))), /* @__PURE__ */ import_react37.default.createElement("div", {
     className: "detail"
-  }, "Network:", /* @__PURE__ */ import_react36.default.createElement("div", {
+  }, /* @__PURE__ */ import_react37.default.createElement("span", null, "Network: "), /* @__PURE__ */ import_react37.default.createElement("div", {
     className: "logo"
-  }, /* @__PURE__ */ import_react36.default.createElement(Logo, {
-    label: selectedPair.network
-  })), /* @__PURE__ */ import_react36.default.createElement("strong", null, selectedPair.network))), /* @__PURE__ */ import_react36.default.createElement("div", {
+  }, /* @__PURE__ */ import_react37.default.createElement(Logo, {
+    label: selectedPair.network,
+    width: 10,
+    height: 10
+  })), /* @__PURE__ */ import_react37.default.createElement("strong", null, selectedPair.network))), /* @__PURE__ */ import_react37.default.createElement("div", {
     className: "info"
-  }, /* @__PURE__ */ import_react36.default.createElement("div", {
+  }, /* @__PURE__ */ import_react37.default.createElement("div", {
     className: "detail"
-  }, "Holders: ", /* @__PURE__ */ import_react36.default.createElement("strong", null, /* @__PURE__ */ import_react36.default.createElement("i", null, "[Coming Soon]"))), /* @__PURE__ */ import_react36.default.createElement("div", {
+  }, /* @__PURE__ */ import_react37.default.createElement("span", null, "Holders:"), " ", /* @__PURE__ */ import_react37.default.createElement("strong", null)), /* @__PURE__ */ import_react37.default.createElement("div", {
     className: "detail"
-  }, "Exchange:", /* @__PURE__ */ import_react36.default.createElement("div", {
+  }, /* @__PURE__ */ import_react37.default.createElement("span", null, "Exchange: "), /* @__PURE__ */ import_react37.default.createElement("div", {
     className: "logo"
-  }, /* @__PURE__ */ import_react36.default.createElement(Logo, {
-    label: selectedPair.exchange
-  })), /* @__PURE__ */ import_react36.default.createElement("strong", null, selectedPair.exchange)))), /* @__PURE__ */ import_react36.default.createElement("div", {
+  }, /* @__PURE__ */ import_react37.default.createElement(Logo, {
+    label: selectedPair.exchange,
+    width: 10,
+    height: 10
+  })), /* @__PURE__ */ import_react37.default.createElement("strong", null, selectedPair.exchange)))), /* @__PURE__ */ import_react37.default.createElement("div", {
     className: "up",
     onClick: () => handleDetail(currentIndex === index ? null : index)
-  }, /* @__PURE__ */ import_react36.default.createElement(up_default, {
-    height: 12,
-    width: 12
+  }, /* @__PURE__ */ import_react37.default.createElement(up_default, {
+    height: 7,
+    width: 7
   })))));
 };
 var ResultDetail_default = ResultDetail;
@@ -3018,42 +3170,45 @@ var StyledResult = import_styled_components4.default.div`
   margin-right: auto;
   position: relative;  
 `;
-var StyledLoading = import_styled_components4.default.div`
-  position: relative;
-  display: flex;
-  justify-content: center;  
-  margin: 10px;
+var StyledLoading = import_styled_components4.default.div`  
   ${({ props }) => {
   var _a2, _b2;
   return `
-    color: ${((_a2 = props == null ? void 0 : props.styles) == null ? void 0 : _a2.color) || "black"};
-    font-size: ${((_b2 = props == null ? void 0 : props.styles) == null ? void 0 : _b2.fontSize) || "15px"};      
+    position: relative;
+    display: flex;
+    justify-content: center;  
+    margin: 10px;
+    color: ${((_a2 = props == null ? void 0 : props.styles) == null ? void 0 : _a2.color) || "white"};
+    font-size: ${((_b2 = props == null ? void 0 : props.styles) == null ? void 0 : _b2.fontSize) || "12px"};      
   `;
 }}    
 `;
 var StyledResultTitle = import_styled_components4.default.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
   ${({ styles }) => `    
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     color: ${(styles == null ? void 0 : styles.color) || "#B4BBC7"};
     font-size: ${(styles == null ? void 0 : styles.fontSize) || "9px"};      
     padding: ${(styles == null ? void 0 : styles.padding) || "4px 16px"};      
-    margin: ${(styles == null ? void 0 : styles.padding) || "0"};      
+    margin: ${(styles == null ? void 0 : styles.margin) || "0"};      
     > span {
-      font-size: ${(styles == null ? void 0 : styles.fontSize) || "7px"};      
+      font-size: ${(styles == null ? void 0 : styles.fontSize2) || "7px"};      
     }
 
     > button {
+      display: flex;
+      align-items: center;
+      
       border-color: ${(styles == null ? void 0 : styles.buttonBorderColor) || "#232C38"};      
       background-color: ${(styles == null ? void 0 : styles.buttonBackColor) || "#232C38"};      
       color: ${(styles == null ? void 0 : styles.buttonColor) || "#7A808A"};      
       border-radius: ${(styles == null ? void 0 : styles.buttonBorderRadius) || "4px"};      
+      font-size: ${(styles == null ? void 0 : styles.buttonFontSize) || "7px"};      
+      padding: ${(styles == null ? void 0 : styles.buttonPadding) || "3px 6px"};      
       border-width: 0;      
       cursor: pointer;
-      padding: 3px 6px;
-
+      
       &:hover {
         background-color: ${(styles == null ? void 0 : styles.buttonHoverBackColor) || "black"};      
       }
@@ -3083,10 +3238,10 @@ var StyledResultContent = import_styled_components4.default.div`
 
   & .header {
     display: grid;
-    grid-template-columns: 40% 5% 6% 48%; 
+    grid-template-columns: 41% 5% 6% 49%; 
     border-bottom: 1px solid #474F5C; 
-    color: #7A808A;
-    font-size: 10px;
+    color: #B4BBC7;
+    font-size: 7px;
     font-weight: bold;
     padding-bottom: 10px; 
 
@@ -3097,71 +3252,69 @@ var StyledResultContent = import_styled_components4.default.div`
 `;
 var SearchResult = (props) => {
   const dispatch = (0, import_react_redux2.useDispatch)();
-  const renderProps = (0, import_react37.useContext)(TokenSearch_default);
+  const renderProps = (0, import_react38.useContext)(TokenSearch_default);
   const { customResult, customLoading } = renderProps;
   const { suggestions, searchText } = (0, import_react_redux2.useSelector)((state) => state);
-  const [currentIndex, setCurrentIndex] = (0, import_react37.useState)(0);
+  const [currentIndex, setCurrentIndex] = (0, import_react38.useState)(0);
   const filteredSuggestions = suggestions.slice().sort((pair1, pair2) => pair2.volumeUSD - pair1.volumeUSD);
   if (props.loading) {
     const loadingTitle = (customLoading == null ? void 0 : customLoading.loadingTitle) ? customLoading.loadingTitle : "Searching...";
-    return /* @__PURE__ */ import_react37.default.createElement(StyledLoading, {
+    return /* @__PURE__ */ import_react38.default.createElement(StyledLoading, {
       styles: customLoading == null ? void 0 : customLoading.styles
     }, loadingTitle);
   }
-  if (!!searchText && !filteredSuggestions.length) {
-    const notFoundTitle = (customLoading == null ? void 0 : customLoading.notFoundTitle) ? customLoading.notFoundTitle : "No pairs found...";
-    return /* @__PURE__ */ import_react37.default.createElement(StyledLoading, {
-      styles: customLoading == null ? void 0 : customLoading.styles
-    }, notFoundTitle);
-  }
+  const notFoundTitle = (customLoading == null ? void 0 : customLoading.notFoundTitle) ? customLoading.notFoundTitle : "No results found";
   const handleClose = () => {
     dispatch(stopSelecting());
   };
-  return /* @__PURE__ */ import_react37.default.createElement(StyledResult, {
-    styles: customResult == null ? void 0 : customResult.wrapper
-  }, /* @__PURE__ */ import_react37.default.createElement(StyledResultTitle, {
+  return /* @__PURE__ */ import_react38.default.createElement(StyledResult, null, /* @__PURE__ */ import_react38.default.createElement(StyledResultTitle, {
     styles: customResult == null ? void 0 : customResult.title
-  }, /* @__PURE__ */ import_react37.default.createElement("div", null, "Search Results ", /* @__PURE__ */ import_react37.default.createElement("span", null, "(", filteredSuggestions.length, " Results Found)")), /* @__PURE__ */ import_react37.default.createElement("button", {
+  }, /* @__PURE__ */ import_react38.default.createElement("div", null, "Search Results ", /* @__PURE__ */ import_react38.default.createElement("span", null, "(", filteredSuggestions.length, " Results Found)")), /* @__PURE__ */ import_react38.default.createElement("button", {
     onClick: handleClose
-  }, "Close ", /* @__PURE__ */ import_react37.default.createElement(unchecked_default, null))), /* @__PURE__ */ import_react37.default.createElement(StyledResultContent, {
+  }, "Close\xA0", /* @__PURE__ */ import_react38.default.createElement(unchecked_default, {
+    width: 7,
+    height: 7
+  }))), /* @__PURE__ */ import_react38.default.createElement(StyledResultContent, {
     styles: customResult == null ? void 0 : customResult.content
-  }, /* @__PURE__ */ import_react37.default.createElement("div", {
+  }, /* @__PURE__ */ import_react38.default.createElement("div", {
     className: "header"
-  }, /* @__PURE__ */ import_react37.default.createElement("span", null, "Pair"), /* @__PURE__ */ import_react37.default.createElement("span", null, "Net."), /* @__PURE__ */ import_react37.default.createElement("span", null, "Exch."), /* @__PURE__ */ import_react37.default.createElement("span", null, "Details.")), filteredSuggestions.map((suggestions2, index) => /* @__PURE__ */ import_react37.default.createElement(ResultDetail_default, {
+  }, /* @__PURE__ */ import_react38.default.createElement("span", null, "Pair"), /* @__PURE__ */ import_react38.default.createElement("span", null, "Net."), /* @__PURE__ */ import_react38.default.createElement("span", null, "Exch."), /* @__PURE__ */ import_react38.default.createElement("span", null, "Details.")), filteredSuggestions.map((suggestions2, index) => /* @__PURE__ */ import_react38.default.createElement(ResultDetail_default, {
     suggestions: filteredSuggestions,
     index,
     key: `token-detail-${index}`,
     currentIndex,
     handleDetail: setCurrentIndex
-  }))));
+  })), !!searchText && !filteredSuggestions.length && /* @__PURE__ */ import_react38.default.createElement(StyledLoading, {
+    styles: customLoading == null ? void 0 : customLoading.styles
+  }, notFoundTitle)));
 };
 var SearchResult_default = SearchResult;
 
 // src/searchbar/tokenSearch/SearchFilters.tsx
-var import_react42 = __toESM(require("react"));
+var import_react43 = __toESM(require("react"));
 var import_react_redux5 = require("react-redux");
 var import_styled_components6 = __toESM(require("styled-components"));
 var import_react_accessible_accordion = require("react-accessible-accordion");
 
 // src/searchbar/tokenSearch/SearchFiltersNetworkSelectors.tsx
-var import_react40 = __toESM(require("react"));
+var import_react41 = __toESM(require("react"));
 var import_react_redux3 = require("react-redux");
 var import_lodash4 = require("lodash");
 
 // src/searchbar/tokenSearch/Chip.tsx
-var import_react39 = __toESM(require("react"));
+var import_react40 = __toESM(require("react"));
 var import_styled_components5 = __toESM(require("styled-components"));
 
 // src/searchbar/icons/checked.tsx
-var import_react38 = __toESM(require("react"));
-var CheckedIcon = (0, import_react38.memo)(({ active, activeColor, color, height, width }) => /* @__PURE__ */ import_react38.default.createElement("svg", {
+var import_react39 = __toESM(require("react"));
+var CheckedIcon = (0, import_react39.memo)(({ active, activeColor, color, height, width }) => /* @__PURE__ */ import_react39.default.createElement("svg", {
   height: height != null ? height : 11,
   width: width != null ? width : 8,
   viewBox: "0 0 11 8",
   fill: "none"
-}, /* @__PURE__ */ import_react38.default.createElement("g", {
+}, /* @__PURE__ */ import_react39.default.createElement("g", {
   transform: "translate(0)"
-}, /* @__PURE__ */ import_react38.default.createElement("path", {
+}, /* @__PURE__ */ import_react39.default.createElement("path", {
   d: "M1 2.91L4.29 6.16L9.48 1",
   stroke: "#00C30E",
   strokeWidth: "1.5",
@@ -3193,14 +3346,14 @@ var StyledChip = import_styled_components5.default.div`
           border-radius: ${(styles == null ? void 0 : styles.borderRadius) || "4px"};  
           background-color: ${(styles == null ? void 0 : styles.backgroundColor) || "#232B35"};  
           border: ${(styles == null ? void 0 : styles.border) || "solid 2px #232B35"};   
-          padding: ${(styles == null ? void 0 : styles.padding) || "7px 5px"};   
-          margin: ${(styles == null ? void 0 : styles.margin) || "5px 5px 0"};   
+          padding: ${(styles == null ? void 0 : styles.padding) || "2px 5px"};   
+          margin: ${(styles == null ? void 0 : styles.margin) || "5px"};   
           color: ${(styles == null ? void 0 : styles.defaultColor) || "#B4BBC7"};   
-          width: ${(styles == null ? void 0 : styles.width) || "122px"};   
+          width: ${(styles == null ? void 0 : styles.width) || "108px"};   
           height: ${(styles == null ? void 0 : styles.height) || "auto"};   
-          text-align: ${(styles == null ? void 0 : styles.textAlign) || "center"}; 
+          text-align: ${(styles == null ? void 0 : styles.textAlign) || "left"}; 
           text-transform: ${(styles == null ? void 0 : styles.textTransform) || "uppercase"}; 
-          grid-template-columns: ${(styles == null ? void 0 : styles.gridTemplateColumn) || "20px 20px 70px"}; 
+          grid-template-columns: ${(styles == null ? void 0 : styles.gridTemplateColumns) || "20px 75px 10px"}; 
           >:last-child {      
             justify-self: ${(styles == null ? void 0 : styles.justifySelf) || "end"}; 
           }
@@ -3209,60 +3362,62 @@ var StyledChip = import_styled_components5.default.div`
         > input:checked + label {   
           -webkit-transition: all 500ms ease;
           transition: all 500ms ease;   
-          border-color: ${(styles == null ? void 0 : styles.checkedColor) || "#474F5C"};    
+          border-color: ${(styles == null ? void 0 : styles.checkedBorderColor) || "#474F5C"};    
           color: ${(styles == null ? void 0 : styles.checkedColor) || "white"};   
           background-color: ${(styles == null ? void 0 : styles.checkedBackgroundColor) || "#474F5C"};   
         }    
     `}   
 `;
 var Chip = (props) => {
-  const renderProps = (0, import_react39.useContext)(TokenSearch_default);
+  const renderProps = (0, import_react40.useContext)(TokenSearch_default);
   const { label, checked, onChange, name, value, styles, filter } = props;
   const { customChip } = renderProps;
   const customStyles = styles === void 0 ? customChip == null ? void 0 : customChip.styles : styles;
-  const checkedStatus = checked ? /* @__PURE__ */ import_react39.default.createElement(checked_default, null) : /* @__PURE__ */ import_react39.default.createElement(unchecked_default, null);
-  return /* @__PURE__ */ import_react39.default.createElement(StyledChip, {
+  const checkedStatus = checked ? /* @__PURE__ */ import_react40.default.createElement(checked_default, null) : /* @__PURE__ */ import_react40.default.createElement(unchecked_default, null);
+  return /* @__PURE__ */ import_react40.default.createElement(StyledChip, {
     styles: customStyles
-  }, /* @__PURE__ */ import_react39.default.createElement("input", {
+  }, /* @__PURE__ */ import_react40.default.createElement("input", {
     type: "checkbox",
     id: `${label}-${name}`,
     onChange,
     checked,
     name,
     value
-  }), /* @__PURE__ */ import_react39.default.createElement("label", {
+  }), /* @__PURE__ */ import_react40.default.createElement("label", {
     htmlFor: `${label}-${name}`
-  }, /* @__PURE__ */ import_react39.default.createElement(Logo, {
+  }, /* @__PURE__ */ import_react40.default.createElement(Logo, {
     label,
-    filter
-  }), /* @__PURE__ */ import_react39.default.createElement("span", null, label), label !== "Select All" && checkedStatus));
+    filter,
+    width: 16,
+    height: 16
+  }), /* @__PURE__ */ import_react40.default.createElement("span", null, label), label !== "Select All" && checkedStatus));
 };
 
 // src/searchbar/tokenSearch/SearchFiltersNetworkSelectors.tsx
 var FilterNetworkAll = () => {
   const dispatch = (0, import_react_redux3.useDispatch)();
-  const renderProps = (0, import_react40.useContext)(TokenSearch_default);
+  const renderProps = (0, import_react41.useContext)(TokenSearch_default);
   const { exchangeMap, networkMap } = (0, import_react_redux3.useSelector)((state) => state);
   const networkAll = Object.values((0, import_lodash4.omitBy)(networkMap, (b) => !b)).length === 0;
   const exchangeNamesActive = Object.keys((0, import_lodash4.omitBy)(exchangeMap, (b) => !b));
   const { customAllChip } = renderProps;
   const styles = {
-    fontSize: (customAllChip == null ? void 0 : customAllChip.fontSize) || "9px",
-    fontWeight: (customAllChip == null ? void 0 : customAllChip.fontWeight) || "100",
+    fontSize: (customAllChip == null ? void 0 : customAllChip.fontSize) || "7px",
+    fontWeight: (customAllChip == null ? void 0 : customAllChip.fontWeight) || "500",
     borderRadius: (customAllChip == null ? void 0 : customAllChip.borderRadius) || "4px",
     backgroundColor: (customAllChip == null ? void 0 : customAllChip.backgroundColor) || "#474F5C",
     border: (customAllChip == null ? void 0 : customAllChip.border) || "0",
-    padding: (customAllChip == null ? void 0 : customAllChip.padding) || "4px 10px",
+    padding: (customAllChip == null ? void 0 : customAllChip.padding) || "3px 2px",
     margin: (customAllChip == null ? void 0 : customAllChip.margin) || "0",
     defaultColor: (customAllChip == null ? void 0 : customAllChip.defaultColor) || "#7A808A",
     width: (customAllChip == null ? void 0 : customAllChip.width) || "auto",
     height: (customAllChip == null ? void 0 : customAllChip.height) || "auto",
     textAlign: (customAllChip == null ? void 0 : customAllChip.textAlign) || "center",
     textTransform: (customAllChip == null ? void 0 : customAllChip.textTransform) || "inherit",
-    gridTemplateColumn: (customAllChip == null ? void 0 : customAllChip.gridTemplateColumn) || "40px",
+    gridTemplateColumns: (customAllChip == null ? void 0 : customAllChip.gridTemplateColumns) || "40px",
     justifySelf: (customAllChip == null ? void 0 : customAllChip.justifySelf) || "center"
   };
-  return /* @__PURE__ */ import_react40.default.createElement(Chip, {
+  return /* @__PURE__ */ import_react41.default.createElement(Chip, {
     name: "AllNetworks",
     label: "Select All",
     checked: networkAll,
@@ -3277,7 +3432,7 @@ var FilterNetworkSelectors = () => {
   const dispatch = (0, import_react_redux3.useDispatch)();
   const { networkMap } = (0, import_react_redux3.useSelector)((state) => state);
   const networkElement = (networkName) => {
-    return /* @__PURE__ */ import_react40.default.createElement(Chip, {
+    return /* @__PURE__ */ import_react41.default.createElement(Chip, {
       key: networkName,
       name: networkName,
       label: networkName,
@@ -3289,7 +3444,7 @@ var FilterNetworkSelectors = () => {
 };
 
 // src/searchbar/tokenSearch/SearchFiltersExchangeSelectors.tsx
-var import_react41 = __toESM(require("react"));
+var import_react42 = __toESM(require("react"));
 var import_lodash5 = require("lodash");
 var import_react_redux4 = require("react-redux");
 var FilterExchangeAll = () => {
@@ -3297,25 +3452,25 @@ var FilterExchangeAll = () => {
   const { exchangeMap, networkMap } = (0, import_react_redux4.useSelector)((state) => state);
   const exchangeAll = Object.values((0, import_lodash5.omitBy)(exchangeMap, (b) => !b)).length === 0;
   const exchangeNamesActive = exchangeNames(Object.keys((0, import_lodash5.omitBy)(networkMap, (b) => !b)));
-  const renderProps = (0, import_react41.useContext)(TokenSearch_default);
+  const renderProps = (0, import_react42.useContext)(TokenSearch_default);
   const { customAllChip } = renderProps;
   const styles = {
-    fontSize: (customAllChip == null ? void 0 : customAllChip.fontSize) || "9px",
-    fontWeight: (customAllChip == null ? void 0 : customAllChip.fontWeight) || "100",
+    fontSize: (customAllChip == null ? void 0 : customAllChip.fontSize) || "7px",
+    fontWeight: (customAllChip == null ? void 0 : customAllChip.fontWeight) || "500",
     borderRadius: (customAllChip == null ? void 0 : customAllChip.borderRadius) || "4px",
     backgroundColor: (customAllChip == null ? void 0 : customAllChip.backgroundColor) || "#474F5C",
     border: (customAllChip == null ? void 0 : customAllChip.border) || "0",
-    padding: (customAllChip == null ? void 0 : customAllChip.padding) || "4px 10px",
+    padding: (customAllChip == null ? void 0 : customAllChip.padding) || "3px 2px",
     margin: (customAllChip == null ? void 0 : customAllChip.margin) || "0",
     defaultColor: (customAllChip == null ? void 0 : customAllChip.defaultColor) || "#7A808A",
     width: (customAllChip == null ? void 0 : customAllChip.width) || "auto",
     height: (customAllChip == null ? void 0 : customAllChip.height) || "auto",
     textAlign: (customAllChip == null ? void 0 : customAllChip.textAlign) || "center",
     textTransform: (customAllChip == null ? void 0 : customAllChip.textTransform) || "inherit",
-    gridTemplateColumn: (customAllChip == null ? void 0 : customAllChip.gridTemplateColumn) || "40px",
+    gridTemplateColumns: (customAllChip == null ? void 0 : customAllChip.gridTemplateColumns) || "40px",
     justifySelf: (customAllChip == null ? void 0 : customAllChip.justifySelf) || "center"
   };
-  return /* @__PURE__ */ import_react41.default.createElement(Chip, {
+  return /* @__PURE__ */ import_react42.default.createElement(Chip, {
     name: "AllExchanges",
     label: "Select All",
     checked: exchangeAll,
@@ -3328,7 +3483,7 @@ var FilterExchangeSelectors = () => {
   const { networkMap, exchangeMap } = (0, import_react_redux4.useSelector)((state) => state);
   const exchangeNamesActive = exchangeNames(Object.keys((0, import_lodash5.omitBy)(networkMap, (b) => !b)));
   const exchangeElement = (exchangeName) => {
-    return /* @__PURE__ */ import_react41.default.createElement(Chip, {
+    return /* @__PURE__ */ import_react42.default.createElement(Chip, {
       key: exchangeName,
       name: exchangeName,
       label: exchangeName,
@@ -3355,7 +3510,7 @@ var FilterWrapper = import_styled_components6.default.div`
       position: absolute;    
       transform: rotate(-45deg);  
       
-      color: ${(styles == null ? void 0 : styles.toggleHeight) || "#B4BBC7"};
+      color: ${(styles == null ? void 0 : styles.toggleColor) || "#B4BBC7"};
       height: ${(styles == null ? void 0 : styles.toggleHeight) || "7px"};
       width: ${(styles == null ? void 0 : styles.toggleWidth) || "7px"};
       margin-right: ${(styles == null ? void 0 : styles.toggleMarginRight) || "0"};    
@@ -3374,12 +3529,8 @@ var FilterWrapper = import_styled_components6.default.div`
     }
 
     .accordion__panel {    
-      border: ${(styles == null ? void 0 : styles.contentBorder) || "0"}; 
-      border-top-style: ${(styles == null ? void 0 : styles.contentBorderTop) || "none"}; 
-      border-right-style: ${(styles == null ? void 0 : styles.contentBorderRight) || "none"}; 
-      border-bottom-style: ${(styles == null ? void 0 : styles.contentBorderBottom) || "none"}; 
-      border-left-style: ${(styles == null ? void 0 : styles.contentBorderLeft) || "none"}; 
-      border-radius: ${(styles == null ? void 0 : styles.borderRadius) || "0"}; 
+      border: ${(styles == null ? void 0 : styles.contentBorder) || "0"};       
+      border-radius: ${(styles == null ? void 0 : styles.contentBorderRadius) || "0"}; 
       margin:  ${(styles == null ? void 0 : styles.margin) || "0"};
     }
   `}  
@@ -3401,7 +3552,7 @@ var StyledFilterHeader = import_styled_components6.default.div`
     font-size: ${(styles == null ? void 0 : styles.fontSize) || "9px"};     
     font-weight: ${(styles == null ? void 0 : styles.fontWeight) || "500"};     
     &:hover {
-      background-color: ${(styles == null ? void 0 : styles.hoverColor) || "#474F5C"};
+      background-color: ${(styles == null ? void 0 : styles.hoverColor) || "#232C38"};
     }
   `}      
 `;
@@ -3447,49 +3598,51 @@ var SearchDescription = (props) => {
     desc = "Searching all networks and exchanges";
   } else {
     if (type === "network")
-      desc = /* @__PURE__ */ import_react42.default.createElement("div", {
+      desc = /* @__PURE__ */ import_react43.default.createElement("div", {
         style: { display: "flex", justifyContent: "right" }
-      }, "Searching\xA0", /* @__PURE__ */ import_react42.default.createElement(StyledCount, null, networkCount, " network(s)"), "\xA0within\xA0", /* @__PURE__ */ import_react42.default.createElement(StyledCount, null, exchangeCount, " exchange(s)"));
+      }, "Searching\xA0", /* @__PURE__ */ import_react43.default.createElement(StyledCount, null, networkCount, " network(s)"), "\xA0within\xA0", /* @__PURE__ */ import_react43.default.createElement(StyledCount, null, exchangeCount, " exchange(s)"));
     else
-      desc = /* @__PURE__ */ import_react42.default.createElement("div", {
+      desc = /* @__PURE__ */ import_react43.default.createElement("div", {
         style: { display: "flex", justifyContent: "right" }
-      }, "Searching\xA0", /* @__PURE__ */ import_react42.default.createElement(StyledCount, null, exchangeCount, " exchange(s)"), "\xA0within\xA0", /* @__PURE__ */ import_react42.default.createElement(StyledCount, null, networkCount, " network(s)"));
+      }, "Searching\xA0", /* @__PURE__ */ import_react43.default.createElement(StyledCount, null, exchangeCount, " exchange(s)"), "\xA0within\xA0", /* @__PURE__ */ import_react43.default.createElement(StyledCount, null, networkCount, " network(s)"));
   }
-  return /* @__PURE__ */ import_react42.default.createElement(import_react42.default.Fragment, null, desc);
+  return /* @__PURE__ */ import_react43.default.createElement(import_react43.default.Fragment, null, desc);
 };
 var SearchFilters = () => {
-  var _a2, _b2, _c2, _d, _e, _f, _g, _h;
+  var _a2, _b2, _c2, _d, _e, _f, _g, _h, _i, _j;
   const { networkMap, exchangeMap } = (0, import_react_redux5.useSelector)((state) => state);
-  const renderProps = (0, import_react42.useContext)(TokenSearch_default);
+  const renderProps = (0, import_react43.useContext)(TokenSearch_default);
   const { customSearchFilter } = renderProps;
   const exchangesActive = Object.values(networkMap).filter((b) => b).length !== 0;
   const networkCount = Object.values(networkMap).filter((b) => b).length;
   const exchangeCount = Object.values(exchangeMap).filter((b) => b).length;
   const networkTitle = ((_a2 = customSearchFilter == null ? void 0 : customSearchFilter.network) == null ? void 0 : _a2.title) || "Select Network(s)";
   const exchangeTitle = ((_b2 = customSearchFilter == null ? void 0 : customSearchFilter.exchange) == null ? void 0 : _b2.title) || "Select Exchange(s)";
-  return /* @__PURE__ */ import_react42.default.createElement(FilterWrapper, {
+  return /* @__PURE__ */ import_react43.default.createElement(FilterWrapper, {
     styles: customSearchFilter == null ? void 0 : customSearchFilter.wrapper
-  }, /* @__PURE__ */ import_react42.default.createElement(import_react_accessible_accordion.Accordion, {
-    allowZeroExpanded: true
-  }, /* @__PURE__ */ import_react42.default.createElement(import_react_accessible_accordion.AccordionItem, null, /* @__PURE__ */ import_react42.default.createElement(import_react_accessible_accordion.AccordionItemHeading, null, /* @__PURE__ */ import_react42.default.createElement(import_react_accessible_accordion.AccordionItemButton, null, /* @__PURE__ */ import_react42.default.createElement(StyledFilterHeader, {
+  }, /* @__PURE__ */ import_react43.default.createElement(import_react_accessible_accordion.Accordion, {
+    allowMultipleExpanded: false
+  }, /* @__PURE__ */ import_react43.default.createElement(import_react_accessible_accordion.AccordionItem, null, /* @__PURE__ */ import_react43.default.createElement(import_react_accessible_accordion.AccordionItemHeading, null, /* @__PURE__ */ import_react43.default.createElement(import_react_accessible_accordion.AccordionItemButton, null, /* @__PURE__ */ import_react43.default.createElement(StyledFilterHeader, {
     styles: (_c2 = customSearchFilter == null ? void 0 : customSearchFilter.network) == null ? void 0 : _c2.header
-  }, /* @__PURE__ */ import_react42.default.createElement("span", null, networkTitle), /* @__PURE__ */ import_react42.default.createElement(FilterNetworkAll, null)))), /* @__PURE__ */ import_react42.default.createElement(import_react_accessible_accordion.AccordionItemPanel, null, /* @__PURE__ */ import_react42.default.createElement(StyledFilterWrapper, {
+  }, /* @__PURE__ */ import_react43.default.createElement("span", null, networkTitle), /* @__PURE__ */ import_react43.default.createElement(FilterNetworkAll, null)))), /* @__PURE__ */ import_react43.default.createElement(import_react_accessible_accordion.AccordionItemPanel, null, /* @__PURE__ */ import_react43.default.createElement(StyledFilterWrapper, {
     styles: (_d = customSearchFilter == null ? void 0 : customSearchFilter.network) == null ? void 0 : _d.wrapper
-  }, /* @__PURE__ */ import_react42.default.createElement(StyledFilterContent, {
+  }, /* @__PURE__ */ import_react43.default.createElement(StyledFilterContent, {
     styles: (_e = customSearchFilter == null ? void 0 : customSearchFilter.network) == null ? void 0 : _e.content
-  }, /* @__PURE__ */ import_react42.default.createElement(FilterNetworkSelectors, null)), /* @__PURE__ */ import_react42.default.createElement(StyledDescription, null, /* @__PURE__ */ import_react42.default.createElement(SearchDescription, {
+  }, /* @__PURE__ */ import_react43.default.createElement(FilterNetworkSelectors, null)), /* @__PURE__ */ import_react43.default.createElement(StyledDescription, {
+    styles: (_f = customSearchFilter == null ? void 0 : customSearchFilter.network) == null ? void 0 : _f.description
+  }, /* @__PURE__ */ import_react43.default.createElement(SearchDescription, {
     networkCount,
     exchangeCount,
     type: "network"
-  })))))), exchangesActive && /* @__PURE__ */ import_react42.default.createElement(import_react_accessible_accordion.Accordion, {
-    allowZeroExpanded: true
-  }, /* @__PURE__ */ import_react42.default.createElement(import_react_accessible_accordion.AccordionItem, null, /* @__PURE__ */ import_react42.default.createElement(import_react_accessible_accordion.AccordionItemHeading, null, /* @__PURE__ */ import_react42.default.createElement(import_react_accessible_accordion.AccordionItemButton, null, /* @__PURE__ */ import_react42.default.createElement(StyledFilterHeader, {
-    styles: (_f = customSearchFilter == null ? void 0 : customSearchFilter.exchange) == null ? void 0 : _f.header
-  }, /* @__PURE__ */ import_react42.default.createElement("span", null, exchangeTitle), /* @__PURE__ */ import_react42.default.createElement(FilterExchangeAll, null)))), /* @__PURE__ */ import_react42.default.createElement(import_react_accessible_accordion.AccordionItemPanel, null, /* @__PURE__ */ import_react42.default.createElement(StyledFilterWrapper, {
-    styles: (_g = customSearchFilter == null ? void 0 : customSearchFilter.exchange) == null ? void 0 : _g.wrapper
-  }, /* @__PURE__ */ import_react42.default.createElement(StyledFilterContent, {
-    styles: (_h = customSearchFilter == null ? void 0 : customSearchFilter.exchange) == null ? void 0 : _h.content
-  }, /* @__PURE__ */ import_react42.default.createElement(FilterExchangeSelectors, null)), /* @__PURE__ */ import_react42.default.createElement(StyledDescription, null, /* @__PURE__ */ import_react42.default.createElement(SearchDescription, {
+  }))))), exchangesActive && /* @__PURE__ */ import_react43.default.createElement(import_react_accessible_accordion.AccordionItem, null, /* @__PURE__ */ import_react43.default.createElement(import_react_accessible_accordion.AccordionItemHeading, null, /* @__PURE__ */ import_react43.default.createElement(import_react_accessible_accordion.AccordionItemButton, null, /* @__PURE__ */ import_react43.default.createElement(StyledFilterHeader, {
+    styles: (_g = customSearchFilter == null ? void 0 : customSearchFilter.exchange) == null ? void 0 : _g.header
+  }, /* @__PURE__ */ import_react43.default.createElement("span", null, exchangeTitle), /* @__PURE__ */ import_react43.default.createElement(FilterExchangeAll, null)))), /* @__PURE__ */ import_react43.default.createElement(import_react_accessible_accordion.AccordionItemPanel, null, /* @__PURE__ */ import_react43.default.createElement(StyledFilterWrapper, {
+    styles: (_h = customSearchFilter == null ? void 0 : customSearchFilter.exchange) == null ? void 0 : _h.wrapper
+  }, /* @__PURE__ */ import_react43.default.createElement(StyledFilterContent, {
+    styles: (_i = customSearchFilter == null ? void 0 : customSearchFilter.exchange) == null ? void 0 : _i.content
+  }, /* @__PURE__ */ import_react43.default.createElement(FilterExchangeSelectors, null)), /* @__PURE__ */ import_react43.default.createElement(StyledDescription, {
+    styles: (_j = customSearchFilter == null ? void 0 : customSearchFilter.exchange) == null ? void 0 : _j.description
+  }, /* @__PURE__ */ import_react43.default.createElement(SearchDescription, {
     networkCount,
     exchangeCount,
     type: "exchange"
@@ -3500,21 +3653,19 @@ var SearchFilters_default = SearchFilters;
 // src/searchbar/tokenSearch/index.tsx
 var StyledWrapper2 = import_styled_components7.default.div`
   ${({ styles }) => `
-    min-width: 540px;
+    min-width: 420px;
     overflow-x: auto;
-    background-color: ${(styles == null ? void 0 : styles.backgroundColor) || "#474F5C"};  
-    border-color: ${(styles == null ? void 0 : styles.borderColor) || "#474F5C"};  
-    border-style: ${(styles == null ? void 0 : styles.borderStyle) || "solid"};  
-    border-width: ${(styles == null ? void 0 : styles.borderWidth) || "4px"};  
+    background-color: ${(styles == null ? void 0 : styles.backgroundColor) || "#474F5C"};          
     border-radius: ${(styles == null ? void 0 : styles.borderRadius) || "4px"};  
+    border:  ${(styles == null ? void 0 : styles.border) || "4px solid #474F5C"};  
   `}  
 `;
 var TokenSearch = (renderProps) => {
   const { customWrapper } = renderProps;
   const dispatch = (0, import_react_redux6.useDispatch)();
   const { isSelecting, isLoading } = (0, import_react_redux6.useSelector)((state) => state);
-  const searchRef = (0, import_react43.useRef)();
-  (0, import_react43.useEffect)(() => {
+  const searchRef = (0, import_react44.useRef)();
+  (0, import_react44.useEffect)(() => {
     window.onmousedown = (e) => {
       var _a2;
       if (!((_a2 = searchRef == null ? void 0 : searchRef.current) == null ? void 0 : _a2.contains(e.target))) {
@@ -3522,29 +3673,29 @@ var TokenSearch = (renderProps) => {
       }
     };
   }, [dispatch]);
-  return /* @__PURE__ */ import_react43.default.createElement(TokenSearch_default.Provider, {
+  return /* @__PURE__ */ import_react44.default.createElement(TokenSearch_default.Provider, {
     value: renderProps
-  }, /* @__PURE__ */ import_react43.default.createElement(StyledWrapper2, {
+  }, /* @__PURE__ */ import_react44.default.createElement(StyledWrapper2, {
     ref: searchRef,
     styles: customWrapper
-  }, /* @__PURE__ */ import_react43.default.createElement(SearchInput_default, null), /* @__PURE__ */ import_react43.default.createElement(SearchFilters_default, null), isSelecting && /* @__PURE__ */ import_react43.default.createElement(SearchResult_default, {
+  }, /* @__PURE__ */ import_react44.default.createElement(SearchInput_default, null), isSelecting && /* @__PURE__ */ import_react44.default.createElement(import_react44.default.Fragment, null, /* @__PURE__ */ import_react44.default.createElement(SearchFilters_default, null), /* @__PURE__ */ import_react44.default.createElement(SearchResult_default, {
     loading: isLoading
-  })));
+  }))));
 };
 var tokenSearch_default = TokenSearch;
 
 // src/searchbar/index.tsx
 var SearchBar = (renderProps) => {
-  return /* @__PURE__ */ import_react44.default.createElement(import_react_redux7.Provider, {
+  return /* @__PURE__ */ import_react45.default.createElement(import_react_redux7.Provider, {
     store
-  }, /* @__PURE__ */ import_react44.default.createElement(tokenSearch_default, {
+  }, /* @__PURE__ */ import_react45.default.createElement(tokenSearch_default, {
     customWrapper: renderProps == null ? void 0 : renderProps.customWrapper,
     customSearchInput: renderProps == null ? void 0 : renderProps.customSearchInput,
     customSearchFilter: renderProps == null ? void 0 : renderProps.customSearchFilter,
+    customLoading: renderProps == null ? void 0 : renderProps.customLoading,
     customChip: renderProps == null ? void 0 : renderProps.customChip,
     customResult: renderProps == null ? void 0 : renderProps.customResult,
     customTokenDetail: renderProps == null ? void 0 : renderProps.customTokenDetail,
-    customLoading: renderProps == null ? void 0 : renderProps.customLoading,
     customActions: renderProps == null ? void 0 : renderProps.customActions,
     customAllChip: renderProps == null ? void 0 : renderProps.customAllChip
   }));
