@@ -9,31 +9,31 @@ import {RootState} from '../redux/store';
 import config from '../config';
 
 const StyledInput = styled.input`
-  ${({styles}) => `    
+  ${({styleOverrides}) => `    
     margin-left: auto;
     margin-right: auto;
     position: relative;
     outline: 0;
-    width: ${ styles?.width || "-webkit-fill-available" };
-    height: ${ styles?.height || "auto" };
-    border: ${ styles?.border || "none" };   
-    color: ${ styles?.color || "#7A808A" };
-    display: ${ styles?.display || "block" };           
-    border-radius: ${ styles?.borderRadius || "4px" };  
-    background: ${ styles?.background || "#00070E" };   
-    padding: ${ styles?.padding || "10px 14px" };    
-    font-size: ${ styles?.fontSize || "8px" };      
-    font-family: ${ styles?.fontFamily || "'Fira Code', monospace" };
+    width: ${ styleOverrides?.width || "-webkit-fill-available" };
+    height: ${ styleOverrides?.height || "auto" };
+    border: ${ styleOverrides?.border || "none" };   
+    color: ${ styleOverrides?.color || "#7A808A" };
+    display: ${ styleOverrides?.display || "block" };           
+    border-radius: ${ styleOverrides?.borderRadius || "4px" };  
+    background: ${ styleOverrides?.background || "#00070E" };   
+    padding: ${ styleOverrides?.padding || "10px 14px" };    
+    font-size: ${ styleOverrides?.fontSize || "8px" };      
+    font-family: ${ styleOverrides?.fontFamily || "'Fira Code', monospace" };
   `}  
 `;
 
 const StyledSearchIconWrapper = styled.div`    
-  ${({styles}) => `
+  ${({styleOverrides}) => `
     cursor: pointer;
     float: right;
     position: absolute;
-    right: ${ styles?.right || "14px" };      
-    top: ${ styles?.top || "6px" };        
+    right: ${ styleOverrides?.right || "14px" };      
+    top: ${ styleOverrides?.top || "6px" };        
   `}    
 `;
 
@@ -78,9 +78,9 @@ const SearchInput = () => {
         placeholder={placeholder}
         autocomplete={'off'}
         onChange={debounceChangeHandler}
-        styles={customSearchInput?.input}
+        styleOverrides={customSearchInput?.input}
       />
-      <StyledSearchIconWrapper styles={customSearchInput?.icon}>       
+      <StyledSearchIconWrapper styleOverrides={customSearchInput?.icon}>       
         <SearchIcon
             activeColor={activeColor}
             color={color}

@@ -16,44 +16,44 @@ const StyledResult = styled.div`
 `;
 
 const StyledLoading = styled.div`  
-  ${({props}) => `
+  ${({styleOverrides}) => `
     position: relative;
     display: flex;
     justify-content: center;  
     margin: 10px;
-    color: ${ props?.styles?.color || "white" };
-    font-size: ${ props?.styles?.fontSize || "12px" };      
+    color: ${ styleOverrides?.color || "white" };
+    font-size: ${ styleOverrides?.fontSize || "12px" };      
   `}    
 `
 
 const StyledResultTitle = styled.div`
-  ${({styles}) => `    
+  ${({styleOverrides}) => `    
     display: flex;
     align-items: center;
     justify-content: space-between;
-    color: ${ styles?.color || "#B4BBC7" };
-    font-size: ${ styles?.fontSize || "9px" };      
-    padding: ${ styles?.padding || "4px 16px" };      
-    margin: ${ styles?.margin || "0" };      
+    color: ${ styleOverrides?.color || "#B4BBC7" };
+    font-size: ${ styleOverrides?.fontSize || "9px" };      
+    padding: ${ styleOverrides?.padding || "4px 16px" };      
+    margin: ${ styleOverrides?.margin || "0" };      
     > span {
-      font-size: ${ styles?.fontSize2 || "7px" };      
+      font-size: ${ styleOverrides?.fontSize2 || "7px" };      
     }
 
     > button {
       display: flex;
       align-items: center;
       
-      border-color: ${ styles?.buttonBorderColor || "#232C38" };      
-      background-color: ${ styles?.buttonBackColor || "#232C38" };      
-      color: ${ styles?.buttonColor || "#7A808A" };      
-      border-radius: ${ styles?.buttonBorderRadius || "4px" };      
-      font-size: ${ styles?.buttonFontSize || "7px" };      
-      padding: ${ styles?.buttonPadding || "3px 6px" };      
+      border-color: ${ styleOverrides?.buttonBorderColor || "#232C38" };      
+      background-color: ${ styleOverrides?.buttonBackColor || "#232C38" };      
+      color: ${ styleOverrides?.buttonColor || "#7A808A" };      
+      border-radius: ${ styleOverrides?.buttonBorderRadius || "4px" };      
+      font-size: ${ styleOverrides?.buttonFontSize || "7px" };      
+      padding: ${ styleOverrides?.buttonPadding || "3px 6px" };      
       border-width: 0;      
       cursor: pointer;
       
       &:hover {
-        background-color: ${ styles?.buttonHoverBackColor || "black" };      
+        background-color: ${ styleOverrides?.buttonHoverBackColor || "black" };      
       }
     }
   `}    
@@ -64,20 +64,20 @@ const StyledResultContent = styled.div`
   margin-left: auto;
   margin-right: auto;
 
-  ${({styles}) => `
-    padding: ${ styles?.padding || "14px" };    
-    background: ${ styles?.background || "#00070E" };
-    border-radius: ${ styles?.borderRadius || "4px" };        
-    width: ${ styles?.width || "auto" };
-    height: ${ styles?.height || "300px" };
-    border: ${ styles?.border || "1px solid grey" };   
-    color: ${ styles?.color || "#FFF" };
-    display: ${ styles?.display || "block" };   
-    border-color: ${ styles?.borderColor || "#474F5C" };  
-    border-style: ${ styles?.borderStyle || "solid" };  
-    border-width: ${ styles?.borderWidth || "1px" };      
-    font-size: ${ styles?.fontSize || "15px" };      
-    font-family: ${ styles?.fontFamily || "'Fira Code', monospace" };  
+  ${({styleOverrides}) => `
+    padding: ${ styleOverrides?.padding || "14px" };    
+    background: ${ styleOverrides?.background || "#00070E" };
+    border-radius: ${ styleOverrides?.borderRadius || "4px" };        
+    width: ${ styleOverrides?.width || "auto" };
+    height: ${ styleOverrides?.height || "300px" };
+    border: ${ styleOverrides?.border || "1px solid grey" };   
+    color: ${ styleOverrides?.color || "#FFF" };
+    display: ${ styleOverrides?.display || "block" };   
+    border-color: ${ styleOverrides?.borderColor || "#474F5C" };  
+    border-style: ${ styleOverrides?.borderStyle || "solid" };  
+    border-width: ${ styleOverrides?.borderWidth || "1px" };      
+    font-size: ${ styleOverrides?.fontSize || "15px" };      
+    font-family: ${ styleOverrides?.fontFamily || "'Fira Code', monospace" };  
   `}  
 
   & .header {
@@ -112,7 +112,7 @@ const SearchResult: FC<Loading> = (props: Loading) => {
   
     if (props.loading) {
       const loadingTitle = customLoading?.loadingTitle ? customLoading.loadingTitle : 'Searching...'
-      return <StyledLoading styles={customLoading?.styles}>{loadingTitle}</StyledLoading>;
+      return <StyledLoading styleOverrides={customLoading}>{loadingTitle}</StyledLoading>;
     }
 
     const notFoundTitle = customLoading?.notFoundTitle ? customLoading.notFoundTitle : 'No results found'    
@@ -123,13 +123,13 @@ const SearchResult: FC<Loading> = (props: Loading) => {
      
     return (    
       <StyledResult>    
-        <StyledResultTitle styles={customResult?.title}>
+        <StyledResultTitle styleOverrides={customResult?.title}>
           <div>
             Search Results <span>({filteredSuggestions.length} Results Found)</span>
           </div>
           <button onClick={handleClose}>Close&nbsp;<UnCheckedIcon width={7} height={7}/></button>
         </StyledResultTitle>      
-        <StyledResultContent styles={customResult?.content}>
+        <StyledResultContent styleOverrides={customResult?.content}>
           <div className='header'>
             <span>Pair</span>
             <span>Net.</span>
@@ -149,7 +149,7 @@ const SearchResult: FC<Loading> = (props: Loading) => {
           }  
           {
             !!searchText && !filteredSuggestions.length &&
-            <StyledLoading styles={customLoading?.styles}>{notFoundTitle}</StyledLoading>
+            <StyledLoading styleOverrides={customLoading?.styles}>{notFoundTitle}</StyledLoading>
           }
         </StyledResultContent>
       </StyledResult>        

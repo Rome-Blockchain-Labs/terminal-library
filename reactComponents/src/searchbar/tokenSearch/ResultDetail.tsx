@@ -12,24 +12,24 @@ import UpIcon from '../icons/up';
 const imageSize = 26;
 
 const StyledDetailList = styled.div`  
-  ${({styles}) => `
-    display: ${ styles?.container?.display || "grid" };
+  ${({styleOverrides}) => `
+    display: ${ styleOverrides?.container?.display || "grid" };
     grid-gap: 5px;
-    align-items: ${ styles?.container?.alignItems || "center" };    
+    align-items: ${ styleOverrides?.container?.alignItems || "center" };    
     justify-content: space-between;
-    padding: ${ styles?.container?.padding || "5px 0" };    
-    background: ${ styles?.container?.background || "#00070E" };
-    border-bottom: ${ styles?.container?.borderbottom || "1px solid #474F5C" };    
-    grid-template-columns: ${styles?.container?.gridTemplateColumns || "15% 1% 18% 4% 4% 35% 10%"}; 
+    padding: ${ styleOverrides?.container?.padding || "5px 0" };    
+    background: ${ styleOverrides?.container?.background || "#00070E" };
+    border-bottom: ${ styleOverrides?.container?.borderbottom || "1px solid #474F5C" };    
+    grid-template-columns: ${styleOverrides?.container?.gridTemplateColumns || "15% 1% 18% 4% 4% 35% 10%"}; 
 
     & .token {
       display: inherit;
       align-items: center;
       grid-template-columns: 16px 100px; 
-      color: ${ styles?.token?.color || "#B4BBC7" };
-      font-size: ${ styles?.token?.fontSize || "8px" };
-      font-weight: ${ styles?.token?.fontWeight || "600" };      
-      padding: ${ styles?.token?.padding || "0 5px" };      
+      color: ${ styleOverrides?.token?.color || "#B4BBC7" };
+      font-size: ${ styleOverrides?.token?.fontSize || "8px" };
+      font-weight: ${ styleOverrides?.token?.fontWeight || "600" };      
+      padding: ${ styleOverrides?.token?.padding || "0 5px" };      
       
       > span {
         padding-left: 5px;
@@ -42,8 +42,8 @@ const StyledDetailList = styled.div`
     }
 
     & .pair {
-      color: ${ styles?.pair?.color || "#B4BBC7" };
-      font-size: ${ styles?.pair?.fontSize || "7px" };
+      color: ${ styleOverrides?.pair?.color || "#B4BBC7" };
+      font-size: ${ styleOverrides?.pair?.fontSize || "7px" };
 
       & .count {
         display: flex;
@@ -51,7 +51,7 @@ const StyledDetailList = styled.div`
     }
 
     & .detail {
-      padding: ${ styles?.detail?.padding || "3px" };
+      padding: ${ styleOverrides?.detail?.padding || "3px" };
     }
     
     > button {      
@@ -59,22 +59,21 @@ const StyledDetailList = styled.div`
       align-items: center;
       justify-content: center;
       justify-self: right;
-      border-color: ${ styles?.button?.borderColor || "#474F5C" };      
-      background-color: ${ styles?.button?.backgroundColor || "#474F5C" };      
-      color: ${ styles?.button?.color || "#7A808A" };      
-      border-radius: ${ styles?.button?.borderRadius || "4px" };      
-      font-size: ${ styles?.button?.fontSize || "7px" };
+      border-color: ${ styleOverrides?.button?.borderColor || "#474F5C" };      
+      background-color: ${ styleOverrides?.button?.backgroundColor || "#474F5C" };      
+      color: ${ styleOverrides?.button?.color || "#7A808A" };      
+      border-radius: ${ styleOverrides?.button?.borderRadius || "4px" };      
+      font-size: ${ styleOverrides?.button?.fontSize || "7px" };
       border-width: 0;      
       cursor: pointer;
-      padding: ${ styles?.button?.padding || "3px" };
-      width: ${ styles?.button?.width || "40px" };
+      padding: ${ styleOverrides?.button?.padding || "3px" };
+      width: ${ styleOverrides?.button?.width || "auto" };
 
       &:hover {
-        background-color: ${ styles?.button?.hoverBackColor || "#232C38" };      
+        background-color: ${ styleOverrides?.button?.hoverBackColor || "#232C38" };      
       }    
 
-      & .icon {
-        padding-top: 3px;
+      & .icon {        
         padding-left: 3px;
       }
     }
@@ -82,22 +81,22 @@ const StyledDetailList = styled.div`
 `;
 
 const StyledDetailContent = styled.div`
-  ${({styles}) => `
-    display: ${ styles?.content?.display || "block" };    
-    align-items: ${ styles?.content?.alignItems || "center" };    
-    padding: ${ styles?.content?.padding || "5px" };    
-    margin: ${ styles?.content?.margin || "5px 0" };    
-    background: ${ styles?.content?.background || "#474F5C" };
-    border-bottom: ${ styles?.content?.borderbottom || "1px solid #474F5C" };    
-    border-radius: ${ styles?.content?.borderRadius || "4px" };      
+  ${({styleOverrides}) => `
+    display: ${ styleOverrides?.content?.display || "block" };    
+    align-items: ${ styleOverrides?.content?.alignItems || "center" };    
+    padding: ${ styleOverrides?.content?.padding || "5px" };    
+    margin: ${ styleOverrides?.content?.margin || "5px 0" };    
+    background: ${ styleOverrides?.content?.background || "#474F5C" };
+    border-bottom: ${ styleOverrides?.content?.borderbottom || "1px solid #474F5C" };    
+    border-radius: ${ styleOverrides?.content?.borderRadius || "4px" };      
     transition: all 1500ms ease;
 
     & .details {
       display: grid;
-      padding: 7px 0;
-      font-size: ${ styles?.content?.fontSize || "7px" };
+      padding: 3px 0;
+      font-size: ${ styleOverrides?.content?.fontSize || "7px" };
 
-      grid-template-columns: ${styles?.content?.gridTemplateColumns || "53% 45% 2%"}; 
+      grid-template-columns: ${styleOverrides?.content?.gridTemplateColumns || "53% 45% 2%"}; 
 
       & .token {
         display: grid;        
@@ -108,8 +107,8 @@ const StyledDetailContent = styled.div`
         
         & .name {
           align-self: center;          
-          font-size: ${ styles?.token?.fontSize || "8px" };
-          font-weight: ${ styles?.token?.fontWeight || "600" };          
+          font-size: ${ styleOverrides?.token?.fontSize || "8px" };
+          font-weight: ${ styleOverrides?.token?.fontWeight || "600" };          
         }
     
         & .address {
@@ -118,7 +117,7 @@ const StyledDetailContent = styled.div`
           grid-row: 2;
           grid-column: 2;
           color: #B4BBC7;
-          font-size: ${ styles?.address?.fontSize || "7px" };
+          font-size: ${ styleOverrides?.address?.fontSize || "7px" };
           padding-bottom: 5px;
           
           > strong {
@@ -139,7 +138,7 @@ const StyledDetailContent = styled.div`
         grid-template-columns: 40px 30px 50px;
         display: grid;
 
-        font-size: ${ styles?.content?.detail?.fontSize || "7px" };
+        font-size: ${ styleOverrides?.content?.detail?.fontSize || "7px" };
         > strong {
           color: white;
         }
@@ -231,7 +230,7 @@ export const ResultDetail: FC<DetailType> = (props: DetailType) => {
   return (
     <>     
     { currentIndex !== index && 
-      <StyledDetailList styles={customTokenDetail?.list}>              
+      <StyledDetailList styleOverrides={customTokenDetail?.list}>              
       <div className='token'>
         {tokenImage(selectedPair.token0)} <span>{selectedPair.token0.name}</span>
       </div>    
@@ -256,7 +255,7 @@ export const ResultDetail: FC<DetailType> = (props: DetailType) => {
         </div>
       </div>
       <button onClick={() => handleDetail(currentIndex === index ? null : index)}>
-        Details 
+        <span>Details </span>
         <div className='icon'>
           <DownIcon width={7} height={7} />
         </div>
@@ -265,7 +264,7 @@ export const ResultDetail: FC<DetailType> = (props: DetailType) => {
     }
     {
       currentIndex === index && 
-      <StyledDetailContent styles={customTokenDetail?.details}>
+      <StyledDetailContent styleOverrides={customTokenDetail?.details}>
         <div className='details'>
           <div className='left'>
             <div className='token'>

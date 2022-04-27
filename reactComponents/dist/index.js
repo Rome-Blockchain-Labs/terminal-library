@@ -429,30 +429,30 @@ var config_default = {
 
 // src/searchbar/tokenSearch/SearchInput.tsx
 var StyledInput = import_styled_components2.default.input`
-  ${({ styles }) => `    
+  ${({ styleOverrides }) => `    
     margin-left: auto;
     margin-right: auto;
     position: relative;
     outline: 0;
-    width: ${(styles == null ? void 0 : styles.width) || "-webkit-fill-available"};
-    height: ${(styles == null ? void 0 : styles.height) || "auto"};
-    border: ${(styles == null ? void 0 : styles.border) || "none"};   
-    color: ${(styles == null ? void 0 : styles.color) || "#7A808A"};
-    display: ${(styles == null ? void 0 : styles.display) || "block"};           
-    border-radius: ${(styles == null ? void 0 : styles.borderRadius) || "4px"};  
-    background: ${(styles == null ? void 0 : styles.background) || "#00070E"};   
-    padding: ${(styles == null ? void 0 : styles.padding) || "10px 14px"};    
-    font-size: ${(styles == null ? void 0 : styles.fontSize) || "8px"};      
-    font-family: ${(styles == null ? void 0 : styles.fontFamily) || "'Fira Code', monospace"};
+    width: ${(styleOverrides == null ? void 0 : styleOverrides.width) || "-webkit-fill-available"};
+    height: ${(styleOverrides == null ? void 0 : styleOverrides.height) || "auto"};
+    border: ${(styleOverrides == null ? void 0 : styleOverrides.border) || "none"};   
+    color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "#7A808A"};
+    display: ${(styleOverrides == null ? void 0 : styleOverrides.display) || "block"};           
+    border-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderRadius) || "4px"};  
+    background: ${(styleOverrides == null ? void 0 : styleOverrides.background) || "#00070E"};   
+    padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "10px 14px"};    
+    font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "8px"};      
+    font-family: ${(styleOverrides == null ? void 0 : styleOverrides.fontFamily) || "'Fira Code', monospace"};
   `}  
 `;
 var StyledSearchIconWrapper = import_styled_components2.default.div`    
-  ${({ styles }) => `
+  ${({ styleOverrides }) => `
     cursor: pointer;
     float: right;
     position: absolute;
-    right: ${(styles == null ? void 0 : styles.right) || "14px"};      
-    top: ${(styles == null ? void 0 : styles.top) || "6px"};        
+    right: ${(styleOverrides == null ? void 0 : styleOverrides.right) || "14px"};      
+    top: ${(styleOverrides == null ? void 0 : styleOverrides.top) || "6px"};        
   `}    
 `;
 var StyledWrapper = import_styled_components2.default.div`
@@ -485,9 +485,9 @@ var SearchInput = () => {
     placeholder,
     autocomplete: "off",
     onChange: debounceChangeHandler,
-    styles: customSearchInput == null ? void 0 : customSearchInput.input
+    styleOverrides: customSearchInput == null ? void 0 : customSearchInput.input
   }), /* @__PURE__ */ import_react3.default.createElement(StyledSearchIconWrapper, {
-    styles: customSearchInput == null ? void 0 : customSearchInput.icon
+    styleOverrides: customSearchInput == null ? void 0 : customSearchInput.icon
   }, /* @__PURE__ */ import_react3.default.createElement(SearchIcon_default, {
     activeColor,
     color,
@@ -2619,7 +2619,7 @@ var MdexIcon = (0, import_react33.memo)(({ active, activeColor, color, height, w
 var mdex_default = MdexIcon;
 
 // src/searchbar/tokenSearch/Logo.tsx
-var Logo = ({ label, width, height, filter }) => {
+var Logo = ({ label, width, height, grayscaleFilter }) => {
   let result;
   switch (label) {
     case "bsc":
@@ -2801,7 +2801,7 @@ var Logo = ({ label, width, height, filter }) => {
       break;
   }
   return /* @__PURE__ */ import_react34.default.createElement("div", {
-    style: { filter: `grayscale(${filter})` }
+    style: { filter: `grayscale(${grayscaleFilter})` }
   }, result);
 };
 
@@ -2860,26 +2860,26 @@ var up_default = UpIcon;
 // src/searchbar/tokenSearch/ResultDetail.tsx
 var imageSize = 26;
 var StyledDetailList = import_styled_components3.default.div`  
-  ${({ styles }) => {
+  ${({ styleOverrides }) => {
   var _a2, _b2, _c2, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t, _u;
   return `
-    display: ${((_a2 = styles == null ? void 0 : styles.container) == null ? void 0 : _a2.display) || "grid"};
+    display: ${((_a2 = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _a2.display) || "grid"};
     grid-gap: 5px;
-    align-items: ${((_b2 = styles == null ? void 0 : styles.container) == null ? void 0 : _b2.alignItems) || "center"};    
+    align-items: ${((_b2 = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _b2.alignItems) || "center"};    
     justify-content: space-between;
-    padding: ${((_c2 = styles == null ? void 0 : styles.container) == null ? void 0 : _c2.padding) || "5px 0"};    
-    background: ${((_d = styles == null ? void 0 : styles.container) == null ? void 0 : _d.background) || "#00070E"};
-    border-bottom: ${((_e = styles == null ? void 0 : styles.container) == null ? void 0 : _e.borderbottom) || "1px solid #474F5C"};    
-    grid-template-columns: ${((_f = styles == null ? void 0 : styles.container) == null ? void 0 : _f.gridTemplateColumns) || "15% 1% 18% 4% 4% 35% 10%"}; 
+    padding: ${((_c2 = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _c2.padding) || "5px 0"};    
+    background: ${((_d = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _d.background) || "#00070E"};
+    border-bottom: ${((_e = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _e.borderbottom) || "1px solid #474F5C"};    
+    grid-template-columns: ${((_f = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _f.gridTemplateColumns) || "15% 1% 18% 4% 4% 35% 10%"}; 
 
     & .token {
       display: inherit;
       align-items: center;
       grid-template-columns: 16px 100px; 
-      color: ${((_g = styles == null ? void 0 : styles.token) == null ? void 0 : _g.color) || "#B4BBC7"};
-      font-size: ${((_h = styles == null ? void 0 : styles.token) == null ? void 0 : _h.fontSize) || "8px"};
-      font-weight: ${((_i = styles == null ? void 0 : styles.token) == null ? void 0 : _i.fontWeight) || "600"};      
-      padding: ${((_j = styles == null ? void 0 : styles.token) == null ? void 0 : _j.padding) || "0 5px"};      
+      color: ${((_g = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _g.color) || "#B4BBC7"};
+      font-size: ${((_h = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _h.fontSize) || "8px"};
+      font-weight: ${((_i = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _i.fontWeight) || "600"};      
+      padding: ${((_j = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _j.padding) || "0 5px"};      
       
       > span {
         padding-left: 5px;
@@ -2892,8 +2892,8 @@ var StyledDetailList = import_styled_components3.default.div`
     }
 
     & .pair {
-      color: ${((_k = styles == null ? void 0 : styles.pair) == null ? void 0 : _k.color) || "#B4BBC7"};
-      font-size: ${((_l = styles == null ? void 0 : styles.pair) == null ? void 0 : _l.fontSize) || "7px"};
+      color: ${((_k = styleOverrides == null ? void 0 : styleOverrides.pair) == null ? void 0 : _k.color) || "#B4BBC7"};
+      font-size: ${((_l = styleOverrides == null ? void 0 : styleOverrides.pair) == null ? void 0 : _l.fontSize) || "7px"};
 
       & .count {
         display: flex;
@@ -2901,7 +2901,7 @@ var StyledDetailList = import_styled_components3.default.div`
     }
 
     & .detail {
-      padding: ${((_m = styles == null ? void 0 : styles.detail) == null ? void 0 : _m.padding) || "3px"};
+      padding: ${((_m = styleOverrides == null ? void 0 : styleOverrides.detail) == null ? void 0 : _m.padding) || "3px"};
     }
     
     > button {      
@@ -2909,22 +2909,21 @@ var StyledDetailList = import_styled_components3.default.div`
       align-items: center;
       justify-content: center;
       justify-self: right;
-      border-color: ${((_n = styles == null ? void 0 : styles.button) == null ? void 0 : _n.borderColor) || "#474F5C"};      
-      background-color: ${((_o = styles == null ? void 0 : styles.button) == null ? void 0 : _o.backgroundColor) || "#474F5C"};      
-      color: ${((_p = styles == null ? void 0 : styles.button) == null ? void 0 : _p.color) || "#7A808A"};      
-      border-radius: ${((_q = styles == null ? void 0 : styles.button) == null ? void 0 : _q.borderRadius) || "4px"};      
-      font-size: ${((_r = styles == null ? void 0 : styles.button) == null ? void 0 : _r.fontSize) || "7px"};
+      border-color: ${((_n = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _n.borderColor) || "#474F5C"};      
+      background-color: ${((_o = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _o.backgroundColor) || "#474F5C"};      
+      color: ${((_p = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _p.color) || "#7A808A"};      
+      border-radius: ${((_q = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _q.borderRadius) || "4px"};      
+      font-size: ${((_r = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _r.fontSize) || "7px"};
       border-width: 0;      
       cursor: pointer;
-      padding: ${((_s = styles == null ? void 0 : styles.button) == null ? void 0 : _s.padding) || "3px"};
-      width: ${((_t = styles == null ? void 0 : styles.button) == null ? void 0 : _t.width) || "40px"};
+      padding: ${((_s = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _s.padding) || "3px"};
+      width: ${((_t = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _t.width) || "auto"};
 
       &:hover {
-        background-color: ${((_u = styles == null ? void 0 : styles.button) == null ? void 0 : _u.hoverBackColor) || "#232C38"};      
+        background-color: ${((_u = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _u.hoverBackColor) || "#232C38"};      
       }    
 
-      & .icon {
-        padding-top: 3px;
+      & .icon {        
         padding-left: 3px;
       }
     }
@@ -2932,24 +2931,24 @@ var StyledDetailList = import_styled_components3.default.div`
 }}    
 `;
 var StyledDetailContent = import_styled_components3.default.div`
-  ${({ styles }) => {
+  ${({ styleOverrides }) => {
   var _a2, _b2, _c2, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n;
   return `
-    display: ${((_a2 = styles == null ? void 0 : styles.content) == null ? void 0 : _a2.display) || "block"};    
-    align-items: ${((_b2 = styles == null ? void 0 : styles.content) == null ? void 0 : _b2.alignItems) || "center"};    
-    padding: ${((_c2 = styles == null ? void 0 : styles.content) == null ? void 0 : _c2.padding) || "5px"};    
-    margin: ${((_d = styles == null ? void 0 : styles.content) == null ? void 0 : _d.margin) || "5px 0"};    
-    background: ${((_e = styles == null ? void 0 : styles.content) == null ? void 0 : _e.background) || "#474F5C"};
-    border-bottom: ${((_f = styles == null ? void 0 : styles.content) == null ? void 0 : _f.borderbottom) || "1px solid #474F5C"};    
-    border-radius: ${((_g = styles == null ? void 0 : styles.content) == null ? void 0 : _g.borderRadius) || "4px"};      
+    display: ${((_a2 = styleOverrides == null ? void 0 : styleOverrides.content) == null ? void 0 : _a2.display) || "block"};    
+    align-items: ${((_b2 = styleOverrides == null ? void 0 : styleOverrides.content) == null ? void 0 : _b2.alignItems) || "center"};    
+    padding: ${((_c2 = styleOverrides == null ? void 0 : styleOverrides.content) == null ? void 0 : _c2.padding) || "5px"};    
+    margin: ${((_d = styleOverrides == null ? void 0 : styleOverrides.content) == null ? void 0 : _d.margin) || "5px 0"};    
+    background: ${((_e = styleOverrides == null ? void 0 : styleOverrides.content) == null ? void 0 : _e.background) || "#474F5C"};
+    border-bottom: ${((_f = styleOverrides == null ? void 0 : styleOverrides.content) == null ? void 0 : _f.borderbottom) || "1px solid #474F5C"};    
+    border-radius: ${((_g = styleOverrides == null ? void 0 : styleOverrides.content) == null ? void 0 : _g.borderRadius) || "4px"};      
     transition: all 1500ms ease;
 
     & .details {
       display: grid;
-      padding: 7px 0;
-      font-size: ${((_h = styles == null ? void 0 : styles.content) == null ? void 0 : _h.fontSize) || "7px"};
+      padding: 3px 0;
+      font-size: ${((_h = styleOverrides == null ? void 0 : styleOverrides.content) == null ? void 0 : _h.fontSize) || "7px"};
 
-      grid-template-columns: ${((_i = styles == null ? void 0 : styles.content) == null ? void 0 : _i.gridTemplateColumns) || "53% 45% 2%"}; 
+      grid-template-columns: ${((_i = styleOverrides == null ? void 0 : styleOverrides.content) == null ? void 0 : _i.gridTemplateColumns) || "53% 45% 2%"}; 
 
       & .token {
         display: grid;        
@@ -2960,8 +2959,8 @@ var StyledDetailContent = import_styled_components3.default.div`
         
         & .name {
           align-self: center;          
-          font-size: ${((_j = styles == null ? void 0 : styles.token) == null ? void 0 : _j.fontSize) || "8px"};
-          font-weight: ${((_k = styles == null ? void 0 : styles.token) == null ? void 0 : _k.fontWeight) || "600"};          
+          font-size: ${((_j = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _j.fontSize) || "8px"};
+          font-weight: ${((_k = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _k.fontWeight) || "600"};          
         }
     
         & .address {
@@ -2970,7 +2969,7 @@ var StyledDetailContent = import_styled_components3.default.div`
           grid-row: 2;
           grid-column: 2;
           color: #B4BBC7;
-          font-size: ${((_l = styles == null ? void 0 : styles.address) == null ? void 0 : _l.fontSize) || "7px"};
+          font-size: ${((_l = styleOverrides == null ? void 0 : styleOverrides.address) == null ? void 0 : _l.fontSize) || "7px"};
           padding-bottom: 5px;
           
           > strong {
@@ -2991,7 +2990,7 @@ var StyledDetailContent = import_styled_components3.default.div`
         grid-template-columns: 40px 30px 50px;
         display: grid;
 
-        font-size: ${((_n = (_m = styles == null ? void 0 : styles.content) == null ? void 0 : _m.detail) == null ? void 0 : _n.fontSize) || "7px"};
+        font-size: ${((_n = (_m = styleOverrides == null ? void 0 : styleOverrides.content) == null ? void 0 : _m.detail) == null ? void 0 : _n.fontSize) || "7px"};
         > strong {
           color: white;
         }
@@ -3067,7 +3066,7 @@ var ResultDetail = (props) => {
       return /* @__PURE__ */ import_react37.default.createElement(default_default, null);
   };
   return /* @__PURE__ */ import_react37.default.createElement(import_react37.default.Fragment, null, currentIndex !== index && /* @__PURE__ */ import_react37.default.createElement(StyledDetailList, {
-    styles: customTokenDetail == null ? void 0 : customTokenDetail.list
+    styleOverrides: customTokenDetail == null ? void 0 : customTokenDetail.list
   }, /* @__PURE__ */ import_react37.default.createElement("div", {
     className: "token"
   }, tokenImage(selectedPair.token0), " ", /* @__PURE__ */ import_react37.default.createElement("span", null, selectedPair.token0.name)), "/", /* @__PURE__ */ import_react37.default.createElement("div", {
@@ -3094,13 +3093,13 @@ var ResultDetail = (props) => {
     className: "detail"
   }, "Volume: ", /* @__PURE__ */ import_react37.default.createElement("strong", null, intToWords(selectedPair.volumeUSD))))), /* @__PURE__ */ import_react37.default.createElement("button", {
     onClick: () => handleDetail(currentIndex === index ? null : index)
-  }, "Details", /* @__PURE__ */ import_react37.default.createElement("div", {
+  }, /* @__PURE__ */ import_react37.default.createElement("span", null, "Details "), /* @__PURE__ */ import_react37.default.createElement("div", {
     className: "icon"
   }, /* @__PURE__ */ import_react37.default.createElement(down_default, {
     width: 7,
     height: 7
   })))), currentIndex === index && /* @__PURE__ */ import_react37.default.createElement(StyledDetailContent, {
-    styles: customTokenDetail == null ? void 0 : customTokenDetail.details
+    styleOverrides: customTokenDetail == null ? void 0 : customTokenDetail.details
   }, /* @__PURE__ */ import_react37.default.createElement("div", {
     className: "details"
   }, /* @__PURE__ */ import_react37.default.createElement("div", {
@@ -3171,46 +3170,43 @@ var StyledResult = import_styled_components4.default.div`
   position: relative;  
 `;
 var StyledLoading = import_styled_components4.default.div`  
-  ${({ props }) => {
-  var _a2, _b2;
-  return `
+  ${({ styleOverrides }) => `
     position: relative;
     display: flex;
     justify-content: center;  
     margin: 10px;
-    color: ${((_a2 = props == null ? void 0 : props.styles) == null ? void 0 : _a2.color) || "white"};
-    font-size: ${((_b2 = props == null ? void 0 : props.styles) == null ? void 0 : _b2.fontSize) || "12px"};      
-  `;
-}}    
+    color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "white"};
+    font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "12px"};      
+  `}    
 `;
 var StyledResultTitle = import_styled_components4.default.div`
-  ${({ styles }) => `    
+  ${({ styleOverrides }) => `    
     display: flex;
     align-items: center;
     justify-content: space-between;
-    color: ${(styles == null ? void 0 : styles.color) || "#B4BBC7"};
-    font-size: ${(styles == null ? void 0 : styles.fontSize) || "9px"};      
-    padding: ${(styles == null ? void 0 : styles.padding) || "4px 16px"};      
-    margin: ${(styles == null ? void 0 : styles.margin) || "0"};      
+    color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "#B4BBC7"};
+    font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "9px"};      
+    padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "4px 16px"};      
+    margin: ${(styleOverrides == null ? void 0 : styleOverrides.margin) || "0"};      
     > span {
-      font-size: ${(styles == null ? void 0 : styles.fontSize2) || "7px"};      
+      font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize2) || "7px"};      
     }
 
     > button {
       display: flex;
       align-items: center;
       
-      border-color: ${(styles == null ? void 0 : styles.buttonBorderColor) || "#232C38"};      
-      background-color: ${(styles == null ? void 0 : styles.buttonBackColor) || "#232C38"};      
-      color: ${(styles == null ? void 0 : styles.buttonColor) || "#7A808A"};      
-      border-radius: ${(styles == null ? void 0 : styles.buttonBorderRadius) || "4px"};      
-      font-size: ${(styles == null ? void 0 : styles.buttonFontSize) || "7px"};      
-      padding: ${(styles == null ? void 0 : styles.buttonPadding) || "3px 6px"};      
+      border-color: ${(styleOverrides == null ? void 0 : styleOverrides.buttonBorderColor) || "#232C38"};      
+      background-color: ${(styleOverrides == null ? void 0 : styleOverrides.buttonBackColor) || "#232C38"};      
+      color: ${(styleOverrides == null ? void 0 : styleOverrides.buttonColor) || "#7A808A"};      
+      border-radius: ${(styleOverrides == null ? void 0 : styleOverrides.buttonBorderRadius) || "4px"};      
+      font-size: ${(styleOverrides == null ? void 0 : styleOverrides.buttonFontSize) || "7px"};      
+      padding: ${(styleOverrides == null ? void 0 : styleOverrides.buttonPadding) || "3px 6px"};      
       border-width: 0;      
       cursor: pointer;
       
       &:hover {
-        background-color: ${(styles == null ? void 0 : styles.buttonHoverBackColor) || "black"};      
+        background-color: ${(styleOverrides == null ? void 0 : styleOverrides.buttonHoverBackColor) || "black"};      
       }
     }
   `}    
@@ -3220,20 +3216,20 @@ var StyledResultContent = import_styled_components4.default.div`
   margin-left: auto;
   margin-right: auto;
 
-  ${({ styles }) => `
-    padding: ${(styles == null ? void 0 : styles.padding) || "14px"};    
-    background: ${(styles == null ? void 0 : styles.background) || "#00070E"};
-    border-radius: ${(styles == null ? void 0 : styles.borderRadius) || "4px"};        
-    width: ${(styles == null ? void 0 : styles.width) || "auto"};
-    height: ${(styles == null ? void 0 : styles.height) || "300px"};
-    border: ${(styles == null ? void 0 : styles.border) || "1px solid grey"};   
-    color: ${(styles == null ? void 0 : styles.color) || "#FFF"};
-    display: ${(styles == null ? void 0 : styles.display) || "block"};   
-    border-color: ${(styles == null ? void 0 : styles.borderColor) || "#474F5C"};  
-    border-style: ${(styles == null ? void 0 : styles.borderStyle) || "solid"};  
-    border-width: ${(styles == null ? void 0 : styles.borderWidth) || "1px"};      
-    font-size: ${(styles == null ? void 0 : styles.fontSize) || "15px"};      
-    font-family: ${(styles == null ? void 0 : styles.fontFamily) || "'Fira Code', monospace"};  
+  ${({ styleOverrides }) => `
+    padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "14px"};    
+    background: ${(styleOverrides == null ? void 0 : styleOverrides.background) || "#00070E"};
+    border-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderRadius) || "4px"};        
+    width: ${(styleOverrides == null ? void 0 : styleOverrides.width) || "auto"};
+    height: ${(styleOverrides == null ? void 0 : styleOverrides.height) || "300px"};
+    border: ${(styleOverrides == null ? void 0 : styleOverrides.border) || "1px solid grey"};   
+    color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "#FFF"};
+    display: ${(styleOverrides == null ? void 0 : styleOverrides.display) || "block"};   
+    border-color: ${(styleOverrides == null ? void 0 : styleOverrides.borderColor) || "#474F5C"};  
+    border-style: ${(styleOverrides == null ? void 0 : styleOverrides.borderStyle) || "solid"};  
+    border-width: ${(styleOverrides == null ? void 0 : styleOverrides.borderWidth) || "1px"};      
+    font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "15px"};      
+    font-family: ${(styleOverrides == null ? void 0 : styleOverrides.fontFamily) || "'Fira Code', monospace"};  
   `}  
 
   & .header {
@@ -3260,7 +3256,7 @@ var SearchResult = (props) => {
   if (props.loading) {
     const loadingTitle = (customLoading == null ? void 0 : customLoading.loadingTitle) ? customLoading.loadingTitle : "Searching...";
     return /* @__PURE__ */ import_react38.default.createElement(StyledLoading, {
-      styles: customLoading == null ? void 0 : customLoading.styles
+      styleOverrides: customLoading
     }, loadingTitle);
   }
   const notFoundTitle = (customLoading == null ? void 0 : customLoading.notFoundTitle) ? customLoading.notFoundTitle : "No results found";
@@ -3268,14 +3264,14 @@ var SearchResult = (props) => {
     dispatch(stopSelecting());
   };
   return /* @__PURE__ */ import_react38.default.createElement(StyledResult, null, /* @__PURE__ */ import_react38.default.createElement(StyledResultTitle, {
-    styles: customResult == null ? void 0 : customResult.title
+    styleOverrides: customResult == null ? void 0 : customResult.title
   }, /* @__PURE__ */ import_react38.default.createElement("div", null, "Search Results ", /* @__PURE__ */ import_react38.default.createElement("span", null, "(", filteredSuggestions.length, " Results Found)")), /* @__PURE__ */ import_react38.default.createElement("button", {
     onClick: handleClose
   }, "Close\xA0", /* @__PURE__ */ import_react38.default.createElement(unchecked_default, {
     width: 7,
     height: 7
   }))), /* @__PURE__ */ import_react38.default.createElement(StyledResultContent, {
-    styles: customResult == null ? void 0 : customResult.content
+    styleOverrides: customResult == null ? void 0 : customResult.content
   }, /* @__PURE__ */ import_react38.default.createElement("div", {
     className: "header"
   }, /* @__PURE__ */ import_react38.default.createElement("span", null, "Pair"), /* @__PURE__ */ import_react38.default.createElement("span", null, "Net."), /* @__PURE__ */ import_react38.default.createElement("span", null, "Exch."), /* @__PURE__ */ import_react38.default.createElement("span", null, "Details.")), filteredSuggestions.map((suggestions2, index) => /* @__PURE__ */ import_react38.default.createElement(ResultDetail_default, {
@@ -3285,7 +3281,7 @@ var SearchResult = (props) => {
     currentIndex,
     handleDetail: setCurrentIndex
   })), !!searchText && !filteredSuggestions.length && /* @__PURE__ */ import_react38.default.createElement(StyledLoading, {
-    styles: customLoading == null ? void 0 : customLoading.styles
+    styleOverrides: customLoading == null ? void 0 : customLoading.styles
   }, notFoundTitle)));
 };
 var SearchResult_default = SearchResult;
@@ -3324,7 +3320,7 @@ var checked_default = CheckedIcon;
 
 // src/searchbar/tokenSearch/Chip.tsx
 var StyledChip = import_styled_components5.default.div`
-    ${({ styles }) => `
+    ${({ styleOverrides }) => `
         > input {
           display: none;
         }
@@ -3341,41 +3337,41 @@ var StyledChip = import_styled_components5.default.div`
           -ms-user-select: none;
           user-select: none;
     
-          font-size: ${(styles == null ? void 0 : styles.fontSize) || "8px"};  
-          font-weight: ${(styles == null ? void 0 : styles.fontWeight) || "500"};  
-          border-radius: ${(styles == null ? void 0 : styles.borderRadius) || "4px"};  
-          background-color: ${(styles == null ? void 0 : styles.backgroundColor) || "#232B35"};  
-          border: ${(styles == null ? void 0 : styles.border) || "solid 2px #232B35"};   
-          padding: ${(styles == null ? void 0 : styles.padding) || "2px 5px"};   
-          margin: ${(styles == null ? void 0 : styles.margin) || "5px"};   
-          color: ${(styles == null ? void 0 : styles.defaultColor) || "#B4BBC7"};   
-          width: ${(styles == null ? void 0 : styles.width) || "108px"};   
-          height: ${(styles == null ? void 0 : styles.height) || "auto"};   
-          text-align: ${(styles == null ? void 0 : styles.textAlign) || "left"}; 
-          text-transform: ${(styles == null ? void 0 : styles.textTransform) || "uppercase"}; 
-          grid-template-columns: ${(styles == null ? void 0 : styles.gridTemplateColumns) || "20px 75px 10px"}; 
+          font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "8px"};  
+          font-weight: ${(styleOverrides == null ? void 0 : styleOverrides.fontWeight) || "500"};  
+          border-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderRadius) || "4px"};  
+          background-color: ${(styleOverrides == null ? void 0 : styleOverrides.backgroundColor) || "#232B35"};  
+          border: ${(styleOverrides == null ? void 0 : styleOverrides.border) || "solid 2px #232B35"};   
+          padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "2px 5px"};   
+          margin: ${(styleOverrides == null ? void 0 : styleOverrides.margin) || "5px"};   
+          color: ${(styleOverrides == null ? void 0 : styleOverrides.defaultColor) || "#B4BBC7"};   
+          width: ${(styleOverrides == null ? void 0 : styleOverrides.width) || "108px"};   
+          height: ${(styleOverrides == null ? void 0 : styleOverrides.height) || "auto"};   
+          text-align: ${(styleOverrides == null ? void 0 : styleOverrides.textAlign) || "left"}; 
+          text-transform: ${(styleOverrides == null ? void 0 : styleOverrides.textTransform) || "uppercase"}; 
+          grid-template-columns: ${(styleOverrides == null ? void 0 : styleOverrides.gridTemplateColumns) || "22% 68% 10%"}; 
           >:last-child {      
-            justify-self: ${(styles == null ? void 0 : styles.justifySelf) || "end"}; 
+            justify-self: ${(styleOverrides == null ? void 0 : styleOverrides.justifySelf) || "end"}; 
           }
         }
         
         > input:checked + label {   
           -webkit-transition: all 500ms ease;
           transition: all 500ms ease;   
-          border-color: ${(styles == null ? void 0 : styles.checkedBorderColor) || "#474F5C"};    
-          color: ${(styles == null ? void 0 : styles.checkedColor) || "white"};   
-          background-color: ${(styles == null ? void 0 : styles.checkedBackgroundColor) || "#474F5C"};   
+          border-color: ${(styleOverrides == null ? void 0 : styleOverrides.checkedBorderColor) || "#474F5C"};    
+          color: ${(styleOverrides == null ? void 0 : styleOverrides.checkedColor) || "white"};   
+          background-color: ${(styleOverrides == null ? void 0 : styleOverrides.checkedBackgroundColor) || "#474F5C"};   
         }    
     `}   
 `;
 var Chip = (props) => {
   const renderProps = (0, import_react40.useContext)(TokenSearch_default);
-  const { label, checked, onChange, name, value, styles, filter } = props;
+  const { label, checked, onChange, name, value, styleOverrides, grayscaleFilter } = props;
   const { customChip } = renderProps;
-  const customStyles = styles === void 0 ? customChip == null ? void 0 : customChip.styles : styles;
+  const customStyles = styleOverrides === void 0 ? customChip == null ? void 0 : customChip.styleOverrides : styleOverrides;
   const checkedStatus = checked ? /* @__PURE__ */ import_react40.default.createElement(checked_default, null) : /* @__PURE__ */ import_react40.default.createElement(unchecked_default, null);
   return /* @__PURE__ */ import_react40.default.createElement(StyledChip, {
-    styles: customStyles
+    styleOverrides: customStyles
   }, /* @__PURE__ */ import_react40.default.createElement("input", {
     type: "checkbox",
     id: `${label}-${name}`,
@@ -3387,7 +3383,7 @@ var Chip = (props) => {
     htmlFor: `${label}-${name}`
   }, /* @__PURE__ */ import_react40.default.createElement(Logo, {
     label,
-    filter,
+    grayscaleFilter,
     width: 16,
     height: 16
   }), /* @__PURE__ */ import_react40.default.createElement("span", null, label), label !== "Select All" && checkedStatus));
@@ -3401,7 +3397,7 @@ var FilterNetworkAll = () => {
   const networkAll = Object.values((0, import_lodash4.omitBy)(networkMap, (b) => !b)).length === 0;
   const exchangeNamesActive = Object.keys((0, import_lodash4.omitBy)(exchangeMap, (b) => !b));
   const { customAllChip } = renderProps;
-  const styles = {
+  const styleOverrides = {
     fontSize: (customAllChip == null ? void 0 : customAllChip.fontSize) || "7px",
     fontWeight: (customAllChip == null ? void 0 : customAllChip.fontWeight) || "500",
     borderRadius: (customAllChip == null ? void 0 : customAllChip.borderRadius) || "4px",
@@ -3421,7 +3417,7 @@ var FilterNetworkAll = () => {
     name: "AllNetworks",
     label: "Select All",
     checked: networkAll,
-    styles,
+    styleOverrides,
     onChange: (e) => {
       dispatch(setNetworkMapAll({ networkNames, networkAll }));
       dispatch(setExchangeMapAll({ exchangeNames: exchangeNamesActive, exchangeAll: false }));
@@ -3454,7 +3450,7 @@ var FilterExchangeAll = () => {
   const exchangeNamesActive = exchangeNames(Object.keys((0, import_lodash5.omitBy)(networkMap, (b) => !b)));
   const renderProps = (0, import_react42.useContext)(TokenSearch_default);
   const { customAllChip } = renderProps;
-  const styles = {
+  const styleOverrides = {
     fontSize: (customAllChip == null ? void 0 : customAllChip.fontSize) || "7px",
     fontWeight: (customAllChip == null ? void 0 : customAllChip.fontWeight) || "500",
     borderRadius: (customAllChip == null ? void 0 : customAllChip.borderRadius) || "4px",
@@ -3474,7 +3470,7 @@ var FilterExchangeAll = () => {
     name: "AllExchanges",
     label: "Select All",
     checked: exchangeAll,
-    styles,
+    styleOverrides,
     onChange: () => dispatch(setExchangeMapAll({ exchangeNames: exchangeNamesActive, exchangeAll }))
   });
 };
@@ -3487,7 +3483,7 @@ var FilterExchangeSelectors = () => {
       key: exchangeName,
       name: exchangeName,
       label: exchangeName,
-      filter: 1,
+      grayscaleFilter: 1,
       checked: exchangeMap[exchangeName] || false,
       onChange: (e) => dispatch(setExchangeMap({ exchangeName, checked: e.target.checked }))
     });
@@ -3497,12 +3493,12 @@ var FilterExchangeSelectors = () => {
 
 // src/searchbar/tokenSearch/SearchFilters.tsx
 var FilterWrapper = import_styled_components6.default.div`  
-  ${({ styles }) => `    
+  ${({ styleOverrides }) => `    
     .accordion__button {
       position: relative;
     }
-    background-color: ${(styles == null ? void 0 : styles.backgroundColor) || "#00070E"};
-    border-radius: ${(styles == null ? void 0 : styles.borderRadius) || "4px"};
+    background-color: ${(styleOverrides == null ? void 0 : styleOverrides.backgroundColor) || "#00070E"};
+    border-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderRadius) || "4px"};
 
     .accordion__button:first-child:after {
       display: block;    
@@ -3510,14 +3506,14 @@ var FilterWrapper = import_styled_components6.default.div`
       position: absolute;    
       transform: rotate(-45deg);  
       
-      color: ${(styles == null ? void 0 : styles.toggleColor) || "#B4BBC7"};
-      height: ${(styles == null ? void 0 : styles.toggleHeight) || "7px"};
-      width: ${(styles == null ? void 0 : styles.toggleWidth) || "7px"};
-      margin-right: ${(styles == null ? void 0 : styles.toggleMarginRight) || "0"};    
-      left: ${(styles == null ? void 0 : styles.toggleLeft) || "50%"};    
-      top: ${(styles == null ? void 0 : styles.toggleTop) || "5px"};    
-      border-bottom: ${(styles == null ? void 0 : styles.toggleBorderBottom) || "2px solid currentColor"}; 
-      border-right: ${(styles == null ? void 0 : styles.toggleBorderRight) || "2px solid currentColor"}; 
+      color: ${(styleOverrides == null ? void 0 : styleOverrides.toggleColor) || "#B4BBC7"};
+      height: ${(styleOverrides == null ? void 0 : styleOverrides.toggleHeight) || "7px"};
+      width: ${(styleOverrides == null ? void 0 : styleOverrides.toggleWidth) || "7px"};
+      margin-right: ${(styleOverrides == null ? void 0 : styleOverrides.toggleMarginRight) || "0"};    
+      left: ${(styleOverrides == null ? void 0 : styleOverrides.toggleLeft) || "50%"};    
+      top: ${(styleOverrides == null ? void 0 : styleOverrides.toggleTop) || "5px"};    
+      border-bottom: ${(styleOverrides == null ? void 0 : styleOverrides.toggleBorderBottom) || "2px solid currentColor"}; 
+      border-right: ${(styleOverrides == null ? void 0 : styleOverrides.toggleBorderRight) || "2px solid currentColor"}; 
       transform: rotate(45deg);
        
     }
@@ -3529,62 +3525,62 @@ var FilterWrapper = import_styled_components6.default.div`
     }
 
     .accordion__panel {    
-      border: ${(styles == null ? void 0 : styles.contentBorder) || "0"};       
-      border-radius: ${(styles == null ? void 0 : styles.contentBorderRadius) || "0"}; 
-      margin:  ${(styles == null ? void 0 : styles.margin) || "0"};
+      border: ${(styleOverrides == null ? void 0 : styleOverrides.contentBorder) || "0"};       
+      border-radius: ${(styleOverrides == null ? void 0 : styleOverrides.contentBorderRadius) || "0"}; 
+      margin:  ${(styleOverrides == null ? void 0 : styleOverrides.margin) || "0"};
     }
   `}  
 `;
 var StyledFilterHeader = import_styled_components6.default.div`  
-  ${({ styles }) => `
-    display: ${(styles == null ? void 0 : styles.display) || "flex"};
-    justify-content: ${(styles == null ? void 0 : styles.justifyContent) || "space-between"};
-    align-items: ${(styles == null ? void 0 : styles.alignItems) || "center"};
-    width: ${(styles == null ? void 0 : styles.width) || "auto"};
-    border: ${(styles == null ? void 0 : styles.border) || "none"}; 
-    background-color: ${(styles == null ? void 0 : styles.backgroundColor) || "#00070E"}; 
-    color: ${(styles == null ? void 0 : styles.color) || "#B4BBC7"};    
+  ${({ styleOverrides }) => `
+    display: ${(styleOverrides == null ? void 0 : styleOverrides.display) || "flex"};
+    justify-content: ${(styleOverrides == null ? void 0 : styleOverrides.justifyContent) || "space-between"};
+    align-items: ${(styleOverrides == null ? void 0 : styleOverrides.alignItems) || "center"};
+    width: ${(styleOverrides == null ? void 0 : styleOverrides.width) || "auto"};
+    border: ${(styleOverrides == null ? void 0 : styleOverrides.border) || "none"}; 
+    background-color: ${(styleOverrides == null ? void 0 : styleOverrides.backgroundColor) || "#00070E"}; 
+    color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "#B4BBC7"};    
     cursor: pointer;
-    padding: ${(styles == null ? void 0 : styles.padding) || "6px 14px"};   
-    text-align: ${(styles == null ? void 0 : styles.textAlign) || "left"};     
-    margin: ${(styles == null ? void 0 : styles.margin) || "4px 0"};     
-    border-radius: ${(styles == null ? void 0 : styles.borderRadius) || "4px"};     
-    font-size: ${(styles == null ? void 0 : styles.fontSize) || "9px"};     
-    font-weight: ${(styles == null ? void 0 : styles.fontWeight) || "500"};     
+    padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "6px 14px"};   
+    text-align: ${(styleOverrides == null ? void 0 : styleOverrides.textAlign) || "left"};     
+    margin: ${(styleOverrides == null ? void 0 : styleOverrides.margin) || "4px 0"};     
+    border-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderRadius) || "4px"};     
+    font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "9px"};     
+    font-weight: ${(styleOverrides == null ? void 0 : styleOverrides.fontWeight) || "500"};     
     &:hover {
-      background-color: ${(styles == null ? void 0 : styles.hoverColor) || "#232C38"};
+      background-color: ${(styleOverrides == null ? void 0 : styleOverrides.hoverColor) || "#232C38"};
     }
   `}      
 `;
 var StyledFilterContent = import_styled_components6.default.div`
-  ${({ styles }) => `
+  ${({ styleOverrides }) => `
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 5px;
     margin-left: 10px;
-    justify-content: ${(styles == null ? void 0 : styles.justifyContent) || "start"};
-    align-items: ${(styles == null ? void 0 : styles.alignItems) || "center"};  
-    padding:  ${(styles == null ? void 0 : styles.padding) || "0 0 5px"};           
+    justify-content: ${(styleOverrides == null ? void 0 : styleOverrides.justifyContent) || "start"};
+    align-items: ${(styleOverrides == null ? void 0 : styleOverrides.alignItems) || "center"};  
+    padding:  ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "0 0 5px"};           
   `}      
 `;
 var StyledDescription = import_styled_components6.default.div`
-  ${({ styles }) => `
-    text-align: ${(styles == null ? void 0 : styles.textAlign) || "right"};
-    font-size: ${(styles == null ? void 0 : styles.fontSize) || "9px"};
-    font-weight: ${(styles == null ? void 0 : styles.fontWeight) || "100"};
-    padding: ${(styles == null ? void 0 : styles.padding) || "10px 10px 5px"};       
-    background-color: ${(styles == null ? void 0 : styles.backgroundColor) || "#00070E"};
-    color: ${(styles == null ? void 0 : styles.color) || "#7A808A"};       
+  ${({ styleOverrides }) => `
+    text-align: ${(styleOverrides == null ? void 0 : styleOverrides.textAlign) || "right"};
+    font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "9px"};
+    font-weight: ${(styleOverrides == null ? void 0 : styleOverrides.fontWeight) || "100"};
+    padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "10px 10px 5px"};       
+    background-color: ${(styleOverrides == null ? void 0 : styleOverrides.backgroundColor) || "#00070E"};
+    color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "#7A808A"};       
   `}
 `;
 var StyledFilterWrapper = import_styled_components6.default.div`  
-  ${({ styles }) => `
+  ${({ styleOverrides }) => `
     display: block;
-    justify-content: ${(styles == null ? void 0 : styles.justifyContent) || "center"};
-    align-items: ${(styles == null ? void 0 : styles.alignItems) || "center"};  
-    padding:  ${(styles == null ? void 0 : styles.padding) || "0 0 5px"};       
-    background-color: ${(styles == null ? void 0 : styles.backgroundColor) || "#00070E"};    
-    border-radius: ${(styles == null ? void 0 : styles.borderRadius) || "4px"};    
+    justify-content: ${(styleOverrides == null ? void 0 : styleOverrides.justifyContent) || "center"};
+    align-items: ${(styleOverrides == null ? void 0 : styleOverrides.alignItems) || "center"};  
+    padding:  ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "0 0 5px"};       
+    background-color: ${(styleOverrides == null ? void 0 : styleOverrides.backgroundColor) || "#00070E"};    
+    border-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderRadius) || "4px"};    
   `}      
 `;
 var StyledCount = import_styled_components6.default.div`
@@ -3619,29 +3615,29 @@ var SearchFilters = () => {
   const networkTitle = ((_a2 = customSearchFilter == null ? void 0 : customSearchFilter.network) == null ? void 0 : _a2.title) || "Select Network(s)";
   const exchangeTitle = ((_b2 = customSearchFilter == null ? void 0 : customSearchFilter.exchange) == null ? void 0 : _b2.title) || "Select Exchange(s)";
   return /* @__PURE__ */ import_react43.default.createElement(FilterWrapper, {
-    styles: customSearchFilter == null ? void 0 : customSearchFilter.wrapper
+    styleOverrides: customSearchFilter == null ? void 0 : customSearchFilter.wrapper
   }, /* @__PURE__ */ import_react43.default.createElement(import_react_accessible_accordion.Accordion, {
     allowMultipleExpanded: false
   }, /* @__PURE__ */ import_react43.default.createElement(import_react_accessible_accordion.AccordionItem, null, /* @__PURE__ */ import_react43.default.createElement(import_react_accessible_accordion.AccordionItemHeading, null, /* @__PURE__ */ import_react43.default.createElement(import_react_accessible_accordion.AccordionItemButton, null, /* @__PURE__ */ import_react43.default.createElement(StyledFilterHeader, {
-    styles: (_c2 = customSearchFilter == null ? void 0 : customSearchFilter.network) == null ? void 0 : _c2.header
+    styleOverrides: (_c2 = customSearchFilter == null ? void 0 : customSearchFilter.network) == null ? void 0 : _c2.header
   }, /* @__PURE__ */ import_react43.default.createElement("span", null, networkTitle), /* @__PURE__ */ import_react43.default.createElement(FilterNetworkAll, null)))), /* @__PURE__ */ import_react43.default.createElement(import_react_accessible_accordion.AccordionItemPanel, null, /* @__PURE__ */ import_react43.default.createElement(StyledFilterWrapper, {
-    styles: (_d = customSearchFilter == null ? void 0 : customSearchFilter.network) == null ? void 0 : _d.wrapper
+    styleOverrides: (_d = customSearchFilter == null ? void 0 : customSearchFilter.network) == null ? void 0 : _d.wrapper
   }, /* @__PURE__ */ import_react43.default.createElement(StyledFilterContent, {
-    styles: (_e = customSearchFilter == null ? void 0 : customSearchFilter.network) == null ? void 0 : _e.content
+    styleOverrides: (_e = customSearchFilter == null ? void 0 : customSearchFilter.network) == null ? void 0 : _e.content
   }, /* @__PURE__ */ import_react43.default.createElement(FilterNetworkSelectors, null)), /* @__PURE__ */ import_react43.default.createElement(StyledDescription, {
-    styles: (_f = customSearchFilter == null ? void 0 : customSearchFilter.network) == null ? void 0 : _f.description
+    styleOverrides: (_f = customSearchFilter == null ? void 0 : customSearchFilter.network) == null ? void 0 : _f.description
   }, /* @__PURE__ */ import_react43.default.createElement(SearchDescription, {
     networkCount,
     exchangeCount,
     type: "network"
   }))))), exchangesActive && /* @__PURE__ */ import_react43.default.createElement(import_react_accessible_accordion.AccordionItem, null, /* @__PURE__ */ import_react43.default.createElement(import_react_accessible_accordion.AccordionItemHeading, null, /* @__PURE__ */ import_react43.default.createElement(import_react_accessible_accordion.AccordionItemButton, null, /* @__PURE__ */ import_react43.default.createElement(StyledFilterHeader, {
-    styles: (_g = customSearchFilter == null ? void 0 : customSearchFilter.exchange) == null ? void 0 : _g.header
+    styleOverrides: (_g = customSearchFilter == null ? void 0 : customSearchFilter.exchange) == null ? void 0 : _g.header
   }, /* @__PURE__ */ import_react43.default.createElement("span", null, exchangeTitle), /* @__PURE__ */ import_react43.default.createElement(FilterExchangeAll, null)))), /* @__PURE__ */ import_react43.default.createElement(import_react_accessible_accordion.AccordionItemPanel, null, /* @__PURE__ */ import_react43.default.createElement(StyledFilterWrapper, {
-    styles: (_h = customSearchFilter == null ? void 0 : customSearchFilter.exchange) == null ? void 0 : _h.wrapper
+    styleOverrides: (_h = customSearchFilter == null ? void 0 : customSearchFilter.exchange) == null ? void 0 : _h.wrapper
   }, /* @__PURE__ */ import_react43.default.createElement(StyledFilterContent, {
-    styles: (_i = customSearchFilter == null ? void 0 : customSearchFilter.exchange) == null ? void 0 : _i.content
+    styleOverrides: (_i = customSearchFilter == null ? void 0 : customSearchFilter.exchange) == null ? void 0 : _i.content
   }, /* @__PURE__ */ import_react43.default.createElement(FilterExchangeSelectors, null)), /* @__PURE__ */ import_react43.default.createElement(StyledDescription, {
-    styles: (_j = customSearchFilter == null ? void 0 : customSearchFilter.exchange) == null ? void 0 : _j.description
+    styleOverrides: (_j = customSearchFilter == null ? void 0 : customSearchFilter.exchange) == null ? void 0 : _j.description
   }, /* @__PURE__ */ import_react43.default.createElement(SearchDescription, {
     networkCount,
     exchangeCount,
@@ -3652,12 +3648,12 @@ var SearchFilters_default = SearchFilters;
 
 // src/searchbar/tokenSearch/index.tsx
 var StyledWrapper2 = import_styled_components7.default.div`
-  ${({ styles }) => `
+  ${({ styleOverrides }) => `
     min-width: 420px;
     overflow-x: auto;
-    background-color: ${(styles == null ? void 0 : styles.backgroundColor) || "#474F5C"};          
-    border-radius: ${(styles == null ? void 0 : styles.borderRadius) || "4px"};  
-    border:  ${(styles == null ? void 0 : styles.border) || "4px solid #474F5C"};  
+    background-color: ${(styleOverrides == null ? void 0 : styleOverrides.backgroundColor) || "#474F5C"};          
+    border-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderRadius) || "4px"};  
+    border:  ${(styleOverrides == null ? void 0 : styleOverrides.border) || "4px solid #474F5C"};  
   `}  
 `;
 var TokenSearch = (renderProps) => {
@@ -3677,7 +3673,7 @@ var TokenSearch = (renderProps) => {
     value: renderProps
   }, /* @__PURE__ */ import_react44.default.createElement(StyledWrapper2, {
     ref: searchRef,
-    styles: customWrapper
+    styleOverrides: customWrapper
   }, /* @__PURE__ */ import_react44.default.createElement(SearchInput_default, null), isSelecting && /* @__PURE__ */ import_react44.default.createElement(import_react44.default.Fragment, null, /* @__PURE__ */ import_react44.default.createElement(SearchFilters_default, null), /* @__PURE__ */ import_react44.default.createElement(SearchResult_default, {
     loading: isLoading
   }))));

@@ -16,7 +16,7 @@ export const FilterExchangeAll = () => {
   const renderProps = useContext(TokenSearchContext);
   const { customAllChip } = renderProps
 
-  const styles = {
+  const styleOverrides = {
     fontSize: customAllChip?.fontSize || '7px',
     fontWeight: customAllChip?.fontWeight || '500',
     borderRadius: customAllChip?.borderRadius || "4px",
@@ -38,7 +38,7 @@ export const FilterExchangeAll = () => {
     name={'AllExchanges'}
     label={'Select All'}
     checked={exchangeAll}
-    styles={styles}
+    styleOverrides={styleOverrides}
     onChange={() => dispatch(setExchangeMapAll({ exchangeNames: exchangeNamesActive, exchangeAll: exchangeAll }))}
   />;
 };
@@ -56,7 +56,7 @@ export const FilterExchangeSelectors = () => {
       key={exchangeName}
       name={exchangeName}
       label={exchangeName}
-      filter={1}
+      grayscaleFilter={1}
       checked={exchangeMap[exchangeName] || false}
       onChange={e => dispatch(setExchangeMap({ exchangeName: exchangeName, checked: e.target.checked }))}
     />;

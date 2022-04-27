@@ -14,12 +14,12 @@ import { RootState } from "../redux/store";
 import TokenSearchContext from '../Context/TokenSearch';
 
 const FilterWrapper = styled.div`  
-  ${({styles}) => `    
+  ${({styleOverrides}) => `    
     .accordion__button {
       position: relative;
     }
-    background-color: ${ styles?.backgroundColor || "#00070E" };
-    border-radius: ${ styles?.borderRadius || "4px" };
+    background-color: ${ styleOverrides?.backgroundColor || "#00070E" };
+    border-radius: ${ styleOverrides?.borderRadius || "4px" };
 
     .accordion__button:first-child:after {
       display: block;    
@@ -27,14 +27,14 @@ const FilterWrapper = styled.div`
       position: absolute;    
       transform: rotate(-45deg);  
       
-      color: ${ styles?.toggleColor || "#B4BBC7" };
-      height: ${ styles?.toggleHeight || "7px" };
-      width: ${ styles?.toggleWidth || "7px" };
-      margin-right: ${ styles?.toggleMarginRight || "0" };    
-      left: ${ styles?.toggleLeft || "50%" };    
-      top: ${ styles?.toggleTop || "5px" };    
-      border-bottom: ${ styles?.toggleBorderBottom || "2px solid currentColor" }; 
-      border-right: ${ styles?.toggleBorderRight || "2px solid currentColor" }; 
+      color: ${ styleOverrides?.toggleColor || "#B4BBC7" };
+      height: ${ styleOverrides?.toggleHeight || "7px" };
+      width: ${ styleOverrides?.toggleWidth || "7px" };
+      margin-right: ${ styleOverrides?.toggleMarginRight || "0" };    
+      left: ${ styleOverrides?.toggleLeft || "50%" };    
+      top: ${ styleOverrides?.toggleTop || "5px" };    
+      border-bottom: ${ styleOverrides?.toggleBorderBottom || "2px solid currentColor" }; 
+      border-right: ${ styleOverrides?.toggleBorderRight || "2px solid currentColor" }; 
       transform: rotate(45deg);
        
     }
@@ -46,66 +46,66 @@ const FilterWrapper = styled.div`
     }
 
     .accordion__panel {    
-      border: ${ styles?.contentBorder || "0" };       
-      border-radius: ${ styles?.contentBorderRadius || "0" }; 
-      margin:  ${ styles?.margin || "0" };
+      border: ${ styleOverrides?.contentBorder || "0" };       
+      border-radius: ${ styleOverrides?.contentBorderRadius || "0" }; 
+      margin:  ${ styleOverrides?.margin || "0" };
     }
   `}  
 `;
 
 const StyledFilterHeader = styled.div`  
-  ${({styles}) => `
-    display: ${ styles?.display || "flex" };
-    justify-content: ${ styles?.justifyContent || "space-between" };
-    align-items: ${ styles?.alignItems || "center" };
-    width: ${ styles?.width || "auto" };
-    border: ${ styles?.border || "none" }; 
-    background-color: ${ styles?.backgroundColor || "#00070E" }; 
-    color: ${ styles?.color || "#B4BBC7" };    
+  ${({styleOverrides}) => `
+    display: ${ styleOverrides?.display || "flex" };
+    justify-content: ${ styleOverrides?.justifyContent || "space-between" };
+    align-items: ${ styleOverrides?.alignItems || "center" };
+    width: ${ styleOverrides?.width || "auto" };
+    border: ${ styleOverrides?.border || "none" }; 
+    background-color: ${ styleOverrides?.backgroundColor || "#00070E" }; 
+    color: ${ styleOverrides?.color || "#B4BBC7" };    
     cursor: pointer;
-    padding: ${ styles?.padding || "6px 14px" };   
-    text-align: ${ styles?.textAlign || "left" };     
-    margin: ${ styles?.margin || "4px 0" };     
-    border-radius: ${ styles?.borderRadius || "4px" };     
-    font-size: ${ styles?.fontSize || "9px" };     
-    font-weight: ${ styles?.fontWeight || "500" };     
+    padding: ${ styleOverrides?.padding || "6px 14px" };   
+    text-align: ${ styleOverrides?.textAlign || "left" };     
+    margin: ${ styleOverrides?.margin || "4px 0" };     
+    border-radius: ${ styleOverrides?.borderRadius || "4px" };     
+    font-size: ${ styleOverrides?.fontSize || "9px" };     
+    font-weight: ${ styleOverrides?.fontWeight || "500" };     
     &:hover {
-      background-color: ${ styles?.hoverColor || "#232C38" };
+      background-color: ${ styleOverrides?.hoverColor || "#232C38" };
     }
   `}      
 `; 
 
 const StyledFilterContent = styled.div`
-  ${({styles}) => `
+  ${({styleOverrides}) => `
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 5px;
     margin-left: 10px;
-    justify-content: ${ styles?.justifyContent || "start" };
-    align-items: ${ styles?.alignItems || "center" };  
-    padding:  ${ styles?.padding || "0 0 5px" };           
+    justify-content: ${ styleOverrides?.justifyContent || "start" };
+    align-items: ${ styleOverrides?.alignItems || "center" };  
+    padding:  ${ styleOverrides?.padding || "0 0 5px" };           
   `}      
 `;
 
 const StyledDescription = styled.div`
-  ${({styles}) => `
-    text-align: ${ styles?.textAlign || "right" };
-    font-size: ${ styles?.fontSize || "9px" };
-    font-weight: ${ styles?.fontWeight || "100" };
-    padding: ${ styles?.padding || "10px 10px 5px" };       
-    background-color: ${ styles?.backgroundColor || "#00070E" };
-    color: ${ styles?.color || "#7A808A" };       
+  ${({styleOverrides}) => `
+    text-align: ${ styleOverrides?.textAlign || "right" };
+    font-size: ${ styleOverrides?.fontSize || "9px" };
+    font-weight: ${ styleOverrides?.fontWeight || "100" };
+    padding: ${ styleOverrides?.padding || "10px 10px 5px" };       
+    background-color: ${ styleOverrides?.backgroundColor || "#00070E" };
+    color: ${ styleOverrides?.color || "#7A808A" };       
   `}
 `
 
 const StyledFilterWrapper = styled.div`  
-  ${({styles}) => `
+  ${({styleOverrides}) => `
     display: block;
-    justify-content: ${ styles?.justifyContent || "center" };
-    align-items: ${ styles?.alignItems || "center" };  
-    padding:  ${ styles?.padding || "0 0 5px" };       
-    background-color: ${ styles?.backgroundColor || "#00070E" };    
-    border-radius: ${ styles?.borderRadius || "4px" };    
+    justify-content: ${ styleOverrides?.justifyContent || "center" };
+    align-items: ${ styleOverrides?.alignItems || "center" };  
+    padding:  ${ styleOverrides?.padding || "0 0 5px" };       
+    background-color: ${ styleOverrides?.backgroundColor || "#00070E" };    
+    border-radius: ${ styleOverrides?.borderRadius || "4px" };    
   `}      
 `
 const StyledCount = styled.div`
@@ -151,23 +151,23 @@ export const SearchFilters = () => {
   const exchangeTitle = customSearchFilter?.exchange?.title || 'Select Exchange(s)'
   // RENDERING.
   return (
-    <FilterWrapper styles={customSearchFilter?.wrapper}>
+    <FilterWrapper styleOverrides={customSearchFilter?.wrapper}>
       <Accordion allowMultipleExpanded={false}>
         <AccordionItem>
           <AccordionItemHeading>
             <AccordionItemButton>
-              <StyledFilterHeader styles={customSearchFilter?.network?.header}>
+              <StyledFilterHeader styleOverrides={customSearchFilter?.network?.header}>
                 <span>{networkTitle}</span>
                 <FilterNetworkAll />
               </StyledFilterHeader>            
             </AccordionItemButton>
           </AccordionItemHeading>
           <AccordionItemPanel>            
-            <StyledFilterWrapper styles={customSearchFilter?.network?.wrapper}>
-              <StyledFilterContent styles={customSearchFilter?.network?.content}>                                         
+            <StyledFilterWrapper styleOverrides={customSearchFilter?.network?.wrapper}>
+              <StyledFilterContent styleOverrides={customSearchFilter?.network?.content}>                                         
                 <FilterNetworkSelectors />              
               </StyledFilterContent>                                        
-              <StyledDescription styles={customSearchFilter?.network?.description}>
+              <StyledDescription styleOverrides={customSearchFilter?.network?.description}>
                 <SearchDescription 
                   networkCount={networkCount}
                   exchangeCount={exchangeCount}
@@ -180,18 +180,18 @@ export const SearchFilters = () => {
         { exchangesActive && <AccordionItem>
             <AccordionItemHeading>
               <AccordionItemButton>
-                <StyledFilterHeader styles={customSearchFilter?.exchange?.header}>
+                <StyledFilterHeader styleOverrides={customSearchFilter?.exchange?.header}>
                   <span>{exchangeTitle}</span>
                   <FilterExchangeAll />
                 </StyledFilterHeader>            
               </AccordionItemButton>
             </AccordionItemHeading>
             <AccordionItemPanel>            
-              <StyledFilterWrapper styles={customSearchFilter?.exchange?.wrapper}>
-                <StyledFilterContent styles={customSearchFilter?.exchange?.content}>                                         
+              <StyledFilterWrapper styleOverrides={customSearchFilter?.exchange?.wrapper}>
+                <StyledFilterContent styleOverrides={customSearchFilter?.exchange?.content}>                                         
                   <FilterExchangeSelectors />
                 </StyledFilterContent>                                                        
-                <StyledDescription styles={customSearchFilter?.exchange?.description}>
+                <StyledDescription styleOverrides={customSearchFilter?.exchange?.description}>
                   <SearchDescription 
                     networkCount={networkCount}
                     exchangeCount={exchangeCount}

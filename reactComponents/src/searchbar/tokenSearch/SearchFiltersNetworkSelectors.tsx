@@ -16,7 +16,7 @@ export const FilterNetworkAll = () => {
   const exchangeNamesActive = Object.keys(omitBy(exchangeMap, b => !b));
   
   const { customAllChip } = renderProps
-  const styles = {
+  const styleOverrides = {
     fontSize: customAllChip?.fontSize || '7px',
     fontWeight: customAllChip?.fontWeight || '500',
     borderRadius: customAllChip?.borderRadius || "4px",
@@ -38,7 +38,7 @@ export const FilterNetworkAll = () => {
     name={'AllNetworks'}
     label={'Select All'}
     checked={networkAll}
-    styles={styles}
+    styleOverrides={styleOverrides}
     onChange={
       e => {
         dispatch(setNetworkMapAll({ networkNames: networkNames, networkAll: networkAll }));

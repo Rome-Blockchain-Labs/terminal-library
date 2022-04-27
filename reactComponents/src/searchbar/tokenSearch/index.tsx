@@ -9,12 +9,12 @@ import TokenSearchContext from '../Context/TokenSearch'
 import { RenderProps } from '../../types';
 
 const StyledWrapper = styled.div`
-  ${({styles}) => `
+  ${({styleOverrides}) => `
     min-width: 420px;
     overflow-x: auto;
-    background-color: ${ styles?.backgroundColor || "#474F5C" };          
-    border-radius: ${ styles?.borderRadius || "4px" };  
-    border:  ${ styles?.border || "4px solid #474F5C" };  
+    background-color: ${ styleOverrides?.backgroundColor || "#474F5C" };          
+    border-radius: ${ styleOverrides?.borderRadius || "4px" };  
+    border:  ${ styleOverrides?.border || "4px solid #474F5C" };  
   `}  
 `
 
@@ -34,7 +34,7 @@ export const TokenSearch: FC<RenderProps> = (renderProps: RenderProps) => {
 
   return (
     <TokenSearchContext.Provider value={renderProps}>
-      <StyledWrapper ref={searchRef} styles={customWrapper}>
+      <StyledWrapper ref={searchRef} styleOverrides={customWrapper}>
         <SearchInput />
         
         {isSelecting && (

@@ -31,12 +31,12 @@ import MdexIcon from '../icons/mdex';
 
 type LogoType = {
   label: any;
-  filter?: any;
+  grayscaleFilter?: any;
   width?: number;
   height?: number;
 }
 
-export const Logo: FC<LogoType> = ({label, width, height, filter}) => {  
+export const Logo: FC<LogoType> = ({label, width, height, grayscaleFilter}) => {  
   let result;
   switch(label) {
     // networks
@@ -133,7 +133,7 @@ export const Logo: FC<LogoType> = ({label, width, height, filter}) => {
       break;
   }
   
-  return <div style={{filter: `grayscale(${filter})`}}>
+  return <div style={{filter: `grayscale(${grayscaleFilter})`}}>
     {result}
   </div>
 }
