@@ -18,7 +18,7 @@ const StyledWrapper = styled.div`
       width: -webkit-fill-available;
       left: 0; 
       top: 33px;
-
+      z-index: 99;
       background-color: ${ styleOverrides?.backgroundColor || "#474F5C" };          
       border-bottom-left-radius: ${ styleOverrides?.borderBottomLeftRadius || "4px" };  
       border-bottom-right-radius: ${ styleOverrides?.borderBottomRightRadius || "4px" };  

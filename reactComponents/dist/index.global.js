@@ -60101,7 +60101,7 @@ spurious results.`);
       width: -webkit-fill-available;
       left: 0; 
       top: 33px;
-
+      z-index: 99;
       background-color: ${(styleOverrides == null ? void 0 : styleOverrides.backgroundColor) || "#474F5C"};          
       border-bottom-left-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderBottomLeftRadius) || "4px"};  
       border-bottom-right-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderBottomRightRadius) || "4px"};  
