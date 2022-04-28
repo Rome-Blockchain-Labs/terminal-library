@@ -11,7 +11,6 @@ import { SearchBar } from '@romeblockchain/react-components';
     <SearchBar />    
 </div>
 ```
-
 ### SearchBar Props Options
  - customWrapper          // JSON format for the search bar div style
  - customSearchInput      // JSON format for input style
@@ -291,6 +290,12 @@ const actionComponent1 = (props) => {
 }
 ```
 
+### Set configuration params in .ENV (Optional)
+```
+REACT_APP_SEARCH_INPUT_LENGTH_MINIMUM=3
+REACT_APP_SEARCH_ASYNC_DELAY=300
+REACT_APP_SEARCH_ASYNC_DATASET_LENGTH_MAXIMUM=500
+```
 ## After that you can pass the props as follows;
 ```
     // All the props are optional, you may pass or not

@@ -10,11 +10,23 @@ import { RenderProps } from '../../types';
 
 const StyledWrapper = styled.div`
   ${({styleOverrides}) => `
-    min-width: 420px;
-    overflow-x: auto;
-    background-color: ${ styleOverrides?.backgroundColor || "#474F5C" };          
-    border-radius: ${ styleOverrides?.borderRadius || "4px" };  
-    border:  ${ styleOverrides?.border || "4px solid #474F5C" };  
+    min-width: 420px;            
+    position: relative;
+
+    & .dropDown {
+      position: absolute;
+      width: -webkit-fill-available;
+      left: 0; 
+      top: 33px;
+
+      background-color: ${ styleOverrides?.backgroundColor || "#474F5C" };          
+      border-bottom-left-radius: ${ styleOverrides?.borderBottomLeftRadius || "4px" };  
+      border-bottom-right-radius: ${ styleOverrides?.borderBottomRightRadius || "4px" };  
+      border-color: ${ styleOverrides?.borderColor || "#474F5C" };          
+      border-style: ${ styleOverrides?.borderStyle || "solid" };                
+      border-width:${ styleOverrides?.borderStyle || "4px" };                 
+      border-top: none;
+    }
   `}  
 `
 
@@ -33,18 +45,17 @@ export const TokenSearch: FC<RenderProps> = (renderProps: RenderProps) => {
   }, [dispatch]);
 
   return (
-    <TokenSearchContext.Provider value={renderProps}>
+    <TokenSearchContext.Provider value={renderProps}>                 
       <StyledWrapper ref={searchRef} styleOverrides={customWrapper}>
-        <SearchInput />
-        
+        <SearchInput />      
         {isSelecting && (
-          <>
-            <SearchFilters />      
-            <SearchResult loading={isLoading} />
-          </>
+          <div className='dropDown'>        
+              <SearchFilters />      
+              <SearchResult loading={isLoading} />            
+          </div>
           )
-        }
-      </StyledWrapper>
+        }      
+      </StyledWrapper>      
     </TokenSearchContext.Provider>
   );
 };

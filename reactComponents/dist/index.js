@@ -424,7 +424,8 @@ var _a, _b, _c;
 var config_default = {
   SEARCH_INPUT_LENGTH_MINIMUM: (_a = process.env.REACT_APP_SEARCH_INPUT_LENGTH_MINIMUM) != null ? _a : 3,
   SEARCH_ASYNC_DELAY: (_b = process.env.REACT_APP_SEARCH_ASYNC_DELAY) != null ? _b : 300,
-  SEARCH_ASYNC_DATASET_LENGTH_MAXIMUM: (_c = process.env.REACT_APP_SEARCH_ASYNC_DATASET_LENGTH_MAXIMUM) != null ? _c : 500
+  SEARCH_ASYNC_DATASET_LENGTH_MAXIMUM: (_c = process.env.REACT_APP_SEARCH_ASYNC_DATASET_LENGTH_MAXIMUM) != null ? _c : 500,
+  IS_ENV_PRODUCTION: process.env.REACT_APP_ROME_ENV === "production" ? true : false
 };
 
 // src/searchbar/tokenSearch/SearchInput.tsx
@@ -436,7 +437,7 @@ var StyledInput = import_styled_components2.default.input`
     outline: 0;
     width: ${(styleOverrides == null ? void 0 : styleOverrides.width) || "-webkit-fill-available"};
     height: ${(styleOverrides == null ? void 0 : styleOverrides.height) || "auto"};
-    border: ${(styleOverrides == null ? void 0 : styleOverrides.border) || "none"};   
+    border: ${(styleOverrides == null ? void 0 : styleOverrides.border) || "5px solid #474F5C"};   
     color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "#7A808A"};
     display: ${(styleOverrides == null ? void 0 : styleOverrides.display) || "block"};           
     border-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderRadius) || "4px"};  
@@ -452,7 +453,7 @@ var StyledSearchIconWrapper = import_styled_components2.default.div`
     float: right;
     position: absolute;
     right: ${(styleOverrides == null ? void 0 : styleOverrides.right) || "14px"};      
-    top: ${(styleOverrides == null ? void 0 : styleOverrides.top) || "6px"};        
+    top: ${(styleOverrides == null ? void 0 : styleOverrides.top) || "12px"};        
   `}    
 `;
 var StyledWrapper = import_styled_components2.default.div`
@@ -3617,7 +3618,8 @@ var SearchFilters = () => {
   return /* @__PURE__ */ import_react43.default.createElement(FilterWrapper, {
     styleOverrides: customSearchFilter == null ? void 0 : customSearchFilter.wrapper
   }, /* @__PURE__ */ import_react43.default.createElement(import_react_accessible_accordion.Accordion, {
-    allowMultipleExpanded: false
+    allowMultipleExpanded: false,
+    allowZeroExpanded: true
   }, /* @__PURE__ */ import_react43.default.createElement(import_react_accessible_accordion.AccordionItem, null, /* @__PURE__ */ import_react43.default.createElement(import_react_accessible_accordion.AccordionItemHeading, null, /* @__PURE__ */ import_react43.default.createElement(import_react_accessible_accordion.AccordionItemButton, null, /* @__PURE__ */ import_react43.default.createElement(StyledFilterHeader, {
     styleOverrides: (_c2 = customSearchFilter == null ? void 0 : customSearchFilter.network) == null ? void 0 : _c2.header
   }, /* @__PURE__ */ import_react43.default.createElement("span", null, networkTitle), /* @__PURE__ */ import_react43.default.createElement(FilterNetworkAll, null)))), /* @__PURE__ */ import_react43.default.createElement(import_react_accessible_accordion.AccordionItemPanel, null, /* @__PURE__ */ import_react43.default.createElement(StyledFilterWrapper, {
@@ -3649,11 +3651,23 @@ var SearchFilters_default = SearchFilters;
 // src/searchbar/tokenSearch/index.tsx
 var StyledWrapper2 = import_styled_components7.default.div`
   ${({ styleOverrides }) => `
-    min-width: 420px;
-    overflow-x: auto;
-    background-color: ${(styleOverrides == null ? void 0 : styleOverrides.backgroundColor) || "#474F5C"};          
-    border-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderRadius) || "4px"};  
-    border:  ${(styleOverrides == null ? void 0 : styleOverrides.border) || "4px solid #474F5C"};  
+    min-width: 420px;            
+    position: relative;
+
+    & .dropDown {
+      position: absolute;
+      width: -webkit-fill-available;
+      left: 0; 
+      top: 33px;
+
+      background-color: ${(styleOverrides == null ? void 0 : styleOverrides.backgroundColor) || "#474F5C"};          
+      border-bottom-left-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderBottomLeftRadius) || "4px"};  
+      border-bottom-right-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderBottomRightRadius) || "4px"};  
+      border-color: ${(styleOverrides == null ? void 0 : styleOverrides.borderColor) || "#474F5C"};          
+      border-style: ${(styleOverrides == null ? void 0 : styleOverrides.borderStyle) || "solid"};                
+      border-width:${(styleOverrides == null ? void 0 : styleOverrides.borderStyle) || "4px"};                 
+      border-top: none;
+    }
   `}  
 `;
 var TokenSearch = (renderProps) => {
@@ -3674,7 +3688,9 @@ var TokenSearch = (renderProps) => {
   }, /* @__PURE__ */ import_react44.default.createElement(StyledWrapper2, {
     ref: searchRef,
     styleOverrides: customWrapper
-  }, /* @__PURE__ */ import_react44.default.createElement(SearchInput_default, null), isSelecting && /* @__PURE__ */ import_react44.default.createElement(import_react44.default.Fragment, null, /* @__PURE__ */ import_react44.default.createElement(SearchFilters_default, null), /* @__PURE__ */ import_react44.default.createElement(SearchResult_default, {
+  }, /* @__PURE__ */ import_react44.default.createElement(SearchInput_default, null), isSelecting && /* @__PURE__ */ import_react44.default.createElement("div", {
+    className: "dropDown"
+  }, /* @__PURE__ */ import_react44.default.createElement(SearchFilters_default, null), /* @__PURE__ */ import_react44.default.createElement(SearchResult_default, {
     loading: isLoading
   }))));
 };
@@ -3684,7 +3700,7 @@ var tokenSearch_default = TokenSearch;
 var SearchBar = (renderProps) => {
   return /* @__PURE__ */ import_react45.default.createElement(import_react_redux7.Provider, {
     store
-  }, /* @__PURE__ */ import_react45.default.createElement(tokenSearch_default, {
+  }, !config_default.IS_ENV_PRODUCTION && /* @__PURE__ */ import_react45.default.createElement(tokenSearch_default, {
     customWrapper: renderProps == null ? void 0 : renderProps.customWrapper,
     customSearchInput: renderProps == null ? void 0 : renderProps.customSearchInput,
     customSearchFilter: renderProps == null ? void 0 : renderProps.customSearchFilter,

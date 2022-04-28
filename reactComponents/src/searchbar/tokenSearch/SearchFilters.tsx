@@ -152,7 +152,7 @@ export const SearchFilters = () => {
   // RENDERING.
   return (
     <FilterWrapper styleOverrides={customSearchFilter?.wrapper}>
-      <Accordion allowMultipleExpanded={false}>
+      <Accordion allowMultipleExpanded={false} allowZeroExpanded>
         <AccordionItem>
           <AccordionItemHeading>
             <AccordionItemButton>
