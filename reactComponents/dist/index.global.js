@@ -58801,19 +58801,19 @@ spurious results.`);
       }
 
       & .right {
-        padding-top: 10px;
+        padding-top: 10px;        
 
         & .widgets {          
           color: #B4BBC7;
         }
 
         & .actions {
-          padding: 10px 0;
+          padding: 5px 0;
 
           display: flex;
   
           > div {
-            padding-right: 10px;
+            padding-right: 5px;
           }
         }
   
