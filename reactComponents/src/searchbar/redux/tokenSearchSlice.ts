@@ -4,18 +4,18 @@ import { stringify } from 'flatted';
 import { searchTokensAsync } from "../tokenSearch/helpers/async";
 import { uniq, omitBy } from "lodash"
 import { networkExchangePairs } from '../tokenSearch/helpers/config';
-import {TokenSearchState} from "./types";
+import { TokenSearchState } from "./types";
 
 export const setPair = createAsyncThunk(
   'token/setPair',
-  async ({ selectedPair }:any) => {    
+  async ({ selectedPair }: any) => {
     return selectedPair;
   }
 );
 
 export const resetSearchOnNewExchange = createAsyncThunk(
   'token/searchReset',
-  async (searchString:any, thunkAPI:any) => {    
+  async (thunkAPI: any) => {
     thunkAPI.dispatch(searchTokenPairs(''));
   }
 );
@@ -23,7 +23,7 @@ export const resetSearchOnNewExchange = createAsyncThunk(
 //todo no need for this to be a thunk
 const setPairSearchTimestamp = createAsyncThunk(
   'token/saveTime',
-  async (timestamp:any) => {
+  async (timestamp: any) => {
     return timestamp;
   }
 );
@@ -70,7 +70,7 @@ const valueCleaner = (networkMap, exchangeMap) => {
 
 export const searchTokenPairs = createAsyncThunk(
   'token/search',
-  async (searchString:any, thunkAPI:any) => {
+  async (searchString: any, thunkAPI: any) => {
     try {
       let { networkMap, exchangeMap } = thunkAPI.getState();
       let processedNetworks;
@@ -126,7 +126,8 @@ const initialState: TokenSearchState = {
   serializedTradeEstimator: '',
   suggestions: [],
   exchangeMap: {},
-  networkMap: {}
+  networkMap: {},
+  viewResult: false
 };
 
 export const tokenSearchSlice = createSlice({
@@ -138,6 +139,7 @@ export const tokenSearchSlice = createSlice({
       state.fetchError = null;
       state.isSelecting = false;
       state.selectedPair = undefined;
+      state.viewResult = true;
       // don't update pairSearchTimestamp
       state.serializedTradeEstimator = '';
     });
@@ -171,6 +173,18 @@ export const tokenSearchSlice = createSlice({
   initialState,
   name: 'tokenSearch',
   reducers: {
+    resetSearch: (state) => {      
+      state.searchText = '';
+      state.suggestions = [];
+      state.isLoading = false;
+      state.exchangeMap = {},
+      state.networkMap = {},
+      state.isSelecting = false;      
+      state.viewResult = false;
+    },
+    setViewResult: (state, action) => {
+      state.viewResult = action.payload
+    },
     setSearchText: (state, action) => {
       state.searchText = action.payload;
     },
@@ -189,7 +203,6 @@ export const tokenSearchSlice = createSlice({
     },
     setExchangeMapAll: (state, action) => {
       let exchangeName;
-
 
       // Loops through the network names.
       for (exchangeName of action.payload.exchangeNames) {
@@ -229,6 +242,18 @@ export const tokenSearchSlice = createSlice({
   },
 });
 
-export const { setSearchText, startSelecting, stopSelecting, toggleSelecting, setExchangeMap, setExchangeMapAll, setNetworkMap, setNetworkMapAll } =
+export const { 
+  setSearchText, 
+  startSelecting, 
+  stopSelecting, 
+  toggleSelecting, 
+  setExchangeMap, 
+  setExchangeMapAll, 
+  setNetworkMap, 
+  setNetworkMapAll,
+  setViewResult,
+  resetSearch
+  } =
   tokenSearchSlice.actions;
-export default tokenSearchSlice.reducer;
+
+  export default tokenSearchSlice.reducer;

@@ -1,5 +1,5 @@
-import React, { useContext, FC } from "react"
-import { useSelector } from 'react-redux';
+import React, { useContext, FC, useEffect } from "react"
+import { useDispatch, useSelector } from 'react-redux';
 import styled from  'styled-components'
 import {
   Accordion,
@@ -12,6 +12,7 @@ import { FilterNetworkAll, FilterNetworkSelectors } from "./SearchFiltersNetwork
 import { FilterExchangeAll, FilterExchangeSelectors } from "./SearchFiltersExchangeSelectors";
 import { RootState } from "../redux/store";
 import TokenSearchContext from '../Context/TokenSearch';
+import { setViewResult } from '../redux/tokenSearchSlice';
 
 const FilterWrapper = styled.div`  
   ${({styleOverrides}) => `    
@@ -65,7 +66,7 @@ const StyledFilterHeader = styled.div`
     cursor: pointer;
     padding: ${ styleOverrides?.padding || "6px 14px" };   
     text-align: ${ styleOverrides?.textAlign || "left" };     
-    margin: ${ styleOverrides?.margin || "4px 0" };     
+    margin: ${ styleOverrides?.margin || "5px 0 0" };     
     border-radius: ${ styleOverrides?.borderRadius || "4px" };     
     font-size: ${ styleOverrides?.fontSize || "9px" };     
     font-weight: ${ styleOverrides?.fontWeight || "500" };     
@@ -139,7 +140,8 @@ const SearchDescription: FC<SelectedNetworks> = (props: SelectedNetworks) => {
 }
 
 export const SearchFilters = () => {
-  const { networkMap, exchangeMap  } = useSelector((state:RootState) => state);
+  const dispatch = useDispatch();
+  const { networkMap, exchangeMap, searchText  } = useSelector((state:RootState) => state);
   const renderProps = useContext(TokenSearchContext);  
   const { customSearchFilter } = renderProps;
   const exchangesActive = Object.values(networkMap).filter(b => b).length !== 0;
@@ -149,6 +151,13 @@ export const SearchFilters = () => {
   
   const networkTitle = customSearchFilter?.network?.title || 'Select Network(s)'
   const exchangeTitle = customSearchFilter?.exchange?.title || 'Select Exchange(s)'
+
+  useEffect(() => {    
+    (Object.keys(networkMap).length > 0 ||
+    Object.keys(exchangeMap).length > 0) && searchText.length > 0 &&
+    dispatch(setViewResult(true));
+  }, [networkMap, exchangeMap, searchText])
+
   // RENDERING.
   return (
     <FilterWrapper styleOverrides={customSearchFilter?.wrapper}>

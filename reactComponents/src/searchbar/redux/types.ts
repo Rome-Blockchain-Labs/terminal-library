@@ -34,4 +34,5 @@ export type TokenSearchState = {
   serializedTradeEstimator: string;
   exchangeMap:any//todo
   networkMap:any//todo
+  viewResult: boolean;
 };

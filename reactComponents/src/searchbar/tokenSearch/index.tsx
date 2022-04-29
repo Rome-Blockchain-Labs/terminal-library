@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, FC } from 'react';
 import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
 import styled from 'styled-components';
-import { stopSelecting } from '../redux/tokenSearchSlice';
+import { stopSelecting, setViewResult } from '../redux/tokenSearchSlice';
 import SearchInput from "./SearchInput";
 import SearchResult from "./SearchResult";
 import SearchFilters from "./SearchFilters";
@@ -27,23 +27,44 @@ const StyledWrapper = styled.div`
       border-width:${ styleOverrides?.borderStyle || "4px" };                 
       border-top: none;
     }
+
+    & button {
+      display: flex;
+      align-items: center;
+      border-color: ${ styleOverrides?.button.borderColor || "#232C38" };      
+      background-color: ${ styleOverrides?.button.backColor || "#232C38" };      
+      color: ${ styleOverrides?.button.color || "#7A808A" };      
+      border-radius: ${ styleOverrides?.button.borderRadius || "4px" };      
+      font-size: ${ styleOverrides?.button.fontSize || "7px" };      
+      padding: ${ styleOverrides?.button.padding || "3px 6px" };      
+      border-width: 0;      
+      cursor: pointer;
+      &:hover {
+        background-color: ${ styleOverrides?.button.hoverBackColor || "black" };      
+      }
+
+      & span {
+        padding-right: 3px;
+      }
+    }
   `}  
 `
 
 export const TokenSearch: FC<RenderProps> = (renderProps: RenderProps) => {
   const { customWrapper } = renderProps
   const dispatch = useDispatch();
-  const { isSelecting, isLoading } = useSelector((state: RootStateOrAny) => state);
+  const { isSelecting, isLoading, viewResult } = useSelector((state: RootStateOrAny) => state);
   const searchRef = useRef<HTMLDivElement>();
 
   useEffect(() => {
     window.onmousedown = (e) => {
       if (!searchRef?.current?.contains(e.target)) {
         dispatch(stopSelecting());
+        dispatch(setViewResult(false));        
       }
     };
   }, [dispatch]);
-
+   
   return (
     <TokenSearchContext.Provider value={renderProps}>                 
       <StyledWrapper ref={searchRef} styleOverrides={customWrapper}>
@@ -51,7 +72,7 @@ export const TokenSearch: FC<RenderProps> = (renderProps: RenderProps) => {
         {isSelecting && (
           <div className='dropDown'>        
               <SearchFilters />      
-              <SearchResult loading={isLoading} />            
+              { viewResult && <SearchResult loading={isLoading} /> }
           </div>
           )
         }      

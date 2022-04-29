@@ -72,10 +72,6 @@ const StyledDetailList = styled.div`
       &:hover {
         background-color: ${ styleOverrides?.button?.hoverBackColor || "#232C38" };      
       }    
-
-      & .icon {        
-        padding-left: 3px;
-      }
     }
   `}    
 `;
@@ -256,9 +252,7 @@ export const ResultDetail: FC<DetailType> = (props: DetailType) => {
       </div>
       <button onClick={() => handleDetail(currentIndex === index ? null : index)}>
         <span>Details </span>
-        <div className='icon'>
-          <DownIcon width={7} height={7} />
-        </div>
+        <DownIcon width={7} height={7} />        
       </button>
       </StyledDetailList>
     }

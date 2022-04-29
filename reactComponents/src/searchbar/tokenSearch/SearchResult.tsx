@@ -1,11 +1,11 @@
-import React, { useContext, useState, FC } from 'react';
+import React, { useContext, useState, FC, useEffect } from 'react';
 import styled from 'styled-components'
 
 import { useSelector, useDispatch } from 'react-redux';
 import TokenSearchContext from '../Context/TokenSearch';
 import { RootState } from "../redux/store";
 import UnCheckedIcon from '../icons/unchecked';
-import { stopSelecting } from '../redux/tokenSearchSlice';
+import { setViewResult } from '../redux/tokenSearchSlice';
 import ResultDetail from './ResultDetail'
 
 const StyledResult = styled.div`
@@ -37,24 +37,6 @@ const StyledResultTitle = styled.div`
     margin: ${ styleOverrides?.margin || "0" };      
     > span {
       font-size: ${ styleOverrides?.fontSize2 || "7px" };      
-    }
-
-    > button {
-      display: flex;
-      align-items: center;
-      
-      border-color: ${ styleOverrides?.buttonBorderColor || "#232C38" };      
-      background-color: ${ styleOverrides?.buttonBackColor || "#232C38" };      
-      color: ${ styleOverrides?.buttonColor || "#7A808A" };      
-      border-radius: ${ styleOverrides?.buttonBorderRadius || "4px" };      
-      font-size: ${ styleOverrides?.buttonFontSize || "7px" };      
-      padding: ${ styleOverrides?.buttonPadding || "3px 6px" };      
-      border-width: 0;      
-      cursor: pointer;
-      
-      &:hover {
-        background-color: ${ styleOverrides?.buttonHoverBackColor || "black" };      
-      }
     }
   `}    
 `
@@ -105,7 +87,7 @@ const SearchResult: FC<Loading> = (props: Loading) => {
   const {suggestions, searchText} = useSelector(
     (state:RootState) => state
   );
-  const [currentIndex, setCurrentIndex] = useState(0)
+  const [currentIndex, setCurrentIndex] = useState(-1)
   const filteredSuggestions = suggestions
     .slice()
     .sort((pair1, pair2) => pair2.volumeUSD - pair1.volumeUSD);
@@ -118,7 +100,7 @@ const SearchResult: FC<Loading> = (props: Loading) => {
     const notFoundTitle = customLoading?.notFoundTitle ? customLoading.notFoundTitle : 'No results found'    
       
     const handleClose = () => {
-      dispatch(stopSelecting());
+      dispatch(setViewResult(false));      
     }
      
     return (    

@@ -27,7 +27,16 @@ import { SearchBar } from '@romeblockchain/react-components';
 const customWrapper = {
     backgroundColor: '#474F5C',      
     borderRadius: '4px',    
-    border: 'none'  
+    border: 'none',
+    button: {
+        borderColor: '#232C38',
+        backColor: '#232C38',
+        color: '#7A808A',
+        borderRadius: '4px',
+        fontSize: '7px',
+        padding: '4px 6px',
+        hoverBackColor: 'black'
+    }
 }
 
 const customSearchInput = {
@@ -120,14 +129,7 @@ const customResult = {
         fontSize: '9px',      
         padding: '4px 16px',      
         margin: '0',   
-        fontSize2: '7px',                     
-        buttonBorderColor: '#232C38',      
-        buttonBackColor: '#232C38',      
-        buttonColor: '#7A808A',      
-        buttonBorderRadius: '4px',      
-        buttonHoverBackColor: 'black'
-        buttonFontSize: '7px',      
-        buttonPadding: '3px 5px'      
+        fontSize2: '7px',                             
     },
     content: {
         padding: '14px',
