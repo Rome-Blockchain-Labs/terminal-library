@@ -6,6 +6,7 @@ import * as React from "react";
 import { render } from "react-dom";
 
 import {SearchBar} from "./searchbar";
+/*
 const customWrapper = {
   backgroundColor: '#474F5C',      
   borderRadius: '4px',    
@@ -235,7 +236,7 @@ const customTokenDetail = {
 
   }
 }
+*/
+
 const rootElement = document.getElementById("root");
-render(<SearchBar
-     
-/>, rootElement);
+render(<SearchBar />, rootElement);

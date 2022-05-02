@@ -186,9 +186,15 @@ const StyledAction = styled.div`
   cursor: pointer;
   padding: 10;
 `
-const Action = (props) => {
+
+type ActionType = {
+  component: FC,
+  detail: any
+}
+
+const Action = (props: ActionType) => {
   const { component, detail } = props
-  const Component = component
+  const Component: FC<any> = component
   return (
     <StyledAction>
       <Component detail={detail}/>
@@ -198,7 +204,7 @@ const Action = (props) => {
 
 export type DetailType = {
   index: number;
-  suggestions: object;
+  suggestions: any;
   handleDetail: any;
   currentIndex : number;
 }
@@ -298,7 +304,7 @@ export const ResultDetail: FC<DetailType> = (props: DetailType) => {
             </div>
             <div className='info'>
               <div className='detail'>
-                <span>Holders:</span> <strong></strong>
+                
               </div>
               <div className='detail'>
                 <span>Exchange: </span>

@@ -85,7 +85,8 @@ const searchTokenAsync_searchString = searchString => {
 };
 
 // Function that creates the actual async token.
-export const searchTokensAsync = async (searchString, searchNetworks, searchExchanges) => {//, config = { nilVolumeOkay:false }) => {
+// eslint-disable-next-line
+export const searchTokensAsync = async (searchString: string, searchNetworks: Array<string>, searchExchanges: Array<string>) => {
   let res;
   let isPair = false
   const queries = searchString.split(' ')

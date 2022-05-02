@@ -1,15 +1,15 @@
 import React, { FC, memo } from 'react';
+import SVGIcon from './abstract';
+
 import { IIconProps } from '.';
 
-const SushiIcon: FC<IIconProps> = memo(
-  ({ active, activeColor, color, height, width }) => (
-    <svg
-      height={height ?? 16}
-      width={width ?? 16}
-      viewBox="0 0 16.982 16.982"
-      fill="none"
-    >
-      <g transform='translate(0)'>
+const SushiIcon: FC<IIconProps> = ({ height, width }) => (
+  <SVGIcon 
+    height={height ?? 16}
+    width={width ?? 16}
+    viewBox="0 0 16.982 16.982">
+    
+    <g transform='translate(0)'>
         <g id="Strategies_-_logo_-_SUSHI" data-name="Strategies - logo - SUSHI" transform="translate(0.5 0.5)">
           <g id="Group_216" data-name="Group 216" transform="translate(0 0)">
             <g id="Group_203" data-name="Group 203" transform="translate(0 0)">
@@ -26,8 +26,7 @@ const SushiIcon: FC<IIconProps> = memo(
           </g>
         </g>
       </g>
-    </svg>
-  )
-);
+      </SVGIcon>    
+)
 
-export default SushiIcon;
+export default memo(SushiIcon);

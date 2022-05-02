@@ -3363,15 +3363,15 @@ var StyledChip = import_styled_components5.default.div`
         }
 
         > input + label {
-          -webkit-transition: all 500ms ease;
           transition: all 500ms ease;    
           cursor: pointer;    
           display: grid;
           align-items: center;
-              
-          -moz-user-select: -moz-none;
-          -webkit-user-select: none;
-          -ms-user-select: none;
+
+          ::-webkit-transition: all 500ms ease;
+          ::-moz-user-select: -moz-none;
+          ::-webkit-user-select: none;
+          ::-ms-user-select: none;
           user-select: none;
     
           font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "8px"};  
@@ -3393,7 +3393,7 @@ var StyledChip = import_styled_components5.default.div`
         }
         
         > input:checked + label {   
-          -webkit-transition: all 500ms ease;
+          ::-webkit-transition: all 500ms ease;
           transition: all 500ms ease;   
           border-color: ${(styleOverrides == null ? void 0 : styleOverrides.checkedBorderColor) || "#474F5C"};    
           color: ${(styleOverrides == null ? void 0 : styleOverrides.checkedColor) || "white"};   

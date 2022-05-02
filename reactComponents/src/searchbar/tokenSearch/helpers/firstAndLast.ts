@@ -1,6 +1,6 @@
-export const firstAndLast = (str, chars = 8) =>
+export const firstAndLast = (str: string, chars = 8): string =>
   str && str.slice(0, chars) + '...' + str.slice(-chars);
 
-export const capitalizeFirstLetter = (string) => {
-  return string.charAt(0).toUpperCase() + string.slice(1);
+export const capitalizeFirstLetter = (str: string): string => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
 }

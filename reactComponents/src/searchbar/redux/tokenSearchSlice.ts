@@ -72,7 +72,7 @@ export const searchTokenPairs = createAsyncThunk(
   'token/search',
   async (searchString: any, thunkAPI: any) => {
     try {
-      let { networkMap, exchangeMap } = thunkAPI.getState();
+      const { networkMap, exchangeMap } = thunkAPI.getState();
       let processedNetworks;
       let processedExchanges;
       const pairSearchTimestamp = new Date().getTime();
@@ -132,7 +132,7 @@ const initialState: TokenSearchState = {
 
 export const tokenSearchSlice = createSlice({
   extraReducers: (builder) => {
-    builder.addCase(resetSearchOnNewExchange.fulfilled, (state, action) => {
+    builder.addCase(resetSearchOnNewExchange.fulfilled, (state) => {
       state.searchText = '';
       state.suggestions = [];
       state.isLoading = true;
@@ -164,7 +164,7 @@ export const tokenSearchSlice = createSlice({
         state.fetchError = null;
       }
     });
-    builder.addCase(searchTokenPairs.rejected, (state, action) => {
+    builder.addCase(searchTokenPairs.rejected, (state) => {
       state.suggestions = [];
       state.isLoading = false;
       state.fetchError = 'Something went wrong fetching token pair.'; //action.error.message
@@ -215,7 +215,7 @@ export const tokenSearchSlice = createSlice({
           // Removes all manual networks.
           delete state.exchangeMap[exchangeName]
         }
-      };
+      }
       // Object.keys(state.exchangeMap).map(key => delete state.exchangeMap[key]);
     },
     setNetworkMap: (state, action) => {
@@ -237,7 +237,7 @@ export const tokenSearchSlice = createSlice({
           // Removes all manual networks.
           delete state.networkMap[networkName]
         }
-      };
+      }
     }
   },
 });

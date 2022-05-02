@@ -1,4 +1,4 @@
-import React, { useContext, useState, FC, useEffect } from 'react';
+import React, { useContext, useState, FC } from 'react';
 import styled from 'styled-components'
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -131,7 +131,7 @@ const SearchResult: FC<Loading> = (props: Loading) => {
           }  
           {
             !!searchText && !filteredSuggestions.length &&
-            <StyledLoading styleOverrides={customLoading?.styles}>{notFoundTitle}</StyledLoading>
+            <StyledLoading styleOverrides={customLoading}>{notFoundTitle}</StyledLoading>
           }
         </StyledResultContent>
       </StyledResult>        

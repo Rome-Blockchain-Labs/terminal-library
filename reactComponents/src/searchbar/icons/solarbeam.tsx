@@ -1,14 +1,13 @@
 import React, { FC, memo } from 'react';
+import SVGIcon from './abstract';
+
 import { IIconProps } from '.';
 
-const SolarBeamIcon: FC<IIconProps> = memo(
-  ({ active, activeColor, color, height, width }) => (
-    <svg
-      height={height ?? 16}
-      width={width ?? 16}
-      viewBox="0 0 400 400"        
-      fill="none"
-    >      
+const SolarBeamIcon: FC<IIconProps> = ({ height, width }) => (
+  <SVGIcon 
+    height={height ?? 16}
+    width={width ?? 16}
+    viewBox="0 0 400 400">     
     <g transform='translate(0)'>
       <g>      
         <linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="2072.4641" y1="-1546.937" x2="2469.3081" y2="-1546.937" gradientTransform="matrix(-0.7071 -0.7071 -0.7071 0.7071 711.9044 2899.5825)">
@@ -29,9 +28,8 @@ const SolarBeamIcon: FC<IIconProps> = memo(
         c1.3,0.1,2.6,0.1,3.9,0.1c5,0,9.9-0.4,14.7-1.2l58.9,155.7C147,344.2,119.3,330.3,97.6,310.1z M203.8,350.4l-62.2-164.4
         c6-2.8,11.6-6.3,16.7-10.3l140.2,137.9C273,335.7,240,349.5,203.8,350.4z M315.3,296.5L175,158.5c3.6-4.9,6.7-10.1,9.3-15.7
         l166.1,60.5C349.6,238.8,336.5,271.2,315.3,296.5z"/>
-    </g>    
-    </svg>
-  )
-);
+    </g>        
+  </SVGIcon>    
+)
 
-export default SolarBeamIcon;
+export default memo(SolarBeamIcon);

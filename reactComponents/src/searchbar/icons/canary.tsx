@@ -1,16 +1,16 @@
 import React, { FC, memo } from 'react';
+import SVGIcon from './abstract';
+
 import { IIconProps } from '.';
 
-const CanaryIcon: FC<IIconProps> = memo(
-  ({ active, activeColor, color, height, width }) => (
-    <svg
-      height={height ?? 16}
-      width={width ?? 16}
-      viewBox="0 0 584 587"        
-      fill="none"
-    >          
-      <g transform="translate(0)">
-        <path fill="none" d="M0,0"/>
+const CanaryIcon: FC<IIconProps> = ({ height, width }) => (
+  <SVGIcon 
+    height={height ?? 16}
+    width={width ?? 16}
+    viewBox="0 0 584 587">
+    
+    <g transform='translate(0)'>
+      <path fill="none" d="M0,0"/>
         <path fill="none" d="M0,0"/>
         <path fill="none" d="M0,0"/>
         <path fill="none" d="M0,0"/>
@@ -38,9 +38,8 @@ const CanaryIcon: FC<IIconProps> = memo(
         1692 -1098 916 65 1763 743 2087 1672 43 125 127 453 123 482 -2 15 -28 -18
         -90 -114z"/>
         </g>
-      </g>
-    </svg>
-  )
-);
+    </g>
+  </SVGIcon>    
+)
 
-export default CanaryIcon;
+export default memo(CanaryIcon);

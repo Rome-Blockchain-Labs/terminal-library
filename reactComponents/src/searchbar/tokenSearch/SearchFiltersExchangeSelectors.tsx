@@ -7,7 +7,7 @@ import { Chip } from "./Chip"
 import { RootState } from "../redux/store";
 import TokenSearchContext from '../Context/TokenSearch';
 
-export const FilterExchangeAll = () => {
+export const FilterExchangeAll = (): JSX.Element => {
   const dispatch = useDispatch();
   const { exchangeMap, networkMap } = useSelector((state:RootState) => state);
   const exchangeAll = Object.values(omitBy(exchangeMap, b => !b)).length === 0;
@@ -44,7 +44,7 @@ export const FilterExchangeAll = () => {
 };
 
 
-export const FilterExchangeSelectors = () => {
+export const FilterExchangeSelectors = (): JSX.Element => {
   const dispatch = useDispatch();
   const { networkMap, exchangeMap } = useSelector((state:RootState) => state);
   const exchangeNamesActive = exchangeNames(Object.keys(omitBy(networkMap, b => !b)));

@@ -1,16 +1,16 @@
 import React, { FC, memo } from 'react';
+import SVGIcon from './abstract';
+
 import { IIconProps } from '.';
 
-const LydiaFinanceIcon: FC<IIconProps> = memo(
-  ({ active, activeColor, color, height, width }) => (
-    <svg
-      height={height ?? 16}
-      width={width ?? 16}
-      viewBox="0 0 400 400"        
-      fill="none"
-    >      
+const LydiaFinanceIcon: FC<IIconProps> = ({ height, width }) => (
+  <SVGIcon 
+    height={height ?? 16}
+    width={width ?? 16}
+    viewBox="0 0 400 400">
+    
     <g transform='translate(0)'>
-      <path fill="#070931" d="M26.9,147.2c-5.7,7.9-11.4,15.7-17.3,23.9c-0.8-16.7,5.1-31.3,12-45.6c6.9-14.4,16.2-27.2,28.6-37.4
+    <path fill="#070931" d="M26.9,147.2c-5.7,7.9-11.4,15.7-17.3,23.9c-0.8-16.7,5.1-31.3,12-45.6c6.9-14.4,16.2-27.2,28.6-37.4
         c-0.2-0.3-0.4-0.7-0.5-1c-4.5,1.5-9.1,2.7-13.5,4.4c-4.5,1.8-8.8,4.2-14.2,5.8c1.7-3.4,3-7.1,5.3-10.1
         c10.2-13.1,24-21.3,39.1-27.4c14.9-5.9,30-11.6,45-17.3c0.3-0.1,0.6-0.4,1.5-1c-11.1-0.9-20.5,4.2-30.6,4.8
         c-0.2-0.5-0.4-1-0.6-1.5c6.1-3,12-6.5,18.3-8.8c12.1-4.5,24.4-8.7,36.7-12.5c10.2-3.1,20.5-2.3,30.6,1.3c0.9,0.3,1.8,0.5,2.8,0.7
@@ -727,9 +727,8 @@ const LydiaFinanceIcon: FC<IIconProps> = memo(
         C294.2,188.8,294.3,188.9,294.4,189z"/>
       <path fill="#F4B731" d="M338.5,171.3c-0.4-0.1-0.7-0.3-1.1-0.4c0.1-0.1,0.2-0.3,0.2-0.3C337.9,170.8,338.2,171,338.5,171.3
         C338.5,171.2,338.5,171.3,338.5,171.3z"/>
-    </g>    
-    </svg>
-  )
-);
+    </g>
+  </SVGIcon>    
+)
 
-export default LydiaFinanceIcon;
+export default memo(LydiaFinanceIcon);

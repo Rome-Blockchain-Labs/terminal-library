@@ -46,5 +46,6 @@ const moonriverPairs = [
 ]
 export const networkExchangePairs = [...BSCPairs,...AvalanchePairs, ...moonbeamPairs, ...moonriverPairs];
 export const networkNames = uniq(networkExchangePairs.map(pair => pair[0]));
-export const exchangeNames = networkNames => uniq(networkExchangePairs.filter(pair => networkNames.includes(pair[0])).map(pair => pair[1]));
+// eslint-disable-next-line
+export const exchangeNames = (networkNames: Array<string>) => uniq(networkExchangePairs.filter(pair => networkNames.includes(pair[0])).map(pair => pair[1]));
 

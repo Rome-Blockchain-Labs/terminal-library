@@ -1,15 +1,14 @@
 
 import React, { FC, memo } from 'react';
+import SVGIcon from './abstract';
+
 import { IIconProps } from '.';
 
-const SafeSwapIcon: FC<IIconProps> = memo(
-  ({ active, activeColor, color, height, width }) => (
-    <svg
-      height={height ?? 16}
-      width={width ?? 16}
-      viewBox="0 0 400 400"
-      fill="none"
-    >
+const SafeSwapIcon: FC<IIconProps> = ({ height, width }) => (
+  <SVGIcon 
+    height={height ?? 16}
+    width={width ?? 16}
+    viewBox="0 0 400 400">
       <g transform="translate(0)">
         <path fill="#5B3DD7" d="M378.5,237.9v-111c0-16.6-10.8-35.3-25.2-43.6L226,9.8c-14.4-8.3-36-8.3-50.3,0L48.3,83.3
           c-9.4,5.4-14.8,13.9-14.8,23.3s5.4,17.9,14.9,23.3l19.1,11l-3.2,5.6c-1,1.7-0.9,3.9,0.2,5.5c1,1.4,2.5,2.1,4.1,2.1
@@ -28,9 +27,7 @@ const SafeSwapIcon: FC<IIconProps> = memo(
         <polygon fill="#5B3DD7" points="245.3,210.1 267.4,222.8 245.3,209.6 	"/>
         <path fill="#5B3DD7" d="M175.5,203.2v-2l-63.2-36.5c0.9,0.9,1.9,1.7,3,2.4L175.5,203.2z"/>
       </g>
- 
-    </svg>
-  )
-);
+    </SVGIcon>
+)
 
-export default SafeSwapIcon;
+export default memo(SafeSwapIcon);

@@ -1,5 +1,5 @@
-import React, { createContext } from 'react'
-import {RenderProps} from '../../types'
+import { createContext } from 'react'
+import { RenderProps } from '../../types'
 
-const TokenSearchContext = createContext<any>({})
+const TokenSearchContext = createContext<RenderProps>({})
 export default TokenSearchContext

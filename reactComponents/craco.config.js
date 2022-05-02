@@ -1,3 +1,4 @@
+// @typescript-eslint/no-var-requires
 const { addBeforeLoader, loaderByName } = require('@craco/craco');
 // const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 

@@ -3,6 +3,7 @@ import * as React from "react";
 import { render } from "react-dom";
 
 import {SearchBar} from "./searchbar";
+/*
 const customWrapper = {
   backgroundColor: '#474F5C',      
   borderRadius: '4px',    
@@ -229,17 +230,8 @@ const customTokenDetail = {
           fontSize: '10px'
       }
 
-
   }
 }
+*/
 const rootElement = document.getElementById("root");
-render(<SearchBar
-  customWrapper={customWrapper}
-  customSearchInput={customSearchInput}
-  customSearchFilter={customSearchFilter}
-  customLoading={customLoading}
-  customChip={customChip}
-  customAllChip={customAllChip}
-  customResult={customResult}
-  customTokenDetail={customTokenDetail}          
-/>, rootElement);
+render(<SearchBar />, rootElement);

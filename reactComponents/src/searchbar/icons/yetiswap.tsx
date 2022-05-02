@@ -1,14 +1,12 @@
 import React, { FC, memo } from 'react';
-import { IIconProps } from '.';
+import SVGIcon from './abstract';
 
-const YetiSwapIcon: FC<IIconProps> = memo(
-  ({ active, activeColor, color, height, width }) => (
-    <svg
-      height={height ?? 16}
-      width={width ?? 16}
-      viewBox="0 0 400 400"        
-      fill="none"
-    >      
+import { IIconProps } from '.';
+const YetiSwapIcon: FC<IIconProps> = ({ height, width }) => (
+  <SVGIcon 
+    height={height ?? 16}
+    width={width ?? 16}
+    viewBox="0 0 400 400">
     <g transform='translate(0)'>            
       <path fill="#48668C" d="M215.5,275.6c-0.3-0.9-0.6-2.7-0.9-2.7c-2.8,0.2-6-0.1-8.3,1.2c-2,1.1-2.9,4.1-4.8,7c0-7.8,0-14.5,0-21.2
         c0-2.5,5.2-10,7.8-12c1-0.7,1.6-2.2,2-3.4c1.8-6,4.9-12.1,4.7-18.1c-0.1-5.1-4.1-10-6.3-15c-0.6,0.1-1.1,0.2-1.7,0.3
@@ -95,8 +93,8 @@ const YetiSwapIcon: FC<IIconProps> = memo(
       <path fill="#48668C" d="M101.6,210.5c0.4-0.4,0.7-0.8,1.1-1.2c-0.1,0.6-0.3,1.2-0.4,1.8C102.1,210.9,101.9,210.7,101.6,210.5z"/>
       <path fill="#48668C" d="M112.5,283c-0.2,0.2-0.5,0.5-0.7,0.7c0.1-0.4,0.1-0.8,0.2-1.3C112.2,282.6,112.4,282.8,112.5,283z"/>
     </g>    
-    </svg>
-  )
-);
+    </SVGIcon>    
+)
 
-export default YetiSwapIcon;
+export default memo(YetiSwapIcon)
+   

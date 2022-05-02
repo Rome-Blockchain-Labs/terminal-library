@@ -1,14 +1,14 @@
 import React, { FC, memo } from 'react';
+import SVGIcon from './abstract';
+
 import { IIconProps } from '.';
 
-const TraderIcon: FC<IIconProps> = memo(
-  ({ active, activeColor, color, height, width }) => (
-    <svg
-      height={height ?? 16}
-      width={width ?? 16}
-      viewBox="0 0 11 15"        
-      fill="none"
-    >      
+const TraderIcon: FC<IIconProps> = ({ height, width }) => (
+  <SVGIcon 
+    height={height ?? 16}
+    width={width ?? 16}
+    viewBox="0 0 11 15">
+    
     <g transform='translate(0)'>
       <g clipPath="url(#clip0_1021_1562)">
       <path d="M10.6501 10.88C10.6501 10.88 10.7101 10.96 10.7101 11C10.7101 11.39 10.7101 11.78 10.7101 12.17C10.7101 12.24 10.6701 12.3 10.6101 12.34C9.96006 12.72 9.31006 13.1 8.66006 13.47C8.64006 13.48 8.59006 13.47 8.56006 13.47C8.58006 13.41 8.59006 13.36 8.60006 13.3V12.11C8.68006 12.06 8.75006 12.01 8.83006 11.96C9.25006 11.73 9.67006 11.5 10.0801 11.27C10.2701 11.16 10.4501 11.02 10.6401 10.89L10.6501 10.88Z" fill="#7A808A"/>
@@ -32,8 +32,8 @@ const TraderIcon: FC<IIconProps> = memo(
       </clipPath>
       </defs>
     </g>    
-    </svg>
-  )
-);
+    </SVGIcon>    
+)
 
-export default TraderIcon;
+export default memo(TraderIcon);
+

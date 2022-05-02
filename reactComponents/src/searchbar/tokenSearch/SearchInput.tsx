@@ -48,7 +48,7 @@ const StyledResetBtn = styled.button`
   top: 11px;  
 `
 
-const SearchInput = () => {
+const SearchInput = (): JSX.Element => {
   const dispatch = useDispatch();
   const renderProps = useContext(TokenSearchContext);  
   const { customSearchInput } = renderProps;
@@ -78,14 +78,9 @@ const SearchInput = () => {
 
   const handleClick = () => {        
     text.length > 0 && dispatch(setViewResult(true))    
-  }
-
+  }  
   
-  
-  const placeholder = customSearchInput?.placeholder ?  customSearchInput?.placeholder : 'Search pair by symbol, name, contract or token'
-
-  const activeColor = customSearchInput?.icon?.activeColor ? customSearchInput?.icon?.activeColor : '#FF0000'
-  const color  = customSearchInput?.icon?.color ? customSearchInput?.icon?.color : '#7A808A'
+  const placeholder = customSearchInput?.placeholder ?  customSearchInput?.placeholder : 'Search pair by symbol, name, contract or token'  
   const height = customSearchInput?.icon?.height ? customSearchInput?.icon?.height : 14
   const width = customSearchInput?.icon?.width ? customSearchInput?.icon?.width : 14
  
@@ -110,9 +105,7 @@ const SearchInput = () => {
         <ResetIcon />
       </StyledResetBtn>      
       <StyledSearchIconWrapper styleOverrides={customSearchInput?.icon}>       
-        <SearchIcon
-            activeColor={activeColor}
-            color={color}
+        <SearchIcon            
             height={height}
             width={width}
           />          

@@ -1,14 +1,13 @@
 import React, { FC, memo } from 'react';
+import SVGIcon from './abstract';
+
 import { IIconProps } from '.';
 
-const SolarFlareIcon: FC<IIconProps> = memo(
-  ({ active, activeColor, color, height, width }) => (
-    <svg
-      height={height ?? 16}
-      width={width ?? 16}
-      viewBox="0 0 400 400"        
-      fill="none"
-    >      
+const SolarFlareIcon: FC<IIconProps> = ({ height, width }) => (
+  <SVGIcon 
+    height={height ?? 16}
+    width={width ?? 16}
+    viewBox="0 0 400 400">           
     <g transform='translate(0)'>
       <linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="339.4755" y1="339.4754" x2="60.5245" y2="60.5244">
         <stop  offset="0" style={{stopColor: '#FF288B'}}/>
@@ -23,8 +22,6 @@ const SolarFlareIcon: FC<IIconProps> = memo(
         C304.2,64.5,317.4,75.7,328.6,88.7z M109.6,55.9l52.5,89.9l-8.2,8.2l-83-64.7C82.1,76.3,95.1,65,109.6,55.9z M200,370.2
         c-67.5,0-125.9-39.4-153.4-96.5l94.2-40.8l59.2,59.2l58.9-58.9l94.3,40.9C325.6,330.9,267.3,370.2,200,370.2z"/>
     </g>    
-    </svg>
-  )
-);
-
-export default SolarFlareIcon;
+    </SVGIcon>    
+)
+export default memo(SolarFlareIcon);

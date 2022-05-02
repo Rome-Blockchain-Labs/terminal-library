@@ -139,7 +139,7 @@ const SearchDescription: FC<SelectedNetworks> = (props: SelectedNetworks) => {
   )
 }
 
-export const SearchFilters = () => {
+export const SearchFilters = (): JSX.Element => {
   const dispatch = useDispatch();
   const { networkMap, exchangeMap, searchText  } = useSelector((state:RootState) => state);
   const renderProps = useContext(TokenSearchContext);  
@@ -149,8 +149,8 @@ export const SearchFilters = () => {
   const networkCount = Object.values(networkMap).filter(b=>b).length
   const exchangeCount = Object.values(exchangeMap).filter(b=>b).length
   
-  const networkTitle = customSearchFilter?.network?.title || 'Select Network(s)'
-  const exchangeTitle = customSearchFilter?.exchange?.title || 'Select Exchange(s)'
+  const networkTitle = customSearchFilter?.fitler?.network || 'Select Network(s)'
+  const exchangeTitle = customSearchFilter?.fitler?.exchange || 'Select Exchange(s)'
 
   useEffect(() => {    
     (Object.keys(networkMap).length > 0 ||
@@ -161,22 +161,22 @@ export const SearchFilters = () => {
   // RENDERING.
   return (
     <FilterWrapper styleOverrides={customSearchFilter?.wrapper}>
-      <Accordion allowMultipleExpanded={false} allowZeroExpanded>
+      <Accordion allowMultipleExpanded allowZeroExpanded>
         <AccordionItem>
           <AccordionItemHeading>
             <AccordionItemButton>
-              <StyledFilterHeader styleOverrides={customSearchFilter?.network?.header}>
+              <StyledFilterHeader styleOverrides={customSearchFilter?.fitler?.header}>
                 <span>{networkTitle}</span>
                 <FilterNetworkAll />
               </StyledFilterHeader>            
             </AccordionItemButton>
           </AccordionItemHeading>
           <AccordionItemPanel>            
-            <StyledFilterWrapper styleOverrides={customSearchFilter?.network?.wrapper}>
-              <StyledFilterContent styleOverrides={customSearchFilter?.network?.content}>                                         
+            <StyledFilterWrapper styleOverrides={customSearchFilter?.fitler?.wrapper}>
+              <StyledFilterContent styleOverrides={customSearchFilter?.fitler?.content}>                                         
                 <FilterNetworkSelectors />              
               </StyledFilterContent>                                        
-              <StyledDescription styleOverrides={customSearchFilter?.network?.description}>
+              <StyledDescription styleOverrides={customSearchFilter?.fitler?.description}>
                 <SearchDescription 
                   networkCount={networkCount}
                   exchangeCount={exchangeCount}
@@ -189,18 +189,18 @@ export const SearchFilters = () => {
         { exchangesActive && <AccordionItem>
             <AccordionItemHeading>
               <AccordionItemButton>
-                <StyledFilterHeader styleOverrides={customSearchFilter?.exchange?.header}>
+                <StyledFilterHeader styleOverrides={customSearchFilter?.fitler?.header}>
                   <span>{exchangeTitle}</span>
                   <FilterExchangeAll />
                 </StyledFilterHeader>            
               </AccordionItemButton>
             </AccordionItemHeading>
             <AccordionItemPanel>            
-              <StyledFilterWrapper styleOverrides={customSearchFilter?.exchange?.wrapper}>
-                <StyledFilterContent styleOverrides={customSearchFilter?.exchange?.content}>                                         
+              <StyledFilterWrapper styleOverrides={customSearchFilter?.fitler?.wrapper}>
+                <StyledFilterContent styleOverrides={customSearchFilter?.fitler?.content}>                                         
                   <FilterExchangeSelectors />
                 </StyledFilterContent>                                                        
-                <StyledDescription styleOverrides={customSearchFilter?.exchange?.description}>
+                <StyledDescription styleOverrides={customSearchFilter?.fitler?.description}>
                   <SearchDescription 
                     networkCount={networkCount}
                     exchangeCount={exchangeCount}

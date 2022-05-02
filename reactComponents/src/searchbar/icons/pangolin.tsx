@@ -1,14 +1,14 @@
 import React, { FC, memo } from 'react';
+import SVGIcon from './abstract';
+
 import { IIconProps } from '.';
 
-const PangolinIcon: FC<IIconProps> = memo(
-  ({ active, activeColor, color, height, width }) => (
-    <svg
-      height={height ?? 16}
-      width={width ?? 16}
-      viewBox="0 0 14 12"        
-      fill="none"
-    >      
+const PangolinIcon: FC<IIconProps> = ({ height, width }) => (
+  <SVGIcon 
+    height={height ?? 16}
+    width={width ?? 16}
+    viewBox="0 0 14 12">
+    
     <g transform='translate(0)'>
       <g clipPath="url(#clip0_1021_1532)">
         <path d="M10.6201 1.61L7.31006 4.01L9.93006 5.92L13.0401 3.66L11.8501 0H10.0901L10.6101 1.6L10.6201 1.61Z" fill="#7A808A"/>
@@ -25,9 +25,8 @@ const PangolinIcon: FC<IIconProps> = memo(
         <rect width="13.04" height="11.84" fill="white"/>
         </clipPath>
         </defs>
-    </g>    
-    </svg>
-  )
-);
+    </g>
+  </SVGIcon>    
+)
 
-export default PangolinIcon;
+export default memo(PangolinIcon);

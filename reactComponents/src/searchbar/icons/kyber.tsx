@@ -1,14 +1,14 @@
 import React, { FC, memo } from 'react';
+import SVGIcon from './abstract';
+
 import { IIconProps } from '.';
 
-const KyberIcon: FC<IIconProps> = memo(
-  ({ active, activeColor, color, height, width }) => (
-    <svg
-      height={height ?? 16}
-      width={width ?? 16}
-      viewBox="0 0 11 15"        
-      fill="none"
-    >      
+const KyberIcon: FC<IIconProps> = ({ height, width }) => (
+  <SVGIcon 
+    height={height ?? 16}
+    width={width ?? 16}
+    viewBox="0 0 11 15">
+    
     <g transform='translate(0)'>
       <g clipPath="url(#clip0_1021_1517)">
         <path d="M4.53003 7.01998L10.2 10.02C10.34 10.1 10.52 10.06 10.61 9.92998C10.64 9.88998 10.65 9.83998 10.65 9.78998V4.25998C10.65 4.09998 10.51 3.97998 10.36 3.97998C10.3 3.97998 10.25 3.98998 10.2 4.01998L4.53003 7.01998V7.01998Z" fill="#7A808A"/>
@@ -21,10 +21,8 @@ const KyberIcon: FC<IIconProps> = memo(
         <rect width="10.65" height="14.05" fill="white"/>
         </clipPath>
       </defs>
+    </g>
+  </SVGIcon>    
+)
 
-    </g>    
-    </svg>
-  )
-);
-
-export default KyberIcon;
+export default memo(KyberIcon);

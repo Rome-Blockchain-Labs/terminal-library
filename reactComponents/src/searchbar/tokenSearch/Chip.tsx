@@ -13,16 +13,17 @@ const StyledChip = styled.div`
         }
 
         > input + label {
-          -webkit-transition: all 500ms ease;
+          
           transition: all 500ms ease;    
           cursor: pointer;    
           display: grid;
           align-items: center;
-              
-          -moz-user-select: -moz-none;
-          -webkit-user-select: none;
-          -ms-user-select: none;
           user-select: none;
+
+          ::-webkit-transition: all 500ms ease;    
+          ::-moz-user-select: -moz-none;
+          ::-webkit-user-select: none;
+          ::-ms-user-select: none;          
     
           font-size: ${styleOverrides?.fontSize || "8px"};  
           font-weight: ${styleOverrides?.fontWeight || "500"};  
@@ -43,7 +44,7 @@ const StyledChip = styled.div`
         }
         
         > input:checked + label {   
-          -webkit-transition: all 500ms ease;
+          ::-webkit-transition: all 500ms ease;
           transition: all 500ms ease;   
           border-color: ${styleOverrides?.checkedBorderColor || "#474F5C"};    
           color: ${styleOverrides?.checkedColor || "white"};   
@@ -58,7 +59,7 @@ export const Chip: FC<any> = (props) => {
   const { label, checked, onChange, name, value, styleOverrides, grayscaleFilter } = props
   
   const { customChip } = renderProps
-  const customStyles = styleOverrides === undefined ? customChip?.styleOverrides : styleOverrides
+  const customStyles = styleOverrides === undefined ? customChip : styleOverrides
   
   const checkedStatus = checked ? <CheckedIcon /> : <UnCheckedIcon />
 
