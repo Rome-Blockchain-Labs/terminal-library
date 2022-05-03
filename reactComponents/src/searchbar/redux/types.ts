@@ -26,6 +26,8 @@ type TokenPair = {
 export type TokenSearchState = {
   searchText: string;
   suggestions: Array<any>;
+  suggestionRendered: Array<any>;
+  page: number;
   isLoading: boolean;
   fetchError: string | null;
   isSelecting: boolean;

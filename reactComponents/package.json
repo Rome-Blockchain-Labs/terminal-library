@@ -32,6 +32,7 @@
     "react": "^17.0.0",
     "react-accessible-accordion": "^4.0.0",
     "react-dom": "^17.0.0",
+    "react-infinite-scroll-hook": "^4.0.3",
     "react-redux": "^7.2.8",
     "reactstrap": "^9.0.1",
     "styled-components": "^5.3.5",

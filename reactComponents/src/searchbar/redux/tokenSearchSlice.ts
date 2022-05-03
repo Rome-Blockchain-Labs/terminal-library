@@ -5,6 +5,9 @@ import { searchTokensAsync } from "../tokenSearch/helpers/async";
 import { uniq, omitBy } from "lodash"
 import { networkExchangePairs } from '../tokenSearch/helpers/config';
 import { TokenSearchState } from "./types";
+import config from '../config';
+
+const LOAD_LIMIT = Number(config.LOAD_LIMIT || 10)
 
 //todo no need for this to be a thunk
 const setPairSearchTimestamp = createAsyncThunk(
@@ -110,16 +113,23 @@ const initialState: TokenSearchState = {
   selectedPair: undefined,
   serializedTradeEstimator: '',
   suggestions: [],
+  suggestionRendered: [],
+  page: 1,
   exchangeMap: {},
   networkMap: {},
   viewResult: false
 };
 
+const loadMoreItem = (state) => {
+  state.suggestionRendered = state.suggestions.slice(0, state.page * LOAD_LIMIT)
+  state.page += 1
+}
+
 export const tokenSearchSlice = createSlice({
-  extraReducers: (builder) => {     
+  extraReducers: (builder) => {
     builder.addCase(setPairSearchTimestamp.fulfilled, (state, action) => {
       state.pairSearchTimestamp = action.payload;
-    });    
+    });
     builder.addCase(searchTokenPairs.pending, (state) => {
       state.isLoading = true;
       state.fetchError = null;
@@ -127,9 +137,12 @@ export const tokenSearchSlice = createSlice({
     builder.addCase(searchTokenPairs.fulfilled, (state, action) => {
       if (action.payload?.pairSearchTimestamp >= state.pairSearchTimestamp) {
         state.pairSearchTimestamp = action.payload.pairSearchTimestamp;
-        state.suggestions = action.payload.data;
+        const suggestions = action.payload.data
+        suggestions.sort((pair1, pair2) => pair2.volumeUSD - pair1.volumeUSD);
+        state.suggestions = suggestions
         state.isLoading = false;
         state.fetchError = null;
+        loadMoreItem(state)
       }
     });
     builder.addCase(searchTokenPairs.rejected, (state) => {
@@ -141,13 +154,13 @@ export const tokenSearchSlice = createSlice({
   initialState,
   name: 'tokenSearch',
   reducers: {
-    resetSearch: (state) => {      
+    resetSearch: (state) => {
       state.searchText = '';
       state.suggestions = [];
       state.isLoading = false;
       state.exchangeMap = {},
-      state.networkMap = {},
-      state.isSelecting = false;      
+        state.networkMap = {},
+        state.isSelecting = false;
       state.viewResult = false;
     },
     setViewResult: (state, action) => {
@@ -206,22 +219,26 @@ export const tokenSearchSlice = createSlice({
           delete state.networkMap[networkName]
         }
       }
+    },
+    loadMore: (state) => {
+      loadMoreItem(state)
     }
   },
 });
 
-export const { 
-  setSearchText, 
-  startSelecting, 
-  stopSelecting, 
-  toggleSelecting, 
-  setExchangeMap, 
-  setExchangeMapAll, 
-  setNetworkMap, 
+export const {
+  setSearchText,
+  startSelecting,
+  stopSelecting,
+  toggleSelecting,
+  setExchangeMap,
+  setExchangeMapAll,
+  setNetworkMap,
   setNetworkMapAll,
   setViewResult,
-  resetSearch
-  } =
+  resetSearch,
+  loadMore
+} =
   tokenSearchSlice.actions;
 
-  export default tokenSearchSlice.reducer;
+export default tokenSearchSlice.reducer;
