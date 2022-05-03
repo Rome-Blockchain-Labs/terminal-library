@@ -17,232 +17,232 @@ export {
 };
 
 type CustomWrapperType = {
-  backgroundColor: string | undefined,
-  borderRadius: string | undefined,    
-  border: string | undefined,
-  button: {
-      borderColor: string | undefined,
-      backColor: string | undefined,
-      color: string | undefined,
-      borderRadius: string | undefined,
-      fontSize: string | undefined,
-      padding: string | undefined,
-      hoverBackColor: string | undefined
-  } | undefined
+  backgroundColor?: string,
+  borderRadius?: string,    
+  border?: string,
+  button?: {
+      borderColor?: string,
+      backColor?: string,
+      color?: string,
+      borderRadius?: string,
+      fontSize?: string,
+      padding?: string,
+      hoverBackColor?: string
+  }
 }
 
 type CustomSerchInputType = {
-  input: {
-      width: string | undefined,
-      height: string | undefined,
-      border: string | undefined,
-      color: string | undefined,
-      display: string | undefined,
-      borderRadius: string | undefined,
-      background: string | undefined,
-      padding: string | undefined,
-      fontSize: string | undefined,
-      fontFamily: string | undefined
-  } | undefined,
+  input?: {
+      width?: string,
+      height?: string,
+      border?: string,
+      color?: string,
+      display?: string,
+      borderRadius?: string,
+      background?: string,
+      padding?: string,
+      fontSize?: string,
+      fontFamily?: string
+  },
 
-  icon: {
-      right: string | undefined,
-      top: string | undefined,
-      height: number | undefined,
-      width: number | undefined,
-      color: string | undefined,
-      activeColor: string | undefined
-  } | undefined,
+  icon?: {
+      right?: string,
+      top?: string,
+      height?: number,
+      width?: number,
+      color?: string,
+      activeColor?: string
+  },
 
-  placeholder : string | undefined
+  placeholder ?: string
 }
 
 type CustomSearchFilterType = {  
-    wrapper: {
-        backgroundColor: string | undefined,
-        borderRadius: string | undefined,
-        toggleColor: string | undefined,
-        toggleHeight: string | undefined,
-        toggleWidth: string | undefined,
-        toggleMarginRight: string | undefined,    
-        toggleLeft: string | undefined,    
-        toggleTop: string | undefined,    
-        toggleBorderBottom: string | undefined, 
-        toggleBorderRight: string | undefined, 
-        contentBorder: string | undefined,        
-        contentBorderRadius: string | undefined,
-        margin: string | undefined
-    } | undefined,
+    wrapper?: {
+        backgroundColor?: string,
+        borderRadius?: string,
+        toggleColor?: string,
+        toggleHeight?: string,
+        toggleWidth?: string,
+        toggleMarginRight?: string,    
+        toggleLeft?: string,    
+        toggleTop?: string,    
+        toggleBorderBottom?: string, 
+        toggleBorderRight?: string, 
+        contentBorder?: string,        
+        contentBorderRadius?: string,
+        margin?: string
+    },
 
-    fitler: {
-        network: string | undefined,
-        exchange: string | undefined,
-        header: {
-            display: string | undefined,
-            justifyContent: string | undefined,
-            alignItems: string | undefined,
-            width: string | undefined,
-            border: string | undefined,
-            backgroundColor: string | undefined,
-            color: string | undefined,            
-            padding: string | undefined,
-            textAlign: string | undefined,
-            margin: string | undefined,
-            borderRadius: string | undefined,
-            fontSize: string | undefined,
-            fontWeight: string | undefined,     
-            hoverColor: string | undefined
-        } | undefined,
-        wrapper: {
-            justifyContent: string | undefined,
-            alignItems: string | undefined,
-            padding: string | undefined,
-            backgroundColor: string | undefined,
-            borderRadius: string | undefined
-        } | undefined,
-        content: {
-            justifyContent: string | undefined,
-            alignItems: string | undefined,
-            padding:  string | undefined
-        } | undefined,
-        description: {
-            textAlign: string | undefined,
-            fontSize: string | undefined,
-            fontWeight: string | undefined,
-            padding: string | undefined,
-            backgroundColor: string | undefined,
-            color: string | undefined
-        } | undefined
+    fitler?: {
+        network?: string,
+        exchange?: string,
+        header?: {
+            display?: string,
+            justifyContent?: string,
+            alignItems?: string,
+            width?: string,
+            border?: string,
+            backgroundColor?: string,
+            color?: string,            
+            padding?: string,
+            textAlign?: string,
+            margin?: string,
+            borderRadius?: string,
+            fontSize?: string,
+            fontWeight?: string,     
+            hoverColor?: string
+        },
+        wrapper?: {
+            justifyContent?: string,
+            alignItems?: string,
+            padding?: string,
+            backgroundColor?: string,
+            borderRadius?: string
+        },
+        content?: {
+            justifyContent?: string,
+            alignItems?: string,
+            padding?:  string
+        },
+        description?: {
+            textAlign?: string,
+            fontSize?: string,
+            fontWeight?: string,
+            padding?: string,
+            backgroundColor?: string,
+            color?: string
+        }
     }
 }
 
 type CustomResultType = {        
-  title: {
-      color: string | undefined,
-      fontSize: string | undefined,      
-      padding: string | undefined,
-      margin: string | undefined,   
-      fontSize2: string | undefined,
-  } | undefined,
-  content: {
-      padding: string | undefined,
-      background: string | undefined,
-      borderRadius: string | undefined,    
-      width: string | undefined,
-      height: string | undefined,
-      border: string | undefined,   
-      color: string | undefined,
-      display: string | undefined,   
-      borderColor: string | undefined,  
-      borderStyle: string | undefined,  
-      borderWidth: string | undefined,  
-      fontSize: string | undefined,  
-      fontFamily: string | undefined
-  } | undefined
+  title?: {
+      color?: string,
+      fontSize?: string,      
+      padding?: string,
+      margin?: string,   
+      fontSize2?: string,
+  },
+  content?: {
+      padding?: string,
+      background?: string,
+      borderRadius?: string,    
+      width?: string,
+      height?: string,
+      border?: string,   
+      color?: string,
+      display?: string,   
+      borderColor?: string,  
+      borderStyle?: string,  
+      borderWidth?: string,  
+      fontSize?: string,  
+      fontFamily?: string
+  }
 }
 
 type CustomLoadingType ={
-  loadingTitle: string | undefined,
-  notFoundTitle: string | undefined,
-  color: string | undefined,
-  fontSize: string | undefined
+  loadingTitle?: string,
+  notFoundTitle?: string,
+  color?: string,
+  fontSize?: string
 }
 
 type CustomChipType = {
-  fontSize: string | undefined,
-  fontWeight: string | undefined,
-  borderRadius: string | undefined,
-  backgroundColor: string | undefined,
-  border: string | undefined, 
-  padding: string | undefined, 
-  margin: string | undefined, 
-  defaultColor: string | undefined, 
-  width: string | undefined, 
-  height: string | undefined, 
-  textAlign: string | undefined,
-  textTransform: string | undefined, 
-  gridTemplateColumns: string | undefined,
-  justifySelf: string | undefined,     
-  checkedBorderColor: string | undefined,  
-  checkedColor: string | undefined, 
-  checkedBackgroundColor: string | undefined
+  fontSize?: string,
+  fontWeight?: string,
+  borderRadius?: string,
+  backgroundColor?: string,
+  border?: string, 
+  padding?: string, 
+  margin?: string, 
+  defaultColor?: string, 
+  width?: string, 
+  height?: string, 
+  textAlign?: string,
+  textTransform?: string, 
+  gridTemplateColumns?: string,
+  justifySelf?: string,     
+  checkedBorderColor?: string,  
+  checkedColor?: string, 
+  checkedBackgroundColor?: string
 }
 
 type CustomAllChipType = {
-  fontSize: string | undefined,
-  fontWeight: string | undefined,
-  borderRadius: string | undefined,
-  backgroundColor: string | undefined,
-  border: string | undefined,
-  padding: string | undefined,
-  margin: string | undefined,
-  defaultColor: string | undefined,
-  width: string | undefined,
-  height: string | undefined,
-  textAlign: string | undefined,
-  textTransform: string | undefined,
-  gridTemplateColumns:  string | undefined,
-  justifySelf: string | undefined
+  fontSize?: string,
+  fontWeight?: string,
+  borderRadius?: string,
+  backgroundColor?: string,
+  border?: string,
+  padding?: string,
+  margin?: string,
+  defaultColor?: string,
+  width?: string,
+  height?: string,
+  textAlign?: string,
+  textTransform?: string,
+  gridTemplateColumns?:  string,
+  justifySelf?: string
 }
 
 type CustomTokenDetailType = {
-  list: {
-      container: {
-          display: string | undefined,
-          alignItems: string | undefined,
-          padding: string | undefined,
-          background: string | undefined,
-          borderBottom: string | undefined,
-          gridTemplateColumns: string | undefined
-      } | undefined,
+  list?: {
+      container?: {
+          display?: string,
+          alignItems?: string,
+          padding?: string,
+          background?: string,
+          borderBottom?: string,
+          gridTemplateColumns?: string
+      },
 
-      token: {
-          color: string | undefined,
-          fontSize: string | undefined,
-          fontWeight: string | undefined,
-          padding: string | undefined,
-      } | undefined,
+      token?: {
+          color?: string,
+          fontSize?: string,
+          fontWeight?: string,
+          padding?: string,
+      },
 
-      pair: {
-          color: string | undefined,
-          fontSize: string | undefined
-      } | undefined,
+      pair?: {
+          color?: string,
+          fontSize?: string
+      },
 
-      detail: {
-          padding: string | undefined
-      } | undefined
-  } | undefined,
-  details: {
-      content: {
-          display: string | undefined,
-          alignItems: string | undefined,
-          padding: string | undefined,
-          margin: string | undefined,
-          background: string | undefined,
-          borderBottom: string | undefined,
-          borderRadius: string | undefined,
-          fontSize: string | undefined,
-          gridTemplateColumns: string | undefined
-      } | undefined,
+      detail?: {
+          padding?: string
+      }
+  },
+  details?: {
+      content?: {
+          display?: string,
+          alignItems?: string,
+          padding?: string,
+          margin?: string,
+          background?: string,
+          borderBottom?: string,
+          borderRadius?: string,
+          fontSize?: string,
+          gridTemplateColumns?: string
+      },
 
-      token: {
-          fontSize: string | undefined,
-          fontWeight: string | undefined
-      } | undefined,
+      token?: {
+          fontSize?: string,
+          fontWeight?: string
+      },
 
-      address: {
-          fontSize: string | undefined
-      } | undefined,
+      address?: {
+          fontSize?: string
+      },
 
-      detail: {
-          fontSize: string | undefined
-      } | undefined
-  } | undefined
+      detail?: {
+          fontSize?: string
+      }
+  }
 }
 
 type ActionComponentType = {
-  index: number,
-  component: FC
+  index?: number,
+  component?: FC
 }
  
 export type RenderProps = {

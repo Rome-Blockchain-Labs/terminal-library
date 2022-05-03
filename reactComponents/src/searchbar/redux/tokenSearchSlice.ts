@@ -6,28 +6,13 @@ import { uniq, omitBy } from "lodash"
 import { networkExchangePairs } from '../tokenSearch/helpers/config';
 import { TokenSearchState } from "./types";
 
-export const setPair = createAsyncThunk(
-  'token/setPair',
-  async ({ selectedPair }: any) => {
-    return selectedPair;
-  }
-);
-
-export const resetSearchOnNewExchange = createAsyncThunk(
-  'token/searchReset',
-  async (thunkAPI: any) => {
-    thunkAPI.dispatch(searchTokenPairs(''));
-  }
-);
-
 //todo no need for this to be a thunk
 const setPairSearchTimestamp = createAsyncThunk(
   'token/saveTime',
-  async (timestamp: any) => {
+  async (timestamp: number) => {
     return timestamp;
   }
 );
-
 
 // Function that handles the "All" values of both the network and the exchange.
 // Consider that "no value" equates "All".
@@ -131,27 +116,10 @@ const initialState: TokenSearchState = {
 };
 
 export const tokenSearchSlice = createSlice({
-  extraReducers: (builder) => {
-    builder.addCase(resetSearchOnNewExchange.fulfilled, (state) => {
-      state.searchText = '';
-      state.suggestions = [];
-      state.isLoading = true;
-      state.fetchError = null;
-      state.isSelecting = false;
-      state.selectedPair = undefined;
-      state.viewResult = true;
-      // don't update pairSearchTimestamp
-      state.serializedTradeEstimator = '';
-    });
+  extraReducers: (builder) => {     
     builder.addCase(setPairSearchTimestamp.fulfilled, (state, action) => {
       state.pairSearchTimestamp = action.payload;
-    });
-    builder.addCase(setPair.fulfilled, (state, action) => {
-      //pending/rejected not needed as its not really async
-      state.searchText = '';
-      state.isSelecting = false;
-      state.selectedPair = action.payload;
-    });
+    });    
     builder.addCase(searchTokenPairs.pending, (state) => {
       state.isLoading = true;
       state.fetchError = null;

@@ -1,4 +1,4 @@
-import React, { FC, memo } from 'react';
+import React, { FC } from 'react';
 import SVGIcon from './abstract';
 
 import { IIconProps } from '.';
@@ -25,4 +25,4 @@ const KyberIcon: FC<IIconProps> = ({ height, width }) => (
   </SVGIcon>    
 )
 
-export default memo(KyberIcon);
+export default KyberIcon;

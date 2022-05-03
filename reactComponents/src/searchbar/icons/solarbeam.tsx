@@ -1,4 +1,4 @@
-import React, { FC, memo } from 'react';
+import React, { FC } from 'react';
 import SVGIcon from './abstract';
 
 import { IIconProps } from '.';
@@ -32,4 +32,4 @@ const SolarBeamIcon: FC<IIconProps> = ({ height, width }) => (
   </SVGIcon>    
 )
 
-export default memo(SolarBeamIcon);
+export default SolarBeamIcon;

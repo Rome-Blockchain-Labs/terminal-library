@@ -1,4 +1,4 @@
-import React, { FC, memo } from 'react';
+import React, { FC } from 'react';
 import SVGIcon from './abstract';
 
 import { IIconProps } from '.';
@@ -15,4 +15,4 @@ const UpIcon: FC<IIconProps> = ({ height, width }) => (
 )
 
 
-export default memo(UpIcon);
+export default UpIcon

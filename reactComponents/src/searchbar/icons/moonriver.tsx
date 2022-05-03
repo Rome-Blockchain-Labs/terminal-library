@@ -1,4 +1,4 @@
-import React, { FC, memo } from 'react';
+import React, { FC } from 'react';
 import SVGIcon from './abstract';
 
 import { IIconProps } from '.';
@@ -46,4 +46,4 @@ const MoonRiverIcon: FC<IIconProps> = ({ height, width }) => (
 	</SVGIcon>
 )
 
-export default memo(MoonRiverIcon);
+export default MoonRiverIcon;

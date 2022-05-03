@@ -188,13 +188,13 @@ const StyledAction = styled.div`
 `
 
 type ActionType = {
-  component: FC,
-  detail: any
+  component?: FC<any>,
+  detail?: any
 }
 
 const Action = (props: ActionType) => {
   const { component, detail } = props
-  const Component: FC<any> = component
+  const Component: any  = component
   return (
     <StyledAction>
       <Component detail={detail}/>

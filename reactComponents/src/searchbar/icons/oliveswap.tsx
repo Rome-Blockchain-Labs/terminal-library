@@ -1,4 +1,4 @@
-import React, { FC, memo } from 'react';
+import React, { FC } from 'react';
 import SVGIcon from './abstract';
 
 import { IIconProps } from '.';
@@ -20,4 +20,4 @@ const OliveSwapIcon: FC<IIconProps> = ({ height, width }) => (
   </SVGIcon>    
 )
 
-export default memo(OliveSwapIcon);
+export default OliveSwapIcon

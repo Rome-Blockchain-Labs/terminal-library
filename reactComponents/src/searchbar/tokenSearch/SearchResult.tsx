@@ -1,4 +1,4 @@
-import React, { useContext, useState, FC } from 'react';
+import React, { useContext, useState, FC, useEffect } from 'react';
 import styled from 'styled-components'
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -88,6 +88,9 @@ const SearchResult: FC<Loading> = (props: Loading) => {
     (state:RootState) => state
   );
   const [currentIndex, setCurrentIndex] = useState(-1)
+  useEffect(() => {
+    currentIndex && console.log(currentIndex, '>>>>>>>>>>>>>>>>')
+  }, [currentIndex])
   const filteredSuggestions = suggestions
     .slice()
     .sort((pair1, pair2) => pair2.volumeUSD - pair1.volumeUSD);

@@ -1,4 +1,4 @@
-import React, { memo, FC } from 'react';
+import React, { FC } from 'react';
 import { IIconProps } from '.';
 
 const SVGIcon: FC<IIconProps> = ({children, width, height, viewBox}) => {
@@ -14,4 +14,4 @@ const SVGIcon: FC<IIconProps> = ({children, width, height, viewBox}) => {
   )
 }
 
-export default memo(SVGIcon)
+export default SVGIcon
