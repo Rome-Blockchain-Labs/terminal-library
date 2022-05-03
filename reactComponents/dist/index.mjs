@@ -192,12 +192,19 @@ var searchTokensAsync = async (searchString, searchNetworks, searchExchanges) =>
 
 // src/searchbar/redux/tokenSearchSlice.ts
 import { uniq as uniq2, omitBy } from "lodash";
-var setPair = createAsyncThunk("token/setPair", async ({ selectedPair }) => {
-  return selectedPair;
-});
-var resetSearchOnNewExchange = createAsyncThunk("token/searchReset", async (thunkAPI) => {
-  thunkAPI.dispatch(searchTokenPairs(""));
-});
+
+// src/searchbar/config.tsx
+var _a, _b, _c, _d;
+var config_default = {
+  SEARCH_INPUT_LENGTH_MINIMUM: (_a = process.env.REACT_APP_SEARCH_INPUT_LENGTH_MINIMUM) != null ? _a : 3,
+  SEARCH_ASYNC_DELAY: (_b = process.env.REACT_APP_SEARCH_ASYNC_DELAY) != null ? _b : 300,
+  SEARCH_ASYNC_DATASET_LENGTH_MAXIMUM: (_c = process.env.REACT_APP_SEARCH_ASYNC_DATASET_LENGTH_MAXIMUM) != null ? _c : 500,
+  IS_ENV_PRODUCTION: process.env.REACT_APP_ROME_ENV === "production" ? true : false,
+  LOAD_LIMIT: (_d = process.env.REACT_APP_LOAD_LIMIT) != null ? _d : 10
+};
+
+// src/searchbar/redux/tokenSearchSlice.ts
+var LOAD_LIMIT = Number(config_default.LOAD_LIMIT || 10);
 var setPairSearchTimestamp = createAsyncThunk("token/saveTime", async (timestamp) => {
   return timestamp;
 });
@@ -219,7 +226,7 @@ var valueCleaner = (networkMap, exchangeMap) => {
 };
 var searchTokenPairs = createAsyncThunk("token/search", async (searchString, thunkAPI) => {
   try {
-    let { networkMap, exchangeMap } = thunkAPI.getState();
+    const { networkMap, exchangeMap } = thunkAPI.getState();
     let processedNetworks;
     let processedExchanges;
     const pairSearchTimestamp = new Date().getTime();
@@ -245,29 +252,20 @@ var initialState = {
   selectedPair: void 0,
   serializedTradeEstimator: "",
   suggestions: [],
+  suggestionRendered: [],
+  page: 1,
   exchangeMap: {},
   networkMap: {},
   viewResult: false
 };
+var loadMoreItem = (state) => {
+  state.suggestionRendered = state.suggestions.slice(0, state.page * LOAD_LIMIT);
+  state.page += 1;
+};
 var tokenSearchSlice = createSlice({
   extraReducers: (builder) => {
-    builder.addCase(resetSearchOnNewExchange.fulfilled, (state, action) => {
-      state.searchText = "";
-      state.suggestions = [];
-      state.isLoading = true;
-      state.fetchError = null;
-      state.isSelecting = false;
-      state.selectedPair = void 0;
-      state.viewResult = true;
-      state.serializedTradeEstimator = "";
-    });
     builder.addCase(setPairSearchTimestamp.fulfilled, (state, action) => {
       state.pairSearchTimestamp = action.payload;
-    });
-    builder.addCase(setPair.fulfilled, (state, action) => {
-      state.searchText = "";
-      state.isSelecting = false;
-      state.selectedPair = action.payload;
     });
     builder.addCase(searchTokenPairs.pending, (state) => {
       state.isLoading = true;
@@ -277,12 +275,15 @@ var tokenSearchSlice = createSlice({
       var _a2;
       if (((_a2 = action.payload) == null ? void 0 : _a2.pairSearchTimestamp) >= state.pairSearchTimestamp) {
         state.pairSearchTimestamp = action.payload.pairSearchTimestamp;
-        state.suggestions = action.payload.data;
+        const suggestions = action.payload.data;
+        suggestions.sort((pair1, pair2) => pair2.volumeUSD - pair1.volumeUSD);
+        state.suggestions = suggestions;
         state.isLoading = false;
         state.fetchError = null;
+        loadMoreItem(state);
       }
     });
-    builder.addCase(searchTokenPairs.rejected, (state, action) => {
+    builder.addCase(searchTokenPairs.rejected, (state) => {
       state.suggestions = [];
       state.isLoading = false;
       state.fetchError = "Something went wrong fetching token pair.";
@@ -325,7 +326,6 @@ var tokenSearchSlice = createSlice({
           delete state.exchangeMap[exchangeName];
         }
       }
-      ;
     },
     setNetworkMap: (state, action) => {
       state.networkMap[action.payload.networkName] = action.payload.checked;
@@ -339,7 +339,9 @@ var tokenSearchSlice = createSlice({
           delete state.networkMap[networkName];
         }
       }
-      ;
+    },
+    loadMore: (state) => {
+      loadMoreItem(state);
     }
   }
 });
@@ -353,7 +355,8 @@ var {
   setNetworkMap,
   setNetworkMapAll,
   setViewResult,
-  resetSearch
+  resetSearch,
+  loadMore
 } = tokenSearchSlice.actions;
 var tokenSearchSlice_default = tokenSearchSlice.reducer;
 
@@ -368,60 +371,67 @@ var store = configureStore({
 });
 
 // src/searchbar/tokenSearch/index.tsx
-import React45, { useEffect as useEffect4, useRef } from "react";
+import React45, { useEffect as useEffect3, useRef } from "react";
 import { useDispatch as useDispatch6, useSelector as useSelector6 } from "react-redux";
-import styled7 from "styled-components";
+import styled6 from "styled-components";
 
 // src/searchbar/tokenSearch/SearchInput.tsx
 import React4, { useEffect, useCallback, useContext, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import styled2 from "styled-components";
+import styled from "styled-components";
 
 // src/searchbar/icons/search.tsx
-import styled from "styled-components";
-import React, { memo } from "react";
-var StyledSVG = styled.svg`
-  '&:hover': {     
-      ${({ hoverColor }) => `stroke: ${hoverColor};`}     
-  }
-`;
-var SearchIcon = memo(({ active, activeColor, color, height, width }) => /* @__PURE__ */ React.createElement(StyledSVG, {
+import React2 from "react";
+
+// src/searchbar/icons/abstract.tsx
+import React from "react";
+var SVGIcon = ({ children, width, height, viewBox }) => {
+  return /* @__PURE__ */ React.createElement("svg", {
+    height: height != null ? height : 16,
+    width: width != null ? width : 16,
+    viewBox,
+    fill: "none"
+  }, children);
+};
+var abstract_default = SVGIcon;
+
+// src/searchbar/icons/search.tsx
+var SearchIcon = ({ height, width }) => /* @__PURE__ */ React2.createElement(abstract_default, {
   height: height != null ? height : 18,
-  hoverColor: activeColor,
-  viewBox: "0 0 18 18",
   width: width != null ? width : 18,
-  xmlns: "http://www.w3.org/2000/svg"
-}, /* @__PURE__ */ React.createElement("circle", {
+  viewBox: "0 0 18 18"
+}, /* @__PURE__ */ React2.createElement("g", {
+  transform: "translate(0)"
+}, /* @__PURE__ */ React2.createElement("circle", {
   cx: "7.4",
   cy: "7.4",
   r: "6.4",
-  stroke: active ? activeColor : color
-}), /* @__PURE__ */ React.createElement("path", {
+  stroke: "#7A808A"
+}), /* @__PURE__ */ React2.createElement("path", {
   d: "M7.39995 4.20001C6.97972 4.20001 6.56361 4.28278 6.17536 4.4436C5.78712 4.60441 5.43436 4.84012 5.13721 5.13727C4.84006 5.43442 4.60435 5.78718 4.44354 6.17543C4.28272 6.56367 4.19995 6.97978 4.19995 7.40001",
   "data-name": "Search icon",
-  stroke: active ? activeColor : color,
-  id: "Search_icon"
-}), /* @__PURE__ */ React.createElement("path", {
+  id: "Search_icon",
+  stroke: "#7A808A"
+}), /* @__PURE__ */ React2.createElement("path", {
   d: "M17 17L13.8 13.8",
-  stroke: active ? activeColor : color
+  stroke: "#7A808A"
 })));
 var search_default = SearchIcon;
 
 // src/searchbar/icons/reset.tsx
-import React2, { memo as memo2 } from "react";
-var ResetIcon = memo2(({ active, activeColor, color, height, width }) => /* @__PURE__ */ React2.createElement("svg", {
+import React3 from "react";
+var ResetIcon = ({ height, width }) => /* @__PURE__ */ React3.createElement(abstract_default, {
   height: height != null ? height : 9,
   width: width != null ? width : 9,
-  viewBox: "0 0 9 9",
-  fill: "none"
-}, /* @__PURE__ */ React2.createElement("g", {
+  viewBox: "0 0 9 9"
+}, /* @__PURE__ */ React3.createElement("g", {
   transform: "translate(0)"
-}, /* @__PURE__ */ React2.createElement("path", {
+}, /* @__PURE__ */ React3.createElement("path", {
   d: "M1 4.05747C1.25047 2.1328 3.01695 0.779376 4.94163 1.02985C6.8663 1.28032 8.22412 3.0468 7.96925 4.97147C7.71878 6.89615 5.9523 8.25397 4.02763 7.9991C2.76648 7.83212 1.68989 6.99722 1.21971 5.81517M1 8.01228V5.81517H3.19712",
   stroke: "#B4BBC7",
   strokeLinecap: "round",
   strokeLinejoin: "round"
-}))));
+})));
 var reset_default = ResetIcon;
 
 // src/searchbar/tokenSearch/SearchInput.tsx
@@ -432,17 +442,8 @@ import { createContext } from "react";
 var TokenSearchContext = createContext({});
 var TokenSearch_default = TokenSearchContext;
 
-// src/searchbar/config.tsx
-var _a, _b, _c;
-var config_default = {
-  SEARCH_INPUT_LENGTH_MINIMUM: (_a = process.env.REACT_APP_SEARCH_INPUT_LENGTH_MINIMUM) != null ? _a : 3,
-  SEARCH_ASYNC_DELAY: (_b = process.env.REACT_APP_SEARCH_ASYNC_DELAY) != null ? _b : 300,
-  SEARCH_ASYNC_DATASET_LENGTH_MAXIMUM: (_c = process.env.REACT_APP_SEARCH_ASYNC_DATASET_LENGTH_MAXIMUM) != null ? _c : 500,
-  IS_ENV_PRODUCTION: process.env.REACT_APP_ROME_ENV === "production" ? true : false
-};
-
 // src/searchbar/tokenSearch/SearchInput.tsx
-var StyledInput = styled2.input`
+var StyledInput = styled.input`
   ${({ styleOverrides }) => `    
     margin-left: auto;
     margin-right: auto;
@@ -460,7 +461,7 @@ var StyledInput = styled2.input`
     font-family: ${(styleOverrides == null ? void 0 : styleOverrides.fontFamily) || "'Fira Code', monospace"};
   `}  
 `;
-var StyledSearchIconWrapper = styled2.div`    
+var StyledSearchIconWrapper = styled.div`    
   ${({ styleOverrides }) => `
     cursor: pointer;
     float: right;
@@ -469,16 +470,16 @@ var StyledSearchIconWrapper = styled2.div`
     top: ${(styleOverrides == null ? void 0 : styleOverrides.top) || "12px"};        
   `}    
 `;
-var StyledWrapper = styled2.div`
+var StyledWrapper = styled.div`
   position: relative;
 `;
-var StyledResetBtn = styled2.button`
+var StyledResetBtn = styled.button`
   position: absolute;
   right: 40px;
   top: 11px;  
 `;
 var SearchInput = () => {
-  var _a2, _b2, _c2, _d, _e, _f, _g, _h;
+  var _a2, _b2, _c2, _d2;
   const dispatch = useDispatch();
   const renderProps = useContext(TokenSearch_default);
   const { customSearchInput } = renderProps;
@@ -501,10 +502,8 @@ var SearchInput = () => {
     text.length > 0 && dispatch(setViewResult(true));
   };
   const placeholder = (customSearchInput == null ? void 0 : customSearchInput.placeholder) ? customSearchInput == null ? void 0 : customSearchInput.placeholder : "Search pair by symbol, name, contract or token";
-  const activeColor = ((_a2 = customSearchInput == null ? void 0 : customSearchInput.icon) == null ? void 0 : _a2.activeColor) ? (_b2 = customSearchInput == null ? void 0 : customSearchInput.icon) == null ? void 0 : _b2.activeColor : "#FF0000";
-  const color = ((_c2 = customSearchInput == null ? void 0 : customSearchInput.icon) == null ? void 0 : _c2.color) ? (_d = customSearchInput == null ? void 0 : customSearchInput.icon) == null ? void 0 : _d.color : "#7A808A";
-  const height = ((_e = customSearchInput == null ? void 0 : customSearchInput.icon) == null ? void 0 : _e.height) ? (_f = customSearchInput == null ? void 0 : customSearchInput.icon) == null ? void 0 : _f.height : 14;
-  const width = ((_g = customSearchInput == null ? void 0 : customSearchInput.icon) == null ? void 0 : _g.width) ? (_h = customSearchInput == null ? void 0 : customSearchInput.icon) == null ? void 0 : _h.width : 14;
+  const height = ((_a2 = customSearchInput == null ? void 0 : customSearchInput.icon) == null ? void 0 : _a2.height) ? (_b2 = customSearchInput == null ? void 0 : customSearchInput.icon) == null ? void 0 : _b2.height : 14;
+  const width = ((_c2 = customSearchInput == null ? void 0 : customSearchInput.icon) == null ? void 0 : _c2.width) ? (_d2 = customSearchInput == null ? void 0 : customSearchInput.icon) == null ? void 0 : _d2.width : 14;
   const handleReset = () => {
     setText("");
     dispatch(resetSearch());
@@ -523,8 +522,6 @@ var SearchInput = () => {
   }, /* @__PURE__ */ React4.createElement("span", null, "Reset Search"), /* @__PURE__ */ React4.createElement(reset_default, null)), /* @__PURE__ */ React4.createElement(StyledSearchIconWrapper, {
     styleOverrides: customSearchInput == null ? void 0 : customSearchInput.icon
   }, /* @__PURE__ */ React4.createElement(search_default, {
-    activeColor,
-    color,
     height,
     width
   })));
@@ -532,17 +529,17 @@ var SearchInput = () => {
 var SearchInput_default = SearchInput;
 
 // src/searchbar/tokenSearch/SearchResult.tsx
-import React39, { useContext as useContext3, useState as useState2 } from "react";
-import styled4 from "styled-components";
+import React39, { useContext as useContext3, useState as useState2, useMemo } from "react";
+import useInfiniteScroll from "react-infinite-scroll-hook";
+import styled3 from "styled-components";
 import { useSelector as useSelector2, useDispatch as useDispatch2 } from "react-redux";
 
 // src/searchbar/icons/unchecked.tsx
-import React5, { memo as memo3 } from "react";
-var UnCheckedIcon = memo3(({ active, activeColor, color, height, width }) => /* @__PURE__ */ React5.createElement("svg", {
+import React5 from "react";
+var UnCheckedIcon = ({ height, width }) => /* @__PURE__ */ React5.createElement(abstract_default, {
   height: height != null ? height : 8,
   width: width != null ? width : 8,
-  viewBox: "0 0 8 8",
-  fill: "none"
+  viewBox: "0 0 8 8"
 }, /* @__PURE__ */ React5.createElement("g", {
   transform: "translate(0)"
 }, /* @__PURE__ */ React5.createElement("g", {
@@ -563,38 +560,36 @@ var UnCheckedIcon = memo3(({ active, activeColor, color, height, width }) => /* 
   width: "7.67",
   height: "7.67",
   fill: "white"
-}))))));
+})))));
 var unchecked_default = UnCheckedIcon;
 
 // src/searchbar/tokenSearch/ResultDetail.tsx
 import React38, { useContext as useContext2 } from "react";
-import styled3 from "styled-components";
+import styled2 from "styled-components";
 
 // src/searchbar/icons/default.tsx
-import React6, { memo as memo4 } from "react";
-var DefaultIcon = memo4(({ active, activeColor, color, height, width }) => /* @__PURE__ */ React6.createElement("svg", {
+import React6 from "react";
+var DefaultIcon = ({ height, width }) => /* @__PURE__ */ React6.createElement(abstract_default, {
   height: height != null ? height : 16,
   width: width != null ? width : 16,
-  viewBox: "0 0 16 16",
-  fill: "none"
+  viewBox: "0 0 16 16"
 }, /* @__PURE__ */ React6.createElement("g", {
   transform: "translate(0)"
 }, /* @__PURE__ */ React6.createElement("path", {
   d: "M7.97 15.94C12.3717 15.94 15.94 12.3717 15.94 7.97C15.94 3.56829 12.3717 0 7.97 0C3.56829 0 0 3.56829 0 7.97C0 12.3717 3.56829 15.94 7.97 15.94Z",
   fill: "white"
-}))));
+})));
 var default_default = DefaultIcon;
 
 // src/searchbar/tokenSearch/Logo.tsx
 import React35 from "react";
 
 // src/searchbar/icons/kyber.tsx
-import React7, { memo as memo5 } from "react";
-var KyberIcon = memo5(({ active, activeColor, color, height, width }) => /* @__PURE__ */ React7.createElement("svg", {
+import React7 from "react";
+var KyberIcon = ({ height, width }) => /* @__PURE__ */ React7.createElement(abstract_default, {
   height: height != null ? height : 16,
   width: width != null ? width : 16,
-  viewBox: "0 0 11 15",
-  fill: "none"
+  viewBox: "0 0 11 15"
 }, /* @__PURE__ */ React7.createElement("g", {
   transform: "translate(0)"
 }, /* @__PURE__ */ React7.createElement("g", {
@@ -617,16 +612,15 @@ var KyberIcon = memo5(({ active, activeColor, color, height, width }) => /* @__P
   width: "10.65",
   height: "14.05",
   fill: "white"
-}))))));
+})))));
 var kyber_default = KyberIcon;
 
 // src/searchbar/icons/pangolin.tsx
-import React8, { memo as memo6 } from "react";
-var PangolinIcon = memo6(({ active, activeColor, color, height, width }) => /* @__PURE__ */ React8.createElement("svg", {
+import React8 from "react";
+var PangolinIcon = ({ height, width }) => /* @__PURE__ */ React8.createElement(abstract_default, {
   height: height != null ? height : 16,
   width: width != null ? width : 16,
-  viewBox: "0 0 14 12",
-  fill: "none"
+  viewBox: "0 0 14 12"
 }, /* @__PURE__ */ React8.createElement("g", {
   transform: "translate(0)"
 }, /* @__PURE__ */ React8.createElement("g", {
@@ -661,16 +655,15 @@ var PangolinIcon = memo6(({ active, activeColor, color, height, width }) => /* @
   width: "13.04",
   height: "11.84",
   fill: "white"
-}))))));
+})))));
 var pangolin_default = PangolinIcon;
 
 // src/searchbar/icons/sushi.tsx
-import React9, { memo as memo7 } from "react";
-var SushiIcon = memo7(({ active, activeColor, color, height, width }) => /* @__PURE__ */ React9.createElement("svg", {
+import React9 from "react";
+var SushiIcon = ({ height, width }) => /* @__PURE__ */ React9.createElement(abstract_default, {
   height: height != null ? height : 16,
   width: width != null ? width : 16,
-  viewBox: "0 0 16.982 16.982",
-  fill: "none"
+  viewBox: "0 0 16.982 16.982"
 }, /* @__PURE__ */ React9.createElement("g", {
   transform: "translate(0)"
 }, /* @__PURE__ */ React9.createElement("g", {
@@ -728,16 +721,15 @@ var SushiIcon = memo7(({ active, activeColor, color, height, width }) => /* @__P
   d: "M2038.732,687.115a1.54,1.54,0,0,0-.417-.071,1.55,1.55,0,0,1,.1,1.437c-.005.009-.01.018-.016.027-.335.479-1.087.6-2.037.4-.061.1-.116.191-.167.268-.032.048-.062.092-.091.133l.037.012c.048,0,.048.048.048.1s-.048.048-.1.048h0l-.085-.026a2.452,2.452,0,0,1-.441.412c-.048.048-.1.048-.144.1-.529.432-1.394.192-2.019-.625s-1.009-1.153-1.346-1.153a.954.954,0,0,0-.7.237,5.674,5.674,0,0,0-.787.724,2.093,2.093,0,0,1-1.126.706,12.5,12.5,0,0,0,1.271,1.024c2.427,1.713,4.994,2.153,5.79,1.089l.024.017,2.211-3.268A1.822,1.822,0,0,0,2038.732,687.115Zm-1.057,2.5a4.731,4.731,0,0,1-1.153-.048.1.1,0,1,1,0-.192,4.642,4.642,0,0,0,1.153.048.1.1,0,1,1,0,.192Z",
   transform: "translate(-2027.421 -681.99)",
   fill: "#15b3b0"
-}))))));
+})))));
 var sushi_default = SushiIcon;
 
 // src/searchbar/icons/trader.tsx
-import React10, { memo as memo8 } from "react";
-var TraderIcon = memo8(({ active, activeColor, color, height, width }) => /* @__PURE__ */ React10.createElement("svg", {
+import React10 from "react";
+var TraderIcon = ({ height, width }) => /* @__PURE__ */ React10.createElement(abstract_default, {
   height: height != null ? height : 16,
   width: width != null ? width : 16,
-  viewBox: "0 0 11 15",
-  fill: "none"
+  viewBox: "0 0 11 15"
 }, /* @__PURE__ */ React10.createElement("g", {
   transform: "translate(0)"
 }, /* @__PURE__ */ React10.createElement("g", {
@@ -790,16 +782,15 @@ var TraderIcon = memo8(({ active, activeColor, color, height, width }) => /* @__
   width: "10.72",
   height: "14.87",
   fill: "white"
-}))))));
+})))));
 var trader_default = TraderIcon;
 
 // src/searchbar/icons/bsc.tsx
-import React11, { memo as memo9 } from "react";
-var BscIcon = memo9(({ active, activeColor, color, height, width }) => /* @__PURE__ */ React11.createElement("svg", {
+import React11 from "react";
+var BscIcon = ({ height, width }) => /* @__PURE__ */ React11.createElement(abstract_default, {
   height: height != null ? height : 16,
   width: width != null ? width : 16,
-  viewBox: "0 0 16 16",
-  fill: "none"
+  viewBox: "0 0 16 16"
 }, /* @__PURE__ */ React11.createElement("g", {
   transform: "translate(0)"
 }, /* @__PURE__ */ React11.createElement("path", {
@@ -820,16 +811,15 @@ var BscIcon = memo9(({ active, activeColor, color, height, width }) => /* @__PUR
 }), /* @__PURE__ */ React11.createElement("path", {
   d: "M9.68001 7.97001L7.97001 6.26001L6.71001 7.52001L6.56001 7.66001L6.26001 7.96001L7.97001 9.67001L9.68001 7.96001",
   fill: "#F3BA2F"
-}))));
+})));
 var bsc_default = BscIcon;
 
 // src/searchbar/icons/avalanche.tsx
-import React12, { memo as memo10 } from "react";
-var AvalancheIcon = memo10(({ active, activeColor, color, height, width }) => /* @__PURE__ */ React12.createElement("svg", {
+import React12 from "react";
+var AvalancheIcon = ({ height, width }) => /* @__PURE__ */ React12.createElement(abstract_default, {
   height: height != null ? height : 16,
   width: width != null ? width : 16,
-  viewBox: "0 0 16 16",
-  fill: "none"
+  viewBox: "0 0 16 16"
 }, /* @__PURE__ */ React12.createElement("g", {
   transform: "translate(0)"
 }, /* @__PURE__ */ React12.createElement("path", {
@@ -838,146 +828,123 @@ var AvalancheIcon = memo10(({ active, activeColor, color, height, width }) => /*
 }), /* @__PURE__ */ React12.createElement("path", {
   d: "M10.7799 8.17002C10.8699 7.89002 11.1699 7.74002 11.4499 7.84002C11.6099 7.89002 11.7299 8.02002 11.7799 8.17002L13.4999 11.19C13.7799 11.67 13.5499 12.06 12.9999 12.06H9.53988C8.98988 12.06 8.76988 11.67 9.03988 11.19L10.7799 8.17002ZM7.44988 2.37002C7.53988 2.10002 7.83988 1.95002 8.10988 2.04002C8.26988 2.09002 8.38988 2.21002 8.43988 2.37002L8.81988 3.06002L9.71988 4.65002C9.93988 5.10002 9.93988 5.63002 9.71988 6.09002L6.68988 11.34C6.41988 11.77 5.94988 12.04 5.44988 12.07H2.94988C2.39988 12.07 2.16988 11.69 2.44988 11.2L7.44988 2.37002Z",
   fill: "white"
-}))));
+})));
 var avalanche_default = AvalancheIcon;
 
 // src/searchbar/icons/moonbeam.tsx
-import React13, { memo as memo11 } from "react";
-var MoonBeamIcon = memo11(({ active, activeColor, color, height, width }) => /* @__PURE__ */ React13.createElement("svg", {
+import React13 from "react";
+var MoonBeamIcon = ({ height, width }) => /* @__PURE__ */ React13.createElement(abstract_default, {
   height: height != null ? height : 16,
   width: width != null ? width : 16,
-  viewBox: "0 0 400 400",
-  fill: "none"
+  viewBox: "0 0 400 400"
+}, /* @__PURE__ */ React13.createElement("g", {
+  transform: "translate(0)"
 }, /* @__PURE__ */ React13.createElement("path", {
   id: "Path_185",
   fill: "#53CBC8",
-  d: "M237.65,32.88c-67.68,0.03-122.53,54.91-122.51,122.59l0,0c0,0.09,0,0.17,0,0.26v0.19\n	c0.18,3.2,2.83,5.7,6.03,5.69h232.97c3.2,0.01,5.85-2.49,6.03-5.69v-0.19c0-0.09,0-0.17,0-0.26l0,0\n	C360.19,87.78,305.33,32.9,237.65,32.88L237.65,32.88z",
-  transform: "translate(0)"
+  d: "M237.65,32.88c-67.68,0.03-122.53,54.91-122.51,122.59l0,0c0,0.09,0,0.17,0,0.26v0.19\n	c0.18,3.2,2.83,5.7,6.03,5.69h232.97c3.2,0.01,5.85-2.49,6.03-5.69v-0.19c0-0.09,0-0.17,0-0.26l0,0\n	C360.19,87.78,305.33,32.9,237.65,32.88L237.65,32.88z"
 }), /* @__PURE__ */ React13.createElement("path", {
   id: "Path_186",
   fill: "#E1147B",
-  d: "M34.01,292.35c0,4.12-3.34,7.46-7.46,7.46s-7.46-3.34-7.46-7.46c0-4.12,3.34-7.46,7.46-7.46l0,0\n	C30.67,284.89,34.01,288.23,34.01,292.35z",
-  transform: "translate(0)"
+  d: "M34.01,292.35c0,4.12-3.34,7.46-7.46,7.46s-7.46-3.34-7.46-7.46c0-4.12,3.34-7.46,7.46-7.46l0,0\n	C30.67,284.89,34.01,288.23,34.01,292.35z"
 }), /* @__PURE__ */ React13.createElement("path", {
   id: "Path_187",
   fill: "#E1147B",
-  d: "M346.04,251.07H96.06c-4.06,0.01-7.35,3.3-7.34,7.36c0,1.22,0.3,2.41,0.88,3.48l0.12,0.23\n	c1.28,2.37,3.77,3.85,6.46,3.85h249.73c2.7,0,5.18-1.47,6.46-3.85l0.12-0.23c1.93-3.58,0.59-8.04-2.99-9.96\n	C348.44,251.38,347.25,251.08,346.04,251.07z",
-  transform: "translate(0)"
+  d: "M346.04,251.07H96.06c-4.06,0.01-7.35,3.3-7.34,7.36c0,1.22,0.3,2.41,0.88,3.48l0.12,0.23\n	c1.28,2.37,3.77,3.85,6.46,3.85h249.73c2.7,0,5.18-1.47,6.46-3.85l0.12-0.23c1.93-3.58,0.59-8.04-2.99-9.96\n	C348.44,251.38,347.25,251.08,346.04,251.07z"
 }), /* @__PURE__ */ React13.createElement("path", {
   id: "Path_188",
   fill: "#E1147B",
-  d: "M379.25,183.44H96.04c-4.06,0.01-7.35,3.31-7.34,7.38c0,0.13,0,0.26,0.01,0.4\n	c0,0.08,0,0.16,0,0.23c0.22,3.89,3.44,6.92,7.33,6.91h283.18c3.89,0.01,7.11-3.03,7.33-6.91c0-0.08,0-0.16,0-0.23\n	c0.23-4.06-2.88-7.53-6.94-7.76C379.5,183.45,379.37,183.44,379.25,183.44z",
-  transform: "translate(0)"
+  d: "M379.25,183.44H96.04c-4.06,0.01-7.35,3.31-7.34,7.38c0,0.13,0,0.26,0.01,0.4\n	c0,0.08,0,0.16,0,0.23c0.22,3.89,3.44,6.92,7.33,6.91h283.18c3.89,0.01,7.11-3.03,7.33-6.91c0-0.08,0-0.16,0-0.23\n	c0.23-4.06-2.88-7.53-6.94-7.76C379.5,183.45,379.37,183.44,379.25,183.44z"
 }), /* @__PURE__ */ React13.createElement("path", {
   id: "Path_189",
   fill: "#E1147B",
-  d: "M272.61,352.53H144.98c-4.06,0.01-7.34,3.31-7.33,7.37c0.01,2.78,1.58,5.31,4.06,6.55l0.47,0.23\n	c1.02,0.51,2.14,0.77,3.27,0.76h126.7c1.14,0,2.26-0.26,3.28-0.76l0.47-0.23c3.63-1.82,5.1-6.23,3.28-9.86\n	C277.94,354.1,275.39,352.53,272.61,352.53z",
-  transform: "translate(0)"
+  d: "M272.61,352.53H144.98c-4.06,0.01-7.34,3.31-7.33,7.37c0.01,2.78,1.58,5.31,4.06,6.55l0.47,0.23\n	c1.02,0.51,2.14,0.77,3.27,0.76h126.7c1.14,0,2.26-0.26,3.28-0.76l0.47-0.23c3.63-1.82,5.1-6.23,3.28-9.86\n	C277.94,354.1,275.39,352.53,272.61,352.53z"
 }), /* @__PURE__ */ React13.createElement("path", {
   id: "Path_190",
   fill: "#E1147B",
-  d: "M350.61,318.71H222.96c-4.06,0.01-7.34,3.31-7.33,7.37c0.01,2.78,1.58,5.31,4.06,6.55l0.47,0.23\n	c1.02,0.5,2.14,0.77,3.28,0.76h126.7c1.14,0,2.26-0.26,3.28-0.76l0.47-0.23c3.63-1.82,5.1-6.23,3.28-9.86\n	C355.93,320.29,353.39,318.72,350.61,318.71z",
-  transform: "translate(0)"
+  d: "M350.61,318.71H222.96c-4.06,0.01-7.34,3.31-7.33,7.37c0.01,2.78,1.58,5.31,4.06,6.55l0.47,0.23\n	c1.02,0.5,2.14,0.77,3.28,0.76h126.7c1.14,0,2.26-0.26,3.28-0.76l0.47-0.23c3.63-1.82,5.1-6.23,3.28-9.86\n	C355.93,320.29,353.39,318.72,350.61,318.71z"
 }), /* @__PURE__ */ React13.createElement("path", {
   id: "Path_191",
   fill: "#E1147B",
-  d: "M176.56,297.47l-0.22-0.23c-2.75-2.98-2.57-7.63,0.41-10.38c1.35-1.25,3.13-1.95,4.97-1.95\n	h207.15c4.06,0,7.34,3.3,7.34,7.35c0,1.84-0.7,3.62-1.95,4.97l-0.22,0.23c-1.39,1.49-3.34,2.34-5.38,2.35H181.95\n	C179.9,299.81,177.95,298.96,176.56,297.47z",
-  transform: "translate(0)"
+  d: "M176.56,297.47l-0.22-0.23c-2.75-2.98-2.57-7.63,0.41-10.38c1.35-1.25,3.13-1.95,4.97-1.95\n	h207.15c4.06,0,7.34,3.3,7.34,7.35c0,1.84-0.7,3.62-1.95,4.97l-0.22,0.23c-1.39,1.49-3.34,2.34-5.38,2.35H181.95\n	C179.9,299.81,177.95,298.96,176.56,297.47z"
 }), /* @__PURE__ */ React13.createElement("path", {
   id: "Path_192",
   fill: "#E1147B",
-  d: "M53.19,284.89h98.92c4.06,0.01,7.34,3.31,7.33,7.37c-0.01,2.78-1.58,5.31-4.06,6.55l-0.47,0.23\n	c-1.02,0.51-2.14,0.77-3.27,0.76H53.66c-1.14,0-2.26-0.26-3.28-0.76l-0.47-0.23c-3.63-1.82-5.1-6.23-3.28-9.86\n	C47.87,286.47,50.41,284.9,53.19,284.89z",
-  transform: "translate(0)"
+  d: "M53.19,284.89h98.92c4.06,0.01,7.34,3.31,7.33,7.37c-0.01,2.78-1.58,5.31-4.06,6.55l-0.47,0.23\n	c-1.02,0.51-2.14,0.77-3.27,0.76H53.66c-1.14,0-2.26-0.26-3.28-0.76l-0.47-0.23c-3.63-1.82-5.1-6.23-3.28-9.86\n	C47.87,286.47,50.41,284.9,53.19,284.89z"
 }), /* @__PURE__ */ React13.createElement("path", {
   id: "Path_193",
   fill: "#E1147B",
-  d: "M76.87,190.92c0,4.12-3.34,7.45-7.46,7.45s-7.45-3.34-7.45-7.46c0-4.11,3.34-7.45,7.45-7.45\n	C73.53,183.46,76.87,186.8,76.87,190.92z",
-  transform: "translate(0)"
+  d: "M76.87,190.92c0,4.12-3.34,7.45-7.46,7.45s-7.45-3.34-7.45-7.46c0-4.11,3.34-7.45,7.45-7.45\n	C73.53,183.46,76.87,186.8,76.87,190.92z"
 }), /* @__PURE__ */ React13.createElement("path", {
   id: "Path_194",
   fill: "#E1147B",
-  d: "M252.65,226.71l0.06-0.23c1.05-3.92-1.27-7.94-5.19-8.99c-0.63-0.17-1.27-0.25-1.92-0.25H38.44\n	c-4.05-0.01-7.35,3.26-7.36,7.32c0,0.65,0.08,1.3,0.25,1.92c0,0.08,0.04,0.16,0.06,0.23c0.87,3.21,3.78,5.45,7.11,5.44h207.05\n	c3.33,0,6.25-2.23,7.11-5.44",
-  transform: "translate(0)"
+  d: "M252.65,226.71l0.06-0.23c1.05-3.92-1.27-7.94-5.19-8.99c-0.63-0.17-1.27-0.25-1.92-0.25H38.44\n	c-4.05-0.01-7.35,3.26-7.36,7.32c0,0.65,0.08,1.3,0.25,1.92c0,0.08,0.04,0.16,0.06,0.23c0.87,3.21,3.78,5.45,7.11,5.44h207.05\n	c3.33,0,6.25-2.23,7.11-5.44"
 }), /* @__PURE__ */ React13.createElement("path", {
   id: "Path_195",
   fill: "#E1147B",
-  d: "M19.26,224.72c0,4.12-3.34,7.45-7.46,7.45c-4.12,0-7.45-3.34-7.45-7.46\n	c0-4.12,3.34-7.45,7.45-7.45C15.92,217.26,19.26,220.6,19.26,224.72z",
-  transform: "translate(0)"
+  d: "M19.26,224.72c0,4.12-3.34,7.45-7.46,7.45c-4.12,0-7.45-3.34-7.45-7.46\n	c0-4.12,3.34-7.45,7.45-7.45C15.92,217.26,19.26,220.6,19.26,224.72z"
 }), /* @__PURE__ */ React13.createElement("path", {
   id: "Path_196",
   fill: "#E1147B",
-  d: "M76.87,258.53c0,4.12-3.34,7.45-7.46,7.45c-4.12,0-7.45-3.34-7.45-7.46\n	c0-4.11,3.34-7.45,7.45-7.45C73.53,251.07,76.87,254.41,76.87,258.53z",
-  transform: "translate(0)"
+  d: "M76.87,258.53c0,4.12-3.34,7.45-7.46,7.45c-4.12,0-7.45-3.34-7.45-7.46\n	c0-4.11,3.34-7.45,7.45-7.45C73.53,251.07,76.87,254.41,76.87,258.53z"
 }), /* @__PURE__ */ React13.createElement("path", {
   id: "Path_197",
   fill: "#E1147B",
-  d: "M203.79,326.17c0,4.12-3.34,7.46-7.46,7.46c-4.12,0-7.46-3.34-7.46-7.46\n	c0-4.12,3.34-7.46,7.46-7.46l0,0C200.45,318.71,203.79,322.05,203.79,326.17z",
-  transform: "translate(0)"
+  d: "M203.79,326.17c0,4.12-3.34,7.46-7.46,7.46c-4.12,0-7.46-3.34-7.46-7.46\n	c0-4.12,3.34-7.46,7.46-7.46l0,0C200.45,318.71,203.79,322.05,203.79,326.17z"
 }), /* @__PURE__ */ React13.createElement("path", {
   id: "Path_198",
   fill: "#E1147B",
-  d: "M125.8,359.97c0,4.12-3.34,7.45-7.46,7.45c-4.12,0-7.45-3.34-7.45-7.46\n	c0-4.12,3.34-7.45,7.45-7.45C122.47,352.51,125.8,355.85,125.8,359.97z",
-  transform: "translate(0)"
+  d: "M125.8,359.97c0,4.12-3.34,7.45-7.46,7.45c-4.12,0-7.45-3.34-7.45-7.46\n	c0-4.12,3.34-7.45,7.45-7.45C122.47,352.51,125.8,355.85,125.8,359.97z"
 })));
 var moonbeam_default = MoonBeamIcon;
 
 // src/searchbar/icons/moonriver.tsx
-import React14, { memo as memo12 } from "react";
-var MoonRiverIcon = memo12(({ active, activeColor, color, height, width }) => /* @__PURE__ */ React14.createElement("svg", {
+import React14 from "react";
+var MoonRiverIcon = ({ height, width }) => /* @__PURE__ */ React14.createElement(abstract_default, {
   height: height != null ? height : 16,
   width: width != null ? width : 16,
-  viewBox: "0 0 400 400",
-  fill: "none"
+  viewBox: "0 0 400 400"
+}, /* @__PURE__ */ React14.createElement("g", {
+  transform: "translate(0)"
 }, /* @__PURE__ */ React14.createElement("path", {
   fill: "#EFB505",
-  d: "M64.78,180.08c-4.92-20.6-3.71-39.83,0.69-58.92C80.77,54.7,141.25,7.78,208.66,9.89\n		c69.28,2.16,127.08,51.69,137.91,119.6c2.4,15.07,0.88,30.83,0.29,46.24c-0.13,3.46-3.2,7.83-6.2,10\n		c-32.54,23.48-78.97,23.69-112.12,0.91c-7.67-5.27-15.35-10.53-23.02-15.81c-38.93-26.77-88.15-26.81-127.02-0.1\n		C74.33,173.59,70.15,176.42,64.78,180.08z",
-  transform: "translate(0)"
+  d: "M64.78,180.08c-4.92-20.6-3.71-39.83,0.69-58.92C80.77,54.7,141.25,7.78,208.66,9.89\n		c69.28,2.16,127.08,51.69,137.91,119.6c2.4,15.07,0.88,30.83,0.29,46.24c-0.13,3.46-3.2,7.83-6.2,10\n		c-32.54,23.48-78.97,23.69-112.12,0.91c-7.67-5.27-15.35-10.53-23.02-15.81c-38.93-26.77-88.15-26.81-127.02-0.1\n		C74.33,173.59,70.15,176.42,64.78,180.08z"
 }), /* @__PURE__ */ React14.createElement("path", {
   fill: "#4FC2C1",
-  d: "M145.2,170.15c23.06,0.43,45.95,6.11,66.14,20.76c7.3,5.3,14.84,10.28,22.32,15.33\n		c32.52,21.95,72.33,21.87,104.93-0.17c2.1-1.42,4.17-2.91,6.33-4.24c4.73-2.92,9.27-2.93,12.55,2.01c3.05,4.6,1.37,8.63-2.69,11.8\n		c-18.77,14.66-39.9,23.18-63.83,24.01c-25.02,0.86-47.8-5.49-68.47-20.15c-16.48-11.68-32.24-24.93-52.94-29.15\n		c-30.34-6.19-58.9-3.18-84.63,15.59c-4.55,3.32-9.27,6.43-14.03,9.47c-4.39,2.8-9.61,2.98-11.66-1.82\n		c-1.35-3.14-0.47-9.38,1.89-11.62C82.28,181.86,113.4,170.23,145.2,170.15z",
-  transform: "translate(0)"
+  d: "M145.2,170.15c23.06,0.43,45.95,6.11,66.14,20.76c7.3,5.3,14.84,10.28,22.32,15.33\n		c32.52,21.95,72.33,21.87,104.93-0.17c2.1-1.42,4.17-2.91,6.33-4.24c4.73-2.92,9.27-2.93,12.55,2.01c3.05,4.6,1.37,8.63-2.69,11.8\n		c-18.77,14.66-39.9,23.18-63.83,24.01c-25.02,0.86-47.8-5.49-68.47-20.15c-16.48-11.68-32.24-24.93-52.94-29.15\n		c-30.34-6.19-58.9-3.18-84.63,15.59c-4.55,3.32-9.27,6.43-14.03,9.47c-4.39,2.8-9.61,2.98-11.66-1.82\n		c-1.35-3.14-0.47-9.38,1.89-11.62C82.28,181.86,113.4,170.23,145.2,170.15z"
 }), /* @__PURE__ */ React14.createElement("path", {
   fill: "#50C6C4",
-  d: "M266.7,306.33c-0.01,13.51-0.06,27.02,0.02,40.53c0.04,6.48-2.04,11.57-9.32,11.29\n		c-6.75-0.26-8.48-5.34-8.47-11.36c0.05-27.02,0.05-54.04,0.01-81.07c-0.01-6.03,1.77-11.08,8.55-11.26\n		c7.25-0.2,9.32,4.8,9.26,11.33C266.61,279.3,266.7,292.82,266.7,306.33z",
-  transform: "translate(0)"
+  d: "M266.7,306.33c-0.01,13.51-0.06,27.02,0.02,40.53c0.04,6.48-2.04,11.57-9.32,11.29\n		c-6.75-0.26-8.48-5.34-8.47-11.36c0.05-27.02,0.05-54.04,0.01-81.07c-0.01-6.03,1.77-11.08,8.55-11.26\n		c7.25-0.2,9.32,4.8,9.26,11.33C266.61,279.3,266.7,292.82,266.7,306.33z"
 }), /* @__PURE__ */ React14.createElement("path", {
   fill: "#51C6C4",
-  d: "M108.32,258.02c-0.01-12.7-0.02-25.39,0-38.09c0.01-6.44,1.46-12.67,9.14-12.69c7.3-0.01,8.77,6.28,8.81,12.2\n		c0.17,26.52,0.2,53.05,0.05,79.57c-0.03,5.67-1.92,11.48-8.69,11.44c-6.91-0.04-9.29-5.41-9.3-11.8\n		C108.33,285.1,108.33,271.56,108.32,258.02z",
-  transform: "translate(0)"
+  d: "M108.32,258.02c-0.01-12.7-0.02-25.39,0-38.09c0.01-6.44,1.46-12.67,9.14-12.69c7.3-0.01,8.77,6.28,8.81,12.2\n		c0.17,26.52,0.2,53.05,0.05,79.57c-0.03,5.67-1.92,11.48-8.69,11.44c-6.91-0.04-9.29-5.41-9.3-11.8\n		C108.33,285.1,108.33,271.56,108.32,258.02z"
 }), /* @__PURE__ */ React14.createElement("path", {
   fill: "#50C5C3",
-  d: "M301.77,303.77c0,11.28-0.04,22.57,0.02,33.85c0.03,6.16-2.1,10.94-8.87,10.95\n		c-6.76,0.01-8.94-4.77-8.94-10.92c0.03-23.13,0.02-46.26,0-69.39c0-5.8,2.13-10.31,8.43-10.52c6.73-0.22,9.33,4.26,9.35,10.5\n		C301.79,280.07,301.77,291.92,301.77,303.77z",
-  transform: "translate(0)"
+  d: "M301.77,303.77c0,11.28-0.04,22.57,0.02,33.85c0.03,6.16-2.1,10.94-8.87,10.95\n		c-6.76,0.01-8.94-4.77-8.94-10.92c0.03-23.13,0.02-46.26,0-69.39c0-5.8,2.13-10.31,8.43-10.52c6.73-0.22,9.33,4.26,9.35,10.5\n		C301.79,280.07,301.77,291.92,301.77,303.77z"
 }), /* @__PURE__ */ React14.createElement("path", {
   fill: "#4EC0BF",
-  d: "M91.15,265.64c0.01,8.75,0,17.49,0.01,26.24c0.01,6.48-1.41,12.41-9.26,12.5c-7.46,0.08-9-5.62-9-11.77\n		c-0.02-18.62-0.01-37.23,0.1-55.85c0.03-5.96,2.14-11.11,8.96-10.98c6.58,0.13,9.02,5.15,9.13,11.1\n		C91.27,246.46,91.14,256.05,91.15,265.64z",
-  transform: "translate(0)"
+  d: "M91.15,265.64c0.01,8.75,0,17.49,0.01,26.24c0.01,6.48-1.41,12.41-9.26,12.5c-7.46,0.08-9-5.62-9-11.77\n		c-0.02-18.62-0.01-37.23,0.1-55.85c0.03-5.96,2.14-11.11,8.96-10.98c6.58,0.13,9.02,5.15,9.13,11.1\n		C91.27,246.46,91.14,256.05,91.15,265.64z"
 }), /* @__PURE__ */ React14.createElement("path", {
   fill: "#4DC0BF",
-  d: "M196.58,259.35c0,9.31-0.02,18.63,0,27.94c0.02,6.07-2.08,11.05-8.74,11.27c-7.33,0.24-9.35-5.1-9.35-11.44\n		c-0.01-18.63-0.01-37.26,0.05-55.88c0.02-5.87,1.67-11.28,8.55-11.35c7.09-0.07,9.45,5.13,9.49,11.52\n		C196.62,240.72,196.59,250.04,196.58,259.35z",
-  transform: "translate(0)"
+  d: "M196.58,259.35c0,9.31-0.02,18.63,0,27.94c0.02,6.07-2.08,11.05-8.74,11.27c-7.33,0.24-9.35-5.1-9.35-11.44\n		c-0.01-18.63-0.01-37.26,0.05-55.88c0.02-5.87,1.67-11.28,8.55-11.35c7.09-0.07,9.45,5.13,9.49,11.52\n		C196.62,240.72,196.59,250.04,196.58,259.35z"
 }), /* @__PURE__ */ React14.createElement("path", {
   fill: "#4FC4C2",
-  d: "M337.24,274.32c0.01,5.06,0.2,10.13-0.05,15.17c-0.27,5.58-3.64,9.84-8.96,8.76c-3.32-0.67-7.99-5.2-8.3-8.36\n		c-1.04-10.57-1.04-21.38,0.01-31.95c0.31-3.17,4.96-7.7,8.29-8.39c5.34-1.1,8.69,3.17,8.95,8.75\n		C337.43,263.63,337.24,268.98,337.24,274.32z",
-  transform: "translate(0)"
+  d: "M337.24,274.32c0.01,5.06,0.2,10.13-0.05,15.17c-0.27,5.58-3.64,9.84-8.96,8.76c-3.32-0.67-7.99-5.2-8.3-8.36\n		c-1.04-10.57-1.04-21.38,0.01-31.95c0.31-3.17,4.96-7.7,8.29-8.39c5.34-1.1,8.69,3.17,8.95,8.75\n		C337.43,263.63,337.24,268.98,337.24,274.32z"
 }), /* @__PURE__ */ React14.createElement("path", {
   fill: "#50C6C4",
-  d: "M231.57,259.23c-0.01,13.51-0.05-7.42,0.03,6.09c0.04,6.48-2.04,11.57-9.32,11.29\n		c-6.75-0.26-8.48-5.34-8.47-11.36c0.05-27.02,0.03,13.84-0.01-13.18c-0.01-6.03,1.77-11.08,8.55-11.26\n		c7.25-0.2,9.32,4.8,9.26,11.33C231.48,265.65,231.57,245.72,231.57,259.23z",
-  transform: "translate(0)"
+  d: "M231.57,259.23c-0.01,13.51-0.05-7.42,0.03,6.09c0.04,6.48-2.04,11.57-9.32,11.29\n		c-6.75-0.26-8.48-5.34-8.47-11.36c0.05-27.02,0.03,13.84-0.01-13.18c-0.01-6.03,1.77-11.08,8.55-11.26\n		c7.25-0.2,9.32,4.8,9.26,11.33C231.48,265.65,231.57,245.72,231.57,259.23z"
 }), /* @__PURE__ */ React14.createElement("path", {
   fill: "#50C6C4",
-  d: "M161.19,257.74c-0.01,13.51-0.06,110.54,0.02,124.05c0.04,6.48-2.04,11.57-9.32,11.29\n		c-6.75-0.26-8.48-5.34-8.47-11.36c0.05-27.02,0.05-137.56,0.01-164.58c-0.01-6.03,1.77-11.08,8.55-11.26\n		c7.25-0.2,9.32,4.8,9.26,11.33C161.1,230.72,161.19,244.23,161.19,257.74z",
-  transform: "translate(0)"
+  d: "M161.19,257.74c-0.01,13.51-0.06,110.54,0.02,124.05c0.04,6.48-2.04,11.57-9.32,11.29\n		c-6.75-0.26-8.48-5.34-8.47-11.36c0.05-27.02,0.05-137.56,0.01-164.58c-0.01-6.03,1.77-11.08,8.55-11.26\n		c7.25-0.2,9.32,4.8,9.26,11.33C161.1,230.72,161.19,244.23,161.19,257.74z"
 })));
 var moonriver_default = MoonRiverIcon;
 
 // src/searchbar/icons/apeswap.tsx
-import React15, { memo as memo13 } from "react";
-var ApeSwapIcon = memo13(({ active, activeColor, color, height, width }) => /* @__PURE__ */ React15.createElement("svg", {
+import React15 from "react";
+var ApeSwapIcon = ({ height, width }) => /* @__PURE__ */ React15.createElement(abstract_default, {
   height: height != null ? height : 16,
   width: width != null ? width : 16,
-  viewBox: "0 0 400 400",
-  fill: "none"
+  viewBox: "0 0 400 400"
 }, /* @__PURE__ */ React15.createElement("g", {
   transform: "translate(0)"
 }, /* @__PURE__ */ React15.createElement("path", {
@@ -1034,16 +1001,15 @@ var ApeSwapIcon = memo13(({ active, activeColor, color, height, width }) => /* @
 }), /* @__PURE__ */ React15.createElement("path", {
   fill: "#FBFAFB",
   d: "M143.8,187.3c2.6,0.3,4.7,1.3,5.8,3.9c1.6,3.8-0.9,7.3-5.8,8.2c-4.4-0.7-6.6-3.2-6.3-6.6\n		C137.8,189.7,139.9,188,143.8,187.3z"
-}))));
+})));
 var apeswap_default = ApeSwapIcon;
 
 // src/searchbar/icons/babyswap.tsx
-import React16, { memo as memo14 } from "react";
-var BabySwapIcon = memo14(({ active, activeColor, color, height, width }) => /* @__PURE__ */ React16.createElement("svg", {
+import React16 from "react";
+var BabySwapIcon = ({ height, width }) => /* @__PURE__ */ React16.createElement(abstract_default, {
   height: height != null ? height : 16,
   width: width != null ? width : 16,
-  viewBox: "0 0 400 400",
-  fill: "none"
+  viewBox: "0 0 400 400"
 }, /* @__PURE__ */ React16.createElement("g", {
   transform: "translate(0)"
 }, /* @__PURE__ */ React16.createElement("path", {
@@ -1097,16 +1063,15 @@ var BabySwapIcon = memo14(({ active, activeColor, color, height, width }) => /* 
 }), /* @__PURE__ */ React16.createElement("path", {
   fill: "#582E02",
   d: "M179.8,148.9c11.2-0.1,22.5-0.7,33.7-0.2c9.8,0.5,15.5,5.6,13.9,16.2c-0.7,0.7-1,1.5-1.1,2.5\n        c-6,0.6-12.1,2-18,1.6c-23.8-1.6-45.1,2.8-61.5,21.6c-5.4-1.9-10.7-3.7-16.1-5.6c2.1-5,2.8-12.2,6.5-14.5\n        C150.8,162.5,165.5,156,179.8,148.9z"
-}))));
+})));
 var babyswap_default = BabySwapIcon;
 
 // src/searchbar/icons/biswap.tsx
-import React17, { memo as memo15 } from "react";
-var BiSwapIcon = memo15(({ active, activeColor, color, height, width }) => /* @__PURE__ */ React17.createElement("svg", {
+import React17 from "react";
+var BiSwapIcon = ({ height, width }) => /* @__PURE__ */ React17.createElement(abstract_default, {
   height: height != null ? height : 16,
   width: width != null ? width : 16,
-  viewBox: "0 0 400 400",
-  fill: "none"
+  viewBox: "0 0 400 400"
 }, /* @__PURE__ */ React17.createElement("g", {
   transform: "translate(0)"
 }, /* @__PURE__ */ React17.createElement("linearGradient", {
@@ -1145,16 +1110,15 @@ var BiSwapIcon = memo15(({ active, activeColor, color, height, width }) => /* @_
   id: "Path_8499_00000173119227639985226190000005075093812782462395_",
   style: { fill: `url(#Path_8499_00000069368988579689677870000016304176058613289127_)` },
   d: "\n	M177.4,171.8c8.4-20.6,15.3-41.7,20.9-63.2c14.4-38.8,58.9-27.3,71.1-25.8c20.1,2.9,25.8-4.3,68.2-11.5c2.2,0,4.3-0.7,6.5-0.7\n	c-71.7-80-194.7-86.7-274.7-14.9c-19.1,17.1-34.6,37.8-45.6,60.9C88.4,132.3,157.4,166.8,177.4,171.8z M135.1,39.7\n	c5.8,0.7,33,35.2,38.1,122.9c0,0-35.2-8.6-43.1-26.6C124.3,120.8,132.2,100.7,135.1,39.7z M5.1,200.5c0.2-15.2,1.9-30.4,5-45.2\n	c7.8,6.3,15.2,13,22.3,20.1c51,46.7,132.8,84,163,49.5l0,0c-15.8,19.7-41.5,28.6-66.1,23l-62.5,94C27.4,305.5,5,254.2,5.1,200.5z"
-}))));
+})));
 var biswap_default = BiSwapIcon;
 
 // src/searchbar/icons/ellipsis.finance.tsx
-import React18, { memo as memo16 } from "react";
-var EllipsisFinanceIcon = memo16(({ active, activeColor, color, height, width }) => /* @__PURE__ */ React18.createElement("svg", {
+import React18 from "react";
+var EllipsisFinanceIcon = ({ height, width }) => /* @__PURE__ */ React18.createElement(abstract_default, {
   height: height != null ? height : 16,
   width: width != null ? width : 16,
-  viewBox: "0 0 400 400",
-  fill: "none"
+  viewBox: "0 0 400 400"
 }, /* @__PURE__ */ React18.createElement("g", {
   transform: "translate(0)"
 }, /* @__PURE__ */ React18.createElement("linearGradient", {
@@ -1189,16 +1153,15 @@ var EllipsisFinanceIcon = memo16(({ active, activeColor, color, height, width })
 })), /* @__PURE__ */ React18.createElement("path", {
   style: { fill: `url(#SVGID_00000144307283947220045560000006145373274111585195_)` },
   d: "M165.2,156.5c0.7-0.5,17.3-13.9,41.2-23.5\n          c32-12.9,61.4-12.6,85.1,0.9c0,0,0,0,0,0c0.2,0.1,0.4,0.2,0.5,0.4c0,0,0.1,0.1,0.1,0.1c0.1,0.1,0.3,0.3,0.4,0.5c0,0,0,0,0,0\n          c0,0,0,0,0,0c0,0,0,0,0,0c0,0,0,0,0,0c1,1.5,18.2,28.1,13.9,64.5c-3.7,33.2-23.6,62.9-59.2,88.3c-0.3,0.2-7.6,5.6-20.3,12.9\n          c-2.8,1.7-10.8,6.4-22.7,12.1c-22,10.7-44.1,18.4-65.5,23c-2.5,0.7-33.6,8.5-66.7,5.7c-0.2,0-0.4,0-0.6,0c-1-0.1-1.9-0.2-2.9-0.3\n          c-0.6-0.1-1.2-0.1-1.8-0.2c-0.2,0-0.4,0-0.6-0.1c-10.6-1.3-21.3-3.8-31.1-8.1c49.6,48.9,154,41.3,243.7-20.6\n          c46.8-32.3,82.7-75,100.9-120.1c17.9-44.3,16.6-85.4-3.6-115.7C349.6,55.8,296,60.8,273.1,64.1c-1.3,0.2-2.6,0.5-4,0.8\n          c-5.8,1.1-12.2,2.3-17.6,3.6c-0.8,0.2-1.6,0.4-2.4,0.6c-14.2,4-28.6,9.2-42.7,15.5c-10.4,4.7-20.6,10-30.5,15.7\n          c-0.3,0.2-0.5,0.3-0.5,0.3c-61.9,36.9-75.9,77.5-76.1,106.4c0,0.7,0,1.3,0,2c0,0.7,0,1.3,0.1,2c0,0,0,0.1,0,0.1l0,0.5l0,0.2\n          c0,0.3,0,0.5,0,0.8c0,0.2,0,0.3,0,0.5c0,0,0,0.1,0,0.1c1,15.2,5.5,27.7,9,35.4C111.8,230,123.6,189,165.2,156.5z"
-}))));
+})));
 var ellipsis_finance_default = EllipsisFinanceIcon;
 
 // src/searchbar/icons/safeswap.tsx
-import React19, { memo as memo17 } from "react";
-var SafeSwapIcon = memo17(({ active, activeColor, color, height, width }) => /* @__PURE__ */ React19.createElement("svg", {
+import React19 from "react";
+var SafeSwapIcon = ({ height, width }) => /* @__PURE__ */ React19.createElement(abstract_default, {
   height: height != null ? height : 16,
   width: width != null ? width : 16,
-  viewBox: "0 0 400 400",
-  fill: "none"
+  viewBox: "0 0 400 400"
 }, /* @__PURE__ */ React19.createElement("g", {
   transform: "translate(0)"
 }, /* @__PURE__ */ React19.createElement("path", {
@@ -1216,16 +1179,15 @@ var SafeSwapIcon = memo17(({ active, activeColor, color, height, width }) => /* 
 }), /* @__PURE__ */ React19.createElement("path", {
   fill: "#5B3DD7",
   d: "M175.5,203.2v-2l-63.2-36.5c0.9,0.9,1.9,1.7,3,2.4L175.5,203.2z"
-}))));
+})));
 var safeswap_default = SafeSwapIcon;
 
 // src/searchbar/icons/baguette.tsx
-import React20, { memo as memo18 } from "react";
-var BaquetteIcon = memo18(({ active, activeColor, color, height, width }) => /* @__PURE__ */ React20.createElement("svg", {
+import React20 from "react";
+var BaquetteIcon = ({ height, width }) => /* @__PURE__ */ React20.createElement(abstract_default, {
   height: height != null ? height : 16,
   width: width != null ? width : 16,
-  viewBox: "0 0 384 387",
-  fill: "none"
+  viewBox: "0 0 384 387"
 }, /* @__PURE__ */ React20.createElement("g", {
   transform: "translate(0)"
 }, /* @__PURE__ */ React20.createElement("path", {
@@ -1261,16 +1223,15 @@ var BaquetteIcon = memo18(({ active, activeColor, color, height, width }) => /* 
 }), /* @__PURE__ */ React20.createElement("g", null, /* @__PURE__ */ React20.createElement("path", {
   fill: "#FFFFFF",
   d: "M165.7,160.7c0-1.2,0-2.4,0-3.7c0-1.3,0-2.7,0.1-4.1c0.1-1.4,0.2-2.9,0.3-4.5c0.1-1.5,0.3-3.1,0.4-4.8\n              c0.1-1.6,0.4-3.3,0.6-5c0.1-0.9,0.2-1.7,0.3-2.6c0.1-0.9,0.3-1.7,0.4-2.6c0.1-0.9,0.3-1.8,0.4-2.7c0.2-0.9,0.4-1.8,0.5-2.7\n              c0.2-0.9,0.4-1.8,0.6-2.7c0.2-0.9,0.4-1.8,0.6-2.7c0.2-0.9,0.4-1.8,0.7-2.7c0.2-0.9,0.5-1.8,0.7-2.7c0.5-1.8,1.1-3.6,1.6-5.4\n              c0.5-1.8,1.2-3.6,1.8-5.4c0.6-1.8,1.3-3.5,2-5.3c0.7-1.7,1.4-3.4,2.1-5.1c0.1-0.1,0.1-0.3,0.2-0.4c-2.6-1-5.1-1.9-7.6-2.7\n              c0,0.1-0.1,0.2-0.1,0.4c-0.6,1.8-1.1,3.7-1.6,5.5c-0.5,1.9-1,3.8-1.5,5.7c-0.4,1.9-0.9,3.8-1.3,5.8c-0.4,1.9-0.8,3.9-1.1,5.8\n              c-0.2,1-0.3,1.9-0.5,2.9c-0.1,1-0.3,1.9-0.4,2.9c-0.1,1-0.3,1.9-0.4,2.9c-0.1,1-0.2,1.9-0.3,2.8c-0.1,0.9-0.2,1.9-0.3,2.8\n              c-0.1,0.9-0.1,1.9-0.2,2.8c-0.1,0.9-0.1,1.8-0.2,2.7c0,0.9-0.1,1.8-0.1,2.7c-0.1,1.8-0.1,3.5-0.1,5.2c0,1.7,0,3.3,0.1,4.9\n              c0.1,1.6,0.1,3.1,0.2,4.5c0.1,1.5,0.2,2.8,0.3,4.2c0.1,1.3,0.2,2.6,0.4,3.7c0.3,2.3,0.5,4.4,0.8,6.1c0.5,3.3,0.9,5.2,0.9,5.2\n              s-0.1-1.9-0.3-5.3C165.7,165.1,165.8,163.1,165.7,160.7z M224.8,199.1c0-1.2,0-2.4,0-3.7c0-1.3,0-2.7,0.1-4.1\n              c0.1-1.4,0.2-2.9,0.3-4.5c0.1-1.5,0.3-3.1,0.4-4.8c0.1-1.6,0.4-3.3,0.6-5c0.1-0.9,0.2-1.7,0.3-2.6c0.1-0.9,0.3-1.7,0.4-2.6\n              c0.1-0.9,0.3-1.8,0.4-2.7c0.2-0.9,0.4-1.8,0.5-2.7c0.2-0.9,0.4-1.8,0.6-2.7c0.2-0.9,0.4-1.8,0.6-2.7c0.2-0.9,0.4-1.8,0.7-2.7\n              c0.2-0.9,0.5-1.8,0.7-2.7c0.5-1.8,1.1-3.6,1.6-5.4c0.5-1.8,1.2-3.6,1.8-5.4c0.6-1.8,1.3-3.5,2-5.3c0.7-1.7,1.4-3.4,2.1-5.1\n              c0.4-0.8,0.7-1.7,1.1-2.5c0.4-0.8,0.8-1.6,1.1-2.4c0.8-1.6,1.5-3.2,2.3-4.7c-2.7-1.5-5.4-2.9-8.1-4.3c-0.7,1.9-1.5,3.8-2.2,5.8\n              c-0.3,0.9-0.6,1.8-0.9,2.6c-0.3,0.9-0.6,1.8-0.9,2.7c-0.6,1.8-1.1,3.7-1.6,5.5c-0.5,1.9-1,3.8-1.5,5.7c-0.4,1.9-0.9,3.8-1.3,5.8\n              c-0.4,1.9-0.8,3.9-1.1,5.8c-0.2,1-0.3,1.9-0.5,2.9c-0.1,1-0.3,1.9-0.4,2.9c-0.1,1-0.3,1.9-0.4,2.9c-0.1,1-0.2,1.9-0.3,2.8\n              c-0.1,0.9-0.2,1.9-0.3,2.8c-0.1,0.9-0.1,1.9-0.2,2.8c-0.1,0.9-0.1,1.8-0.2,2.7c0,0.9-0.1,1.8-0.1,2.7c-0.1,1.8-0.1,3.5-0.1,5.2\n              c0,1.7,0,3.3,0.1,4.9c0.1,1.6,0.1,3.1,0.2,4.5c0.1,1.5,0.2,2.8,0.3,4.2c0.1,1.3,0.2,2.6,0.4,3.7c0.3,2.3,0.5,4.4,0.8,6.1\n              c0.5,3.3,0.9,5.2,0.9,5.2s-0.1-1.9-0.3-5.3C224.8,203.5,224.8,201.5,224.8,199.1z M284,243.6c-0.1-1.7-0.1-3.7-0.2-6.1\n              c0-1.2,0-2.4,0-3.7c0-1.3,0-2.7,0.1-4.1c0.1-1.4,0.2-2.9,0.3-4.5c0.1-1.5,0.3-3.1,0.4-4.8c0.1-1.6,0.4-3.3,0.6-5\n              c0.1-0.9,0.2-1.7,0.3-2.6c0.1-0.9,0.3-1.7,0.4-2.6c0.1-0.9,0.3-1.8,0.4-2.7c0.2-0.9,0.4-1.8,0.5-2.7c0.2-0.9,0.4-1.8,0.6-2.7\n              c0.2-0.9,0.4-1.8,0.6-2.7c0.2-0.9,0.4-1.8,0.7-2.7c0.2-0.9,0.5-1.8,0.7-2.7c0.5-1.8,1.1-3.6,1.6-5.4c0.5-1.8,1.2-3.6,1.8-5.4\n              c0.6-1.8,1.3-3.5,2-5.3c0.7-1.7,1.4-3.4,2.1-5.1c0.4-0.8,0.7-1.7,1.1-2.5c0.4-0.8,0.8-1.6,1.1-2.4c0.9-1.9,1.8-3.7,2.7-5.4\n              c-2.5-1.9-5.1-3.7-7.7-5.6c-1,2.5-2,5.1-2.9,7.7c-0.3,0.9-0.6,1.8-0.9,2.6c-0.3,0.9-0.6,1.8-0.9,2.7c-0.6,1.8-1.1,3.7-1.6,5.5\n              c-0.5,1.9-1,3.8-1.5,5.7c-0.4,1.9-0.9,3.8-1.3,5.8c-0.4,1.9-0.8,3.9-1.1,5.8c-0.2,1-0.3,1.9-0.5,2.9c-0.1,1-0.3,1.9-0.4,2.9\n              c-0.1,1-0.3,1.9-0.4,2.9c-0.1,1-0.2,1.9-0.3,2.8c-0.1,0.9-0.2,1.9-0.3,2.8c-0.1,0.9-0.1,1.9-0.2,2.8c-0.1,0.9-0.1,1.8-0.2,2.7\n              c0,0.9-0.1,1.8-0.1,2.7c-0.1,1.8-0.1,3.5-0.1,5.2c0,1.7,0,3.3,0.1,4.9c0.1,1.6,0.1,3.1,0.2,4.5c0.1,1.5,0.2,2.8,0.3,4.2\n              c0.1,1.3,0.2,2.6,0.4,3.7c0.3,2.3,0.5,4.4,0.8,6.1c0.5,3.3,0.9,5.2,0.9,5.2S284.2,247,284,243.6z"
-}))))));
+})))));
 var baguette_default = BaquetteIcon;
 
 // src/searchbar/icons/pancake.tsx
-import React21, { memo as memo19 } from "react";
-var PancakeSwapIcon = memo19(({ active, activeColor, color, height, width }) => /* @__PURE__ */ React21.createElement("svg", {
+import React21 from "react";
+var PancakeSwapIcon = ({ height, width }) => /* @__PURE__ */ React21.createElement(abstract_default, {
   height: height != null ? height : 16,
   width: width != null ? width : 16,
-  viewBox: "0 0 12 12",
-  fill: "none"
+  viewBox: "0 0 12 12"
 }, /* @__PURE__ */ React21.createElement("g", {
   transform: "translate(0)"
 }, /* @__PURE__ */ React21.createElement("g", {
@@ -1284,16 +1245,15 @@ var PancakeSwapIcon = memo19(({ active, activeColor, color, height, width }) => 
   width: "11.76",
   height: "11.93",
   fill: "white"
-}))))));
+})))));
 var pancake_default = PancakeSwapIcon;
 
 // src/searchbar/icons/canary.tsx
-import React22, { memo as memo20 } from "react";
-var CanaryIcon = memo20(({ active, activeColor, color, height, width }) => /* @__PURE__ */ React22.createElement("svg", {
+import React22 from "react";
+var CanaryIcon = ({ height, width }) => /* @__PURE__ */ React22.createElement(abstract_default, {
   height: height != null ? height : 16,
   width: width != null ? width : 16,
-  viewBox: "0 0 584 587",
-  fill: "none"
+  viewBox: "0 0 584 587"
 }, /* @__PURE__ */ React22.createElement("g", {
   transform: "translate(0)"
 }, /* @__PURE__ */ React22.createElement("path", {
@@ -1321,16 +1281,15 @@ var CanaryIcon = memo20(({ active, activeColor, color, height, width }) => /* @_
   d: "M5149 6508 c-59 -33 -86 -96 -81 -180 3 -41 77 -114 125 -123 120\n        -23 227 86 196 200 -29 105 -148 157 -240 103z"
 }), /* @__PURE__ */ React22.createElement("path", {
   d: "M7528 4429 c-120 -185 -238 -331 -392 -484 -475 -473 -1087 -787\n        -1684 -865 -124 -17 -420 -14 -546 5 -477 71 -873 312 -1178 716 -36 47 -73\n        100 -84 117 -10 18 -22 32 -28 32 -23 0 36 -277 100 -463 254 -738 894 -1154\n        1692 -1098 916 65 1763 743 2087 1672 43 125 127 453 123 482 -2 15 -28 -18\n        -90 -114z"
-})))));
+}))));
 var canary_default = CanaryIcon;
 
 // src/searchbar/icons/complus.network.tsx
-import React23, { memo as memo21 } from "react";
-var ComplusNetworkIcon = memo21(({ active, activeColor, color, height, width }) => /* @__PURE__ */ React23.createElement("svg", {
+import React23 from "react";
+var ComplusNetworkIcon = ({ height, width }) => /* @__PURE__ */ React23.createElement(abstract_default, {
   height: height != null ? height : 16,
   width: width != null ? width : 16,
-  viewBox: "0 0 400 400",
-  fill: "none"
+  viewBox: "0 0 400 400"
 }, /* @__PURE__ */ React23.createElement("g", {
   transform: "translate(0)"
 }, /* @__PURE__ */ React23.createElement("polygon", {
@@ -1339,16 +1298,15 @@ var ComplusNetworkIcon = memo21(({ active, activeColor, color, height, width }) 
 }), /* @__PURE__ */ React23.createElement("polygon", {
   fill: "#BB263B",
   points: "87.4,386.9 312.6,386.9 312.6,239.4 238.2,239.4 238.2,313.2 161.8,313.2 161.8,239.4 87.4,239.4 "
-}))));
+})));
 var complus_network_default = ComplusNetworkIcon;
 
 // src/searchbar/icons/elk.finance.tsx
-import React24, { memo as memo22 } from "react";
-var ElkFinanceIcon = memo22(({ active, activeColor, color, height, width }) => /* @__PURE__ */ React24.createElement("svg", {
+import React24 from "react";
+var ElkFinanceIcon = ({ height, width }) => /* @__PURE__ */ React24.createElement(abstract_default, {
   height: height != null ? height : 16,
   width: width != null ? width : 16,
-  viewBox: "0 0 512 512",
-  fill: "none"
+  viewBox: "0 0 400 400"
 }, /* @__PURE__ */ React24.createElement("g", {
   transform: "translate(0)"
 }, /* @__PURE__ */ React24.createElement("path", {
@@ -1383,16 +1341,15 @@ var ElkFinanceIcon = memo22(({ active, activeColor, color, height, width }) => /
   clipRule: "evenodd",
   d: "M124.293 153.463C125.185 153.635 126.43 154.042 127.471 155.083L259.939 287.551C261.505 289.116 261.782 291.17 261.822 292.461C261.867 293.902 261.643 295.509 261.286 297.164C260.567 300.501 259.117 304.864 257.037 310.154C256.4 311.805 252.605 320.934 245.723 337.382L244.701 339.822L242.064 340.029C228.957 341.055 216.256 343.846 203.948 348.404L203.908 348.419L203.867 348.433C198.723 350.222 193.934 352.336 189.495 354.769C189.416 354.985 189.322 355.291 189.226 355.708L189.18 355.909L189.115 356.104C188.834 356.945 188.494 357.8 188.062 358.557C187.698 359.193 186.932 360.376 185.533 361.075L185.48 361.102L185.427 361.126C182.436 362.522 178.516 362.444 174.508 361.839C170.013 361.195 166.062 359.921 162.967 357.755L162.95 357.743L162.933 357.731C161.126 356.441 160.539 354.398 160.291 353.246C159.993 351.862 159.886 350.231 159.886 348.481C159.886 344.957 160.328 340.187 161.155 334.27C161.865 328.358 162.619 323.591 163.429 320.037C163.835 318.26 164.276 316.689 164.771 315.387C165.221 314.203 165.888 312.764 166.968 311.684C167.754 310.897 168.771 310.256 169.694 309.741C170.688 309.187 171.892 308.608 173.269 308.005C176.023 306.798 179.701 305.393 184.258 303.795C189.779 301.807 194.72 300.15 199.071 298.829L187.566 287.324C179.733 289.368 173.262 291.299 168.129 293.113C162.559 295.083 158.819 296.828 156.632 298.292C153.559 300.913 151.565 302.7 150.547 303.718L150.087 304.179L149.511 304.484C146.589 306.031 143.038 306.525 139.231 306.394C135.573 306.268 131.78 305.522 129.271 303.014C128.049 301.792 127.337 300.229 126.882 298.789C126.411 297.298 126.105 295.576 125.911 293.702C125.525 289.964 125.538 285.13 125.894 279.296C126.133 273.473 126.584 268.714 127.291 265.118C127.644 263.318 128.086 261.677 128.662 260.287C129.207 258.973 130.044 257.45 131.436 256.367L131.784 256.097L132.179 255.902C138.256 252.904 143.78 250.431 148.741 248.499L126.239 225.997C119.422 226.572 110.86 229.269 100.435 234.429L100.405 234.443L100.376 234.457C95.892 236.592 91.2836 239.142 86.5504 242.112C85.9349 244.027 84.581 245.672 83.2566 246.997C81.648 248.605 79.5183 249.403 77.4756 249.811C75.401 250.226 72.9934 250.324 70.3513 250.201C67.7166 250.138 65.3905 249.92 63.5042 249.467C61.8732 249.076 59.441 248.26 58.0569 246.107C56.5684 243.813 55.9092 240.537 55.5785 237.08C55.2297 233.433 55.1919 228.837 55.4287 223.358C55.5493 217.873 55.8794 213.178 56.4405 209.313C56.9904 205.525 57.8005 202.246 59.0347 199.759C59.7191 198.337 60.8644 197.37 61.774 196.74C62.7685 196.052 63.9549 195.447 65.2308 194.9C67.7799 193.807 71.1952 192.734 75.3692 191.659C83.9424 189.254 89.2112 186.511 91.9264 183.796C94.0692 181.653 96.4442 177.944 98.9308 172.302C100.177 169.277 101.301 166.751 102.301 164.752C103.261 162.832 104.24 161.121 105.237 159.939C106.392 158.559 107.999 157.549 109.6 156.765C111.271 155.948 113.293 155.207 115.598 154.522L115.636 154.511L115.673 154.501C117.896 153.883 119.907 153.458 121.596 153.34C122.44 153.281 123.373 153.286 124.293 153.463ZM118.03 162.839C116.009 163.441 114.491 164.019 113.409 164.548C112.869 164.812 112.484 165.042 112.22 165.227C111.969 165.404 111.881 165.502 111.881 165.502L111.872 165.513L111.861 165.525C111.57 165.87 110.966 166.797 110.051 168.628C109.176 170.376 108.135 172.707 106.923 175.65L106.903 175.698L106.882 175.745C104.209 181.821 101.307 186.67 98.0535 189.923C93.7271 194.25 86.6784 197.491 77.662 200.015L77.6175 200.028L77.5728 200.039C73.547 201.075 70.607 202.023 68.6441 202.864C67.6594 203.286 67.0475 203.628 66.7062 203.864C66.6906 203.875 66.676 203.886 66.6623 203.895C66.0747 205.202 65.4818 207.346 65.0156 210.558C64.5213 213.963 64.2059 218.295 64.0907 223.594L64.0896 223.641L64.0876 223.688C63.857 228.992 63.908 233.159 64.2041 236.254C64.4451 238.774 64.8198 240.209 65.1011 240.926C65.2129 240.961 65.3534 241 65.5264 241.042C66.5636 241.291 68.2119 241.484 70.6053 241.54L70.658 241.541L70.7106 241.543C72.9802 241.652 74.6351 241.543 75.7762 241.314C76.821 241.105 77.1385 240.856 77.1437 240.856C77.6531 240.345 77.9721 239.954 78.1587 239.681C78.2406 239.562 78.2833 239.485 78.302 239.448C78.4633 238.821 78.7031 238.082 79.0921 237.381C79.3977 236.831 80.0574 235.832 81.2721 235.197C86.4798 231.895 91.5961 229.042 96.6209 226.648C108.486 220.778 118.932 217.492 127.803 217.231L129.672 217.176L164.728 252.232L157.967 254.4C152.203 256.249 145.163 259.192 136.813 263.279C136.772 263.363 136.723 263.47 136.667 263.603C136.392 264.268 136.085 265.299 135.793 266.788C135.21 269.759 134.781 274.027 134.55 279.693L134.548 279.737L134.545 279.781C134.199 285.435 134.213 289.746 134.53 292.811C134.689 294.343 134.911 295.439 135.145 296.179C135.285 296.625 135.4 296.845 135.444 296.923C135.538 296.99 135.787 297.141 136.31 297.298C137.02 297.511 138.066 297.684 139.53 297.734C142.125 297.824 143.86 297.504 144.974 297.05C146.335 295.745 148.432 293.895 151.192 291.544L151.361 291.4L151.544 291.274C154.668 289.121 159.334 287.032 165.24 284.944C171.221 282.83 178.756 280.621 187.81 278.313L190.2 277.704L215.85 303.354L208.427 305.21C202.989 306.57 195.919 308.806 187.177 311.954L187.16 311.96L187.143 311.966C182.666 313.536 179.215 314.859 176.747 315.941C175.511 316.483 174.579 316.938 173.914 317.309C173.527 317.525 173.298 317.675 173.18 317.757C173.121 317.868 173.013 318.09 172.87 318.467C172.572 319.25 172.235 320.394 171.877 321.964C171.163 325.095 170.451 329.533 169.753 335.345L169.748 335.387L169.742 335.429C168.929 341.237 168.551 345.553 168.551 348.481C168.551 349.728 168.621 350.59 168.71 351.144C170.305 352.051 172.588 352.812 175.753 353.264L175.771 353.266L175.789 353.269C178.31 353.651 179.909 353.632 180.844 353.503C181.251 351.834 181.946 349.904 183.35 348.5C183.988 347.862 184.718 347.404 185.473 347.092C190.309 344.453 195.48 342.178 200.979 340.263C213.195 335.743 225.785 332.861 238.74 331.621C245.041 316.556 248.426 308.404 248.956 307.027L248.962 307.011L248.968 306.996C250.995 301.841 252.245 297.988 252.816 295.338C253.05 294.254 253.14 293.504 253.159 293.025L122.124 161.99C121.287 162.057 119.956 162.306 118.03 162.839ZM253.142 292.518C253.143 292.517 253.148 292.538 253.153 292.586C253.143 292.543 253.141 292.519 253.142 292.518ZM168.849 351.728C168.847 351.731 168.836 351.705 168.817 351.642C168.841 351.694 168.85 351.726 168.849 351.728ZM66.501 204.023C66.5005 204.023 66.507 204.017 66.522 204.004C66.5089 204.017 66.5015 204.023 66.501 204.023Z",
   fill: "#231F20"
-}))));
+})));
 var elk_finance_default = ElkFinanceIcon;
 
 // src/searchbar/icons/lydia.finance.tsx
-import React25, { memo as memo23 } from "react";
-var LydiaFinanceIcon = memo23(({ active, activeColor, color, height, width }) => /* @__PURE__ */ React25.createElement("svg", {
+import React25 from "react";
+var LydiaFinanceIcon = ({ height, width }) => /* @__PURE__ */ React25.createElement(abstract_default, {
   height: height != null ? height : 16,
   width: width != null ? width : 16,
-  viewBox: "0 0 400 400",
-  fill: "none"
+  viewBox: "0 0 400 400"
 }, /* @__PURE__ */ React25.createElement("g", {
   transform: "translate(0)"
 }, /* @__PURE__ */ React25.createElement("path", {
@@ -2109,16 +2066,15 @@ var LydiaFinanceIcon = memo23(({ active, activeColor, color, height, width }) =>
 }), /* @__PURE__ */ React25.createElement("path", {
   fill: "#F4B731",
   d: "M338.5,171.3c-0.4-0.1-0.7-0.3-1.1-0.4c0.1-0.1,0.2-0.3,0.2-0.3C337.9,170.8,338.2,171,338.5,171.3\n        C338.5,171.2,338.5,171.3,338.5,171.3z"
-}))));
+})));
 var lydia_finance_default = LydiaFinanceIcon;
 
 // src/searchbar/icons/oliveswap.tsx
-import React26, { memo as memo24 } from "react";
-var OliveSwapIcon = memo24(({ active, activeColor, color, height, width }) => /* @__PURE__ */ React26.createElement("svg", {
+import React26 from "react";
+var OliveSwapIcon = ({ height, width }) => /* @__PURE__ */ React26.createElement(abstract_default, {
   height: height != null ? height : 16,
   width: width != null ? width : 16,
-  viewBox: "0 0 384 384",
-  fill: "none"
+  viewBox: "0 0 384 384"
 }, /* @__PURE__ */ React26.createElement("g", {
   transform: "translate(0)"
 }, /* @__PURE__ */ React26.createElement("circle", {
@@ -2141,16 +2097,15 @@ var OliveSwapIcon = memo24(({ active, activeColor, color, height, width }) => /*
 }), /* @__PURE__ */ React26.createElement("path", {
   d: "M119.181 172.255C112.72 172.255 107.055 170.266 102.88 166.093C91.3511 154.564 96.2211 131.704 113.912 113.912C122.064 105.761 131.704 99.9974 141.047 97.7116C151.284 95.2256 160.229 97.0145 165.995 102.78C171.758 108.545 173.647 117.49 171.063 127.727C168.777 137.169 163.012 146.811 154.962 154.96C143.632 166.191 130.312 172.255 119.181 172.255H119.181ZM149.794 106.556C147.408 106.556 145.122 106.955 143.431 107.352C135.879 109.241 127.827 114.111 120.97 120.968C107.652 134.286 102.582 151.779 109.838 159.035C117.094 166.291 134.587 161.223 147.905 147.903C154.762 141.045 159.632 132.994 161.521 125.341C162.515 121.465 163.41 114.211 159.037 109.838C156.551 107.352 153.073 106.556 149.794 106.556V106.556Z",
   fill: "black"
-}))));
+})));
 var oliveswap_default = OliveSwapIcon;
 
 // src/searchbar/icons/pandaswap.tsx
-import React27, { memo as memo25 } from "react";
-var PandaSwapIcon = memo25(({ active, activeColor, color, height, width }) => /* @__PURE__ */ React27.createElement("svg", {
+import React27 from "react";
+var PandaSwapIcon = ({ height, width }) => /* @__PURE__ */ React27.createElement(abstract_default, {
   height: height != null ? height : 16,
   width: width != null ? width : 16,
-  viewBox: "0 0 400 400",
-  fill: "none"
+  viewBox: "0 0 400 400"
 }, /* @__PURE__ */ React27.createElement("g", {
   transform: "translate(0)"
 }, /* @__PURE__ */ React27.createElement("path", {
@@ -2270,16 +2225,15 @@ var PandaSwapIcon = memo25(({ active, activeColor, color, height, width }) => /*
 }), /* @__PURE__ */ React27.createElement("path", {
   fill: "#FAFAFA",
   d: "M254.9,82.5c0-1.7,1.4-3.1,3.1-3.1c1.7,0,3,1.4,3,3.1c0,1.7-1.4,3.1-3,3.1C256.2,85.6,254.9,84.2,254.9,82.5z"
-}))));
+})));
 var pandaswap_default = PandaSwapIcon;
 
 // src/searchbar/icons/yetiswap.tsx
-import React28, { memo as memo26 } from "react";
-var YetiSwapIcon = memo26(({ active, activeColor, color, height, width }) => /* @__PURE__ */ React28.createElement("svg", {
+import React28 from "react";
+var YetiSwapIcon = ({ height, width }) => /* @__PURE__ */ React28.createElement(abstract_default, {
   height: height != null ? height : 16,
   width: width != null ? width : 16,
-  viewBox: "0 0 400 400",
-  fill: "none"
+  viewBox: "0 0 400 400"
 }, /* @__PURE__ */ React28.createElement("g", {
   transform: "translate(0)"
 }, /* @__PURE__ */ React28.createElement("path", {
@@ -2324,16 +2278,15 @@ var YetiSwapIcon = memo26(({ active, activeColor, color, height, width }) => /* 
 }), /* @__PURE__ */ React28.createElement("path", {
   fill: "#48668C",
   d: "M112.5,283c-0.2,0.2-0.5,0.5-0.7,0.7c0.1-0.4,0.1-0.8,0.2-1.3C112.2,282.6,112.4,282.8,112.5,283z"
-}))));
+})));
 var yetiswap_default = YetiSwapIcon;
 
 // src/searchbar/icons/zero.exchange.tsx
-import React29, { memo as memo27 } from "react";
-var ZeroExchangeIcon = memo27(({ active, activeColor, color, height, width }) => /* @__PURE__ */ React29.createElement("svg", {
+import React29 from "react";
+var ZeroExchangeIcon = ({ height, width }) => /* @__PURE__ */ React29.createElement(abstract_default, {
   height: height != null ? height : 16,
   width: width != null ? width : 16,
-  viewBox: "0 0 400 400",
-  fill: "none"
+  viewBox: "0 0 400 400"
 }, /* @__PURE__ */ React29.createElement("g", {
   transform: "translate(0)"
 }, /* @__PURE__ */ React29.createElement("path", {
@@ -2360,16 +2313,15 @@ var ZeroExchangeIcon = memo27(({ active, activeColor, color, height, width }) =>
 }), /* @__PURE__ */ React29.createElement("path", {
   fill: "#1FB8F9",
   d: "M135.1,311.6c12-1,21.2-7,29.6-15.5c45.4-45.9,90.8-92,137-137.2c17.4-17,20.3-41.5,3.3-59.9\n        c1.7-1.3,3.5-2.5,5-4c14.2-14.1,28.3-28.2,42.4-42.3c17.1,16.8,27,37.3,29.9,61c4.3,35.6-7.1,65.8-32.3,91.1\n        c-33.9,34-67.8,68.1-101.7,102.1c-1.5,1.5-2.9,3.1-4.4,4.7C207.6,311.6,171.4,311.6,135.1,311.6z"
-}))));
+})));
 var zero_exchange_default = ZeroExchangeIcon;
 
 // src/searchbar/icons/beamswap.tsx
-import React30, { memo as memo28 } from "react";
-var BeamSwapIcon = memo28(({ active, activeColor, color, height, width }) => /* @__PURE__ */ React30.createElement("svg", {
+import React30 from "react";
+var BeamSwapIcon = ({ height, width }) => /* @__PURE__ */ React30.createElement(abstract_default, {
   height: height != null ? height : 16,
   width: width != null ? width : 16,
-  viewBox: "0 0 400 400",
-  fill: "none"
+  viewBox: "0 0 400 400"
 }, /* @__PURE__ */ React30.createElement("g", {
   transform: "translate(0)"
 }, /* @__PURE__ */ React30.createElement("g", {
@@ -2455,16 +2407,15 @@ var BeamSwapIcon = memo28(({ active, activeColor, color, height, width }) => /* 
 }), /* @__PURE__ */ React30.createElement("path", {
   fill: "#05113B",
   d: "M291,297.8c12.7-6.9,22-9.5,36.7-5.6c14.7,3.9,15.9,31.7,22.1,43.6c-8.8-10.8-13.8-31.4-29.1-32.3\n        c-15.3-0.9-30.8,4.4-40.8,14.1c2.3,1.9,4.7,3.8,7,5.6c-19.7,11.4-46.5,14-69.3,6.7c8.2-0.9,16-3.9,22.1-8.5\n        c-9.2-13.5-30.8-17.6-48.7-14.8c-17.9,2.7-18.6,24.8-35.9,29.6c14.9-16.9,22.5-38.1,44.8-44.5c8.6-2.4,13.1-2.9,21.4,0.4\n        c10.1,3.9,24.1,17.9,35,19.5C265.9,312.9,282.8,302.2,291,297.8L291,297.8z"
-}))));
+})));
 var beamswap_default = BeamSwapIcon;
 
 // src/searchbar/icons/solarbeam.tsx
-import React31, { memo as memo29 } from "react";
-var SolarBeamIcon = memo29(({ active, activeColor, color, height, width }) => /* @__PURE__ */ React31.createElement("svg", {
+import React31 from "react";
+var SolarBeamIcon = ({ height, width }) => /* @__PURE__ */ React31.createElement(abstract_default, {
   height: height != null ? height : 16,
   width: width != null ? width : 16,
-  viewBox: "0 0 400 400",
-  fill: "none"
+  viewBox: "0 0 400 400"
 }, /* @__PURE__ */ React31.createElement("g", {
   transform: "translate(0)"
 }, /* @__PURE__ */ React31.createElement("g", null, /* @__PURE__ */ React31.createElement("linearGradient", {
@@ -2489,16 +2440,15 @@ var SolarBeamIcon = memo29(({ active, activeColor, color, height, width }) => /*
 })), /* @__PURE__ */ React31.createElement("path", {
   fill: "#FFFFFF",
   d: "M373.8,186.5c-2.4-31.5-13.2-60.6-30.1-85.2c-5.8-8.4-12.3-16.3-19.5-23.6c-31.6-32.1-75.5-52-124.1-52\n        c-16.6,0-32.6,2.4-47.9,6.7c-10.7,3-21,7.1-30.7,12c-34.3,17.4-62.2,45.7-78.8,80.4c-4.7,9.8-8.5,20.2-11.3,31\n        c-3.7,14.1-5.7,28.9-5.7,44.2c0,46.5,18.2,88.6,47.8,119.9c7.2,7.6,15,14.5,23.4,20.7c25.6,18.8,56.6,30.8,90.2,33.2\n        c4.2,0.3,8.5,0.5,12.9,0.5c4.3,0,8.5-0.2,12.7-0.5c39.4-2.8,75.1-18.7,103-43.4c6-5.3,11.5-11,16.7-17\n        c23.7-27.7,38.9-62.8,41.5-101.4c0.3-3.9,0.5-7.9,0.5-11.9C374.4,195.4,374.1,190.9,373.8,186.5z M348.8,177.3l-157.5-57.4\n        c0.7-4.5,1.1-9.1,1.1-13.7c0-0.9,0-1.9-0.1-2.8l121.5-1.8C331.9,122.7,344.4,148.7,348.8,177.3z M200,49.5\n        c32.9,0,63.3,10.6,88.1,28.6l-99.9,1.4c-3.2-10.1-8.2-19.5-14.6-27.7C182.1,50.4,191,49.5,200,49.5z M147.6,59\n        c12.8,11.8,20.8,28.6,20.8,47.2c0,35.4-28.8,64.2-64.2,64.2c-18.2,0-34.6-7.6-46.3-19.7C72.6,108.4,105.7,74.6,147.6,59z M49.5,200\n        c0-7.9,0.6-15.7,1.8-23.3c7.5,5.6,16,10.1,25.1,13.1l-2.1,92.7C58.7,258.9,49.5,230.5,49.5,200z M97.6,310.1l2.6-115.9\n        c1.3,0.1,2.6,0.1,3.9,0.1c5,0,9.9-0.4,14.7-1.2l58.9,155.7C147,344.2,119.3,330.3,97.6,310.1z M203.8,350.4l-62.2-164.4\n        c6-2.8,11.6-6.3,16.7-10.3l140.2,137.9C273,335.7,240,349.5,203.8,350.4z M315.3,296.5L175,158.5c3.6-4.9,6.7-10.1,9.3-15.7\n        l166.1,60.5C349.6,238.8,336.5,271.2,315.3,296.5z"
-}))));
+})));
 var solarbeam_default = SolarBeamIcon;
 
 // src/searchbar/icons/stellaswap.tsx
-import React32, { memo as memo30 } from "react";
-var StellaSwapIcon = memo30(({ active, activeColor, color, height, width }) => /* @__PURE__ */ React32.createElement("svg", {
+import React32 from "react";
+var StellaSwapIcon = ({ height, width }) => /* @__PURE__ */ React32.createElement(abstract_default, {
   height: height != null ? height : 16,
   width: width != null ? width : 16,
-  viewBox: "0 0 400 400",
-  fill: "none"
+  viewBox: "0 0 400 400"
 }, /* @__PURE__ */ React32.createElement("g", {
   transform: "translate(0)"
 }, /* @__PURE__ */ React32.createElement("circle", {
@@ -2522,7 +2472,7 @@ var StellaSwapIcon = memo30(({ active, activeColor, color, height, width }) => /
   style: { stopColor: `#301748` }
 })), /* @__PURE__ */ React32.createElement("path", {
   style: { fill: `url(#SVGID_1_)` },
-  d: "M207.4,328.9c-6.6-6.1-12.8-12.6-18.5-19.5c-13.6-17.5-43.9-48.3-51.4-55.9c-8.7-8.8-17.4-17.7-26-26.7\n          c-1.3-1.3-3.3-2.8-2.1-5c1.2-2.2,3.6-1.8,5.7-1.7c0.9,0.1,1.9,0.3,2.7,0.6c6.2,2.4,12.3,4.9,18.5,7.4c12.3,5,24.3,10.1,36.7,14.8\n          c7.4,2.8,10.6,0,9.2-7.8c-1.2-6.5-2.8-12.9-4.6-19.3c-1.5-5.4,1.6-11,7-12.5c0.5-0.1,1-0.2,1.6-0.3c2.5-0.4,5.1-0.4,7.6-0.6\n          c2.5-0.2,5.1-0.8,6.2-3.8c1-2.7,0.1-5.7-2.1-7.4c-8.4-8.1-16.6-16.2-24.9-24.4c-20.8-20.5-41.5-41-62.2-61.5\n          C98.4,93.3,86.1,81.2,73.9,69.1c-1.2-1.2-2.5-2.2-1.5-4.1s2.6-1.6,4.2-1.3c5.1,1,8.8,4.7,12.8,7.4c10.7,7.4,21.9,14,32.8,21\n          c7.6,4.8,15.3,9.5,22.9,14.4c7.6,4.9,14.7,9.7,22.2,14.5c10.7,6.8,21.5,13.4,32.2,20.2c11.5,7.3,23,14.8,34.4,22.3\n          c2.1,1.4,4,2.1,6.2,0.1c2.2-1.9,1.9-3.9,0.9-6.5c-2.3-6.2-6.6-11.1-8.2-17.4c-0.6-2.1-1-4.1,1-5.7c1.7-1.4,4.1-1.5,5.9-0.3\n          c7.8,3.7,15.3,7.8,22.7,12.3c8.9,5.6,18.2,10.6,27.8,14.9c15.6,7.4,30.5,16.1,45.3,24.9c8.1,5.2,15.2,11.9,20.6,19.9\n          c4.3,5.9,7.9,12.3,10.7,19c4,9.8,6.6,20,7.9,30.5c2.4,18.7-4.4,42.7-13.1,55.6c-7.4,11.7-17.1,21.8-28.5,29.8\n          c-7.7,5.2-15.9,9.5-24.6,12.8c-9.1,3.6-18.5,4.1-28.5,4.5c-0.8,0.1-1.6,0.1-2.5,0C256.6,356.6,236.2,353.7,207.4,328.9z\n          M341.7,266.5c0.7-33.6-26-61.5-59.7-62.2c-0.6,0-1.2,0-1.9,0c-32.9,0.2-60,27.1-60.1,62.6c0,29.1,28.3,61.5,60.5,59.5\n          C313.8,327.8,341.5,297.7,341.7,266.5z"
+  d: "M207.4,328.9c-6.6-6.1-12.8-12.6-18.5-19.5c-13.6-17.5-43.9-48.3-51.4-55.9c-8.7-8.8-17.4-17.7-26-26.7\n        c-1.3-1.3-3.3-2.8-2.1-5c1.2-2.2,3.6-1.8,5.7-1.7c0.9,0.1,1.9,0.3,2.7,0.6c6.2,2.4,12.3,4.9,18.5,7.4c12.3,5,24.3,10.1,36.7,14.8\n        c7.4,2.8,10.6,0,9.2-7.8c-1.2-6.5-2.8-12.9-4.6-19.3c-1.5-5.4,1.6-11,7-12.5c0.5-0.1,1-0.2,1.6-0.3c2.5-0.4,5.1-0.4,7.6-0.6\n        c2.5-0.2,5.1-0.8,6.2-3.8c1-2.7,0.1-5.7-2.1-7.4c-8.4-8.1-16.6-16.2-24.9-24.4c-20.8-20.5-41.5-41-62.2-61.5\n        C98.4,93.3,86.1,81.2,73.9,69.1c-1.2-1.2-2.5-2.2-1.5-4.1s2.6-1.6,4.2-1.3c5.1,1,8.8,4.7,12.8,7.4c10.7,7.4,21.9,14,32.8,21\n        c7.6,4.8,15.3,9.5,22.9,14.4c7.6,4.9,14.7,9.7,22.2,14.5c10.7,6.8,21.5,13.4,32.2,20.2c11.5,7.3,23,14.8,34.4,22.3\n        c2.1,1.4,4,2.1,6.2,0.1c2.2-1.9,1.9-3.9,0.9-6.5c-2.3-6.2-6.6-11.1-8.2-17.4c-0.6-2.1-1-4.1,1-5.7c1.7-1.4,4.1-1.5,5.9-0.3\n        c7.8,3.7,15.3,7.8,22.7,12.3c8.9,5.6,18.2,10.6,27.8,14.9c15.6,7.4,30.5,16.1,45.3,24.9c8.1,5.2,15.2,11.9,20.6,19.9\n        c4.3,5.9,7.9,12.3,10.7,19c4,9.8,6.6,20,7.9,30.5c2.4,18.7-4.4,42.7-13.1,55.6c-7.4,11.7-17.1,21.8-28.5,29.8\n        c-7.7,5.2-15.9,9.5-24.6,12.8c-9.1,3.6-18.5,4.1-28.5,4.5c-0.8,0.1-1.6,0.1-2.5,0C256.6,356.6,236.2,353.7,207.4,328.9z\n        M341.7,266.5c0.7-33.6-26-61.5-59.7-62.2c-0.6,0-1.2,0-1.9,0c-32.9,0.2-60,27.1-60.1,62.6c0,29.1,28.3,61.5,60.5,59.5\n        C313.8,327.8,341.5,297.7,341.7,266.5z"
 }), /* @__PURE__ */ React32.createElement("linearGradient", {
   id: "SVGID_00000179647521726871257740000015064218755421354396_",
   gradientUnits: "userSpaceOnUse",
@@ -2542,7 +2492,7 @@ var StellaSwapIcon = memo30(({ active, activeColor, color, height, width }) => /
   style: { stopColor: `#0D1126` }
 })), /* @__PURE__ */ React32.createElement("path", {
   style: { fill: `url(#SVGID_00000179647521726871257740000015064218755421354396_)` },
-  d: "M134.3,187.3c0,5.2,4,9.5,9.2,9.6\n          c5.1,0,9.1-4.2,9.1-9.2c0-0.2,0-0.4,0-0.6c-0.2-5.2-4.4-9.3-9.6-9.4C137.9,178.1,134.1,182.3,134.3,187.3z"
+  d: "M134.3,187.3c0,5.2,4,9.5,9.2,9.6\n        c5.1,0,9.1-4.2,9.1-9.2c0-0.2,0-0.4,0-0.6c-0.2-5.2-4.4-9.3-9.6-9.4C137.9,178.1,134.1,182.3,134.3,187.3z"
 }), /* @__PURE__ */ React32.createElement("linearGradient", {
   id: "SVGID_00000102512321202755739380000006902697473436652699_",
   gradientUnits: "userSpaceOnUse",
@@ -2562,7 +2512,7 @@ var StellaSwapIcon = memo30(({ active, activeColor, color, height, width }) => /
   style: { stopColor: `#0D1126` }
 })), /* @__PURE__ */ React32.createElement("path", {
   style: { fill: `url(#SVGID_00000102512321202755739380000006902697473436652699_)` },
-  d: "M173,70c5.6,0,8.9-3.6,8.8-9.2\n          c-0.3-4.8-4.2-8.7-9.1-8.9c-4.1,0-9.7,5.2-9.8,9.1C163.3,66.3,167.8,70.3,173,70z"
+  d: "M173,70c5.6,0,8.9-3.6,8.8-9.2\n        c-0.3-4.8-4.2-8.7-9.1-8.9c-4.1,0-9.7,5.2-9.8,9.1C163.3,66.3,167.8,70.3,173,70z"
 }), /* @__PURE__ */ React32.createElement("linearGradient", {
   id: "SVGID_00000039129237823542455810000013466356786325873588_",
   gradientUnits: "userSpaceOnUse",
@@ -2582,7 +2532,7 @@ var StellaSwapIcon = memo30(({ active, activeColor, color, height, width }) => /
   style: { stopColor: `#0D1126` }
 })), /* @__PURE__ */ React32.createElement("path", {
   style: { fill: `url(#SVGID_00000039129237823542455810000013466356786325873588_)` },
-  d: "M72.7,152.2c0.2-4.4-3.2-8.2-7.6-8.4\n          c-0.3,0-0.5,0-0.8,0c-4.6,0.4-8.3,4.2-8.5,8.8c0.3,4.5,4,8,8.5,8.2c4.5,0.2,8.3-3.4,8.5-7.9C72.8,152.6,72.8,152.4,72.7,152.2z"
+  d: "M72.7,152.2c0.2-4.4-3.2-8.2-7.6-8.4\n        c-0.3,0-0.5,0-0.8,0c-4.6,0.4-8.3,4.2-8.5,8.8c0.3,4.5,4,8,8.5,8.2c4.5,0.2,8.3-3.4,8.5-7.9C72.8,152.6,72.8,152.4,72.7,152.2z"
 }), /* @__PURE__ */ React32.createElement("linearGradient", {
   id: "SVGID_00000057129531663735334810000000943885206532706221_",
   gradientUnits: "userSpaceOnUse",
@@ -2602,17 +2552,16 @@ var StellaSwapIcon = memo30(({ active, activeColor, color, height, width }) => /
   style: { stopColor: `#E2107B` }
 })), /* @__PURE__ */ React32.createElement("path", {
   style: { fill: `url(#SVGID_00000057129531663735334810000000943885206532706221_)` },
-  d: "M280.6,326.3c33.2,1.5,61-28.6,61.2-59.8\n          c0.7-33.6-26-61.5-59.7-62.2c-0.6,0-1.2,0-1.9,0c-32.9,0.2-60,27.1-60.1,62.6C220,296,248.4,328.3,280.6,326.3z"
-}))));
+  d: "M280.6,326.3c33.2,1.5,61-28.6,61.2-59.8\n        c0.7-33.6-26-61.5-59.7-62.2c-0.6,0-1.2,0-1.9,0c-32.9,0.2-60,27.1-60.1,62.6C220,296,248.4,328.3,280.6,326.3z"
+})));
 var stellaswap_default = StellaSwapIcon;
 
 // src/searchbar/icons/solar.flare.tsx
-import React33, { memo as memo31 } from "react";
-var SolarFlareIcon = memo31(({ active, activeColor, color, height, width }) => /* @__PURE__ */ React33.createElement("svg", {
+import React33 from "react";
+var SolarFlareIcon = ({ height, width }) => /* @__PURE__ */ React33.createElement(abstract_default, {
   height: height != null ? height : 16,
   width: width != null ? width : 16,
-  viewBox: "0 0 400 400",
-  fill: "none"
+  viewBox: "0 0 400 400"
 }, /* @__PURE__ */ React33.createElement("g", {
   transform: "translate(0)"
 }, /* @__PURE__ */ React33.createElement("linearGradient", {
@@ -2631,16 +2580,15 @@ var SolarFlareIcon = memo31(({ active, activeColor, color, height, width }) => /
 })), /* @__PURE__ */ React33.createElement("path", {
   style: { fill: `url(#SVGID_1_)` },
   d: "M200,2.8C91.1,2.8,2.8,91.1,2.8,200S91.1,397.2,200,397.2c108.9,0,197.2-88.3,197.2-197.2S308.9,2.8,200,2.8z\n        M370.2,200c0,17-2.5,33.4-7.2,48.9l-83.6-36.2l6.9-6.9l83.6-15.9C370.1,193.2,370.2,196.6,370.2,200z M29.8,200\n        c0-3.3,0.1-6.6,0.3-9.9l83.8,16l6.3,6.3l-83.4,36.1C32.3,233.1,29.8,216.8,29.8,200z M126.9,181l-93.1-17.7\n        c4.1-18.7,11.4-36.3,21.1-52.2l79.8,62.1L126.9,181z M146.1,200l53.9-53.9l53.9,53.9L200,253.9L146.1,200z M273,180.8l-8.1-8.1\n        l79.9-62.2c9.9,16,17.2,33.7,21.4,52.6L273,180.8z M213,120.9V30.3c18.5,1.4,36.2,5.7,52.5,12.6l-48.1,82.3L213,120.9z M186,121.9\n        l-4,4l-48.3-82.7c16.3-6.9,33.9-11.3,52.3-12.9V121.9z M328.6,88.7l-83.1,64.7l-8.4-8.4l52.4-89.7\n        C304.2,64.5,317.4,75.7,328.6,88.7z M109.6,55.9l52.5,89.9l-8.2,8.2l-83-64.7C82.1,76.3,95.1,65,109.6,55.9z M200,370.2\n        c-67.5,0-125.9-39.4-153.4-96.5l94.2-40.8l59.2,59.2l58.9-58.9l94.3,40.9C325.6,330.9,267.3,370.2,200,370.2z"
-}))));
+})));
 var solar_flare_default = SolarFlareIcon;
 
 // src/searchbar/icons/mdex.tsx
-import React34, { memo as memo32 } from "react";
-var MdexIcon = memo32(({ active, activeColor, color, height, width }) => /* @__PURE__ */ React34.createElement("svg", {
+import React34 from "react";
+var MdexIcon = ({ height, width }) => /* @__PURE__ */ React34.createElement(abstract_default, {
   height: height != null ? height : 16,
   width: width != null ? width : 16,
-  viewBox: "0 0 12 11",
-  fill: "none"
+  viewBox: "0 0 12 11"
 }, /* @__PURE__ */ React34.createElement("g", {
   transform: "translate(0)"
 }, /* @__PURE__ */ React34.createElement("path", {
@@ -2649,7 +2597,7 @@ var MdexIcon = memo32(({ active, activeColor, color, height, width }) => /* @__P
 }), /* @__PURE__ */ React34.createElement("path", {
   d: "M7.39996 2.54002C6.96996 2.15002 6.58996 1.81002 6.20996 1.46002C7.59996 -0.989979 11.76 -0.039979 11.72 2.83002C11.75 4.83002 11.72 6.82002 11.69 8.82002C11.68 9.63002 11.01 10.28 10.2 10.27C10.13 10.27 10.06 10.27 9.98996 10.25C9.98996 7.92002 9.99996 5.58002 10.03 3.25002C10.12 2.65002 9.79996 2.06002 9.23996 1.82002C8.44996 1.46002 7.92996 2.02002 7.38996 2.54002H7.39996Z",
   fill: "white"
-}))));
+})));
 var mdex_default = MdexIcon;
 
 // src/searchbar/tokenSearch/Logo.tsx
@@ -2860,13 +2808,13 @@ function intToWords(int) {
 }
 
 // src/searchbar/icons/down.tsx
-import React36, { memo as memo33 } from "react";
-var DownIcon = memo33(({ active, activeColor, color, height, width }) => /* @__PURE__ */ React36.createElement("svg", {
+import React36 from "react";
+var DownIcon = ({ height, width }) => /* @__PURE__ */ React36.createElement(abstract_default, {
   height: height != null ? height : 7,
-  viewBox: "0 0 7 5",
   width: width != null ? width : 5,
-  xmlns: "http://www.w3.org/2000/svg",
-  fill: "none"
+  viewBox: "0 0 7 5"
+}, /* @__PURE__ */ React36.createElement("g", {
+  transform: "translate(0)"
 }, /* @__PURE__ */ React36.createElement("path", {
   d: "M1 1L3.49449 3.5L6 1",
   stroke: "#7A808A",
@@ -2876,13 +2824,13 @@ var DownIcon = memo33(({ active, activeColor, color, height, width }) => /* @__P
 var down_default = DownIcon;
 
 // src/searchbar/icons/up.tsx
-import React37, { memo as memo34 } from "react";
-var UpIcon = memo34(({ active, activeColor, color, height, width }) => /* @__PURE__ */ React37.createElement("svg", {
+import React37 from "react";
+var UpIcon = ({ height, width }) => /* @__PURE__ */ React37.createElement(abstract_default, {
   height: height != null ? height : 7,
-  viewBox: "0 0 7 4",
   width: width != null ? width : 4,
-  xmlns: "http://www.w3.org/2000/svg",
-  fill: "none"
+  viewBox: "0 0 7 4"
+}, /* @__PURE__ */ React37.createElement("g", {
+  transform: "translate(0)"
 }, /* @__PURE__ */ React37.createElement("path", {
   d: "M6 3.5L3.50551 1L1 3.5",
   stroke: "#7A808A",
@@ -2893,16 +2841,16 @@ var up_default = UpIcon;
 
 // src/searchbar/tokenSearch/ResultDetail.tsx
 var imageSize = 26;
-var StyledDetailList = styled3.div`  
+var StyledDetailList = styled2.div`  
   ${({ styleOverrides }) => {
-  var _a2, _b2, _c2, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t, _u;
+  var _a2, _b2, _c2, _d2, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t, _u;
   return `
     display: ${((_a2 = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _a2.display) || "grid"};
     grid-gap: 5px;
     align-items: ${((_b2 = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _b2.alignItems) || "center"};    
     justify-content: space-between;
     padding: ${((_c2 = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _c2.padding) || "5px 0"};    
-    background: ${((_d = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _d.background) || "#00070E"};
+    background: ${((_d2 = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _d2.background) || "#00070E"};
     border-bottom: ${((_e = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _e.borderbottom) || "1px solid #474F5C"};    
     grid-template-columns: ${((_f = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _f.gridTemplateColumns) || "15% 1% 18% 4% 4% 35% 10%"}; 
 
@@ -2960,14 +2908,14 @@ var StyledDetailList = styled3.div`
   `;
 }}    
 `;
-var StyledDetailContent = styled3.div`
+var StyledDetailContent = styled2.div`
   ${({ styleOverrides }) => {
-  var _a2, _b2, _c2, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n;
+  var _a2, _b2, _c2, _d2, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n;
   return `
     display: ${((_a2 = styleOverrides == null ? void 0 : styleOverrides.content) == null ? void 0 : _a2.display) || "block"};    
     align-items: ${((_b2 = styleOverrides == null ? void 0 : styleOverrides.content) == null ? void 0 : _b2.alignItems) || "center"};    
     padding: ${((_c2 = styleOverrides == null ? void 0 : styleOverrides.content) == null ? void 0 : _c2.padding) || "5px"};    
-    margin: ${((_d = styleOverrides == null ? void 0 : styleOverrides.content) == null ? void 0 : _d.margin) || "5px 0"};    
+    margin: ${((_d2 = styleOverrides == null ? void 0 : styleOverrides.content) == null ? void 0 : _d2.margin) || "5px 0"};    
     background: ${((_e = styleOverrides == null ? void 0 : styleOverrides.content) == null ? void 0 : _e.background) || "#474F5C"};
     border-bottom: ${((_f = styleOverrides == null ? void 0 : styleOverrides.content) == null ? void 0 : _f.borderbottom) || "1px solid #474F5C"};    
     border-radius: ${((_g = styleOverrides == null ? void 0 : styleOverrides.content) == null ? void 0 : _g.borderRadius) || "4px"};      
@@ -3068,7 +3016,7 @@ var StyledDetailContent = styled3.div`
   `;
 }}
 `;
-var StyledAction = styled3.div`
+var StyledAction = styled2.div`
   cursor: pointer;
   padding: 10;
 `;
@@ -3172,7 +3120,7 @@ var ResultDetail = (props) => {
     className: "info"
   }, /* @__PURE__ */ React38.createElement("div", {
     className: "detail"
-  }, /* @__PURE__ */ React38.createElement("span", null, "Holders:"), " ", /* @__PURE__ */ React38.createElement("strong", null)), /* @__PURE__ */ React38.createElement("div", {
+  }), /* @__PURE__ */ React38.createElement("div", {
     className: "detail"
   }, /* @__PURE__ */ React38.createElement("span", null, "Exchange: "), /* @__PURE__ */ React38.createElement("div", {
     className: "logo"
@@ -3191,13 +3139,13 @@ var ResultDetail = (props) => {
 var ResultDetail_default = ResultDetail;
 
 // src/searchbar/tokenSearch/SearchResult.tsx
-var StyledResult = styled4.div`
+var StyledResult = styled3.div`
   background-color: inherit;
   margin-left: auto;
   margin-right: auto;
   position: relative;  
 `;
-var StyledLoading = styled4.div`  
+var StyledLoading = styled3.div`  
   ${({ styleOverrides }) => `
     position: relative;
     display: flex;
@@ -3207,7 +3155,7 @@ var StyledLoading = styled4.div`
     font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "12px"};      
   `}    
 `;
-var StyledResultTitle = styled4.div`
+var StyledResultTitle = styled3.div`
   ${({ styleOverrides }) => `    
     display: flex;
     align-items: center;
@@ -3221,7 +3169,7 @@ var StyledResultTitle = styled4.div`
     }
   `}    
 `;
-var StyledResultContent = styled4.div`
+var StyledResultContent = styled3.div`
   overflow: auto;
   margin-left: auto;
   margin-right: auto;
@@ -3260,9 +3208,14 @@ var SearchResult = (props) => {
   const dispatch = useDispatch2();
   const renderProps = useContext3(TokenSearch_default);
   const { customResult, customLoading } = renderProps;
-  const { suggestions, searchText } = useSelector2((state) => state);
+  const { suggestions, searchText, isLoading, suggestionRendered } = useSelector2((state) => state);
   const [currentIndex, setCurrentIndex] = useState2(-1);
-  const filteredSuggestions = suggestions.slice().sort((pair1, pair2) => pair2.volumeUSD - pair1.volumeUSD);
+  const hasNextPage = useMemo(() => suggestionRendered.length < suggestions.length, [suggestions, suggestionRendered]);
+  const [sentryRef] = useInfiniteScroll({
+    loading: isLoading,
+    hasNextPage,
+    onLoadMore: () => dispatch(loadMore())
+  });
   if (props.loading) {
     const loadingTitle = (customLoading == null ? void 0 : customLoading.loadingTitle) ? customLoading.loadingTitle : "Searching...";
     return /* @__PURE__ */ React39.createElement(StyledLoading, {
@@ -3275,7 +3228,7 @@ var SearchResult = (props) => {
   };
   return /* @__PURE__ */ React39.createElement(StyledResult, null, /* @__PURE__ */ React39.createElement(StyledResultTitle, {
     styleOverrides: customResult == null ? void 0 : customResult.title
-  }, /* @__PURE__ */ React39.createElement("div", null, "Search Results ", /* @__PURE__ */ React39.createElement("span", null, "(", filteredSuggestions.length, " Results Found)")), /* @__PURE__ */ React39.createElement("button", {
+  }, /* @__PURE__ */ React39.createElement("div", null, "Search Results ", /* @__PURE__ */ React39.createElement("span", null, "(", suggestions.length, " Results Found)")), /* @__PURE__ */ React39.createElement("button", {
     onClick: handleClose
   }, "Close\xA0", /* @__PURE__ */ React39.createElement(unchecked_default, {
     width: 7,
@@ -3284,22 +3237,24 @@ var SearchResult = (props) => {
     styleOverrides: customResult == null ? void 0 : customResult.content
   }, /* @__PURE__ */ React39.createElement("div", {
     className: "header"
-  }, /* @__PURE__ */ React39.createElement("span", null, "Pair"), /* @__PURE__ */ React39.createElement("span", null, "Net."), /* @__PURE__ */ React39.createElement("span", null, "Exch."), /* @__PURE__ */ React39.createElement("span", null, "Details.")), filteredSuggestions.map((suggestions2, index) => /* @__PURE__ */ React39.createElement(ResultDetail_default, {
-    suggestions: filteredSuggestions,
+  }, /* @__PURE__ */ React39.createElement("span", null, "Pair"), /* @__PURE__ */ React39.createElement("span", null, "Net."), /* @__PURE__ */ React39.createElement("span", null, "Exch."), /* @__PURE__ */ React39.createElement("span", null, "Details.")), suggestionRendered.map((suggestions2, index) => /* @__PURE__ */ React39.createElement(ResultDetail_default, {
+    suggestions: suggestionRendered,
     index,
     key: `token-detail-${index}`,
     currentIndex,
     handleDetail: setCurrentIndex
-  })), !!searchText && !filteredSuggestions.length && /* @__PURE__ */ React39.createElement(StyledLoading, {
-    styleOverrides: customLoading == null ? void 0 : customLoading.styles
-  }, notFoundTitle)));
+  })), !!searchText && !suggestionRendered.length && /* @__PURE__ */ React39.createElement(StyledLoading, {
+    styleOverrides: customLoading
+  }, notFoundTitle), hasNextPage && /* @__PURE__ */ React39.createElement("div", {
+    ref: sentryRef
+  }, "loading....")));
 };
 var SearchResult_default = SearchResult;
 
 // src/searchbar/tokenSearch/SearchFilters.tsx
-import React44, { useContext as useContext7, useEffect as useEffect3 } from "react";
+import React44, { useContext as useContext7, useEffect as useEffect2 } from "react";
 import { useDispatch as useDispatch5, useSelector as useSelector5 } from "react-redux";
-import styled6 from "styled-components";
+import styled5 from "styled-components";
 import {
   Accordion,
   AccordionItem,
@@ -3315,15 +3270,14 @@ import { omitBy as omitBy2 } from "lodash";
 
 // src/searchbar/tokenSearch/Chip.tsx
 import React41, { useContext as useContext4 } from "react";
-import styled5 from "styled-components";
+import styled4 from "styled-components";
 
 // src/searchbar/icons/checked.tsx
-import React40, { memo as memo35 } from "react";
-var CheckedIcon = memo35(({ active, activeColor, color, height, width }) => /* @__PURE__ */ React40.createElement("svg", {
+import React40 from "react";
+var CheckedIcon = ({ height, width }) => /* @__PURE__ */ React40.createElement(abstract_default, {
   height: height != null ? height : 11,
   width: width != null ? width : 8,
-  viewBox: "0 0 11 8",
-  fill: "none"
+  viewBox: "0 0 11 8"
 }, /* @__PURE__ */ React40.createElement("g", {
   transform: "translate(0)"
 }, /* @__PURE__ */ React40.createElement("path", {
@@ -3331,27 +3285,28 @@ var CheckedIcon = memo35(({ active, activeColor, color, height, width }) => /* @
   stroke: "#00C30E",
   strokeWidth: "1.5",
   strokeLinecap: "round"
-}))));
+})));
 var checked_default = CheckedIcon;
 
 // src/searchbar/tokenSearch/Chip.tsx
-var StyledChip = styled5.div`
+var StyledChip = styled4.div`
     ${({ styleOverrides }) => `
         > input {
           display: none;
         }
 
         > input + label {
-          -webkit-transition: all 500ms ease;
+          
           transition: all 500ms ease;    
           cursor: pointer;    
           display: grid;
           align-items: center;
-              
-          -moz-user-select: -moz-none;
-          -webkit-user-select: none;
-          -ms-user-select: none;
           user-select: none;
+
+          ::-webkit-transition: all 500ms ease;    
+          ::-moz-user-select: -moz-none;
+          ::-webkit-user-select: none;
+          ::-ms-user-select: none;          
     
           font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "8px"};  
           font-weight: ${(styleOverrides == null ? void 0 : styleOverrides.fontWeight) || "500"};  
@@ -3372,7 +3327,7 @@ var StyledChip = styled5.div`
         }
         
         > input:checked + label {   
-          -webkit-transition: all 500ms ease;
+          ::-webkit-transition: all 500ms ease;
           transition: all 500ms ease;   
           border-color: ${(styleOverrides == null ? void 0 : styleOverrides.checkedBorderColor) || "#474F5C"};    
           color: ${(styleOverrides == null ? void 0 : styleOverrides.checkedColor) || "white"};   
@@ -3384,7 +3339,7 @@ var Chip = (props) => {
   const renderProps = useContext4(TokenSearch_default);
   const { label, checked, onChange, name, value, styleOverrides, grayscaleFilter } = props;
   const { customChip } = renderProps;
-  const customStyles = styleOverrides === void 0 ? customChip == null ? void 0 : customChip.styleOverrides : styleOverrides;
+  const customStyles = styleOverrides === void 0 ? customChip : styleOverrides;
   const checkedStatus = checked ? /* @__PURE__ */ React41.createElement(checked_default, null) : /* @__PURE__ */ React41.createElement(unchecked_default, null);
   return /* @__PURE__ */ React41.createElement(StyledChip, {
     styleOverrides: customStyles
@@ -3429,15 +3384,16 @@ var FilterNetworkAll = () => {
     gridTemplateColumns: (customAllChip == null ? void 0 : customAllChip.gridTemplateColumns) || "40px",
     justifySelf: (customAllChip == null ? void 0 : customAllChip.justifySelf) || "center"
   };
+  const handleChange = () => {
+    dispatch(setNetworkMapAll({ networkNames, networkAll }));
+    dispatch(setExchangeMapAll({ exchangeNames: exchangeNamesActive, exchangeAll: false }));
+  };
   return /* @__PURE__ */ React42.createElement(Chip, {
     name: "AllNetworks",
     label: "Select All",
     checked: networkAll,
     styleOverrides,
-    onChange: (e) => {
-      dispatch(setNetworkMapAll({ networkNames, networkAll }));
-      dispatch(setExchangeMapAll({ exchangeNames: exchangeNamesActive, exchangeAll: false }));
-    }
+    onChange: handleChange
   });
 };
 var FilterNetworkSelectors = () => {
@@ -3508,7 +3464,7 @@ var FilterExchangeSelectors = () => {
 };
 
 // src/searchbar/tokenSearch/SearchFilters.tsx
-var FilterWrapper = styled6.div`  
+var FilterWrapper = styled5.div`  
   ${({ styleOverrides }) => `    
     .accordion__button {
       position: relative;
@@ -3547,7 +3503,7 @@ var FilterWrapper = styled6.div`
     }
   `}  
 `;
-var StyledFilterHeader = styled6.div`  
+var StyledFilterHeader = styled5.div`  
   ${({ styleOverrides }) => `
     display: ${(styleOverrides == null ? void 0 : styleOverrides.display) || "flex"};
     justify-content: ${(styleOverrides == null ? void 0 : styleOverrides.justifyContent) || "space-between"};
@@ -3568,7 +3524,7 @@ var StyledFilterHeader = styled6.div`
     }
   `}      
 `;
-var StyledFilterContent = styled6.div`
+var StyledFilterContent = styled5.div`
   ${({ styleOverrides }) => `
     display: flex;
     flex-wrap: wrap;
@@ -3579,7 +3535,7 @@ var StyledFilterContent = styled6.div`
     padding:  ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "0 0 5px"};           
   `}      
 `;
-var StyledDescription = styled6.div`
+var StyledDescription = styled5.div`
   ${({ styleOverrides }) => `
     text-align: ${(styleOverrides == null ? void 0 : styleOverrides.textAlign) || "right"};
     font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "9px"};
@@ -3589,7 +3545,7 @@ var StyledDescription = styled6.div`
     color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "#7A808A"};       
   `}
 `;
-var StyledFilterWrapper = styled6.div`  
+var StyledFilterWrapper = styled5.div`  
   ${({ styleOverrides }) => `
     display: block;
     justify-content: ${(styleOverrides == null ? void 0 : styleOverrides.justifyContent) || "center"};
@@ -3599,7 +3555,7 @@ var StyledFilterWrapper = styled6.div`
     border-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderRadius) || "4px"};    
   `}      
 `;
-var StyledCount = styled6.div`
+var StyledCount = styled5.div`
   color: white;
   font-weight: 400;  
 `;
@@ -3621,7 +3577,7 @@ var SearchDescription = (props) => {
   return /* @__PURE__ */ React44.createElement(React44.Fragment, null, desc);
 };
 var SearchFilters = () => {
-  var _a2, _b2, _c2, _d, _e, _f, _g, _h, _i, _j;
+  var _a2, _b2, _c2, _d2, _e, _f, _g, _h, _i, _j;
   const dispatch = useDispatch5();
   const { networkMap, exchangeMap, searchText } = useSelector5((state) => state);
   const renderProps = useContext7(TokenSearch_default);
@@ -3629,36 +3585,36 @@ var SearchFilters = () => {
   const exchangesActive = Object.values(networkMap).filter((b) => b).length !== 0;
   const networkCount = Object.values(networkMap).filter((b) => b).length;
   const exchangeCount = Object.values(exchangeMap).filter((b) => b).length;
-  const networkTitle = ((_a2 = customSearchFilter == null ? void 0 : customSearchFilter.network) == null ? void 0 : _a2.title) || "Select Network(s)";
-  const exchangeTitle = ((_b2 = customSearchFilter == null ? void 0 : customSearchFilter.exchange) == null ? void 0 : _b2.title) || "Select Exchange(s)";
-  useEffect3(() => {
+  const networkTitle = ((_a2 = customSearchFilter == null ? void 0 : customSearchFilter.fitler) == null ? void 0 : _a2.network) || "Select Network(s)";
+  const exchangeTitle = ((_b2 = customSearchFilter == null ? void 0 : customSearchFilter.fitler) == null ? void 0 : _b2.exchange) || "Select Exchange(s)";
+  useEffect2(() => {
     (Object.keys(networkMap).length > 0 || Object.keys(exchangeMap).length > 0) && searchText.length > 0 && dispatch(setViewResult(true));
   }, [networkMap, exchangeMap, searchText]);
   return /* @__PURE__ */ React44.createElement(FilterWrapper, {
     styleOverrides: customSearchFilter == null ? void 0 : customSearchFilter.wrapper
   }, /* @__PURE__ */ React44.createElement(Accordion, {
-    allowMultipleExpanded: false,
+    allowMultipleExpanded: true,
     allowZeroExpanded: true
   }, /* @__PURE__ */ React44.createElement(AccordionItem, null, /* @__PURE__ */ React44.createElement(AccordionItemHeading, null, /* @__PURE__ */ React44.createElement(AccordionItemButton, null, /* @__PURE__ */ React44.createElement(StyledFilterHeader, {
-    styleOverrides: (_c2 = customSearchFilter == null ? void 0 : customSearchFilter.network) == null ? void 0 : _c2.header
+    styleOverrides: (_c2 = customSearchFilter == null ? void 0 : customSearchFilter.fitler) == null ? void 0 : _c2.header
   }, /* @__PURE__ */ React44.createElement("span", null, networkTitle), /* @__PURE__ */ React44.createElement(FilterNetworkAll, null)))), /* @__PURE__ */ React44.createElement(AccordionItemPanel, null, /* @__PURE__ */ React44.createElement(StyledFilterWrapper, {
-    styleOverrides: (_d = customSearchFilter == null ? void 0 : customSearchFilter.network) == null ? void 0 : _d.wrapper
+    styleOverrides: (_d2 = customSearchFilter == null ? void 0 : customSearchFilter.fitler) == null ? void 0 : _d2.wrapper
   }, /* @__PURE__ */ React44.createElement(StyledFilterContent, {
-    styleOverrides: (_e = customSearchFilter == null ? void 0 : customSearchFilter.network) == null ? void 0 : _e.content
+    styleOverrides: (_e = customSearchFilter == null ? void 0 : customSearchFilter.fitler) == null ? void 0 : _e.content
   }, /* @__PURE__ */ React44.createElement(FilterNetworkSelectors, null)), /* @__PURE__ */ React44.createElement(StyledDescription, {
-    styleOverrides: (_f = customSearchFilter == null ? void 0 : customSearchFilter.network) == null ? void 0 : _f.description
+    styleOverrides: (_f = customSearchFilter == null ? void 0 : customSearchFilter.fitler) == null ? void 0 : _f.description
   }, /* @__PURE__ */ React44.createElement(SearchDescription, {
     networkCount,
     exchangeCount,
     type: "network"
   }))))), exchangesActive && /* @__PURE__ */ React44.createElement(AccordionItem, null, /* @__PURE__ */ React44.createElement(AccordionItemHeading, null, /* @__PURE__ */ React44.createElement(AccordionItemButton, null, /* @__PURE__ */ React44.createElement(StyledFilterHeader, {
-    styleOverrides: (_g = customSearchFilter == null ? void 0 : customSearchFilter.exchange) == null ? void 0 : _g.header
+    styleOverrides: (_g = customSearchFilter == null ? void 0 : customSearchFilter.fitler) == null ? void 0 : _g.header
   }, /* @__PURE__ */ React44.createElement("span", null, exchangeTitle), /* @__PURE__ */ React44.createElement(FilterExchangeAll, null)))), /* @__PURE__ */ React44.createElement(AccordionItemPanel, null, /* @__PURE__ */ React44.createElement(StyledFilterWrapper, {
-    styleOverrides: (_h = customSearchFilter == null ? void 0 : customSearchFilter.exchange) == null ? void 0 : _h.wrapper
+    styleOverrides: (_h = customSearchFilter == null ? void 0 : customSearchFilter.fitler) == null ? void 0 : _h.wrapper
   }, /* @__PURE__ */ React44.createElement(StyledFilterContent, {
-    styleOverrides: (_i = customSearchFilter == null ? void 0 : customSearchFilter.exchange) == null ? void 0 : _i.content
+    styleOverrides: (_i = customSearchFilter == null ? void 0 : customSearchFilter.fitler) == null ? void 0 : _i.content
   }, /* @__PURE__ */ React44.createElement(FilterExchangeSelectors, null)), /* @__PURE__ */ React44.createElement(StyledDescription, {
-    styleOverrides: (_j = customSearchFilter == null ? void 0 : customSearchFilter.exchange) == null ? void 0 : _j.description
+    styleOverrides: (_j = customSearchFilter == null ? void 0 : customSearchFilter.fitler) == null ? void 0 : _j.description
   }, /* @__PURE__ */ React44.createElement(SearchDescription, {
     networkCount,
     exchangeCount,
@@ -3668,7 +3624,7 @@ var SearchFilters = () => {
 var SearchFilters_default = SearchFilters;
 
 // src/searchbar/tokenSearch/index.tsx
-var StyledWrapper2 = styled7.div`
+var StyledWrapper2 = styled6.div`
   ${({ styleOverrides }) => `
     min-width: 420px;            
     position: relative;
@@ -3714,7 +3670,7 @@ var TokenSearch = (renderProps) => {
   const dispatch = useDispatch6();
   const { isSelecting, isLoading, viewResult } = useSelector6((state) => state);
   const searchRef = useRef();
-  useEffect4(() => {
+  useEffect3(() => {
     window.onmousedown = (e) => {
       var _a2;
       if (!((_a2 = searchRef == null ? void 0 : searchRef.current) == null ? void 0 : _a2.contains(e.target))) {
