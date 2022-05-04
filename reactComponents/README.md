@@ -1,22 +1,58 @@
-### npm install dependency in package.json
-
+# Search Bar Token Pair Centric Widget
+## npm install
 ```
-
-    "@romeblockchain/terminal-library": "git+https://github.com/Rome-Blockchain-Labs/terminal-library.git#8dda04858acb1c45437325857eff56c60afca5ee"
+ npm i @romeblockchain/react-components
 ```
-
-### import and use the react react component
-
-import {HelloWorldComponent} from "@romeblockchain/terminal-library/reactComponents/dist"
-
+## How to use the search bar component
 ```
+import { SearchBar } from '@romeblockchain/react-components';
+
 <div>
-    <HelloWorldComponent/>
+    <SearchBar />    
 </div>
 ```
 
-### Publishing Instructions
+### Props attribute descrption
 
-1. Go to `react-virtuazlied/dist/es/WindowScroller/utils/onScroll.js`
-2. Delete the last line `import { bpfrpt_proptype_WindowScroller } from "../WindowScroller.js";`
-3. `npm run publish`
+```
+// customActions is the array list which has the index and component
+const customActions = [
+    {
+        index: 1,
+        component: actionComponent1
+    },
+    {    
+        index: 2,
+        component: actionComponent2   
+    },
+    {   
+        index: 3,
+        component: actionComponent3
+    },
+    ...
+]
+
+// You can refer the detail for the token pair information from the prop
+const actionComponent1 = (props) => {  
+  const {detail} = props
+  const handleClick = () => {
+    console.log('Exchange: ', detail)
+  }
+  return (
+    <div onClick={handleClick}>Exchange</div>
+  )
+}
+```
+
+### Set configuration params in .ENV (Optional)
+```
+REACT_APP_SEARCH_INPUT_LENGTH_MINIMUM=3
+REACT_APP_SEARCH_ASYNC_DELAY=300
+REACT_APP_SEARCH_ASYNC_DATASET_LENGTH_MAXIMUM=500
+```
+## After that you can pass the props as follows;
+```
+    // All the props are optional, you may pass or not
+    <SearchBar customActions={customActions}                
+    />
+```

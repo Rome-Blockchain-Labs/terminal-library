@@ -4,32 +4,18 @@ import { stringify } from 'flatted';
 import { searchTokensAsync } from "../tokenSearch/helpers/async";
 import { uniq, omitBy } from "lodash"
 import { networkExchangePairs } from '../tokenSearch/helpers/config';
-import {TokenSearchState} from "./types";
+import { TokenSearchState } from "./types";
+import config from '../config';
 
-export const setPair = createAsyncThunk(
-  'token/setPair',
-  async ({ selectedPair }:any) => {
-    console.log("setPair")
-    return selectedPair;
-  }
-);
-
-export const resetSearchOnNewExchange = createAsyncThunk(
-  'token/searchReset',
-  async (searchString:any, thunkAPI:any) => {
-    console.log("resetSearchOnNewExchange")
-    thunkAPI.dispatch(searchTokenPairs(''));
-  }
-);
+const LOAD_LIMIT = Number(config.LOAD_LIMIT || 10)
 
 //todo no need for this to be a thunk
 const setPairSearchTimestamp = createAsyncThunk(
   'token/saveTime',
-  async (timestamp:any) => {
+  async (timestamp: number) => {
     return timestamp;
   }
 );
-
 
 // Function that handles the "All" values of both the network and the exchange.
 // Consider that "no value" equates "All".
@@ -72,9 +58,9 @@ const valueCleaner = (networkMap, exchangeMap) => {
 
 export const searchTokenPairs = createAsyncThunk(
   'token/search',
-  async (searchString:any, thunkAPI:any) => {
+  async (searchString: any, thunkAPI: any) => {
     try {
-      let { networkMap, exchangeMap } = thunkAPI.getState();
+      const { networkMap, exchangeMap } = thunkAPI.getState();
       let processedNetworks;
       let processedExchanges;
       const pairSearchTimestamp = new Date().getTime();
@@ -108,8 +94,6 @@ export const searchTokenPairs = createAsyncThunk(
       // Loading the data.
       const data = await retry(() => searchTokensAsync(searchString, processedNetworks, processedExchanges), { retries: 1 });
 
-      // console.log("data", data);
-      console.log("data", data.length);
       return { data, pairSearchTimestamp };
     }
     catch (e) {
@@ -129,30 +113,22 @@ const initialState: TokenSearchState = {
   selectedPair: undefined,
   serializedTradeEstimator: '',
   suggestions: [],
+  suggestionRendered: [],
+  page: 1,
   exchangeMap: {},
-  networkMap: {}
+  networkMap: {},
+  viewResult: false
 };
+
+const loadMoreItem = (state) => {
+  state.suggestionRendered = state.suggestions.slice(0, state.page * LOAD_LIMIT)
+  state.page += 1
+}
 
 export const tokenSearchSlice = createSlice({
   extraReducers: (builder) => {
-    builder.addCase(resetSearchOnNewExchange.fulfilled, (state, action) => {
-      state.searchText = '';
-      state.suggestions = [];
-      state.isLoading = true;
-      state.fetchError = null;
-      state.isSelecting = false;
-      state.selectedPair = undefined;
-      // don't update pairSearchTimestamp
-      state.serializedTradeEstimator = '';
-    });
     builder.addCase(setPairSearchTimestamp.fulfilled, (state, action) => {
       state.pairSearchTimestamp = action.payload;
-    });
-    builder.addCase(setPair.fulfilled, (state, action) => {
-      //pending/rejected not needed as its not really async
-      state.searchText = '';
-      state.isSelecting = false;
-      state.selectedPair = action.payload;
     });
     builder.addCase(searchTokenPairs.pending, (state) => {
       state.isLoading = true;
@@ -161,12 +137,15 @@ export const tokenSearchSlice = createSlice({
     builder.addCase(searchTokenPairs.fulfilled, (state, action) => {
       if (action.payload?.pairSearchTimestamp >= state.pairSearchTimestamp) {
         state.pairSearchTimestamp = action.payload.pairSearchTimestamp;
-        state.suggestions = action.payload.data;
+        const suggestions = action.payload.data
+        suggestions.sort((pair1, pair2) => pair2.volumeUSD - pair1.volumeUSD);
+        state.suggestions = suggestions
         state.isLoading = false;
         state.fetchError = null;
+        loadMoreItem(state)
       }
     });
-    builder.addCase(searchTokenPairs.rejected, (state, action) => {
+    builder.addCase(searchTokenPairs.rejected, (state) => {
       state.suggestions = [];
       state.isLoading = false;
       state.fetchError = 'Something went wrong fetching token pair.'; //action.error.message
@@ -175,6 +154,18 @@ export const tokenSearchSlice = createSlice({
   initialState,
   name: 'tokenSearch',
   reducers: {
+    resetSearch: (state) => {
+      state.searchText = '';
+      state.suggestions = [];
+      state.isLoading = false;
+      state.exchangeMap = {},
+        state.networkMap = {},
+        state.isSelecting = false;
+      state.viewResult = false;
+    },
+    setViewResult: (state, action) => {
+      state.viewResult = action.payload
+    },
     setSearchText: (state, action) => {
       state.searchText = action.payload;
     },
@@ -194,7 +185,6 @@ export const tokenSearchSlice = createSlice({
     setExchangeMapAll: (state, action) => {
       let exchangeName;
 
-
       // Loops through the network names.
       for (exchangeName of action.payload.exchangeNames) {
         // Validate if "all exchange" is active.
@@ -206,7 +196,7 @@ export const tokenSearchSlice = createSlice({
           // Removes all manual networks.
           delete state.exchangeMap[exchangeName]
         }
-      };
+      }
       // Object.keys(state.exchangeMap).map(key => delete state.exchangeMap[key]);
     },
     setNetworkMap: (state, action) => {
@@ -228,11 +218,27 @@ export const tokenSearchSlice = createSlice({
           // Removes all manual networks.
           delete state.networkMap[networkName]
         }
-      };
+      }
+    },
+    loadMore: (state) => {
+      loadMoreItem(state)
     }
   },
 });
 
-export const { setSearchText, startSelecting, stopSelecting, toggleSelecting, setExchangeMap, setExchangeMapAll, setNetworkMap, setNetworkMapAll } =
+export const {
+  setSearchText,
+  startSelecting,
+  stopSelecting,
+  toggleSelecting,
+  setExchangeMap,
+  setExchangeMapAll,
+  setNetworkMap,
+  setNetworkMapAll,
+  setViewResult,
+  resetSearch,
+  loadMore
+} =
   tokenSearchSlice.actions;
+
 export default tokenSearchSlice.reducer;

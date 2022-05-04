@@ -9,8 +9,6 @@ export const romeTokenSyncUri = String(
 
 export const maxHits = Number(process.env.REACT_APP_SEARCH_ASYNC_DATASET_LENGTH_MAXIMUM || 500)
 
-export const minStringSearch = Number(process.env.REACT_APP_SEARCH_INPUT_LENGTH_MINIMUM || 3)
-
 const AvalanchePairs = [
   ["avalanche","baguette"],
   ["avalanche","canary"],
@@ -48,5 +46,6 @@ const moonriverPairs = [
 ]
 export const networkExchangePairs = [...BSCPairs,...AvalanchePairs, ...moonbeamPairs, ...moonriverPairs];
 export const networkNames = uniq(networkExchangePairs.map(pair => pair[0]));
-export const exchangeNames = networkNames => uniq(networkExchangePairs.filter(pair => networkNames.includes(pair[0])).map(pair => pair[1]));
+// eslint-disable-next-line
+export const exchangeNames = (networkNames: Array<string>) => uniq(networkExchangePairs.filter(pair => networkNames.includes(pair[0])).map(pair => pair[1]));
 

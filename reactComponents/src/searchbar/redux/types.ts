@@ -26,6 +26,8 @@ type TokenPair = {
 export type TokenSearchState = {
   searchText: string;
   suggestions: Array<any>;
+  suggestionRendered: Array<any>;
+  page: number;
   isLoading: boolean;
   fetchError: string | null;
   isSelecting: boolean;
@@ -34,4 +36,5 @@ export type TokenSearchState = {
   serializedTradeEstimator: string;
   exchangeMap:any//todo
   networkMap:any//todo
+  viewResult: boolean;
 };
