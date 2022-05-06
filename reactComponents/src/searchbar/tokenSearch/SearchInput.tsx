@@ -30,7 +30,6 @@ const StyledInput = styled.input`
 
 const StyledSearchIconWrapper = styled.div`    
   ${({styleOverrides}) => `
-    cursor: pointer;
     float: right;
     position: absolute;
     right: ${ styleOverrides?.right || "14px" };      

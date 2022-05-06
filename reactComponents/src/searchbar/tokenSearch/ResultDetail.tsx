@@ -21,7 +21,7 @@ const StyledDetailList = styled.div`
     background: ${ styleOverrides?.container?.background || "#00070E" };
     border-bottom: ${ styleOverrides?.container?.borderbottom || "1px solid #474F5C" };    
     grid-template-columns: ${styleOverrides?.container?.gridTemplateColumns || "15% 1% 18% 4% 4% 35% 10%"}; 
-
+    cursor: pointer; 
     & .token {
       display: inherit;
       align-items: center;
@@ -72,6 +72,12 @@ const StyledDetailList = styled.div`
       &:hover {
         background-color: ${ styleOverrides?.button?.hoverBackColor || "#232C38" };      
       }    
+    }
+    &:hover {
+      color: #e0e34e;
+      .token, .pair, button {
+        color: #e0e34e;
+      }
     }
   `}    
 `;
@@ -232,7 +238,7 @@ export const ResultDetail: FC<DetailType> = (props: DetailType) => {
   return (
     <>     
     { currentIndex !== index && 
-      <StyledDetailList styleOverrides={customTokenDetail?.list}>              
+      <StyledDetailList styleOverrides={customTokenDetail?.list} onClick={() => handleDetail(currentIndex === index ? null : index)}>              
       <div className='token'>
         {tokenImage(selectedPair.token0)} <span>{selectedPair.token0.name}</span>
       </div>    
