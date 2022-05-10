@@ -74,9 +74,9 @@ const StyledDetailList = styled.div`
       }    
     }
     &:hover {
-      color: #e0e34e;
+      color: rgb(193,255,0);;
       .token, .pair, button {
-        color: #e0e34e;
+        color: rgb(193,255,0);
       }
     }
   `}

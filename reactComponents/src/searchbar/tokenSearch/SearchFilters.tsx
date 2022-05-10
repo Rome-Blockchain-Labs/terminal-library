@@ -129,15 +129,19 @@ const SearchDescription: FC<SelectedNetworks> = (props: SelectedNetworks) => {
     if (type === 'network')
       desc = (
         <div style={{ display: 'flex', justifyContent: 'right' }}>
-          Searching&nbsp;<StyledCount>{networkCount} network(s)</StyledCount>&nbsp;within&nbsp;
-          <StyledCount>{exchangeCount} exchange(s)</StyledCount>
+          Searching&nbsp;
+          <StyledCount>
+            {networkCount} network{networkCount > 1 ? 's' : ''}
+          </StyledCount>
+          &nbsp;within&nbsp;
+          <StyledCount>{exchangeCount} exchange{exchangeCount > 1 ? 's' : ''}</StyledCount>
         </div>
       );
     else
       desc = (
         <div style={{ display: 'flex', justifyContent: 'right' }}>
-          Searching&nbsp;<StyledCount>{exchangeCount} exchange(s)</StyledCount>&nbsp;within&nbsp;
-          <StyledCount>{networkCount} network(s)</StyledCount>
+          Searching&nbsp;<StyledCount>{exchangeCount} exchange{exchangeCount > 1 ? 's' : ''}</StyledCount>&nbsp;within&nbsp;
+          <StyledCount>{networkCount} network{networkCount > 1 ? 's' : ''}</StyledCount>
         </div>
       );
   }

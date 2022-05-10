@@ -21,16 +21,13 @@ const StyledInput = styled.input`
     margin-right: auto;
     position: relative;
     outline: 0;
+    border: none;
     width: ${styleOverrides?.width || '-webkit-fill-available'};
-    height: ${styleOverrides?.height || 'auto'};
-    border: ${styleOverrides?.border || '5px solid #474F5C'};   
+    height: ${styleOverrides?.height || 'auto'};    
     color: ${styleOverrides?.color || '#7A808A'};
-    display: ${styleOverrides?.display || 'block'};           
-    border-radius: ${styleOverrides?.borderRadius || '4px'};  
-    background: ${styleOverrides?.background || '#00070E'};   
+    display: ${styleOverrides?.display || 'block'}; 
     padding: ${styleOverrides?.padding || '10px 14px'};    
-    font-size: ${styleOverrides?.fontSize || '8px'};      
-    font-family: ${styleOverrides?.fontFamily || "'Fira Code', monospace"};
+    background: ${styleOverrides?.background || '#00070E'};  
   `}
 `;
 
@@ -44,7 +41,20 @@ const StyledSearchIconWrapper = styled.div`
 `;
 
 const StyledWrapper = styled.div`
-  position: relative;
+  ${({ styleOverrides }) => `    
+    position: relative;
+    border: ${styleOverrides?.border || '5px solid #474F5C'}; 
+    border-radius: ${styleOverrides?.borderRadius || '4px'}; 
+    color: ${styleOverrides?.color || '#7A808A'};
+    background: ${styleOverrides?.background || '#00070E'};  
+    font-size: ${styleOverrides?.fontSize || '8px'};      
+    font-family: ${styleOverrides?.fontFamily || "'Fira Code', monospace"};
+
+    .invalid-error {
+      padding: ${styleOverrides?.padding || '0 14px 5px'};   
+      color: ${styleOverrides?.colorError || '#F52E2E'};  
+    }
+  `}
 `;
 
 const StyledResetBtn = styled.button`
@@ -58,13 +68,17 @@ const SearchInput = (): JSX.Element => {
   const renderProps = useContext(TokenSearchContext);
   const { customSearchInput } = renderProps;
   const [text, setText] = useState('');
+  const [error, setError] = useState(false);
   const { searchText, networkMap, exchangeMap } = useSelector((state: RootState) => state);
   // Updates the datasets of the results.
   useEffect(() => {
     // Ensure that the search text fulfills the minimum lenght requirement.
     if (searchText.length >= config.SEARCH_INPUT_LENGTH_MINIMUM) {
+      setError(false);
       dispatch(searchTokenPairs({ searchString: searchText, networks: renderProps.networks }));
       dispatch(setSearchText(searchText));
+    } else if (searchText.length > 0) {
+      setError(true);
     }
   }, [dispatch, networkMap, exchangeMap, searchText]);
 
@@ -97,7 +111,7 @@ const SearchInput = (): JSX.Element => {
 
   // RENDERING.
   return (
-    <StyledWrapper onClick={() => dispatch(startSelecting())}>
+    <StyledWrapper onClick={() => dispatch(startSelecting())} styleOverrides={customSearchInput?.input}>
       <StyledInput
         placeholder={placeholder}
         autocomplete={'off'}
@@ -106,6 +120,11 @@ const SearchInput = (): JSX.Element => {
         styleOverrides={customSearchInput?.input}
         value={text}
       />
+      {error && (
+        <div className="invalid-error">
+          Please input {config.SEARCH_INPUT_LENGTH_MINIMUM} characters minimum
+        </div>
+      )}
       <StyledResetBtn onClick={handleReset}>
         <span>Reset Search</span>
         <ResetIcon />
