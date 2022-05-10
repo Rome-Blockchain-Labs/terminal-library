@@ -27,7 +27,7 @@ const StyledDetailList = styled.div`
       align-items: center;
       grid-template-columns: 16px 100px; 
       color: ${styleOverrides?.token?.color || '#B4BBC7'};
-      font-size: ${styleOverrides?.token?.fontSize || '8px'};
+      font-size: ${styleOverrides?.token?.fontSize || '10px'};
       font-weight: ${styleOverrides?.token?.fontWeight || '600'};      
       padding: ${styleOverrides?.token?.padding || '0 5px'};      
       
@@ -43,7 +43,7 @@ const StyledDetailList = styled.div`
 
     & .pair {
       color: ${styleOverrides?.pair?.color || '#B4BBC7'};
-      font-size: ${styleOverrides?.pair?.fontSize || '7px'};
+      font-size: ${styleOverrides?.pair?.fontSize || '10px'};
 
       & .count {
         display: flex;
@@ -63,7 +63,7 @@ const StyledDetailList = styled.div`
       background-color: ${styleOverrides?.button?.backgroundColor || '#474F5C'};      
       color: ${styleOverrides?.button?.color || '#7A808A'};      
       border-radius: ${styleOverrides?.button?.borderRadius || '4px'};      
-      font-size: ${styleOverrides?.button?.fontSize || '7px'};
+      font-size: ${styleOverrides?.button?.fontSize || '10px'};
       border-width: 0;      
       cursor: pointer;
       padding: ${styleOverrides?.button?.padding || '3px'};
@@ -96,7 +96,7 @@ const StyledDetailContent = styled.div`
     & .details {
       display: grid;
       padding: 3px 0;
-      font-size: ${styleOverrides?.content?.fontSize || '7px'};
+      font-size: ${styleOverrides?.content?.fontSize || '10px'};
 
       grid-template-columns: ${styleOverrides?.content?.gridTemplateColumns || '53% 45% 2%'}; 
 
@@ -109,7 +109,7 @@ const StyledDetailContent = styled.div`
         
         & .name {
           align-self: center;          
-          font-size: ${styleOverrides?.token?.fontSize || '8px'};
+          font-size: ${styleOverrides?.token?.fontSize || '10x'};
           font-weight: ${styleOverrides?.token?.fontWeight || '600'};          
         }
     
@@ -119,7 +119,7 @@ const StyledDetailContent = styled.div`
           grid-row: 2;
           grid-column: 2;
           color: #B4BBC7;
-          font-size: ${styleOverrides?.address?.fontSize || '7px'};
+          font-size: ${styleOverrides?.address?.fontSize || '10px'};
           padding-bottom: 5px;
           
           > strong {
@@ -140,7 +140,7 @@ const StyledDetailContent = styled.div`
         grid-template-columns: 40px 30px 50px;
         display: grid;
 
-        font-size: ${styleOverrides?.content?.detail?.fontSize || '7px'};
+        font-size: ${styleOverrides?.content?.detail?.fontSize || '10px'};
         > strong {
           color: white;
         }

@@ -1,5 +1,6 @@
 import React, { useContext, FC, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { omitBy } from 'lodash';
 import styled from 'styled-components';
 import {
   Accordion,
@@ -62,13 +63,13 @@ const StyledFilterHeader = styled.div`
     width: ${styleOverrides?.width || 'auto'};
     border: ${styleOverrides?.border || 'none'}; 
     background-color: ${styleOverrides?.backgroundColor || '#00070E'}; 
-    color: ${styleOverrides?.color || '#B4BBC7'};    
+    color: ${styleOverrides?.color || '#fff'};    
     cursor: pointer;
     padding: ${styleOverrides?.padding || '6px 14px'};   
     text-align: ${styleOverrides?.textAlign || 'left'};     
     margin: ${styleOverrides?.margin || '5px 0 0'};     
     border-radius: ${styleOverrides?.borderRadius || '4px'};     
-    font-size: ${styleOverrides?.fontSize || '9px'};     
+    font-size: ${styleOverrides?.fontSize || '13px'};     
     font-weight: ${styleOverrides?.fontWeight || '500'};     
     &:hover {
       background-color: ${styleOverrides?.hoverColor || '#232C38'};
@@ -91,7 +92,7 @@ const StyledFilterContent = styled.div`
 const StyledDescription = styled.div`
   ${({ styleOverrides }) => `
     text-align: ${styleOverrides?.textAlign || 'right'};
-    font-size: ${styleOverrides?.fontSize || '9px'};
+    font-size: ${styleOverrides?.fontSize || '12px'};
     font-weight: ${styleOverrides?.fontWeight || '100'};
     padding: ${styleOverrides?.padding || '10px 10px 5px'};       
     background-color: ${styleOverrides?.backgroundColor || '#00070E'};
@@ -134,14 +135,22 @@ const SearchDescription: FC<SelectedNetworks> = (props: SelectedNetworks) => {
             {networkCount} network{networkCount > 1 ? 's' : ''}
           </StyledCount>
           &nbsp;within&nbsp;
-          <StyledCount>{exchangeCount} exchange{exchangeCount > 1 ? 's' : ''}</StyledCount>
+          <StyledCount>
+            {exchangeCount} exchange{exchangeCount > 1 ? 's' : ''}
+          </StyledCount>
         </div>
       );
     else
       desc = (
         <div style={{ display: 'flex', justifyContent: 'right' }}>
-          Searching&nbsp;<StyledCount>{exchangeCount} exchange{exchangeCount > 1 ? 's' : ''}</StyledCount>&nbsp;within&nbsp;
-          <StyledCount>{networkCount} network{networkCount > 1 ? 's' : ''}</StyledCount>
+          Searching&nbsp;
+          <StyledCount>
+            {exchangeCount} exchange{exchangeCount > 1 ? 's' : ''}
+          </StyledCount>
+          &nbsp;within&nbsp;
+          <StyledCount>
+            {networkCount} network{networkCount > 1 ? 's' : ''}
+          </StyledCount>
         </div>
       );
   }
@@ -153,11 +162,27 @@ export const SearchFilters = (): JSX.Element => {
   const dispatch = useDispatch();
   const { networkMap, exchangeMap, searchText } = useSelector((state: RootState) => state);
   const renderProps = useContext(TokenSearchContext);
-  const { customSearchFilter } = renderProps;
+  const { customSearchFilter, networks } = renderProps;
   const exchangesActive = Object.values(networkMap).filter((b) => b).length !== 0;
 
-  const networkCount = Object.values(networkMap).filter((b) => b).length;
-  const exchangeCount = Object.values(exchangeMap).filter((b) => b).length;
+  let networkIds: string[] = Object.keys(omitBy(networkMap, (b) => !b));
+  const exchangeIds: string[] = Object.keys(omitBy(exchangeMap, (b) => !b)) || [];
+
+  if (!networkIds.length) {
+    networkIds = networks?.map((network) => network.id) || [];
+  }
+  const networkCount = networkIds.length;
+
+  if (!exchangeIds.length) {
+    networks?.forEach((network) => {
+      if (networkIds.includes(network.id)) {
+        network.exchanges?.forEach((exchange) => {
+          exchangeIds.push(exchange.id);
+        });
+      }
+    });
+  }
+  const exchangeCount = exchangeIds.length;
 
   const networkTitle = customSearchFilter?.fitler?.network || 'Select Network(s)';
   const exchangeTitle = customSearchFilter?.fitler?.exchange || 'Select Exchange(s)';

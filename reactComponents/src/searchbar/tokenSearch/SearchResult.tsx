@@ -33,9 +33,9 @@ const StyledResultTitle = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    color: ${styleOverrides?.color || '#B4BBC7'};
-    font-size: ${styleOverrides?.fontSize || '9px'};      
-    padding: ${styleOverrides?.padding || '4px 16px'};      
+    color: ${styleOverrides?.color || '#fff'};
+    font-size: ${styleOverrides?.fontSize || '12px'};      
+    padding: ${styleOverrides?.padding || '4px 14px'};      
     margin: ${styleOverrides?.margin || '0'};      
     > span {
       font-size: ${styleOverrides?.fontSize2 || '7px'};      
@@ -69,7 +69,7 @@ const StyledResultContent = styled.div`
     grid-template-columns: 41% 5% 6% 49%;
     border-bottom: 1px solid #474f5c;
     color: #b4bbc7;
-    font-size: 7px;
+    font-size: 8px;
     font-weight: bold;
     padding-bottom: 10px;
 

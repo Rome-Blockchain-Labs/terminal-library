@@ -24,7 +24,7 @@ const StyledInput = styled.input`
     border: none;
     width: ${styleOverrides?.width || '-webkit-fill-available'};
     height: ${styleOverrides?.height || 'auto'};    
-    color: ${styleOverrides?.color || '#7A808A'};
+    color: ${styleOverrides?.color || '#B7BEC9'};
     display: ${styleOverrides?.display || 'block'}; 
     padding: ${styleOverrides?.padding || '10px 14px'};    
     background: ${styleOverrides?.background || '#00070E'};  
@@ -43,7 +43,7 @@ const StyledSearchIconWrapper = styled.div`
 const StyledWrapper = styled.div`
   ${({ styleOverrides }) => `    
     position: relative;
-    border: ${styleOverrides?.border || '5px solid #474F5C'}; 
+    border: ${styleOverrides?.border || '4px solid #474F5C'}; 
     border-radius: ${styleOverrides?.borderRadius || '4px'}; 
     color: ${styleOverrides?.color || '#7A808A'};
     background: ${styleOverrides?.background || '#00070E'};  

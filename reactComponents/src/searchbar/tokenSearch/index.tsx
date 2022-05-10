@@ -34,9 +34,9 @@ const StyledWrapper = styled.div`
       align-items: center;
       border-color: ${styleOverrides?.button.borderColor || '#232C38'};      
       background-color: ${styleOverrides?.button.backColor || '#232C38'};      
-      color: ${styleOverrides?.button.color || '#7A808A'};      
+      color: ${styleOverrides?.button.color || '#B1B8C3'};      
       border-radius: ${styleOverrides?.button.borderRadius || '4px'};      
-      font-size: ${styleOverrides?.button.fontSize || '7px'};      
+      font-size: ${styleOverrides?.button.fontSize || '10px'};      
       padding: ${styleOverrides?.button.padding || '3px 6px'};      
       border-width: 0;      
       cursor: pointer;
@@ -59,7 +59,7 @@ export const TokenSearch: FC<RenderProps> = (renderProps: RenderProps) => {
 
   useEffect(() => {
     window.onmousedown = (e) => {
-      if (!searchRef?.current?.contains(e.target)) {
+      if (!searchRef?.current?.contains(e.target) || e.target.closest('.close-result')) {
         dispatch(stopSelecting());
         dispatch(setViewResult(false));
       }

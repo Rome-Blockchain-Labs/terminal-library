@@ -24,7 +24,7 @@ const StyledChip = styled.div`
           ::-webkit-user-select: none;
           ::-ms-user-select: none;          
     
-          font-size: ${styleOverrides?.fontSize || '8px'};  
+          font-size: ${styleOverrides?.fontSize || '10px'};  
           font-weight: ${styleOverrides?.fontWeight || '500'};  
           border-radius: ${styleOverrides?.borderRadius || '4px'};  
           background-color: ${styleOverrides?.backgroundColor || '#232B35'};  
