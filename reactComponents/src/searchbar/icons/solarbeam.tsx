@@ -11,10 +11,10 @@ const SolarBeamIcon: FC<IIconProps> = ({ height, width }) => (
     <g transform='translate(0)'>
       <g>      
         <linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="2072.4641" y1="-1546.937" x2="2469.3081" y2="-1546.937" gradientTransform="matrix(-0.7071 -0.7071 -0.7071 0.7071 711.9044 2899.5825)">
-          <stop offset="0" style={{stopColor: '#FFCB86'}} />
-          <stop offset="1" style={{stopColor: '#D75CA9'}} />
+          <stop offset="0" style={{ stopColor: '#FFCB86' }} />
+          <stop offset="1" style={{ stopColor: '#D75CA9' }} />
         </linearGradient>
-        <circle style={{fill: `url(#SVGID_1_)`}} cx="200" cy="200" r="198.4"/>
+        <circle style={{ fill: `url(#SVGID_1_)` }} cx="200" cy="200" r="198.4"/>
       </g>
       <path fill="#FFFFFF" d="M373.8,186.5c-2.4-31.5-13.2-60.6-30.1-85.2c-5.8-8.4-12.3-16.3-19.5-23.6c-31.6-32.1-75.5-52-124.1-52
         c-16.6,0-32.6,2.4-47.9,6.7c-10.7,3-21,7.1-30.7,12c-34.3,17.4-62.2,45.7-78.8,80.4c-4.7,9.8-8.5,20.2-11.3,31

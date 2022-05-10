@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, { FC } from 'react';
 import DefaultIcon from '../icons/default';
 import KyberIcon from '../icons/kyber';
 import PangolinIcon from '../icons/pangolin';
@@ -26,7 +26,7 @@ import ZeroExchangeIcon from '../icons/zero.exchange';
 import BeamSwapIcon from '../icons/beamswap';
 import SolarBeamIcon from '../icons/solarbeam';
 import StellaSwapIcon from '../icons/stellaswap';
-import SolarFlareIcon from '../icons/solar.flare'
+import SolarFlareIcon from '../icons/solar.flare';
 import MdexIcon from '../icons/mdex';
 
 type LogoType = {
@@ -34,63 +34,68 @@ type LogoType = {
   grayscaleFilter?: any;
   width?: number;
   height?: number;
-}
+};
 
-export const Logo: FC<LogoType> = ({label, width, height, grayscaleFilter}) => {  
+export const Logo: FC<LogoType> = ({
+  label,
+  width,
+  height,
+  grayscaleFilter
+}) => {
   let result;
-  switch(label) {
+  switch (label) {
     // networks
     case 'bsc':
-      result = <BscIcon width={width} height={height} />
+      result = <BscIcon width={width} height={height} />;
       break;
     case 'avalanche':
-      result = <AvalancheIcon width={width} height={height} />
+      result = <AvalancheIcon width={width} height={height} />;
       break;
-    
+
     case 'kyberdmm':
-      result = <KyberIcon width={width} height={height} />
-      break
+      result = <KyberIcon width={width} height={height} />;
+      break;
     case 'pangolin':
-      result = <PangolinIcon width={width} height={height} />
-        break
+      result = <PangolinIcon width={width} height={height} />;
+      break;
     case 'sushiswap':
-      result = <SushiIcon width={width} height={height} />
-        break
+      result = <SushiIcon width={width} height={height} />;
+      break;
     case 'traderjoe':
-      result = <TraderIcon width={width} height={height} />
-        break
+      result = <TraderIcon width={width} height={height} />;
+      break;
     case 'mdex':
-      result = <MdexIcon width={width} height={height} />
-        break
+      result = <MdexIcon width={width} height={height} />;
+      break;
     case 'Select All':
-      result = <></>
+      result = <></>;
       break;
     case 'moonbeam':
-      result = <MoonBeamIcon width={width} height={height} />
+      result = <MoonBeamIcon width={width} height={height} />;
       break;
-    case 'moonriver':   
-      result = <MoonRiverIcon width={width} height={height} />
-      break; 
+    case 'moonriver':
+      result = <MoonRiverIcon width={width} height={height} />;
+      break;
     case 'apeswap':
-      result = <ApeSwapIcon width={width} height={height} />
+      result = <ApeSwapIcon width={width} height={height} />;
       break;
     case 'babyswap':
-      result = <BabySwapIcon width={width} height={height} />
+      result = <BabySwapIcon width={width} height={height} />;
       break;
     case 'biswap':
-      result = <BiSwapIcon width={width} height={height} />
+      result = <BiSwapIcon width={width} height={height} />;
       break;
     case 'ellipsis.finance':
-      result = <EllipsisFinanceIcon width={width} height={height} />
+      result = <EllipsisFinanceIcon width={width} height={height} />;
       break;
     case 'pancakeswap':
-      result = <PancakeIcon width={width} height={height} />
+      result = <PancakeIcon width={width} height={height} />;
       break;
     case 'safeswap':
-      result = <SafeSwapIcon width={width} height={height} />
+      result = <SafeSwapIcon width={width} height={height} />;
       break;
     case 'baguette':
-      result = <BaquetteIcon width={width} height={height} />
+      result = <BaquetteIcon width={width} height={height} />;
       break;
     case 'canary':
       result = <CanaryIcon width={width} height={height} />;
@@ -113,9 +118,9 @@ export const Logo: FC<LogoType> = ({label, width, height, grayscaleFilter}) => {
     case 'yetiswap':
       result = <YetiSwapIcon width={width} height={height} />;
       break;
-    case 'zeroexchange':  
+    case 'zeroexchange':
       result = <ZeroExchangeIcon width={width} height={height} />;
-      break;     
+      break;
     case 'beamswap':
       result = <BeamSwapIcon width={width} height={height} />;
       break;
@@ -129,13 +134,13 @@ export const Logo: FC<LogoType> = ({label, width, height, grayscaleFilter}) => {
       result = <SolarBeamIcon width={width} height={height} />;
       break;
     default:
-      result = <DefaultIcon width={width} height={height} />
+      result = <DefaultIcon width={width} height={height} />;
       break;
   }
-  
-  return <div style={{filter: `grayscale(${grayscaleFilter})`}}>
-    {result}
-  </div>
-}
+
+  return (
+    <div style={{ filter: `grayscale(${grayscaleFilter})` }}>{result}</div>
+  );
+};
 
 export default Logo;

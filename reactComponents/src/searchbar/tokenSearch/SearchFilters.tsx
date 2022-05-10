@@ -1,6 +1,6 @@
-import React, { useContext, FC, useEffect } from "react"
+import React, { useContext, FC, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import styled from  'styled-components'
+import styled from 'styled-components';
 import {
   Accordion,
   AccordionItem,
@@ -8,19 +8,19 @@ import {
   AccordionItemButton,
   AccordionItemPanel,
 } from 'react-accessible-accordion';
-import { FilterNetworkAll, FilterNetworkSelectors } from "./SearchFiltersNetworkSelectors";
-import { FilterExchangeAll, FilterExchangeSelectors } from "./SearchFiltersExchangeSelectors";
-import { RootState } from "../redux/store";
+import { FilterNetworkAll, FilterNetworkSelectors } from './SearchFiltersNetworkSelectors';
+import { FilterExchangeAll, FilterExchangeSelectors } from './SearchFiltersExchangeSelectors';
+import { RootState } from '../redux/store';
 import TokenSearchContext from '../Context/TokenSearch';
 import { setViewResult } from '../redux/tokenSearchSlice';
 
-const FilterWrapper = styled.div`  
-  ${({styleOverrides}) => `    
+const FilterWrapper = styled.div`
+  ${({ styleOverrides }) => `    
     .accordion__button {
       position: relative;
     }
-    background-color: ${ styleOverrides?.backgroundColor || "#00070E" };
-    border-radius: ${ styleOverrides?.borderRadius || "4px" };
+    background-color: ${styleOverrides?.backgroundColor || '#00070E'};
+    border-radius: ${styleOverrides?.borderRadius || '4px'};
 
     .accordion__button:first-child:after {
       display: block;    
@@ -28,14 +28,14 @@ const FilterWrapper = styled.div`
       position: absolute;    
       transform: rotate(-45deg);  
       
-      color: ${ styleOverrides?.toggleColor || "#B4BBC7" };
-      height: ${ styleOverrides?.toggleHeight || "7px" };
-      width: ${ styleOverrides?.toggleWidth || "7px" };
-      margin-right: ${ styleOverrides?.toggleMarginRight || "0" };    
-      left: ${ styleOverrides?.toggleLeft || "50%" };    
-      top: ${ styleOverrides?.toggleTop || "5px" };    
-      border-bottom: ${ styleOverrides?.toggleBorderBottom || "2px solid currentColor" }; 
-      border-right: ${ styleOverrides?.toggleBorderRight || "2px solid currentColor" }; 
+      color: ${styleOverrides?.toggleColor || '#B4BBC7'};
+      height: ${styleOverrides?.toggleHeight || '7px'};
+      width: ${styleOverrides?.toggleWidth || '7px'};
+      margin-right: ${styleOverrides?.toggleMarginRight || '0'};    
+      left: ${styleOverrides?.toggleLeft || '50%'};    
+      top: ${styleOverrides?.toggleTop || '5px'};    
+      border-bottom: ${styleOverrides?.toggleBorderBottom || '2px solid currentColor'}; 
+      border-right: ${styleOverrides?.toggleBorderRight || '2px solid currentColor'}; 
       transform: rotate(45deg);
        
     }
@@ -47,116 +47,122 @@ const FilterWrapper = styled.div`
     }
 
     .accordion__panel {    
-      border: ${ styleOverrides?.contentBorder || "0" };       
-      border-radius: ${ styleOverrides?.contentBorderRadius || "0" }; 
-      margin:  ${ styleOverrides?.margin || "0" };
+      border: ${styleOverrides?.contentBorder || '0'};       
+      border-radius: ${styleOverrides?.contentBorderRadius || '0'}; 
+      margin:  ${styleOverrides?.margin || '0'};
     }
-  `}  
+  `}
 `;
 
-const StyledFilterHeader = styled.div`  
-  ${({styleOverrides}) => `
-    display: ${ styleOverrides?.display || "flex" };
-    justify-content: ${ styleOverrides?.justifyContent || "space-between" };
-    align-items: ${ styleOverrides?.alignItems || "center" };
-    width: ${ styleOverrides?.width || "auto" };
-    border: ${ styleOverrides?.border || "none" }; 
-    background-color: ${ styleOverrides?.backgroundColor || "#00070E" }; 
-    color: ${ styleOverrides?.color || "#B4BBC7" };    
+const StyledFilterHeader = styled.div`
+  ${({ styleOverrides }) => `
+    display: ${styleOverrides?.display || 'flex'};
+    justify-content: ${styleOverrides?.justifyContent || 'space-between'};
+    align-items: ${styleOverrides?.alignItems || 'center'};
+    width: ${styleOverrides?.width || 'auto'};
+    border: ${styleOverrides?.border || 'none'}; 
+    background-color: ${styleOverrides?.backgroundColor || '#00070E'}; 
+    color: ${styleOverrides?.color || '#B4BBC7'};    
     cursor: pointer;
-    padding: ${ styleOverrides?.padding || "6px 14px" };   
-    text-align: ${ styleOverrides?.textAlign || "left" };     
-    margin: ${ styleOverrides?.margin || "5px 0 0" };     
-    border-radius: ${ styleOverrides?.borderRadius || "4px" };     
-    font-size: ${ styleOverrides?.fontSize || "9px" };     
-    font-weight: ${ styleOverrides?.fontWeight || "500" };     
+    padding: ${styleOverrides?.padding || '6px 14px'};   
+    text-align: ${styleOverrides?.textAlign || 'left'};     
+    margin: ${styleOverrides?.margin || '5px 0 0'};     
+    border-radius: ${styleOverrides?.borderRadius || '4px'};     
+    font-size: ${styleOverrides?.fontSize || '9px'};     
+    font-weight: ${styleOverrides?.fontWeight || '500'};     
     &:hover {
-      background-color: ${ styleOverrides?.hoverColor || "#232C38" };
+      background-color: ${styleOverrides?.hoverColor || '#232C38'};
     }
-  `}      
-`; 
+  `}
+`;
 
 const StyledFilterContent = styled.div`
-  ${({styleOverrides}) => `
+  ${({ styleOverrides }) => `
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 5px;
     margin-left: 10px;
-    justify-content: ${ styleOverrides?.justifyContent || "start" };
-    align-items: ${ styleOverrides?.alignItems || "center" };  
-    padding:  ${ styleOverrides?.padding || "0 0 5px" };           
-  `}      
+    justify-content: ${styleOverrides?.justifyContent || 'start'};
+    align-items: ${styleOverrides?.alignItems || 'center'};  
+    padding:  ${styleOverrides?.padding || '0 0 5px'};           
+  `}
 `;
 
 const StyledDescription = styled.div`
-  ${({styleOverrides}) => `
-    text-align: ${ styleOverrides?.textAlign || "right" };
-    font-size: ${ styleOverrides?.fontSize || "9px" };
-    font-weight: ${ styleOverrides?.fontWeight || "100" };
-    padding: ${ styleOverrides?.padding || "10px 10px 5px" };       
-    background-color: ${ styleOverrides?.backgroundColor || "#00070E" };
-    color: ${ styleOverrides?.color || "#7A808A" };       
+  ${({ styleOverrides }) => `
+    text-align: ${styleOverrides?.textAlign || 'right'};
+    font-size: ${styleOverrides?.fontSize || '9px'};
+    font-weight: ${styleOverrides?.fontWeight || '100'};
+    padding: ${styleOverrides?.padding || '10px 10px 5px'};       
+    background-color: ${styleOverrides?.backgroundColor || '#00070E'};
+    color: ${styleOverrides?.color || '#7A808A'};       
   `}
-`
+`;
 
-const StyledFilterWrapper = styled.div`  
-  ${({styleOverrides}) => `
+const StyledFilterWrapper = styled.div`
+  ${({ styleOverrides }) => `
     display: block;
-    justify-content: ${ styleOverrides?.justifyContent || "center" };
-    align-items: ${ styleOverrides?.alignItems || "center" };  
-    padding:  ${ styleOverrides?.padding || "0 0 5px" };       
-    background-color: ${ styleOverrides?.backgroundColor || "#00070E" };    
-    border-radius: ${ styleOverrides?.borderRadius || "4px" };    
-  `}      
-`
+    justify-content: ${styleOverrides?.justifyContent || 'center'};
+    align-items: ${styleOverrides?.alignItems || 'center'};  
+    padding:  ${styleOverrides?.padding || '0 0 5px'};       
+    background-color: ${styleOverrides?.backgroundColor || '#00070E'};    
+    border-radius: ${styleOverrides?.borderRadius || '4px'};    
+  `}
+`;
 const StyledCount = styled.div`
   color: white;
-  font-weight: 400;  
-`
+  font-weight: 400;
+`;
 type SelectedNetworks = {
   networkCount: number;
   exchangeCount: number;
   type: string;
-}
+};
 
-const SearchDescription: FC<SelectedNetworks> = (props: SelectedNetworks) => {  
+const SearchDescription: FC<SelectedNetworks> = (props: SelectedNetworks) => {
   const { networkCount, exchangeCount, type } = props;
   let desc;
 
   if (networkCount === 0 && exchangeCount === 0) {
-    desc = 'Searching all networks and exchanges'
+    desc = 'Searching all networks and exchanges';
   } else {
     if (type === 'network')
-      desc = <div style={{display: 'flex', justifyContent: 'right'}}>Searching&nbsp;<StyledCount>{networkCount} network(s)</StyledCount>&nbsp;within&nbsp;<StyledCount>{exchangeCount} exchange(s)</StyledCount></div>
-    else      
-      desc = <div style={{display: 'flex', justifyContent: 'right'}}>Searching&nbsp;<StyledCount>{exchangeCount} exchange(s)</StyledCount>&nbsp;within&nbsp;<StyledCount>{networkCount} network(s)</StyledCount></div>
+      desc = (
+        <div style={{ display: 'flex', justifyContent: 'right' }}>
+          Searching&nbsp;<StyledCount>{networkCount} network(s)</StyledCount>&nbsp;within&nbsp;
+          <StyledCount>{exchangeCount} exchange(s)</StyledCount>
+        </div>
+      );
+    else
+      desc = (
+        <div style={{ display: 'flex', justifyContent: 'right' }}>
+          Searching&nbsp;<StyledCount>{exchangeCount} exchange(s)</StyledCount>&nbsp;within&nbsp;
+          <StyledCount>{networkCount} network(s)</StyledCount>
+        </div>
+      );
   }
 
-  return (
-    <>
-      {desc}
-    </>   
-  )
-}
+  return <>{desc}</>;
+};
 
 export const SearchFilters = (): JSX.Element => {
   const dispatch = useDispatch();
-  const { networkMap, exchangeMap, searchText  } = useSelector((state:RootState) => state);
-  const renderProps = useContext(TokenSearchContext);  
+  const { networkMap, exchangeMap, searchText } = useSelector((state: RootState) => state);
+  const renderProps = useContext(TokenSearchContext);
   const { customSearchFilter } = renderProps;
-  const exchangesActive = Object.values(networkMap).filter(b => b).length !== 0;
-  
-  const networkCount = Object.values(networkMap).filter(b=>b).length
-  const exchangeCount = Object.values(exchangeMap).filter(b=>b).length
-  
-  const networkTitle = customSearchFilter?.fitler?.network || 'Select Network(s)'
-  const exchangeTitle = customSearchFilter?.fitler?.exchange || 'Select Exchange(s)'
+  const exchangesActive = Object.values(networkMap).filter((b) => b).length !== 0;
 
-  useEffect(() => {    
-    (Object.keys(networkMap).length > 0 ||
-    Object.keys(exchangeMap).length > 0) && searchText.length > 0 &&
-    dispatch(setViewResult(true));
-  }, [networkMap, exchangeMap, searchText])
+  const networkCount = Object.values(networkMap).filter((b) => b).length;
+  const exchangeCount = Object.values(exchangeMap).filter((b) => b).length;
+
+  const networkTitle = customSearchFilter?.fitler?.network || 'Select Network(s)';
+  const exchangeTitle = customSearchFilter?.fitler?.exchange || 'Select Exchange(s)';
+
+  useEffect(() => {
+    (Object.keys(networkMap).length > 0 || Object.keys(exchangeMap).length > 0) &&
+      searchText.length > 0 &&
+      dispatch(setViewResult(true));
+  }, [networkMap, exchangeMap, searchText]);
 
   // RENDERING.
   return (
@@ -168,52 +174,53 @@ export const SearchFilters = (): JSX.Element => {
               <StyledFilterHeader styleOverrides={customSearchFilter?.fitler?.header}>
                 <span>{networkTitle}</span>
                 <FilterNetworkAll />
-              </StyledFilterHeader>            
+              </StyledFilterHeader>
             </AccordionItemButton>
           </AccordionItemHeading>
-          <AccordionItemPanel>            
+          <AccordionItemPanel>
             <StyledFilterWrapper styleOverrides={customSearchFilter?.fitler?.wrapper}>
-              <StyledFilterContent styleOverrides={customSearchFilter?.fitler?.content}>                                         
-                <FilterNetworkSelectors />              
-              </StyledFilterContent>                                        
+              <StyledFilterContent styleOverrides={customSearchFilter?.fitler?.content}>
+                <FilterNetworkSelectors />
+              </StyledFilterContent>
               <StyledDescription styleOverrides={customSearchFilter?.fitler?.description}>
-                <SearchDescription 
+                <SearchDescription
                   networkCount={networkCount}
                   exchangeCount={exchangeCount}
                   type={'network'}
                 />
-              </StyledDescription>              
+              </StyledDescription>
             </StyledFilterWrapper>
-          </AccordionItemPanel> 
+          </AccordionItemPanel>
         </AccordionItem>
-        { exchangesActive && <AccordionItem>
+        {exchangesActive && (
+          <AccordionItem>
             <AccordionItemHeading>
               <AccordionItemButton>
                 <StyledFilterHeader styleOverrides={customSearchFilter?.fitler?.header}>
                   <span>{exchangeTitle}</span>
                   <FilterExchangeAll />
-                </StyledFilterHeader>            
+                </StyledFilterHeader>
               </AccordionItemButton>
             </AccordionItemHeading>
-            <AccordionItemPanel>            
+            <AccordionItemPanel>
               <StyledFilterWrapper styleOverrides={customSearchFilter?.fitler?.wrapper}>
-                <StyledFilterContent styleOverrides={customSearchFilter?.fitler?.content}>                                         
+                <StyledFilterContent styleOverrides={customSearchFilter?.fitler?.content}>
                   <FilterExchangeSelectors />
-                </StyledFilterContent>                                                        
+                </StyledFilterContent>
                 <StyledDescription styleOverrides={customSearchFilter?.fitler?.description}>
-                  <SearchDescription 
+                  <SearchDescription
                     networkCount={networkCount}
                     exchangeCount={exchangeCount}
                     type={'exchange'}
                   />
-                </StyledDescription>              
+                </StyledDescription>
               </StyledFilterWrapper>
-            </AccordionItemPanel> 
+            </AccordionItemPanel>
           </AccordionItem>
-      }
-      </Accordion>        
+        )}
+      </Accordion>
     </FilterWrapper>
   );
-}
+};
 
-export default SearchFilters
+export default SearchFilters;

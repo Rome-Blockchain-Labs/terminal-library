@@ -10,10 +10,10 @@ const SolarFlareIcon: FC<IIconProps> = ({ height, width }) => (
     viewBox="0 0 400 400">           
     <g transform='translate(0)'>
       <linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="339.4755" y1="339.4754" x2="60.5245" y2="60.5244">
-        <stop  offset="0" style={{stopColor: '#FF288B'}}/>
-        <stop  offset="1" style={{stopColor: '#FFCF90'}}/>
+        <stop  offset="0" style={{ stopColor: '#FF288B' }}/>
+        <stop  offset="1" style={{ stopColor: '#FFCF90' }}/>
       </linearGradient>
-      <path style={{fill: `url(#SVGID_1_)`}} d="M200,2.8C91.1,2.8,2.8,91.1,2.8,200S91.1,397.2,200,397.2c108.9,0,197.2-88.3,197.2-197.2S308.9,2.8,200,2.8z
+      <path style={{ fill: `url(#SVGID_1_)` }} d="M200,2.8C91.1,2.8,2.8,91.1,2.8,200S91.1,397.2,200,397.2c108.9,0,197.2-88.3,197.2-197.2S308.9,2.8,200,2.8z
         M370.2,200c0,17-2.5,33.4-7.2,48.9l-83.6-36.2l6.9-6.9l83.6-15.9C370.1,193.2,370.2,196.6,370.2,200z M29.8,200
         c0-3.3,0.1-6.6,0.3-9.9l83.8,16l6.3,6.3l-83.4,36.1C32.3,233.1,29.8,216.8,29.8,200z M126.9,181l-93.1-17.7
         c4.1-18.7,11.4-36.3,21.1-52.2l79.8,62.1L126.9,181z M146.1,200l53.9-53.9l53.9,53.9L200,253.9L146.1,200z M273,180.8l-8.1-8.1

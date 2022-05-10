@@ -1,19 +1,19 @@
-import { FC } from 'react';
+import { FC, ReactNode } from 'react';
 
 import {
   Accordion,
   AccordionItem,
   AccordionItemHeading,
   AccordionItemButton,
-  AccordionItemPanel,
-} from "react-accessible-accordion";
+  AccordionItemPanel
+} from 'react-accessible-accordion';
 
 export {
   Accordion,
   AccordionItem,
   AccordionItemHeading,
   AccordionItemButton,
-  AccordionItemPanel,
+  AccordionItemPanel
 };
 
 type CustomWrapperType = {
@@ -244,7 +244,17 @@ type ActionComponentType = {
   index?: number,
   component?: FC
 }
- 
+type ExchangeType = {
+  id: string,
+  name: string,
+  icon?: ReactNode,
+}
+type NetworkType = {
+  id: string,
+  name: string,
+  icon?: ReactNode,
+  exchanges?: Array<ExchangeType>
+}
 export type RenderProps = {
   customWrapper?: CustomWrapperType;
   customSearchInput?: CustomSerchInputType;
@@ -255,4 +265,5 @@ export type RenderProps = {
   customLoading?: CustomLoadingType;
   customActions?: Array<ActionComponentType>;
   customAllChip?: CustomAllChipType;
+  networks?: Array<NetworkType>
 };

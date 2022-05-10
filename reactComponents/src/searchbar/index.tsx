@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import './App.css';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
-import TokenSearch from "./tokenSearch";
+import TokenSearch from './tokenSearch';
 import { RenderProps } from '../types';
 import config from './config'
 
@@ -22,6 +22,7 @@ export const SearchBar: FC<RenderProps> = (renderProps: RenderProps) => {
           customTokenDetail={renderProps?.customTokenDetail}        
           customActions={renderProps?.customActions}        
           customAllChip={renderProps?.customAllChip}
+          networks = {renderProps?.networks}
         />
       }        
       </Provider>        
