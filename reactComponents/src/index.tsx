@@ -235,7 +235,7 @@ const customTokenDetail = {
 
   }
 }
-*/
 
+*/
 const rootElement = document.getElementById('root');
 render(<SearchBar networks={[]} />, rootElement);
