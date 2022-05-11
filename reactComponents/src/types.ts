@@ -74,7 +74,7 @@ type CustomSearchFilterType = {
         margin?: string
     },
 
-    fitler?: {
+    content?: {
         network?: string,
         exchange?: string,
         header?: {

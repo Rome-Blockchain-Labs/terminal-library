@@ -54,7 +54,7 @@ declare type CustomSearchFilterType = {
         contentBorderRadius?: string;
         margin?: string;
     };
-    fitler?: {
+    content?: {
         network?: string;
         exchange?: string;
         header?: {

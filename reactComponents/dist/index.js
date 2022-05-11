@@ -359,9 +359,6 @@ var tokenSearchSlice_default = tokenSearchSlice.reducer;
 var rootReducer = tokenSearchSlice.reducer;
 var store = (0, import_toolkit2.configureStore)({
   devTools: process.env.NODE_ENV !== "production",
-  middleware: (0, import_toolkit2.getDefaultMiddleware)({
-    immutableCheck: false
-  }),
   reducer: rootReducer
 });
 
@@ -3656,8 +3653,8 @@ var SearchFilters = () => {
     });
   }
   const totalExchangeCount = exchangeIds.length;
-  const networkTitle = ((_a2 = customSearchFilter == null ? void 0 : customSearchFilter.fitler) == null ? void 0 : _a2.network) || "Select Network(s)";
-  const exchangeTitle = ((_b2 = customSearchFilter == null ? void 0 : customSearchFilter.fitler) == null ? void 0 : _b2.exchange) || "Select Exchange(s)";
+  const networkTitle = ((_a2 = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _a2.network) || "Select Network(s)";
+  const exchangeTitle = ((_b2 = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _b2.exchange) || "Select Exchange(s)";
   (0, import_react45.useEffect)(() => {
     (Object.keys(networkMap).length > 0 || Object.keys(exchangeMap).length > 0) && searchText.length > 0 && dispatch(setViewResult(true));
   }, [networkMap, exchangeMap, searchText]);
@@ -3667,25 +3664,25 @@ var SearchFilters = () => {
     allowMultipleExpanded: true,
     allowZeroExpanded: true
   }, /* @__PURE__ */ import_react45.default.createElement(import_react_accessible_accordion.AccordionItem, null, /* @__PURE__ */ import_react45.default.createElement(import_react_accessible_accordion.AccordionItemHeading, null, /* @__PURE__ */ import_react45.default.createElement(import_react_accessible_accordion.AccordionItemButton, null, /* @__PURE__ */ import_react45.default.createElement(StyledFilterHeader, {
-    styleOverrides: (_c2 = customSearchFilter == null ? void 0 : customSearchFilter.fitler) == null ? void 0 : _c2.header
+    styleOverrides: (_c2 = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _c2.header
   }, /* @__PURE__ */ import_react45.default.createElement("span", null, networkTitle), /* @__PURE__ */ import_react45.default.createElement(FilterNetworkAll, null)))), /* @__PURE__ */ import_react45.default.createElement(import_react_accessible_accordion.AccordionItemPanel, null, /* @__PURE__ */ import_react45.default.createElement(StyledFilterWrapper, {
-    styleOverrides: (_d2 = customSearchFilter == null ? void 0 : customSearchFilter.fitler) == null ? void 0 : _d2.wrapper
+    styleOverrides: (_d2 = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _d2.wrapper
   }, /* @__PURE__ */ import_react45.default.createElement(StyledFilterContent, {
-    styleOverrides: (_e = customSearchFilter == null ? void 0 : customSearchFilter.fitler) == null ? void 0 : _e.content
+    styleOverrides: (_e = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _e.content
   }, /* @__PURE__ */ import_react45.default.createElement(FilterNetworkSelectors, null)), /* @__PURE__ */ import_react45.default.createElement(StyledDescription, {
-    styleOverrides: (_f = customSearchFilter == null ? void 0 : customSearchFilter.fitler) == null ? void 0 : _f.description
+    styleOverrides: (_f = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _f.description
   }, /* @__PURE__ */ import_react45.default.createElement(SearchDescription, {
     networkCount,
     exchangeCount,
     type: "network"
   }))))), exchangesActive && /* @__PURE__ */ import_react45.default.createElement(import_react_accessible_accordion.AccordionItem, null, /* @__PURE__ */ import_react45.default.createElement(import_react_accessible_accordion.AccordionItemHeading, null, /* @__PURE__ */ import_react45.default.createElement(import_react_accessible_accordion.AccordionItemButton, null, /* @__PURE__ */ import_react45.default.createElement(StyledFilterHeader, {
-    styleOverrides: (_g = customSearchFilter == null ? void 0 : customSearchFilter.fitler) == null ? void 0 : _g.header
+    styleOverrides: (_g = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _g.header
   }, /* @__PURE__ */ import_react45.default.createElement("span", null, exchangeTitle), /* @__PURE__ */ import_react45.default.createElement(FilterExchangeAll, null)))), /* @__PURE__ */ import_react45.default.createElement(import_react_accessible_accordion.AccordionItemPanel, null, /* @__PURE__ */ import_react45.default.createElement(StyledFilterWrapper, {
-    styleOverrides: (_h = customSearchFilter == null ? void 0 : customSearchFilter.fitler) == null ? void 0 : _h.wrapper
+    styleOverrides: (_h = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _h.wrapper
   }, /* @__PURE__ */ import_react45.default.createElement(StyledFilterContent, {
-    styleOverrides: (_i = customSearchFilter == null ? void 0 : customSearchFilter.fitler) == null ? void 0 : _i.content
+    styleOverrides: (_i = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _i.content
   }, /* @__PURE__ */ import_react45.default.createElement(FilterExchangeSelectors, null)), /* @__PURE__ */ import_react45.default.createElement(StyledDescription, {
-    styleOverrides: (_j = customSearchFilter == null ? void 0 : customSearchFilter.fitler) == null ? void 0 : _j.description
+    styleOverrides: (_j = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _j.description
   }, /* @__PURE__ */ import_react45.default.createElement(SearchDescription, {
     networkCount,
     exchangeCount: exchangeCount || totalExchangeCount,

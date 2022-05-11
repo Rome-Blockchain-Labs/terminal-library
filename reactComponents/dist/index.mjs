@@ -24,8 +24,7 @@ import { Provider } from "react-redux";
 
 // src/searchbar/redux/store.ts
 import {
-  configureStore,
-  getDefaultMiddleware
+  configureStore
 } from "@reduxjs/toolkit";
 
 // src/searchbar/redux/tokenSearchSlice.ts
@@ -332,9 +331,6 @@ var tokenSearchSlice_default = tokenSearchSlice.reducer;
 var rootReducer = tokenSearchSlice.reducer;
 var store = configureStore({
   devTools: process.env.NODE_ENV !== "production",
-  middleware: getDefaultMiddleware({
-    immutableCheck: false
-  }),
   reducer: rootReducer
 });
 
@@ -3635,8 +3631,8 @@ var SearchFilters = () => {
     });
   }
   const totalExchangeCount = exchangeIds.length;
-  const networkTitle = ((_a2 = customSearchFilter == null ? void 0 : customSearchFilter.fitler) == null ? void 0 : _a2.network) || "Select Network(s)";
-  const exchangeTitle = ((_b2 = customSearchFilter == null ? void 0 : customSearchFilter.fitler) == null ? void 0 : _b2.exchange) || "Select Exchange(s)";
+  const networkTitle = ((_a2 = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _a2.network) || "Select Network(s)";
+  const exchangeTitle = ((_b2 = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _b2.exchange) || "Select Exchange(s)";
   useEffect2(() => {
     (Object.keys(networkMap).length > 0 || Object.keys(exchangeMap).length > 0) && searchText.length > 0 && dispatch(setViewResult(true));
   }, [networkMap, exchangeMap, searchText]);
@@ -3646,25 +3642,25 @@ var SearchFilters = () => {
     allowMultipleExpanded: true,
     allowZeroExpanded: true
   }, /* @__PURE__ */ React44.createElement(AccordionItem, null, /* @__PURE__ */ React44.createElement(AccordionItemHeading, null, /* @__PURE__ */ React44.createElement(AccordionItemButton, null, /* @__PURE__ */ React44.createElement(StyledFilterHeader, {
-    styleOverrides: (_c2 = customSearchFilter == null ? void 0 : customSearchFilter.fitler) == null ? void 0 : _c2.header
+    styleOverrides: (_c2 = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _c2.header
   }, /* @__PURE__ */ React44.createElement("span", null, networkTitle), /* @__PURE__ */ React44.createElement(FilterNetworkAll, null)))), /* @__PURE__ */ React44.createElement(AccordionItemPanel, null, /* @__PURE__ */ React44.createElement(StyledFilterWrapper, {
-    styleOverrides: (_d2 = customSearchFilter == null ? void 0 : customSearchFilter.fitler) == null ? void 0 : _d2.wrapper
+    styleOverrides: (_d2 = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _d2.wrapper
   }, /* @__PURE__ */ React44.createElement(StyledFilterContent, {
-    styleOverrides: (_e = customSearchFilter == null ? void 0 : customSearchFilter.fitler) == null ? void 0 : _e.content
+    styleOverrides: (_e = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _e.content
   }, /* @__PURE__ */ React44.createElement(FilterNetworkSelectors, null)), /* @__PURE__ */ React44.createElement(StyledDescription, {
-    styleOverrides: (_f = customSearchFilter == null ? void 0 : customSearchFilter.fitler) == null ? void 0 : _f.description
+    styleOverrides: (_f = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _f.description
   }, /* @__PURE__ */ React44.createElement(SearchDescription, {
     networkCount,
     exchangeCount,
     type: "network"
   }))))), exchangesActive && /* @__PURE__ */ React44.createElement(AccordionItem, null, /* @__PURE__ */ React44.createElement(AccordionItemHeading, null, /* @__PURE__ */ React44.createElement(AccordionItemButton, null, /* @__PURE__ */ React44.createElement(StyledFilterHeader, {
-    styleOverrides: (_g = customSearchFilter == null ? void 0 : customSearchFilter.fitler) == null ? void 0 : _g.header
+    styleOverrides: (_g = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _g.header
   }, /* @__PURE__ */ React44.createElement("span", null, exchangeTitle), /* @__PURE__ */ React44.createElement(FilterExchangeAll, null)))), /* @__PURE__ */ React44.createElement(AccordionItemPanel, null, /* @__PURE__ */ React44.createElement(StyledFilterWrapper, {
-    styleOverrides: (_h = customSearchFilter == null ? void 0 : customSearchFilter.fitler) == null ? void 0 : _h.wrapper
+    styleOverrides: (_h = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _h.wrapper
   }, /* @__PURE__ */ React44.createElement(StyledFilterContent, {
-    styleOverrides: (_i = customSearchFilter == null ? void 0 : customSearchFilter.fitler) == null ? void 0 : _i.content
+    styleOverrides: (_i = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _i.content
   }, /* @__PURE__ */ React44.createElement(FilterExchangeSelectors, null)), /* @__PURE__ */ React44.createElement(StyledDescription, {
-    styleOverrides: (_j = customSearchFilter == null ? void 0 : customSearchFilter.fitler) == null ? void 0 : _j.description
+    styleOverrides: (_j = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _j.description
   }, /* @__PURE__ */ React44.createElement(SearchDescription, {
     networkCount,
     exchangeCount: exchangeCount || totalExchangeCount,

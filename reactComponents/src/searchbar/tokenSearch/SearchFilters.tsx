@@ -189,8 +189,8 @@ export const SearchFilters = (): JSX.Element => {
   }
   const totalExchangeCount = exchangeIds.length;
   
-  const networkTitle = customSearchFilter?.fitler?.network || 'Select Network(s)';
-  const exchangeTitle = customSearchFilter?.fitler?.exchange || 'Select Exchange(s)';
+  const networkTitle = customSearchFilter?.content?.network || 'Select Network(s)';
+  const exchangeTitle = customSearchFilter?.content?.exchange || 'Select Exchange(s)';
 
   useEffect(() => {
     (Object.keys(networkMap).length > 0 || Object.keys(exchangeMap).length > 0) &&
@@ -205,18 +205,18 @@ export const SearchFilters = (): JSX.Element => {
         <AccordionItem>
           <AccordionItemHeading>
             <AccordionItemButton>
-              <StyledFilterHeader styleOverrides={customSearchFilter?.fitler?.header}>
+              <StyledFilterHeader styleOverrides={customSearchFilter?.content?.header}>
                 <span>{networkTitle}</span>
                 <FilterNetworkAll />
               </StyledFilterHeader>
             </AccordionItemButton>
           </AccordionItemHeading>
           <AccordionItemPanel>
-            <StyledFilterWrapper styleOverrides={customSearchFilter?.fitler?.wrapper}>
-              <StyledFilterContent styleOverrides={customSearchFilter?.fitler?.content}>
+            <StyledFilterWrapper styleOverrides={customSearchFilter?.content?.wrapper}>
+              <StyledFilterContent styleOverrides={customSearchFilter?.content?.content}>
                 <FilterNetworkSelectors />
               </StyledFilterContent>
-              <StyledDescription styleOverrides={customSearchFilter?.fitler?.description}>
+              <StyledDescription styleOverrides={customSearchFilter?.content?.description}>
                 <SearchDescription
                   networkCount={networkCount}
                   exchangeCount={exchangeCount}
@@ -230,18 +230,18 @@ export const SearchFilters = (): JSX.Element => {
           <AccordionItem>
             <AccordionItemHeading>
               <AccordionItemButton>
-                <StyledFilterHeader styleOverrides={customSearchFilter?.fitler?.header}>
+                <StyledFilterHeader styleOverrides={customSearchFilter?.content?.header}>
                   <span>{exchangeTitle}</span>
                   <FilterExchangeAll />
                 </StyledFilterHeader>
               </AccordionItemButton>
             </AccordionItemHeading>
             <AccordionItemPanel>
-              <StyledFilterWrapper styleOverrides={customSearchFilter?.fitler?.wrapper}>
-                <StyledFilterContent styleOverrides={customSearchFilter?.fitler?.content}>
+              <StyledFilterWrapper styleOverrides={customSearchFilter?.content?.wrapper}>
+                <StyledFilterContent styleOverrides={customSearchFilter?.content?.content}>
                   <FilterExchangeSelectors />
                 </StyledFilterContent>
-                <StyledDescription styleOverrides={customSearchFilter?.fitler?.description}>
+                <StyledDescription styleOverrides={customSearchFilter?.content?.description}>
                   <SearchDescription
                     networkCount={networkCount}
                     exchangeCount={exchangeCount || totalExchangeCount}
