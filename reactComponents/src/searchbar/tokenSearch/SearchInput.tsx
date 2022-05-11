@@ -15,6 +15,14 @@ import TokenSearchContext from '../Context/TokenSearch';
 import { RootState } from '../redux/store';
 import config from '../config';
 
+const StyledInputGroup = styled.div`
+  ${({ styleOverrides }) => ` 
+    position: relative;
+    width: ${styleOverrides?.width || '-webkit-fill-available'};
+    color: ${styleOverrides?.color || '#B7BEC9'};
+    background: ${styleOverrides?.background || '#00070E'};  
+  `}
+`;
 const StyledInput = styled.input`
   ${({ styleOverrides }) => `    
     margin-left: auto;
@@ -36,7 +44,8 @@ const StyledSearchIconWrapper = styled.div`
     float: right;
     position: absolute;
     right: ${styleOverrides?.right || '14px'};      
-    top: ${styleOverrides?.top || '12px'};        
+    top: 50%;
+    transform: translateY(-50%);   
   `}
 `;
 
@@ -60,7 +69,8 @@ const StyledWrapper = styled.div`
 const StyledResetBtn = styled.button`
   position: absolute;
   right: 40px;
-  top: 11px;
+  top: 50%;
+  transform: translateY(-50%);
 `;
 
 const SearchInput = (): JSX.Element => {
@@ -112,26 +122,28 @@ const SearchInput = (): JSX.Element => {
   // RENDERING.
   return (
     <StyledWrapper onClick={() => dispatch(startSelecting())} styleOverrides={customSearchInput?.input}>
-      <StyledInput
-        placeholder={placeholder}
-        autocomplete={'off'}
-        onChange={onChangeFilter}
-        onClick={handleClick}
-        styleOverrides={customSearchInput?.input}
-        value={text}
-      />
+      <StyledInputGroup styleOverrides={customSearchInput?.input}>
+        <StyledInput
+          placeholder={placeholder}
+          autocomplete={'off'}
+          onChange={onChangeFilter}
+          onClick={handleClick}
+          styleOverrides={customSearchInput?.input}
+          value={text}
+        />
+        <StyledResetBtn onClick={handleReset}>
+          <span>Reset Search</span>
+          <ResetIcon />
+        </StyledResetBtn>
+        <StyledSearchIconWrapper styleOverrides={customSearchInput?.icon}>
+          <SearchIcon height={height} width={width} />
+        </StyledSearchIconWrapper>
+      </StyledInputGroup>
       {error && (
         <div className="invalid-error">
           Please input {config.SEARCH_INPUT_LENGTH_MINIMUM} characters minimum
         </div>
       )}
-      <StyledResetBtn onClick={handleReset}>
-        <span>Reset Search</span>
-        <ResetIcon />
-      </StyledResetBtn>
-      <StyledSearchIconWrapper styleOverrides={customSearchInput?.icon}>
-        <SearchIcon height={height} width={width} />
-      </StyledSearchIconWrapper>
     </StyledWrapper>
   );
 };

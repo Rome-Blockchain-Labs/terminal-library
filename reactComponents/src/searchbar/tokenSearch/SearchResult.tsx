@@ -35,7 +35,7 @@ const StyledResultTitle = styled.div`
     justify-content: space-between;
     color: ${styleOverrides?.color || '#fff'};
     font-size: ${styleOverrides?.fontSize || '12px'};      
-    padding: ${styleOverrides?.padding || '4px 14px'};      
+    padding: ${styleOverrides?.padding || '7px 14px 2px;'};      
     margin: ${styleOverrides?.margin || '0'};      
     > span {
       font-size: ${styleOverrides?.fontSize2 || '7px'};      

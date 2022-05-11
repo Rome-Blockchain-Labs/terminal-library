@@ -38,7 +38,7 @@ export const FilterExchangeAll = (): JSX.Element => {
     height: customAllChip?.height || 'auto',
     textAlign: customAllChip?.textAlign || 'center',
     textTransform: customAllChip?.textTransform || 'inherit',
-    gridTemplateColumns: customAllChip?.gridTemplateColumns || '40px',
+    gridTemplateColumns: customAllChip?.gridTemplateColumns || 'unset',
     justifySelf: customAllChip?.justifySelf || 'center',
   };
 

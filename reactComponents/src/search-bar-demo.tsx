@@ -1,7 +1,12 @@
 // ================ DEMO TEST ===============
 import * as React from 'react';
 import { render } from 'react-dom';
-
+import AvalancheIcon from './searchbar/icons/avalanche';
+import BscIcon from './searchbar/icons/bsc';
+import MdexIcon from './searchbar/icons/mdex';
+import PangolinIcon from './searchbar/icons/pangolin';
+import BiswapIcon from './searchbar/icons/biswap';
+import PancakeIcon from './searchbar/icons/pancake';
 import { SearchBar } from './searchbar';
 /*
 const customWrapper = {
@@ -233,5 +238,77 @@ const customTokenDetail = {
   }
 }
 */
+
+const TableAction = (props: any) => {
+  const handleClick = () => {
+    console.log(props);
+  };
+
+  return (
+    <div data-tip="Chart" onClick={handleClick}>
+      <span>Table</span>
+    </div>
+  );
+};
+const ChartAction = (props: any) => {
+  const handleClick = () => {
+    console.log(props);
+  };
+
+  return (
+    <div data-tip="Chart" onClick={handleClick}>
+      <span>Chart</span>
+    </div>
+  );
+};
+
 const rootElement = document.getElementById('root');
-render(<SearchBar networks={[]} />, rootElement);
+render(
+  <SearchBar
+    networks={[
+      {
+        id: 'avalanche',
+        name: 'Avalanche',
+        icon: <AvalancheIcon></AvalancheIcon>,
+        exchanges: [
+          {
+            id: 'pangolin',
+            name: 'Pangolin',
+            icon: <PangolinIcon></PangolinIcon>,
+          },
+          {
+            id: 'traderjoe',
+            name: 'Traderjoe',
+          },
+        ],
+      },
+      {
+        id: 'bsc',
+        name: 'BNB Chain',
+        icon: <BscIcon></BscIcon>,
+        exchanges: [
+          {
+            id: 'biswap',
+            name: 'Biswap',
+            icon: <BiswapIcon></BiswapIcon>,
+          },
+          {
+            id: 'pancakeswap',
+            name: 'Pancakeswap',
+            icon: <PancakeIcon></PancakeIcon>,
+          },
+          {
+            id: 'mdex',
+            name: 'Mdex',
+            icon: <MdexIcon></MdexIcon>,
+          },
+        ],
+      },
+    ]}
+    customActions={[
+      { component: TableAction, index: 1 },
+      { component: ChartAction, index: 2 },
+    ]}
+  />,
+  rootElement
+);

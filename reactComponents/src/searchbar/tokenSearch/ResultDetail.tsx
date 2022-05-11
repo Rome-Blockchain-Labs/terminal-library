@@ -128,17 +128,12 @@ const StyledDetailContent = styled.div`
           }
         }
       } 
-
-      & .left {
-        & .pair {          
-          padding-left: 5px;
-        }
-      }
       
       & .detail {
         color: #B4BBC7;
-        grid-template-columns: 40px 30px 50px;
+        grid-template-columns: 60px 30px 50px;
         display: grid;
+        margin-top: 4px;
 
         font-size: ${styleOverrides?.content?.detail?.fontSize || '10px'};
         > strong {
@@ -149,40 +144,31 @@ const StyledDetailContent = styled.div`
         justify-self: flex-end;
         cursor: pointer;
       }
-
-      & .right {
-        padding-top: 10px;        
-
-        & .widgets {          
+      .left {
+        .info {
+          padding-left: 25px;
+        }
+      }
+      & .right {            
+        display: flex;
+        flex-direction: column;
+        & .widgets { 
+          margin-top: auto;         
           color: #B4BBC7;
+        }
+        & .pair {          
+          margin-bottom: 6px;
         }
 
         & .actions {
-          padding: 5px 0;
+          padding: 8px 0;
 
           display: flex;
   
           > div {
             padding-right: 5px;
           }
-        }
-  
-        & .info {
-          display: grid;
-          grid-template-columns: 40% 55%;          
-
-          & .detail {           
-            padding-right: 5px;
-            align-items: center;
-            grid-template-columns: 40px 30px 50px;
-            display: grid;
-            
-            & .logo {
-              padding: 0 10px;
-              margin-top: 2px;
-            }
-          }
-        }
+        } 
       }     
     } 
   `}
@@ -233,7 +219,9 @@ export const ResultDetail: FC<DetailType> = (props: DetailType) => {
             {logoIcons[selectedPair.network] ?? <Logo label={selectedPair.network} width={12} height={12} />}
           </div>
           <div className="logo">
-            {logoIcons[selectedPair.exchange] ?? <Logo label={selectedPair.exchange} width={12} height={12} />}
+            {logoIcons[selectedPair.exchange] ?? (
+              <Logo label={selectedPair.exchange} width={12} height={12} />
+            )}
           </div>
           <div className="pair">
             <div className="detail">
@@ -269,12 +257,38 @@ export const ResultDetail: FC<DetailType> = (props: DetailType) => {
                   Address: <strong>{firstAndLast(selectedPair.token1.address)}</strong>
                 </span>
               </div>
+              <div className="info">
+                <div className="detail">
+                  <span>Network: </span>
+                  <div className="logo">
+                    {logoIcons[selectedPair.network] ?? (
+                      <Logo label={selectedPair.network} width={10} height={10} />
+                    )}
+                  </div>
+                  <strong>{selectedPair.network}</strong>
+                </div>
+
+                <div className="detail">
+                  <span>Exchange: </span>
+                  <div className="logo">
+                    {logoIcons[selectedPair.exchange] ?? (
+                      <Logo label={selectedPair.exchange} width={10} height={10} />
+                    )}
+                  </div>
+                  <strong>{selectedPair.exchange}</strong>
+                </div>
+              </div>
+            </div>
+            <div className="right">
               <div className="pair">
                 <span>Pair Address: </span>
                 <strong>{firstAndLast(selectedPair.id)}</strong>
               </div>
-            </div>
-            <div className="right">
+
+              <div className="detail detail-volumn">
+                <span>Volume :</span> <strong>{intToWords(selectedPair.volumeUSD)}</strong>
+              </div>
+
               <div className="widgets">
                 <span>Add a Widget:</span>
                 <div className="actions">
@@ -285,28 +299,6 @@ export const ResultDetail: FC<DetailType> = (props: DetailType) => {
                         component={action.component}
                         detail={selectedPair}></Action>
                     ))}
-                </div>
-              </div>
-              <div className="info">
-                <div className="detail">
-                  <span>Volume :</span> <strong>{intToWords(selectedPair.volumeUSD)}</strong>
-                </div>
-                <div className="detail">
-                  <span>Network: </span>
-                  <div className="logo">
-                    {logoIcons[selectedPair.network] ?? <Logo label={selectedPair.network} width={10} height={10} />}
-                  </div>
-                  <strong>{selectedPair.network}</strong>
-                </div>
-              </div>
-              <div className="info">
-                <div className="detail"></div>
-                <div className="detail">
-                  <span>Exchange: </span>
-                  <div className="logo">
-                    {logoIcons[selectedPair.exchange] ?? <Logo label={selectedPair.exchange} width={10} height={10} />}
-                  </div>
-                  <strong>{selectedPair.exchange}</strong>
                 </div>
               </div>
             </div>

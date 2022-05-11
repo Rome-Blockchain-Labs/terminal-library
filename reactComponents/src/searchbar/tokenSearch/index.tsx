@@ -56,15 +56,19 @@ export const TokenSearch: FC<RenderProps> = (renderProps: RenderProps) => {
   const dispatch = useDispatch();
   const { isSelecting, isLoading, viewResult } = useSelector((state: RootStateOrAny) => state);
   const searchRef = useRef<HTMLDivElement>();
-
+  const closeResultPanel = () => {
+    dispatch(stopSelecting());
+    dispatch(setViewResult(false));
+  };
   useEffect(() => {
     window.onmousedown = (e) => {
-      if (!searchRef?.current?.contains(e.target) || e.target.closest('.close-result')) {
-        dispatch(stopSelecting());
-        dispatch(setViewResult(false));
+      if (!searchRef?.current?.contains(e.target)) {
+        closeResultPanel();
       }
     };
-  }, [dispatch]);
+    window.addEventListener('searchBarClose', closeResultPanel);
+    return window.removeEventListener('searchBarClose', closeResultPanel);
+  }, []);
 
   return (
     <TokenSearchContext.Provider value={renderProps}>

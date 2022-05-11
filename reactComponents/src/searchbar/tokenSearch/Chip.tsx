@@ -23,7 +23,6 @@ const StyledChip = styled.div`
           ::-moz-user-select: -moz-none;
           ::-webkit-user-select: none;
           ::-ms-user-select: none;          
-    
           font-size: ${styleOverrides?.fontSize || '10px'};  
           font-weight: ${styleOverrides?.fontWeight || '500'};  
           border-radius: ${styleOverrides?.borderRadius || '4px'};  
@@ -32,11 +31,13 @@ const StyledChip = styled.div`
           padding: ${styleOverrides?.padding || '2px 5px'};   
           margin: ${styleOverrides?.margin || '5px'};   
           color: ${styleOverrides?.defaultColor || '#B4BBC7'};   
-          width: ${styleOverrides?.width || '108px'};   
-          height: ${styleOverrides?.height || 'auto'};   
+          width: ${styleOverrides?.width || '120px'};   
+          height: ${styleOverrides?.height || '34px'};   
           text-align: ${styleOverrides?.textAlign || 'left'}; 
           text-transform: ${styleOverrides?.textTransform || 'uppercase'}; 
           grid-template-columns: ${styleOverrides?.gridTemplateColumns || '22% 68% 10%'}; 
+          box-sizing: border-box;
+          
           >:last-child {      
             justify-self: ${styleOverrides?.justifySelf || 'end'}; 
           }
@@ -49,6 +50,9 @@ const StyledChip = styled.div`
           color: ${styleOverrides?.checkedColor || 'white'};   
           background-color: ${styleOverrides?.checkedBackgroundColor || '#474F5C'};   
         }    
+        label svg {
+          max-width: 16px;
+        }
     `}
 `;
 
@@ -64,7 +68,14 @@ export const Chip: FC<any> = (props) => {
 
   return (
     <StyledChip styleOverrides={customStyles}>
-      <input type="checkbox" id={`${label}-${name}`} onChange={onChange} checked={checked} name={name} value={value} />
+      <input
+        type="checkbox"
+        id={`${label}-${name}`}
+        onChange={onChange}
+        checked={checked}
+        name={name}
+        value={value}
+      />
       <label htmlFor={`${label}-${name}`}>
         {icon ?? <Logo label={label} grayscaleFilter={grayscaleFilter} width={16} height={16} />}
         <span>{label}</span>
