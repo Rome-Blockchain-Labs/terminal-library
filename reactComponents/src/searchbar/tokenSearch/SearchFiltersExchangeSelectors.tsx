@@ -46,7 +46,8 @@ export const FilterExchangeAll = (): JSX.Element => {
   return (
     <Chip
       name={'AllExchanges'}
-      label={'Select All'}
+      icon={true}
+      label={exchangeAll ? 'Select All' : 'Deselect All'}
       checked={exchangeAll}
       styleOverrides={styleOverrides}
       onChange={() => dispatch(setExchangeMapAll({ exchangeNames, exchangeAll: exchangeAll }))}

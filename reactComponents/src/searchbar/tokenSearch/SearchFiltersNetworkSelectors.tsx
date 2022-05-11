@@ -1,8 +1,8 @@
-import React, { useContext } from 'react'
+import React, { useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { omitBy } from 'lodash'
-import { setNetworkMap, setNetworkMapAll, setExchangeMapAll } from '../redux/tokenSearchSlice'
-import { Chip } from './Chip'
+import { omitBy } from 'lodash';
+import { setNetworkMap, setNetworkMapAll, setExchangeMapAll } from '../redux/tokenSearchSlice';
+import { Chip } from './Chip';
 import { RootState } from '../redux/store';
 import TokenSearchContext from '../Context/TokenSearch';
 
@@ -10,12 +10,12 @@ export const FilterNetworkAll = (): JSX.Element => {
   const dispatch = useDispatch();
   const renderProps = useContext(TokenSearchContext);
 
-  const { exchangeMap, networkMap } = useSelector((state:RootState) => state);
-  const networkAll = Object.values(omitBy(networkMap, b => !b)).length === 0;
-  const exchangeNamesActive = Object.keys(omitBy(exchangeMap, b => !b));
-  const { customAllChip, networks } = renderProps
+  const { exchangeMap, networkMap } = useSelector((state: RootState) => state);
+  const networkAll = Object.values(omitBy(networkMap, (b) => !b)).length === 0;
+  const exchangeNamesActive = Object.keys(omitBy(exchangeMap, (b) => !b));
+  const { customAllChip, networks } = renderProps;
 
-  const networkNames = networks?.map(network=>network.id)
+  const networkNames = networks?.map((network) => network.id);
 
   const styleOverrides = {
     fontSize: customAllChip?.fontSize || '10px',
@@ -25,49 +25,53 @@ export const FilterNetworkAll = (): JSX.Element => {
     border: customAllChip?.border || '0',
     padding: customAllChip?.padding || '3px 4px',
     margin: customAllChip?.margin || '0',
-    defaultColor: customAllChip?.defaultColor || '#7A808A',   
+    defaultColor: customAllChip?.defaultColor || '#7A808A',
     width: customAllChip?.width || 'auto',
     height: customAllChip?.height || 'auto',
     textAlign: customAllChip?.textAlign || 'center',
     textTransform: customAllChip?.textTransform || 'inherit',
     gridTemplateColumns: customAllChip?.gridTemplateColumns || 'unset',
-    justifySelf: customAllChip?.justifySelf || 'center'    
-  }
+    justifySelf: customAllChip?.justifySelf || 'center',
+  };
 
   const handleChange = () => {
     dispatch(setNetworkMapAll({ networkNames, networkAll: networkAll }));
     dispatch(setExchangeMapAll({ exchangeNames: exchangeNamesActive, exchangeAll: false }));
-  }
+  };
   // RENDERING.
-  return <Chip
-    name={'AllNetworks'}
-    label={'Select All'}
-    checked={networkAll}
-    styleOverrides={styleOverrides}
-    onChange={handleChange}
-  />;
+  return (
+    <Chip
+      name={'AllNetworks'}
+      icon={true}
+      label={networkAll ? 'Select All' : 'Deselect All'}
+      checked={networkAll}
+      styleOverrides={styleOverrides}
+      onChange={handleChange}
+    />
+  );
 };
 
 export const FilterNetworkSelectors = (): JSX.Element => {
   const renderProps = useContext(TokenSearchContext);
-  const networks:any = renderProps.networks
+  const networks: any = renderProps.networks;
   const dispatch = useDispatch();
-  const { networkMap } = useSelector((state:RootState) => state);
-
+  const { networkMap } = useSelector((state: RootState) => state);
 
   // Function generating the HTML element of the network.
   const networkElement = (network) => {
     // RENDERING.
-    return <Chip
-      key={network.id}
-      name={network.id}
-      label={network.name}
-      icon= {network.icon}
-      checked={networkMap[network.id] || false}
-      onChange={(e) => dispatch(setNetworkMap({ networkName: network.id, checked: e.target.checked }))}
-    />;
+    return (
+      <Chip
+        key={network.id}
+        name={network.id}
+        label={network.name}
+        icon={network.icon}
+        checked={networkMap[network.id] || false}
+        onChange={(e) => dispatch(setNetworkMap({ networkName: network.id, checked: e.target.checked }))}
+      />
+    );
   };
 
   // RENDERING.
-  return networks.map(network => networkElement(network));
+  return networks.map((network) => networkElement(network));
 };

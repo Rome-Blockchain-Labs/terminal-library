@@ -33,8 +33,8 @@ const FilterWrapper = styled.div`
       height: ${styleOverrides?.toggleHeight || '7px'};
       width: ${styleOverrides?.toggleWidth || '7px'};
       margin-right: ${styleOverrides?.toggleMarginRight || '0'};    
-      left: ${styleOverrides?.toggleLeft || '50%'};    
-      top: ${styleOverrides?.toggleTop || '5px'};    
+      left: ${styleOverrides?.toggleLeft || 'calc(50% - 3.5px);'};    
+      top: ${styleOverrides?.toggleTop || 'calc(50% - 4.9px);'};    
       border-bottom: ${styleOverrides?.toggleBorderBottom || '2px solid currentColor'}; 
       border-right: ${styleOverrides?.toggleBorderRight || '2px solid currentColor'}; 
       transform: rotate(45deg);
@@ -44,7 +44,6 @@ const FilterWrapper = styled.div`
     .accordion__button[aria-expanded='true']:first-child:after,
     .accordion__button[aria-selected='true']:first-child:after {
       transform: rotate(-135deg);
-      top: 10px;    
     }
 
     .accordion__panel {    
@@ -134,10 +133,14 @@ const SearchDescription: FC<SelectedNetworks> = (props: SelectedNetworks) => {
           <StyledCount>
             {networkCount} network{networkCount > 1 ? 's' : ''}
           </StyledCount>
-          &nbsp;within&nbsp;
-          <StyledCount>
-            {exchangeCount} exchange{exchangeCount > 1 ? 's' : ''}
-          </StyledCount>
+          {exchangeCount > 0 && (
+            <>
+              &nbsp;within&nbsp;
+              <StyledCount>
+                {exchangeCount} exchange{exchangeCount > 1 ? 's' : ''}
+              </StyledCount>
+            </>
+          )}
         </div>
       );
     else
@@ -172,6 +175,8 @@ export const SearchFilters = (): JSX.Element => {
     networkIds = networks?.map((network) => network.id) || [];
   }
   const networkCount = networkIds.length;
+  
+  const exchangeCount = exchangeIds.length;
 
   if (!exchangeIds.length) {
     networks?.forEach((network) => {
@@ -182,8 +187,8 @@ export const SearchFilters = (): JSX.Element => {
       }
     });
   }
-  const exchangeCount = exchangeIds.length;
-
+  const totalExchangeCount = exchangeIds.length;
+  
   const networkTitle = customSearchFilter?.fitler?.network || 'Select Network(s)';
   const exchangeTitle = customSearchFilter?.fitler?.exchange || 'Select Exchange(s)';
 
@@ -239,7 +244,7 @@ export const SearchFilters = (): JSX.Element => {
                 <StyledDescription styleOverrides={customSearchFilter?.fitler?.description}>
                   <SearchDescription
                     networkCount={networkCount}
-                    exchangeCount={exchangeCount}
+                    exchangeCount={exchangeCount || totalExchangeCount}
                     type={'exchange'}
                   />
                 </StyledDescription>

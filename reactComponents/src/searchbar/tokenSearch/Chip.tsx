@@ -79,7 +79,7 @@ export const Chip: FC<any> = (props) => {
       <label htmlFor={`${label}-${name}`}>
         {icon ?? <Logo label={label} grayscaleFilter={grayscaleFilter} width={16} height={16} />}
         <span>{label}</span>
-        {label !== 'Select All' && checkedStatus}
+        {!['Select All', 'Deselect All'].includes(label) && checkedStatus}
       </label>
     </StyledChip>
   );

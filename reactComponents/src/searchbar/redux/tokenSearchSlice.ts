@@ -8,11 +8,6 @@ import config from '../config';
 
 const LOAD_LIMIT = Number(config.LOAD_LIMIT || 10);
 
-//todo no need for this to be a thunk
-const setPairSearchTimestamp = createAsyncThunk('token/saveTime', async (timestamp: number) => {
-  return timestamp;
-});
-
 // Function that handles the "All" values of both the network and the exchange.
 // Consider that "no value" equates "All".
 const allValueHandler = (networkMap, exchangeMap, networks) => {
@@ -71,7 +66,11 @@ export const searchTokenPairs = createAsyncThunk('token/search', async (dataProp
     [processedNetworks, processedExchanges] = valueCleaner(networkMap, exchangeMap);
 
     // Runs the function handling the management of the "All" value selected by the user.
-    [processedNetworks, processedExchanges] = allValueHandler(processedNetworks, processedExchanges, networks);
+    [processedNetworks, processedExchanges] = allValueHandler(
+      processedNetworks,
+      processedExchanges,
+      networks
+    );
 
     // Loading the data.
     const data = await retry(() => searchTokensAsync(searchString, processedNetworks, processedExchanges), {
@@ -109,9 +108,6 @@ const loadMoreItem = (state) => {
 
 export const tokenSearchSlice = createSlice({
   extraReducers: (builder) => {
-    builder.addCase(setPairSearchTimestamp.fulfilled, (state, action) => {
-      state.pairSearchTimestamp = action.payload;
-    });
     builder.addCase(searchTokenPairs.pending, (state) => {
       state.isLoading = true;
       state.fetchError = null;
@@ -145,6 +141,9 @@ export const tokenSearchSlice = createSlice({
     },
     setViewResult: (state, action) => {
       state.viewResult = action.payload;
+    },
+    setPairSearchTimestamp: (state, action) => {
+      state.pairSearchTimestamp = action.payload;
     },
     setSearchText: (state, action) => {
       state.searchText = action.payload;
@@ -215,6 +214,7 @@ export const {
   setViewResult,
   resetSearch,
   loadMore,
+  setPairSearchTimestamp,
 } = tokenSearchSlice.actions;
 
 export default tokenSearchSlice.reducer;
