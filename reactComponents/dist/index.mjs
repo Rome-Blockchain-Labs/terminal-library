@@ -413,6 +413,14 @@ var TokenSearchContext = createContext({ networks: [] });
 var TokenSearch_default = TokenSearchContext;
 
 // src/searchbar/tokenSearch/SearchInput.tsx
+var StyledInputGroup = styled.div`
+  ${({ styleOverrides }) => ` 
+    position: relative;
+    width: ${(styleOverrides == null ? void 0 : styleOverrides.width) || "-webkit-fill-available"};
+    color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "#B7BEC9"};
+    background: ${(styleOverrides == null ? void 0 : styleOverrides.background) || "#00070E"};  
+  `}
+`;
 var StyledInput = styled.input`
   ${({ styleOverrides }) => `    
     margin-left: auto;
@@ -433,7 +441,8 @@ var StyledSearchIconWrapper = styled.div`
     float: right;
     position: absolute;
     right: ${(styleOverrides == null ? void 0 : styleOverrides.right) || "14px"};      
-    top: ${(styleOverrides == null ? void 0 : styleOverrides.top) || "12px"};        
+    top: 50%;
+    transform: translateY(-50%);   
   `}
 `;
 var StyledWrapper = styled.div`
@@ -455,7 +464,8 @@ var StyledWrapper = styled.div`
 var StyledResetBtn = styled.button`
   position: absolute;
   right: 40px;
-  top: 11px;
+  top: 50%;
+  transform: translateY(-50%);
 `;
 var SearchInput = () => {
   var _a2, _b2, _c2, _d2;
@@ -494,6 +504,8 @@ var SearchInput = () => {
   return /* @__PURE__ */ React4.createElement(StyledWrapper, {
     onClick: () => dispatch(startSelecting()),
     styleOverrides: customSearchInput == null ? void 0 : customSearchInput.input
+  }, /* @__PURE__ */ React4.createElement(StyledInputGroup, {
+    styleOverrides: customSearchInput == null ? void 0 : customSearchInput.input
   }, /* @__PURE__ */ React4.createElement(StyledInput, {
     placeholder,
     autocomplete: "off",
@@ -501,16 +513,16 @@ var SearchInput = () => {
     onClick: handleClick,
     styleOverrides: customSearchInput == null ? void 0 : customSearchInput.input,
     value: text
-  }), error && /* @__PURE__ */ React4.createElement("div", {
-    className: "invalid-error"
-  }, "Please input ", config_default.SEARCH_INPUT_LENGTH_MINIMUM, " characters minimum"), /* @__PURE__ */ React4.createElement(StyledResetBtn, {
+  }), /* @__PURE__ */ React4.createElement(StyledResetBtn, {
     onClick: handleReset
   }, /* @__PURE__ */ React4.createElement("span", null, "Reset Search"), /* @__PURE__ */ React4.createElement(reset_default, null)), /* @__PURE__ */ React4.createElement(StyledSearchIconWrapper, {
     styleOverrides: customSearchInput == null ? void 0 : customSearchInput.icon
   }, /* @__PURE__ */ React4.createElement(search_default, {
     height,
     width
-  })));
+  }))), error && /* @__PURE__ */ React4.createElement("div", {
+    className: "invalid-error"
+  }, "Please input ", config_default.SEARCH_INPUT_LENGTH_MINIMUM, " characters minimum"));
 };
 var SearchInput_default = SearchInput;
 
@@ -2953,17 +2965,12 @@ var StyledDetailContent = styled2.div`
           }
         }
       } 
-
-      & .left {
-        & .pair {          
-          padding-left: 5px;
-        }
-      }
       
       & .detail {
         color: #B4BBC7;
-        grid-template-columns: 40px 30px 50px;
+        grid-template-columns: 60px 30px 50px;
         display: grid;
+        margin-top: 4px;
 
         font-size: ${((_n = (_m = styleOverrides == null ? void 0 : styleOverrides.content) == null ? void 0 : _m.detail) == null ? void 0 : _n.fontSize) || "10px"};
         > strong {
@@ -2974,40 +2981,31 @@ var StyledDetailContent = styled2.div`
         justify-self: flex-end;
         cursor: pointer;
       }
-
-      & .right {
-        padding-top: 10px;        
-
-        & .widgets {          
+      .left {
+        .info {
+          padding-left: 25px;
+        }
+      }
+      & .right {            
+        display: flex;
+        flex-direction: column;
+        & .widgets { 
+          margin-top: auto;         
           color: #B4BBC7;
+        }
+        & .pair {          
+          margin-bottom: 6px;
         }
 
         & .actions {
-          padding: 5px 0;
+          padding: 8px 0;
 
           display: flex;
   
           > div {
             padding-right: 5px;
           }
-        }
-  
-        & .info {
-          display: grid;
-          grid-template-columns: 40% 55%;          
-
-          & .detail {           
-            padding-right: 5px;
-            align-items: center;
-            grid-template-columns: 40px 30px 50px;
-            display: grid;
-            
-            & .logo {
-              padding: 0 10px;
-              margin-top: 2px;
-            }
-          }
-        }
+        } 
       }     
     } 
   `;
@@ -3092,22 +3090,8 @@ var ResultDetail = (props) => {
   }, selectedPair.token1.name), /* @__PURE__ */ React38.createElement("span", {
     className: "address"
   }, "Address: ", /* @__PURE__ */ React38.createElement("strong", null, firstAndLast(selectedPair.token1.address)))), /* @__PURE__ */ React38.createElement("div", {
-    className: "pair"
-  }, /* @__PURE__ */ React38.createElement("span", null, "Pair Address: "), /* @__PURE__ */ React38.createElement("strong", null, firstAndLast(selectedPair.id)))), /* @__PURE__ */ React38.createElement("div", {
-    className: "right"
-  }, /* @__PURE__ */ React38.createElement("div", {
-    className: "widgets"
-  }, /* @__PURE__ */ React38.createElement("span", null, "Add a Widget:"), /* @__PURE__ */ React38.createElement("div", {
-    className: "actions"
-  }, customActions && customActions.map((action) => /* @__PURE__ */ React38.createElement(Action, {
-    key: `action-${action.index}`,
-    component: action.component,
-    detail: selectedPair
-  })))), /* @__PURE__ */ React38.createElement("div", {
     className: "info"
   }, /* @__PURE__ */ React38.createElement("div", {
-    className: "detail"
-  }, /* @__PURE__ */ React38.createElement("span", null, "Volume :"), " ", /* @__PURE__ */ React38.createElement("strong", null, intToWords(selectedPair.volumeUSD))), /* @__PURE__ */ React38.createElement("div", {
     className: "detail"
   }, /* @__PURE__ */ React38.createElement("span", null, "Network: "), /* @__PURE__ */ React38.createElement("div", {
     className: "logo"
@@ -3115,11 +3099,7 @@ var ResultDetail = (props) => {
     label: selectedPair.network,
     width: 10,
     height: 10
-  })), /* @__PURE__ */ React38.createElement("strong", null, selectedPair.network))), /* @__PURE__ */ React38.createElement("div", {
-    className: "info"
-  }, /* @__PURE__ */ React38.createElement("div", {
-    className: "detail"
-  }), /* @__PURE__ */ React38.createElement("div", {
+  })), /* @__PURE__ */ React38.createElement("strong", null, selectedPair.network)), /* @__PURE__ */ React38.createElement("div", {
     className: "detail"
   }, /* @__PURE__ */ React38.createElement("span", null, "Exchange: "), /* @__PURE__ */ React38.createElement("div", {
     className: "logo"
@@ -3128,6 +3108,20 @@ var ResultDetail = (props) => {
     width: 10,
     height: 10
   })), /* @__PURE__ */ React38.createElement("strong", null, selectedPair.exchange)))), /* @__PURE__ */ React38.createElement("div", {
+    className: "right"
+  }, /* @__PURE__ */ React38.createElement("div", {
+    className: "pair"
+  }, /* @__PURE__ */ React38.createElement("span", null, "Pair Address: "), /* @__PURE__ */ React38.createElement("strong", null, firstAndLast(selectedPair.id))), /* @__PURE__ */ React38.createElement("div", {
+    className: "detail detail-volumn"
+  }, /* @__PURE__ */ React38.createElement("span", null, "Volume :"), " ", /* @__PURE__ */ React38.createElement("strong", null, intToWords(selectedPair.volumeUSD))), /* @__PURE__ */ React38.createElement("div", {
+    className: "widgets"
+  }, /* @__PURE__ */ React38.createElement("span", null, "Add a Widget:"), /* @__PURE__ */ React38.createElement("div", {
+    className: "actions"
+  }, customActions && customActions.map((action) => /* @__PURE__ */ React38.createElement(Action, {
+    key: `action-${action.index}`,
+    component: action.component,
+    detail: selectedPair
+  }))))), /* @__PURE__ */ React38.createElement("div", {
     className: "up",
     onClick: () => handleDetail(currentIndex === index ? null : index)
   }, /* @__PURE__ */ React38.createElement(up_default, {
@@ -3161,7 +3155,7 @@ var StyledResultTitle = styled3.div`
     justify-content: space-between;
     color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "#fff"};
     font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "12px"};      
-    padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "4px 14px"};      
+    padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "7px 14px 2px;"};      
     margin: ${(styleOverrides == null ? void 0 : styleOverrides.margin) || "0"};      
     > span {
       font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize2) || "7px"};      
@@ -3317,7 +3311,6 @@ var StyledChip = styled4.div`
           ::-moz-user-select: -moz-none;
           ::-webkit-user-select: none;
           ::-ms-user-select: none;          
-    
           font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "10px"};  
           font-weight: ${(styleOverrides == null ? void 0 : styleOverrides.fontWeight) || "500"};  
           border-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderRadius) || "4px"};  
@@ -3326,11 +3319,13 @@ var StyledChip = styled4.div`
           padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "2px 5px"};   
           margin: ${(styleOverrides == null ? void 0 : styleOverrides.margin) || "5px"};   
           color: ${(styleOverrides == null ? void 0 : styleOverrides.defaultColor) || "#B4BBC7"};   
-          width: ${(styleOverrides == null ? void 0 : styleOverrides.width) || "108px"};   
-          height: ${(styleOverrides == null ? void 0 : styleOverrides.height) || "auto"};   
+          width: ${(styleOverrides == null ? void 0 : styleOverrides.width) || "120px"};   
+          height: ${(styleOverrides == null ? void 0 : styleOverrides.height) || "34px"};   
           text-align: ${(styleOverrides == null ? void 0 : styleOverrides.textAlign) || "left"}; 
           text-transform: ${(styleOverrides == null ? void 0 : styleOverrides.textTransform) || "uppercase"}; 
           grid-template-columns: ${(styleOverrides == null ? void 0 : styleOverrides.gridTemplateColumns) || "22% 68% 10%"}; 
+          box-sizing: border-box;
+          
           >:last-child {      
             justify-self: ${(styleOverrides == null ? void 0 : styleOverrides.justifySelf) || "end"}; 
           }
@@ -3343,6 +3338,9 @@ var StyledChip = styled4.div`
           color: ${(styleOverrides == null ? void 0 : styleOverrides.checkedColor) || "white"};   
           background-color: ${(styleOverrides == null ? void 0 : styleOverrides.checkedBackgroundColor) || "#474F5C"};   
         }    
+        label svg {
+          max-width: 16px;
+        }
     `}
 `;
 var Chip = (props) => {
@@ -3392,7 +3390,7 @@ var FilterNetworkAll = () => {
     height: (customAllChip == null ? void 0 : customAllChip.height) || "auto",
     textAlign: (customAllChip == null ? void 0 : customAllChip.textAlign) || "center",
     textTransform: (customAllChip == null ? void 0 : customAllChip.textTransform) || "inherit",
-    gridTemplateColumns: (customAllChip == null ? void 0 : customAllChip.gridTemplateColumns) || "40px",
+    gridTemplateColumns: (customAllChip == null ? void 0 : customAllChip.gridTemplateColumns) || "unset",
     justifySelf: (customAllChip == null ? void 0 : customAllChip.justifySelf) || "center"
   };
   const handleChange = () => {
@@ -3458,7 +3456,7 @@ var FilterExchangeAll = () => {
     height: (customAllChip == null ? void 0 : customAllChip.height) || "auto",
     textAlign: (customAllChip == null ? void 0 : customAllChip.textAlign) || "center",
     textTransform: (customAllChip == null ? void 0 : customAllChip.textTransform) || "inherit",
-    gridTemplateColumns: (customAllChip == null ? void 0 : customAllChip.gridTemplateColumns) || "40px",
+    gridTemplateColumns: (customAllChip == null ? void 0 : customAllChip.gridTemplateColumns) || "unset",
     justifySelf: (customAllChip == null ? void 0 : customAllChip.justifySelf) || "center"
   };
   return /* @__PURE__ */ React43.createElement(Chip, {
@@ -3723,15 +3721,20 @@ var TokenSearch = (renderProps) => {
   const dispatch = useDispatch6();
   const { isSelecting, isLoading, viewResult } = useSelector6((state) => state);
   const searchRef = useRef();
+  const closeResultPanel = () => {
+    dispatch(stopSelecting());
+    dispatch(setViewResult(false));
+  };
   useEffect3(() => {
     window.onmousedown = (e) => {
       var _a2;
-      if (!((_a2 = searchRef == null ? void 0 : searchRef.current) == null ? void 0 : _a2.contains(e.target)) || e.target.closest(".close-result")) {
-        dispatch(stopSelecting());
-        dispatch(setViewResult(false));
+      if (!((_a2 = searchRef == null ? void 0 : searchRef.current) == null ? void 0 : _a2.contains(e.target))) {
+        closeResultPanel();
       }
     };
-  }, [dispatch]);
+    window.addEventListener("searchBarClose", closeResultPanel);
+    return window.removeEventListener("searchBarClose", closeResultPanel);
+  }, []);
   return /* @__PURE__ */ React45.createElement(TokenSearch_default.Provider, {
     value: renderProps
   }, /* @__PURE__ */ React45.createElement(StyledWrapper2, {
