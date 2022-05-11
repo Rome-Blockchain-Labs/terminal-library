@@ -67,7 +67,6 @@ export const TokenSearch: FC<RenderProps> = (renderProps: RenderProps) => {
       }
     };
     window.addEventListener('searchBarClose', closeResultPanel);
-    return window.removeEventListener('searchBarClose', closeResultPanel);
   }, []);
 
   return (
