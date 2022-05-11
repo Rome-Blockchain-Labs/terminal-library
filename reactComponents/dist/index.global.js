@@ -54733,9 +54733,6 @@ spurious results.`);
 
   // src/searchbar/redux/tokenSearchSlice.ts
   var LOAD_LIMIT = Number(config_default.LOAD_LIMIT || 10);
-  var setPairSearchTimestamp = createAsyncThunk("token/saveTime", async (timestamp) => {
-    return timestamp;
-  });
   var allValueHandler = (networkMap, exchangeMap, networks) => {
     let returnedNetworkMap = networkMap;
     let returnedExchangeMap = exchangeMap;
@@ -54801,9 +54798,6 @@ spurious results.`);
   };
   var tokenSearchSlice = createSlice({
     extraReducers: (builder) => {
-      builder.addCase(setPairSearchTimestamp.fulfilled, (state, action) => {
-        state.pairSearchTimestamp = action.payload;
-      });
       builder.addCase(searchTokenPairs.pending, (state) => {
         state.isLoading = true;
         state.fetchError = null;
@@ -54838,6 +54832,9 @@ spurious results.`);
       },
       setViewResult: (state, action) => {
         state.viewResult = action.payload;
+      },
+      setPairSearchTimestamp: (state, action) => {
+        state.pairSearchTimestamp = action.payload;
       },
       setSearchText: (state, action) => {
         state.searchText = action.payload;
@@ -54893,7 +54890,8 @@ spurious results.`);
     setNetworkMapAll,
     setViewResult,
     resetSearch,
-    loadMore
+    loadMore,
+    setPairSearchTimestamp
   } = tokenSearchSlice.actions;
   var tokenSearchSlice_default = tokenSearchSlice.reducer;
 
@@ -59943,7 +59941,7 @@ spurious results.`);
       grayscaleFilter,
       width: 16,
       height: 16
-    }), /* @__PURE__ */ import_react53.default.createElement("span", null, label), label !== "Select All" && checkedStatus));
+    }), /* @__PURE__ */ import_react53.default.createElement("span", null, label), !["Select All", "Deselect All"].includes(label) && checkedStatus));
   };
 
   // src/searchbar/tokenSearch/SearchFiltersNetworkSelectors.tsx
@@ -59977,7 +59975,8 @@ spurious results.`);
     };
     return /* @__PURE__ */ import_react54.default.createElement(Chip, {
       name: "AllNetworks",
-      label: "Select All",
+      icon: true,
+      label: networkAll ? "Select All" : "Deselect All",
       checked: networkAll,
       styleOverrides,
       onChange: handleChange
@@ -60038,7 +60037,8 @@ spurious results.`);
     };
     return /* @__PURE__ */ import_react55.default.createElement(Chip, {
       name: "AllExchanges",
-      label: "Select All",
+      icon: true,
+      label: exchangeAll ? "Select All" : "Deselect All",
       checked: exchangeAll,
       styleOverrides,
       onChange: () => dispatch(setExchangeMapAll({ exchangeNames, exchangeAll }))
@@ -60094,8 +60094,8 @@ spurious results.`);
       height: ${(styleOverrides == null ? void 0 : styleOverrides.toggleHeight) || "7px"};
       width: ${(styleOverrides == null ? void 0 : styleOverrides.toggleWidth) || "7px"};
       margin-right: ${(styleOverrides == null ? void 0 : styleOverrides.toggleMarginRight) || "0"};    
-      left: ${(styleOverrides == null ? void 0 : styleOverrides.toggleLeft) || "50%"};    
-      top: ${(styleOverrides == null ? void 0 : styleOverrides.toggleTop) || "5px"};    
+      left: ${(styleOverrides == null ? void 0 : styleOverrides.toggleLeft) || "calc(50% - 3.5px);"};    
+      top: ${(styleOverrides == null ? void 0 : styleOverrides.toggleTop) || "calc(50% - 4.9px);"};    
       border-bottom: ${(styleOverrides == null ? void 0 : styleOverrides.toggleBorderBottom) || "2px solid currentColor"}; 
       border-right: ${(styleOverrides == null ? void 0 : styleOverrides.toggleBorderRight) || "2px solid currentColor"}; 
       transform: rotate(45deg);
@@ -60105,7 +60105,6 @@ spurious results.`);
     .accordion__button[aria-expanded='true']:first-child:after,
     .accordion__button[aria-selected='true']:first-child:after {
       transform: rotate(-135deg);
-      top: 10px;    
     }
 
     .accordion__panel {    
@@ -60180,7 +60179,7 @@ spurious results.`);
       if (type === "network")
         desc = /* @__PURE__ */ import_react56.default.createElement("div", {
           style: { display: "flex", justifyContent: "right" }
-        }, "Searching\xA0", /* @__PURE__ */ import_react56.default.createElement(StyledCount, null, networkCount, " network", networkCount > 1 ? "s" : ""), "\xA0within\xA0", /* @__PURE__ */ import_react56.default.createElement(StyledCount, null, exchangeCount, " exchange", exchangeCount > 1 ? "s" : ""));
+        }, "Searching\xA0", /* @__PURE__ */ import_react56.default.createElement(StyledCount, null, networkCount, " network", networkCount > 1 ? "s" : ""), exchangeCount > 0 && /* @__PURE__ */ import_react56.default.createElement(import_react56.default.Fragment, null, "\xA0within\xA0", /* @__PURE__ */ import_react56.default.createElement(StyledCount, null, exchangeCount, " exchange", exchangeCount > 1 ? "s" : "")));
       else
         desc = /* @__PURE__ */ import_react56.default.createElement("div", {
           style: { display: "flex", justifyContent: "right" }
@@ -60201,6 +60200,7 @@ spurious results.`);
       networkIds = (networks == null ? void 0 : networks.map((network) => network.id)) || [];
     }
     const networkCount = networkIds.length;
+    const exchangeCount = exchangeIds.length;
     if (!exchangeIds.length) {
       networks == null ? void 0 : networks.forEach((network) => {
         var _a3;
@@ -60211,7 +60211,7 @@ spurious results.`);
         }
       });
     }
-    const exchangeCount = exchangeIds.length;
+    const totalExchangeCount = exchangeIds.length;
     const networkTitle = ((_a2 = customSearchFilter == null ? void 0 : customSearchFilter.fitler) == null ? void 0 : _a2.network) || "Select Network(s)";
     const exchangeTitle = ((_b2 = customSearchFilter == null ? void 0 : customSearchFilter.fitler) == null ? void 0 : _b2.exchange) || "Select Exchange(s)";
     (0, import_react56.useEffect)(() => {
@@ -60244,7 +60244,7 @@ spurious results.`);
       styleOverrides: (_j = customSearchFilter == null ? void 0 : customSearchFilter.fitler) == null ? void 0 : _j.description
     }, /* @__PURE__ */ import_react56.default.createElement(SearchDescription, {
       networkCount,
-      exchangeCount,
+      exchangeCount: exchangeCount || totalExchangeCount,
       type: "exchange"
     })))))));
   };
@@ -60310,7 +60310,6 @@ spurious results.`);
         }
       };
       window.addEventListener("searchBarClose", closeResultPanel);
-      return window.removeEventListener("searchBarClose", closeResultPanel);
     }, []);
     return /* @__PURE__ */ import_react57.default.createElement(TokenSearch_default.Provider, {
       value: renderProps
@@ -60330,16 +60329,16 @@ spurious results.`);
     return /* @__PURE__ */ import_react58.default.createElement(Provider_default, {
       store
     }, !config_default.IS_ENV_PRODUCTION && /* @__PURE__ */ import_react58.default.createElement(tokenSearch_default, {
-      customWrapper: renderProps == null ? void 0 : renderProps.customWrapper,
-      customSearchInput: renderProps == null ? void 0 : renderProps.customSearchInput,
-      customSearchFilter: renderProps == null ? void 0 : renderProps.customSearchFilter,
-      customLoading: renderProps == null ? void 0 : renderProps.customLoading,
-      customChip: renderProps == null ? void 0 : renderProps.customChip,
-      customResult: renderProps == null ? void 0 : renderProps.customResult,
-      customTokenDetail: renderProps == null ? void 0 : renderProps.customTokenDetail,
-      customActions: renderProps == null ? void 0 : renderProps.customActions,
-      customAllChip: renderProps == null ? void 0 : renderProps.customAllChip,
-      networks: renderProps == null ? void 0 : renderProps.networks
+      customWrapper: renderProps.customWrapper,
+      customSearchInput: renderProps.customSearchInput,
+      customSearchFilter: renderProps.customSearchFilter,
+      customLoading: renderProps.customLoading,
+      customChip: renderProps.customChip,
+      customResult: renderProps.customResult,
+      customTokenDetail: renderProps.customTokenDetail,
+      customActions: renderProps.customActions,
+      customAllChip: renderProps.customAllChip,
+      networks: renderProps.networks
     }));
   };
 

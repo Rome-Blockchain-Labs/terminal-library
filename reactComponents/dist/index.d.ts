@@ -233,7 +233,7 @@ declare type RenderProps = {
     customLoading?: CustomLoadingType;
     customActions?: Array<ActionComponentType>;
     customAllChip?: CustomAllChipType;
-    networks?: Array<NetworkType>;
+    networks: Array<NetworkType>;
 };
 
 declare const SearchBar: FC<RenderProps>;
