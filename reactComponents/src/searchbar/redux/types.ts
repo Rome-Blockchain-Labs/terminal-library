@@ -22,6 +22,9 @@ type TokenPair = {
   volumeToken1: string;
   volumeUSD: string;
 };
+export interface NetworkItemType {
+  [key: string]: boolean;
+}
 
 export type TokenSearchState = {
   searchText: string;
@@ -34,7 +37,7 @@ export type TokenSearchState = {
   selectedPair: TokenPair | undefined;
   pairSearchTimestamp: number;
   serializedTradeEstimator: string;
-  exchangeMap:any//todo
-  networkMap:any//todo
+  exchangeMap: NetworkItemType;
+  networkMap: NetworkItemType;
   viewResult: boolean;
 };
