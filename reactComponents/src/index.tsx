@@ -1,10 +1,14 @@
-export * from './searchbar';
-export * from './types';
 // ================ DEMO TEST ===============
 import * as React from 'react';
 import { render } from 'react-dom';
-
+import AvalancheIcon from './searchbar/icons/avalanche';
+import BscIcon from './searchbar/icons/bsc';
+import MdexIcon from './searchbar/icons/mdex';
+import PangolinIcon from './searchbar/icons/pangolin';
+import BiswapIcon from './searchbar/icons/biswap';
+import PancakeIcon from './searchbar/icons/pancake';
 import { SearchBar } from './searchbar';
+import { NetworkType } from './types';
 /*
 const customWrapper = {
   backgroundColor: '#474F5C',      
@@ -232,10 +236,77 @@ const customTokenDetail = {
           fontSize: '10px'
       }
 
-
   }
 }
-
 */
+
+const TableAction = (props: any) => {
+  const handleClick = () => {
+    console.log(props);
+  };
+
+  return (
+    <div data-tip="Chart" onClick={handleClick}>
+      <span>Table</span>
+    </div>
+  );
+};
+const ChartAction = (props: any) => {
+  const handleClick = () => {
+    console.log(props);
+  };
+
+  return (
+    <div data-tip="Chart" onClick={handleClick}>
+      <span>Chart</span>
+    </div>
+  );
+};
+
+const networks: NetworkType[] = [
+  {
+    id: 'avalanche',
+    name: 'Avalanche',
+    icon: <AvalancheIcon></AvalancheIcon>,
+    exchanges: [
+      {
+        name: 'pangolin',
+        icon: <PangolinIcon></PangolinIcon>,
+      },
+      {
+        name: 'traderjoe',
+      },
+    ],
+  },
+  {
+    id: 'bsc',
+    name: 'BNB Chain',
+    icon: <BscIcon></BscIcon>,
+    exchanges: [
+      {
+        name: 'biswap',
+        icon: <BiswapIcon></BiswapIcon>,
+      },
+      {
+        name: 'pancakeswap',
+        icon: <PancakeIcon></PancakeIcon>,
+      },
+      {
+        name: 'mdex',
+        icon: <MdexIcon></MdexIcon>,
+      },
+    ],
+  },
+];
+
 const rootElement = document.getElementById('root');
-render(<SearchBar networks={[]} />, rootElement);
+render(
+  <SearchBar
+    networks={networks}
+    customActions={[
+      { component: TableAction, index: 1 },
+      { component: ChartAction, index: 2 },
+    ]}
+  />,
+  rootElement
+);

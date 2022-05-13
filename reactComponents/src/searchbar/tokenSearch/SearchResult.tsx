@@ -114,7 +114,7 @@ const SearchResult: FC<Loading> = (props: Loading) => {
   renderProps.networks?.forEach((network) => {
     logoIcons[network.id] = network.icon;
     network.exchanges?.forEach((exchange) => {
-      logoIcons[exchange.id] = exchange.icon;
+      logoIcons[exchange.name] = exchange.icon;
     });
   });
 

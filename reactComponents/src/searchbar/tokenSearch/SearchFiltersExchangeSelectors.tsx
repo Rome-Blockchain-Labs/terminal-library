@@ -20,7 +20,7 @@ export const FilterExchangeAll = (): JSX.Element => {
   networks?.forEach((network) => {
     if (selectedNetworks.includes(network.id)) {
       network.exchanges?.forEach((exchange) => {
-        exchangeNames.push(exchange.id);
+        exchangeNames.push(exchange.name);
       });
     }
   });
@@ -73,16 +73,16 @@ export const FilterExchangeSelectors = (): JSX.Element => {
     // RENDERING.
     return (
       <Chip
-        key={exchange.id}
-        name={exchange.id}
+        key={exchange.name}
+        name={exchange.name}
         label={exchange.name}
         icon={exchange.icon}
         grayscaleFilter={1}
-        checked={exchangeMap[exchange.id] || false}
+        checked={exchangeMap[exchange.name] || false}
         onChange={(e) =>
           dispatch(
             setExchangeMap({
-              exchangeName: exchange.id,
+              exchangeName: exchange.name,
               checked: e.target.checked,
             })
           )

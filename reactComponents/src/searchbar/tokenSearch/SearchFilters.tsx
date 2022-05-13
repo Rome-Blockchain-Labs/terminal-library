@@ -182,7 +182,7 @@ export const SearchFilters = (): JSX.Element => {
     networks?.forEach((network) => {
       if (networkIds.includes(network.id)) {
         network.exchanges?.forEach((exchange) => {
-          exchangeIds.push(exchange.id);
+          exchangeIds.push(exchange.name);
         });
       }
     });

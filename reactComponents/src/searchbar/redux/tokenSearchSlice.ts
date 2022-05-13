@@ -25,16 +25,16 @@ const allValueHandler = (networkMap, exchangeMap, networks) => {
   // If "All" is active, it overrides all other networks; thus we enable all the networks.
   if (exchangeMap.length === 0 || exchangeMap.includes('All')) {
     // Loads all the networks from "networkExchangePairs".
-    const exchanges: string[] = [];
-    networks.forEach((network) => {
-      if (returnedNetworkMap.includes(network.id)) {
-        network.exchanges.forEach((exchange) => {
-          exchanges.push(exchange.id);
-        });
-      }
-    });
-    returnedExchangeMap = exchanges;
   }
+  const exchanges: string[] = [];
+  networks.forEach((network) => {
+    if (returnedNetworkMap.includes(network.id)) {
+      network.exchanges.forEach((exchange) => {
+        exchanges.push(exchange.name);
+      });
+    }
+  });
+  returnedExchangeMap = exchanges;
 
   // Returns the processed values of "networkMap" and "exchangeMap".
   return [returnedNetworkMap, returnedExchangeMap];
@@ -180,6 +180,16 @@ export const tokenSearchSlice = createSlice({
     setNetworkMap: (state, action) => {
       // Setting the payload network name to the payload value.
       state.networkMap[action.payload.networkName] = action.payload.checked;
+      // if network is false, all exchanges will be deselected.
+      if (!action.payload.checked) {
+        action.payload.networks.forEach((network) => {
+          if (network.id === action.payload.networkName) {
+            network.exchanges.forEach((exhange) => {
+              if (state.exchangeMap[exhange]) state.exchangeMap[exhange] = false;
+            });
+          } else return false;
+        });
+      }
     },
     setNetworkMapAll: (state, action) => {
       let networkName;

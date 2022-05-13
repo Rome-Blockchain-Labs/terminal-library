@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { omitBy } from 'lodash';
 import { setNetworkMap, setNetworkMapAll, setExchangeMapAll } from '../redux/tokenSearchSlice';
@@ -53,7 +53,14 @@ export const FilterNetworkAll = (): JSX.Element => {
 
 export const FilterNetworkSelectors = (): JSX.Element => {
   const renderProps = useContext(TokenSearchContext);
-  const networks: any = renderProps.networks;
+  const networks: any = [...renderProps.networks];
+  const networkItems: any = useMemo(
+    () =>
+      networks.map((network) => {
+        return { id: network.id, exchanges: network.exchanges.map((exhange) => exhange.name) };
+      }),
+    [networks]
+  );
   const dispatch = useDispatch();
   const { networkMap } = useSelector((state: RootState) => state);
 
@@ -64,10 +71,18 @@ export const FilterNetworkSelectors = (): JSX.Element => {
       <Chip
         key={network.id}
         name={network.id}
-        label={network.name}
+        label={network.name || network.id}
         icon={network.icon}
         checked={networkMap[network.id] || false}
-        onChange={(e) => dispatch(setNetworkMap({ networkName: network.id, checked: e.target.checked }))}
+        onChange={(e) =>
+          dispatch(
+            setNetworkMap({
+              networkName: network.id,
+              checked: e.target.checked,
+              networks: networkItems,
+            })
+          )
+        }
       />
     );
   };
