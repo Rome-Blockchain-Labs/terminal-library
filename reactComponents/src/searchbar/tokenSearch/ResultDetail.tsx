@@ -20,7 +20,7 @@ const StyledDetailList = styled.div`
     padding: ${styleOverrides?.container?.padding || '5px 0'};    
     background: transparent;
     border-bottom: ${styleOverrides?.container?.borderbottom || '1px solid #474F5C'};    
-    grid-template-columns: ${styleOverrides?.container?.gridTemplateColumns || '15% 1% 15% 10% 10% 29% 10%'}; 
+    grid-template-columns: ${styleOverrides?.container?.gridTemplateColumns || '19% 1% 19% 10% 10% 23% 14%'}; 
     
     border-radius: ${styleOverrides?.button?.borderRadius || '4px'};
     position: relative;
@@ -47,8 +47,8 @@ const StyledDetailList = styled.div`
     &.active {
       background: #474F5C;
       color: white;
-      padding: 16px 0;
-      grid-template-columns: 15% 1% 15% 10% 10% 39% 0%;
+      padding: 24px 0;
+      grid-template-columns: 19% 1% 19% 10% 10% 38% 0%;
       .token {
         font-weight: ${styleOverrides?.token?.fontWeight || '600'};      
         .address {
