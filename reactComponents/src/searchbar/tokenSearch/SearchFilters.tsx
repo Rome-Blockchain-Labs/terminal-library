@@ -92,10 +92,9 @@ const StyledDescription = styled.div`
   ${({ styleOverrides }) => `
     text-align: ${styleOverrides?.textAlign || 'right'};
     font-size: ${styleOverrides?.fontSize || '12px'};
-    font-weight: ${styleOverrides?.fontWeight || '100'};
     padding: ${styleOverrides?.padding || '10px 10px 5px'};       
     background-color: ${styleOverrides?.backgroundColor || '#00070E'};
-    color: ${styleOverrides?.color || '#7A808A'};       
+    color: ${styleOverrides?.color || '#c4c5c7'};       
   `}
 `;
 
@@ -175,7 +174,7 @@ export const SearchFilters = (): JSX.Element => {
     networkIds = networks?.map((network) => network.id) || [];
   }
   const networkCount = networkIds.length;
-  
+
   const exchangeCount = exchangeIds.length;
 
   if (!exchangeIds.length) {
@@ -188,7 +187,7 @@ export const SearchFilters = (): JSX.Element => {
     });
   }
   const totalExchangeCount = exchangeIds.length;
-  
+
   const networkTitle = customSearchFilter?.content?.network || 'Select Network(s)';
   const exchangeTitle = customSearchFilter?.content?.exchange || 'Select Exchange(s)';
 
