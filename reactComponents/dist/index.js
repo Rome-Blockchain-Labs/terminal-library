@@ -487,7 +487,7 @@ var StyledWrapper = import_styled_components.default.div`
     background: ${(styleOverrides == null ? void 0 : styleOverrides.background) || "#00070E"};  
     font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "8px"};      
     font-family: ${(styleOverrides == null ? void 0 : styleOverrides.fontFamily) || "'Fira Code', monospace"};
-    box-shadow: 0 0 18px 2px #474f5c;
+    box-shadow: 0 0 8px 2px #474f5c;
 
     .invalid-error {
       padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "0 14px 5px"};   
@@ -2880,26 +2880,68 @@ var up_default = UpIcon;
 var imageSize = 26;
 var StyledDetailList = import_styled_components2.default.div`
   ${({ styleOverrides }) => {
-  var _a2, _b2, _c2, _d2, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t, _u;
+  var _a2, _b2, _c2, _d2, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s;
   return `
     display: ${((_a2 = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _a2.display) || "grid"};
     grid-gap: 5px;
     align-items: ${((_b2 = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _b2.alignItems) || "center"};    
     justify-content: space-between;
     padding: ${((_c2 = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _c2.padding) || "5px 0"};    
-    background: ${((_d2 = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _d2.background) || "#00070E"};
-    border-bottom: ${((_e = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _e.borderbottom) || "1px solid #474F5C"};    
-    grid-template-columns: ${((_f = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _f.gridTemplateColumns) || "20% 1% 20% 10% 10% 20% 10%"}; 
-    cursor: pointer; 
-    & .token {
+    background: transparent;
+    border-bottom: ${((_d2 = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _d2.borderbottom) || "1px solid #474F5C"};    
+    grid-template-columns: ${((_e = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _e.gridTemplateColumns) || "15% 1% 15% 10% 10% 29% 10%"}; 
+    
+    border-radius: ${((_f = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _f.borderRadius) || "4px"};
+    position: relative;
+    font-size: ${((_g = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _g.fontSize) || "10px"};
+    color: ${((_h = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _h.color) || "#B4BBC7"};
+
+    .token {      
+      grid-template-columns: 16px 100px; 
+      padding: ${((_i = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _i.padding) || "0 5px"};  
+      .address {
+        position: relative;
+        padding-left: 5px;
+        > span {
+          display: none;
+          font-size: 8px;
+          margin-top: 5px;
+          span {
+            color: ${((_j = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _j.color) || "#B4BBC7"};
+          }
+        }
+      } 
+    }
+
+    &.active {
+      background: #474F5C;
+      color: white;
+      padding: 16px 0;
+      grid-template-columns: 15% 1% 15% 10% 10% 39% 0%;
+      .token {
+        font-weight: ${((_k = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _k.fontWeight) || "600"};      
+        .address {
+          font-size: 12px;
+          > span {
+            display: block;
+          }
+        }
+        svg {
+          width: 26px;
+          height: 26px;
+          margin-top: -10px;
+        }
+      }
+    }
+    .capitalize {
+      text-transform: capitalize;
+    }
+    .text-white {
+      color: white;
+    }
+    .icon-label {
       display: flex;   
       align-items: center;
-      grid-template-columns: 16px 100px; 
-      color: ${((_g = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _g.color) || "#B4BBC7"};
-      font-size: ${((_h = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _h.fontSize) || "10px"};
-      font-weight: ${((_i = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _i.fontWeight) || "600"};      
-      padding: ${((_j = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _j.padding) || "0 5px"};      
-      
       > span {
         padding-left: 5px;
         display: block;
@@ -2909,23 +2951,28 @@ var StyledDetailList = import_styled_components2.default.div`
         flex: 1;
       }
     }
-
-    & .logo {
-      padding: 0;
-      justify-self: center;
+    .text-line-1 {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;  
+      flex: 1;
     }
-
-    & .pair {
-      color: ${((_k = styleOverrides == null ? void 0 : styleOverrides.pair) == null ? void 0 : _k.color) || "#B4BBC7"};
-      font-size: ${((_l = styleOverrides == null ? void 0 : styleOverrides.pair) == null ? void 0 : _l.fontSize) || "10px"};
-
-      & .count {
-        display: flex;
-      }
+    .flex-center {
+      display: flex;
+      align-items: center;
+    }  
+    .flex-1 {
+       flex: 1;
     }
-
+    .gap-5 {
+      gap: 20px;
+    }
+    .gap-2 {
+      gap: 8px;
+    }
     & .detail {
-      padding: ${((_m = styleOverrides == null ? void 0 : styleOverrides.detail) == null ? void 0 : _m.padding) || "3px"};
+      padding: ${((_l = styleOverrides == null ? void 0 : styleOverrides.detail) == null ? void 0 : _l.padding) || "3px"};
     }
     
     > button {      
@@ -2933,126 +2980,40 @@ var StyledDetailList = import_styled_components2.default.div`
       align-items: center;
       justify-content: center;
       justify-self: right;
-      border-color: ${((_n = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _n.borderColor) || "#474F5C"};      
-      background-color: ${((_o = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _o.backgroundColor) || "#474F5C"};      
-      color: ${((_p = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _p.color) || "#7A808A"};      
-      border-radius: ${((_q = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _q.borderRadius) || "4px"};      
-      font-size: ${((_r = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _r.fontSize) || "10px"};
+      border-color: ${((_m = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _m.borderColor) || "#474F5C"};      
+      background-color: ${((_n = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _n.backgroundColor) || "#474F5C"};      
+      color: ${((_o = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _o.color) || "#7A808A"};      
+      border-radius: ${((_p = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _p.borderRadius) || "4px"};     
+      
       border-width: 0;      
       cursor: pointer;
-      padding: ${((_s = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _s.padding) || "3px"};
-      width: ${((_t = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _t.width) || "auto"};
-
+      padding: ${((_q = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _q.padding) || "6px 8px !important"};
+      width: ${((_r = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _r.width) || "auto"};
+      &.down {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background: transparent;
+      }
       &:hover {
-        background-color: ${((_u = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _u.hoverBackColor) || "#232C38"};      
+        background-color: ${((_s = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _s.hoverBackColor) || "#232C38"};      
       }    
     }
-    &:hover {
-      color: rgb(193,255,0);;
-      .token, .pair, button {
-        color: rgb(193,255,0);
-      }
+    .actions {
+      display: flex;
+      flex: 1;
+      gap: 12px;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
     }
-  `;
-}}
-`;
-var StyledDetailContent = import_styled_components2.default.div`
-  ${({ styleOverrides }) => {
-  var _a2, _b2, _c2, _d2, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n;
-  return `
-    display: ${((_a2 = styleOverrides == null ? void 0 : styleOverrides.content) == null ? void 0 : _a2.display) || "block"};    
-    align-items: ${((_b2 = styleOverrides == null ? void 0 : styleOverrides.content) == null ? void 0 : _b2.alignItems) || "center"};    
-    padding: ${((_c2 = styleOverrides == null ? void 0 : styleOverrides.content) == null ? void 0 : _c2.padding) || "5px"};    
-    margin: ${((_d2 = styleOverrides == null ? void 0 : styleOverrides.content) == null ? void 0 : _d2.margin) || "5px 0"};    
-    background: ${((_e = styleOverrides == null ? void 0 : styleOverrides.content) == null ? void 0 : _e.background) || "#474F5C"};
-    border-bottom: ${((_f = styleOverrides == null ? void 0 : styleOverrides.content) == null ? void 0 : _f.borderbottom) || "1px solid #474F5C"};    
-    border-radius: ${((_g = styleOverrides == null ? void 0 : styleOverrides.content) == null ? void 0 : _g.borderRadius) || "4px"};      
-    transition: all 1500ms ease;
-
-    & .details {
-      display: grid;
-      padding: 3px 0;
-      font-size: ${((_h = styleOverrides == null ? void 0 : styleOverrides.content) == null ? void 0 : _h.fontSize) || "10px"};
-
-      grid-template-columns: ${((_i = styleOverrides == null ? void 0 : styleOverrides.content) == null ? void 0 : _i.gridTemplateColumns) || "53% 45% 2%"}; 
-
-      & .token {
-        display: grid;        
-        grid-template-columns: 20px;
-        > span {
-          padding-left: 5px
-        }
-        
-        & .name {
-          align-self: center;          
-          font-size: ${((_j = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _j.fontSize) || "10x"};
-          font-weight: ${((_k = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _k.fontWeight) || "600"};          
-        }
-    
-        & .address {
-          align-self: center;
-          display: flex;
-          grid-row: 2;
-          grid-column: 2;
-          color: #B4BBC7;
-          font-size: ${((_l = styleOverrides == null ? void 0 : styleOverrides.address) == null ? void 0 : _l.fontSize) || "10px"};
-          padding-bottom: 5px;
-          
-          > strong {
-            color: white;
-            padding-left: 5px;            
-          }
-        }
-      } 
-      
-      & .detail {
-        color: #B4BBC7;
-        grid-template-columns: 60px 30px 50px;
-        display: grid;
-        margin-top: 4px;
-
-        font-size: ${((_n = (_m = styleOverrides == null ? void 0 : styleOverrides.content) == null ? void 0 : _m.detail) == null ? void 0 : _n.fontSize) || "10px"};
-        align-items: center;
-        > strong {
-          color: white;
-          text-transform: capitalize;
-        }
-        svg {
-          width: 16px;
-          height: 16px;
-        }
-      }
-      & .up {
-        justify-self: flex-end;
-        cursor: pointer;
-      }
-      .left {
-        .info {
-          padding-left: 25px;
-        }
-      }
-      & .right {            
-        display: flex;
-        flex-direction: column;
-        & .widgets { 
-          margin-top: auto;         
-          color: #B4BBC7;
-        }
-        & .pair {          
-          margin-bottom: 6px;
-        }
-
-        & .actions {
-          padding: 8px 0;
-
-          display: flex;
-  
-          > div {
-            padding-right: 5px;
-          }
-        } 
-      }     
-    } 
+    &:not(.active):hover {
+      cursor: pointer; 
+      color: rgb(193,255,0);
+      .token, .pair, button, strong {
+        color: rgb(193,255,0);
+      }      
+    }
   `;
 }}
 `;
@@ -3068,7 +3029,7 @@ var Action = (props) => {
   }));
 };
 var ResultDetail = (props) => {
-  var _a2, _b2, _c2, _d2;
+  var _a2, _b2;
   const { index, suggestions, handleDetail, currentIndex, logoIcons } = props;
   const renderProps = (0, import_react39.useContext)(TokenSearch_default);
   const { customActions, customTokenDetail } = renderProps;
@@ -3084,93 +3045,58 @@ var ResultDetail = (props) => {
     else
       return /* @__PURE__ */ import_react39.default.createElement(default_default, null);
   };
-  return /* @__PURE__ */ import_react39.default.createElement(import_react39.default.Fragment, null, currentIndex !== index && /* @__PURE__ */ import_react39.default.createElement(StyledDetailList, {
+  return /* @__PURE__ */ import_react39.default.createElement(StyledDetailList, {
     styleOverrides: customTokenDetail == null ? void 0 : customTokenDetail.list,
-    onClick: () => handleDetail(currentIndex === index ? null : index)
+    onClick: () => currentIndex !== index ? handleDetail(index) : "",
+    className: currentIndex === index ? "active" : ""
   }, /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "token"
-  }, tokenImage(selectedPair.token0), " ", /* @__PURE__ */ import_react39.default.createElement("span", null, selectedPair.token0.name)), "/", /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "token"
-  }, tokenImage(selectedPair.token1), " ", /* @__PURE__ */ import_react39.default.createElement("span", null, selectedPair.token1.name)), /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "logo"
+    className: "token icon-label"
+  }, tokenImage(selectedPair.token0), /* @__PURE__ */ import_react39.default.createElement("div", {
+    className: "flex-1 address text-line-1"
+  }, /* @__PURE__ */ import_react39.default.createElement("div", {
+    className: "text-line-1"
+  }, selectedPair.token0.name), /* @__PURE__ */ import_react39.default.createElement("span", {
+    className: "text-line-1"
+  }, /* @__PURE__ */ import_react39.default.createElement("span", null, "Address:"), " ", /* @__PURE__ */ import_react39.default.createElement("strong", null, firstAndLast(selectedPair.token0.address))))), "/", /* @__PURE__ */ import_react39.default.createElement("div", {
+    className: "token icon-label"
+  }, tokenImage(selectedPair.token1), /* @__PURE__ */ import_react39.default.createElement("div", {
+    className: "flex-1 address text-line-1"
+  }, /* @__PURE__ */ import_react39.default.createElement("div", null, selectedPair.token1.name), /* @__PURE__ */ import_react39.default.createElement("span", null, /* @__PURE__ */ import_react39.default.createElement("span", null, "Address:"), " ", /* @__PURE__ */ import_react39.default.createElement("strong", null, firstAndLast(selectedPair.token1.address))))), /* @__PURE__ */ import_react39.default.createElement("div", {
+    className: "logo icon-label"
   }, (_a2 = logoIcons[selectedPair.network]) != null ? _a2 : /* @__PURE__ */ import_react39.default.createElement(Logo, {
     label: selectedPair.network,
     width: 12,
     height: 12
-  })), /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "logo"
+  }), /* @__PURE__ */ import_react39.default.createElement("span", {
+    className: "capitalize"
+  }, selectedPair.network)), /* @__PURE__ */ import_react39.default.createElement("div", {
+    className: "logo icon-label"
   }, (_b2 = logoIcons[selectedPair.exchange]) != null ? _b2 : /* @__PURE__ */ import_react39.default.createElement(Logo, {
     label: selectedPair.exchange,
     width: 12,
     height: 12
-  })), /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "pair"
-  }, /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "count"
-  }, /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "detail"
-  }, "Volume: ", /* @__PURE__ */ import_react39.default.createElement("strong", null, intToWords(selectedPair.volumeUSD))))), /* @__PURE__ */ import_react39.default.createElement("button", {
-    onClick: () => handleDetail(currentIndex === index ? null : index)
-  }, /* @__PURE__ */ import_react39.default.createElement("span", null, "Details "), /* @__PURE__ */ import_react39.default.createElement(down_default, {
-    width: 7,
-    height: 7
-  }))), currentIndex === index && /* @__PURE__ */ import_react39.default.createElement(StyledDetailContent, {
-    styleOverrides: customTokenDetail == null ? void 0 : customTokenDetail.details
-  }, /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "details"
-  }, /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "left"
-  }, /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "token"
-  }, tokenImage(selectedPair.token0), /* @__PURE__ */ import_react39.default.createElement("span", {
-    className: "name"
-  }, selectedPair.token0.name), /* @__PURE__ */ import_react39.default.createElement("span", {
-    className: "address"
-  }, "Address: ", /* @__PURE__ */ import_react39.default.createElement("strong", null, firstAndLast(selectedPair.token0.address)))), /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "token"
-  }, tokenImage(selectedPair.token1), /* @__PURE__ */ import_react39.default.createElement("span", {
-    className: "name"
-  }, selectedPair.token1.name), /* @__PURE__ */ import_react39.default.createElement("span", {
-    className: "address"
-  }, "Address: ", /* @__PURE__ */ import_react39.default.createElement("strong", null, firstAndLast(selectedPair.token1.address)))), /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "info"
-  }, /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "detail"
-  }, /* @__PURE__ */ import_react39.default.createElement("span", null, "Network: "), /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "logo"
-  }, (_c2 = logoIcons[selectedPair.network]) != null ? _c2 : /* @__PURE__ */ import_react39.default.createElement(Logo, {
-    label: selectedPair.network,
-    width: 10,
-    height: 10
-  })), /* @__PURE__ */ import_react39.default.createElement("strong", null, selectedPair.network)), /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "detail"
-  }, /* @__PURE__ */ import_react39.default.createElement("span", null, "Exchange: "), /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "logo"
-  }, (_d2 = logoIcons[selectedPair.exchange]) != null ? _d2 : /* @__PURE__ */ import_react39.default.createElement(Logo, {
-    label: selectedPair.exchange,
-    width: 10,
-    height: 10
-  })), /* @__PURE__ */ import_react39.default.createElement("strong", null, selectedPair.exchange)))), /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "right"
-  }, /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "pair"
-  }, /* @__PURE__ */ import_react39.default.createElement("span", null, "Pair Address: "), /* @__PURE__ */ import_react39.default.createElement("strong", null, firstAndLast(selectedPair.id))), /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "detail detail-volumn"
-  }, /* @__PURE__ */ import_react39.default.createElement("span", null, "Volume :"), " ", /* @__PURE__ */ import_react39.default.createElement("strong", null, intToWords(selectedPair.volumeUSD))), /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "widgets"
-  }, /* @__PURE__ */ import_react39.default.createElement("span", null, "Add a Widget:"), /* @__PURE__ */ import_react39.default.createElement("div", {
+  }), /* @__PURE__ */ import_react39.default.createElement("span", {
+    className: "capitalize"
+  }, selectedPair.exchange)), /* @__PURE__ */ import_react39.default.createElement("div", {
+    className: "pair flex-center gap-5"
+  }, /* @__PURE__ */ import_react39.default.createElement("div", null, "Volume: ", /* @__PURE__ */ import_react39.default.createElement("strong", {
+    className: "text-white"
+  }, intToWords(selectedPair.volumeUSD))), currentIndex === index && /* @__PURE__ */ import_react39.default.createElement("div", {
     className: "actions"
   }, customActions && customActions.map((action) => /* @__PURE__ */ import_react39.default.createElement(Action, {
     key: `action-${action.index}`,
     component: action.component,
     detail: selectedPair
-  }))))), /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "up",
-    onClick: () => handleDetail(currentIndex === index ? null : index)
-  }, /* @__PURE__ */ import_react39.default.createElement(up_default, {
+  })))), /* @__PURE__ */ import_react39.default.createElement("button", {
+    onClick: () => handleDetail(currentIndex === index ? null : index),
+    className: currentIndex === index ? "down" : "up"
+  }, currentIndex !== index ? /* @__PURE__ */ import_react39.default.createElement(import_react39.default.Fragment, null, /* @__PURE__ */ import_react39.default.createElement("span", null, "Details "), /* @__PURE__ */ import_react39.default.createElement(down_default, {
+    width: 7,
+    height: 7
+  })) : /* @__PURE__ */ import_react39.default.createElement(import_react39.default.Fragment, null, /* @__PURE__ */ import_react39.default.createElement("span", null, "Close "), /* @__PURE__ */ import_react39.default.createElement(up_default, {
     height: 7,
     width: 7
-  })))));
+  }))));
 };
 var ResultDetail_default = ResultDetail;
 
@@ -3228,7 +3154,7 @@ var StyledResultContent = import_styled_components3.default.div`
 
   & .header {
     display: grid;
-    grid-template-columns: 48% 10% 10% 40%;
+    grid-template-columns: 39% 10% 10% 40%;
     border-bottom: 1px solid #474f5c;
     color: #b4bbc7;
     font-size: 11px;
@@ -3762,7 +3688,7 @@ var StyledWrapper2 = import_styled_components6.default.div`
       color: ${(styleOverrides == null ? void 0 : styleOverrides.button.color) || "#B1B8C3"};      
       border-radius: ${(styleOverrides == null ? void 0 : styleOverrides.button.borderRadius) || "4px"};      
       font-size: ${(styleOverrides == null ? void 0 : styleOverrides.button.fontSize) || "10px"};      
-      padding: ${(styleOverrides == null ? void 0 : styleOverrides.button.padding) || "6px 8px"};      
+      padding: ${(styleOverrides == null ? void 0 : styleOverrides.button.padding) || "4px 6px"};      
       border-width: 0;      
       cursor: pointer;
       &:hover {
