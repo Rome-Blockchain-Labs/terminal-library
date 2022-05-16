@@ -84,7 +84,13 @@ const StyledFilterContent = styled.div`
     margin-left: 10px;
     justify-content: ${styleOverrides?.justifyContent || 'start'};
     align-items: ${styleOverrides?.alignItems || 'center'};  
-    padding:  ${styleOverrides?.padding || '0 0 5px'};           
+    padding:  ${styleOverrides?.padding || '0 0 5px'};    
+    .chip-icon {
+      filter: grayscale(1);
+      &.active{
+        filter: unset;
+      }     
+    }
   `}
 `;
 

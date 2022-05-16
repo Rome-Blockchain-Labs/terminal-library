@@ -77,7 +77,9 @@ export const Chip: FC<any> = (props) => {
         value={value}
       />
       <label htmlFor={`${label}-${name}`}>
-        {icon ?? <Logo label={label} grayscaleFilter={grayscaleFilter} width={16} height={16} />}
+        <div className={checked ? 'chip-icon active' : 'chip-icon'}>
+          {icon ?? <Logo label={label} grayscaleFilter={grayscaleFilter} width={16} height={16} />}
+        </div>
         <span>{label}</span>
         {!['Select All', 'Deselect All'].includes(label) && checkedStatus}
       </label>
