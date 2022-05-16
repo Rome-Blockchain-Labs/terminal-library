@@ -37,7 +37,7 @@ const StyledWrapper = styled.div`
       color: ${styleOverrides?.button.color || '#B1B8C3'};      
       border-radius: ${styleOverrides?.button.borderRadius || '4px'};      
       font-size: ${styleOverrides?.button.fontSize || '10px'};      
-      padding: ${styleOverrides?.button.padding || '3px 6px'};      
+      padding: ${styleOverrides?.button.padding || '6px 8px'};      
       border-width: 0;      
       cursor: pointer;
       &:hover {

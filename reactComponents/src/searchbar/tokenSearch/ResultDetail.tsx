@@ -49,6 +49,9 @@ const StyledDetailList = styled.div`
     & .pair {
       color: ${styleOverrides?.pair?.color || '#B4BBC7'};
       font-size: ${styleOverrides?.pair?.fontSize || '10px'};
+      display: flex;
+      align-items: center;
+      gap: 10px;
 
       & .count {
         display: flex;
