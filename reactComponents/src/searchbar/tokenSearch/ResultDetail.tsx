@@ -18,19 +18,61 @@ const StyledDetailList = styled.div`
     align-items: ${styleOverrides?.container?.alignItems || 'center'};    
     justify-content: space-between;
     padding: ${styleOverrides?.container?.padding || '5px 0'};    
-    background: ${styleOverrides?.container?.background || '#00070E'};
+    background: transparent;
     border-bottom: ${styleOverrides?.container?.borderbottom || '1px solid #474F5C'};    
-    grid-template-columns: ${styleOverrides?.container?.gridTemplateColumns || '20% 1% 20% 10% 10% 20% 10%'}; 
-    cursor: pointer; 
-    & .token {
+    grid-template-columns: ${styleOverrides?.container?.gridTemplateColumns || '15% 1% 15% 10% 10% 29% 10%'}; 
+    
+    border-radius: ${styleOverrides?.button?.borderRadius || '4px'};
+    position: relative;
+    font-size: ${styleOverrides?.token?.fontSize || '10px'};
+    color: ${styleOverrides?.token?.color || '#B4BBC7'};
+
+    .token {      
+      grid-template-columns: 16px 100px; 
+      padding: ${styleOverrides?.token?.padding || '0 5px'};  
+      .address {
+        position: relative;
+        padding-left: 5px;
+        > span {
+          display: none;
+          font-size: 8px;
+          margin-top: 5px;
+          span {
+            color: ${styleOverrides?.token?.color || '#B4BBC7'};
+          }
+        }
+      } 
+    }
+
+    &.active {
+      background: #474F5C;
+      color: white;
+      padding: 16px 0;
+      grid-template-columns: 15% 1% 15% 10% 10% 39% 0%;
+      .token {
+        font-weight: ${styleOverrides?.token?.fontWeight || '600'};      
+        .address {
+          font-size: 12px;
+          > span {
+            display: block;
+          }
+        }
+        svg {
+          width: 26px;
+          height: 26px;
+          margin-top: -10px;
+        }
+      }
+    }
+    .capitalize {
+      text-transform: capitalize;
+    }
+    .text-white {
+      color: white;
+    }
+    .icon-label {
       display: flex;   
       align-items: center;
-      grid-template-columns: 16px 100px; 
-      color: ${styleOverrides?.token?.color || '#B4BBC7'};
-      font-size: ${styleOverrides?.token?.fontSize || '10px'};
-      font-weight: ${styleOverrides?.token?.fontWeight || '600'};      
-      padding: ${styleOverrides?.token?.padding || '0 5px'};      
-      
       > span {
         padding-left: 5px;
         display: block;
@@ -40,21 +82,26 @@ const StyledDetailList = styled.div`
         flex: 1;
       }
     }
-
-    & .logo {
-      padding: 0;
-      justify-self: center;
+    .text-line-1 {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;  
+      flex: 1;
     }
-
-    & .pair {
-      color: ${styleOverrides?.pair?.color || '#B4BBC7'};
-      font-size: ${styleOverrides?.pair?.fontSize || '10px'};
-
-      & .count {
-        display: flex;
-      }
+    .flex-center {
+      display: flex;
+      align-items: center;
+    }  
+    .flex-1 {
+       flex: 1;
     }
-
+    .gap-5 {
+      gap: 20px;
+    }
+    .gap-2 {
+      gap: 8px;
+    }
     & .detail {
       padding: ${styleOverrides?.detail?.padding || '3px'};
     }
@@ -67,121 +114,37 @@ const StyledDetailList = styled.div`
       border-color: ${styleOverrides?.button?.borderColor || '#474F5C'};      
       background-color: ${styleOverrides?.button?.backgroundColor || '#474F5C'};      
       color: ${styleOverrides?.button?.color || '#7A808A'};      
-      border-radius: ${styleOverrides?.button?.borderRadius || '4px'};      
-      font-size: ${styleOverrides?.button?.fontSize || '10px'};
+      border-radius: ${styleOverrides?.button?.borderRadius || '4px'};     
+      
       border-width: 0;      
       cursor: pointer;
-      padding: ${styleOverrides?.button?.padding || '3px'};
+      padding: ${styleOverrides?.button?.padding || '6px 8px !important'};
       width: ${styleOverrides?.button?.width || 'auto'};
-
+      &.down {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background: transparent;
+      }
       &:hover {
         background-color: ${styleOverrides?.button?.hoverBackColor || '#232C38'};      
       }    
     }
-    &:hover {
-      color: rgb(193,255,0);;
-      .token, .pair, button {
-        color: rgb(193,255,0);
-      }
+    .actions {
+      display: flex;
+      flex: 1;
+      gap: 12px;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
     }
-  `}
-`;
-
-const StyledDetailContent = styled.div`
-  ${({ styleOverrides }) => `
-    display: ${styleOverrides?.content?.display || 'block'};    
-    align-items: ${styleOverrides?.content?.alignItems || 'center'};    
-    padding: ${styleOverrides?.content?.padding || '5px'};    
-    margin: ${styleOverrides?.content?.margin || '5px 0'};    
-    background: ${styleOverrides?.content?.background || '#474F5C'};
-    border-bottom: ${styleOverrides?.content?.borderbottom || '1px solid #474F5C'};    
-    border-radius: ${styleOverrides?.content?.borderRadius || '4px'};      
-    transition: all 1500ms ease;
-
-    & .details {
-      display: grid;
-      padding: 3px 0;
-      font-size: ${styleOverrides?.content?.fontSize || '10px'};
-
-      grid-template-columns: ${styleOverrides?.content?.gridTemplateColumns || '53% 45% 2%'}; 
-
-      & .token {
-        display: grid;        
-        grid-template-columns: 20px;
-        > span {
-          padding-left: 5px
-        }
-        
-        & .name {
-          align-self: center;          
-          font-size: ${styleOverrides?.token?.fontSize || '10x'};
-          font-weight: ${styleOverrides?.token?.fontWeight || '600'};          
-        }
-    
-        & .address {
-          align-self: center;
-          display: flex;
-          grid-row: 2;
-          grid-column: 2;
-          color: #B4BBC7;
-          font-size: ${styleOverrides?.address?.fontSize || '10px'};
-          padding-bottom: 5px;
-          
-          > strong {
-            color: white;
-            padding-left: 5px;            
-          }
-        }
-      } 
-      
-      & .detail {
-        color: #B4BBC7;
-        grid-template-columns: 60px 30px 50px;
-        display: grid;
-        margin-top: 4px;
-
-        font-size: ${styleOverrides?.content?.detail?.fontSize || '10px'};
-        align-items: center;
-        > strong {
-          color: white;
-          text-transform: capitalize;
-        }
-        svg {
-          width: 16px;
-          height: 16px;
-        }
-      }
-      & .up {
-        justify-self: flex-end;
-        cursor: pointer;
-      }
-      .left {
-        .info {
-          padding-left: 25px;
-        }
-      }
-      & .right {            
-        display: flex;
-        flex-direction: column;
-        & .widgets { 
-          margin-top: auto;         
-          color: #B4BBC7;
-        }
-        & .pair {          
-          margin-bottom: 6px;
-        }
-
-        & .actions {
-          padding: 8px 0;
-
-          display: flex;
-  
-          > div {
-            padding-right: 5px;
-          }
-        } 
-      }     
-    } 
+    &:not(.active):hover {
+      cursor: pointer; 
+      color: rgb(193,255,0);
+      .token, .pair, button, strong {
+        color: rgb(193,255,0);
+      }      
+    }
   `}
 `;
 
@@ -214,109 +177,70 @@ export const ResultDetail: FC<DetailType> = (props: DetailType) => {
   };
 
   return (
-    <>
-      {currentIndex !== index && (
-        <StyledDetailList
-          styleOverrides={customTokenDetail?.list}
-          onClick={() => handleDetail(currentIndex === index ? null : index)}>
-          <div className="token">
-            {tokenImage(selectedPair.token0)} <span>{selectedPair.token0.name}</span>
+    <StyledDetailList
+      styleOverrides={customTokenDetail?.list}
+      onClick={() => (currentIndex !== index ? handleDetail(index) : '')}
+      className={currentIndex === index ? 'active' : ''}>
+      <div className="token icon-label">
+        {tokenImage(selectedPair.token0)}
+        <div className="flex-1 address text-line-1">
+          <div className="text-line-1">{selectedPair.token0.name}</div>
+          <span className="text-line-1">
+            <span>Address:</span> <strong>{firstAndLast(selectedPair.token0.address)}</strong>
+          </span>
+        </div>
+      </div>
+      /
+      <div className="token icon-label">
+        {tokenImage(selectedPair.token1)}
+        <div className="flex-1 address text-line-1">
+          <div>{selectedPair.token1.name}</div>
+          <span>
+            <span>Address:</span> <strong>{firstAndLast(selectedPair.token1.address)}</strong>
+          </span>
+        </div>
+      </div>
+      <div className="logo icon-label">
+        {logoIcons[selectedPair.network] ?? <Logo label={selectedPair.network} width={12} height={12} />}
+        <span className="capitalize">{selectedPair.network}</span>
+      </div>
+      <div className="logo icon-label">
+        {logoIcons[selectedPair.exchange] ?? <Logo label={selectedPair.exchange} width={12} height={12} />}
+        <span className="capitalize">{selectedPair.exchange}</span>
+      </div>
+      <div className="pair flex-center gap-5">
+        <div>
+          Volume: <strong className="text-white">{intToWords(selectedPair.volumeUSD)}</strong>
+        </div>
+
+        {currentIndex === index && (
+          <div className="actions">
+            {customActions &&
+              customActions.map((action) => (
+                <Action
+                  key={`action-${action.index}`}
+                  component={action.component}
+                  detail={selectedPair}></Action>
+              ))}
           </div>
-          /
-          <div className="token">
-            {tokenImage(selectedPair.token1)} <span>{selectedPair.token1.name}</span>
-          </div>
-          <div className="logo">
-            {logoIcons[selectedPair.network] ?? <Logo label={selectedPair.network} width={12} height={12} />}
-          </div>
-          <div className="logo">
-            {logoIcons[selectedPair.exchange] ?? (
-              <Logo label={selectedPair.exchange} width={12} height={12} />
-            )}
-          </div>
-          <div className="pair">
-            <div className="count">
-              <div className="detail">
-                Volume: <strong>{intToWords(selectedPair.volumeUSD)}</strong>
-              </div>
-            </div>
-          </div>
-          <button onClick={() => handleDetail(currentIndex === index ? null : index)}>
+        )}
+      </div>
+      <button
+        onClick={() => handleDetail(currentIndex === index ? null : index)}
+        className={currentIndex === index ? 'down' : 'up'}>
+        {currentIndex !== index ? (
+          <>
             <span>Details </span>
             <DownIcon width={7} height={7} />
-          </button>
-        </StyledDetailList>
-      )}
-      {currentIndex === index && (
-        <StyledDetailContent styleOverrides={customTokenDetail?.details}>
-          <div className="details">
-            <div className="left">
-              <div className="token">
-                {tokenImage(selectedPair.token0)}
-                <span className="name">{selectedPair.token0.name}</span>
-                <span className="address">
-                  Address: <strong>{firstAndLast(selectedPair.token0.address)}</strong>
-                </span>
-              </div>
-              <div className="token">
-                {tokenImage(selectedPair.token1)}
-                <span className="name">{selectedPair.token1.name}</span>
-                <span className="address">
-                  Address: <strong>{firstAndLast(selectedPair.token1.address)}</strong>
-                </span>
-              </div>
-              <div className="info">
-                <div className="detail">
-                  <span>Network: </span>
-                  <div className="logo">
-                    {logoIcons[selectedPair.network] ?? (
-                      <Logo label={selectedPair.network} width={10} height={10} />
-                    )}
-                  </div>
-                  <strong>{selectedPair.network}</strong>
-                </div>
-
-                <div className="detail">
-                  <span>Exchange: </span>
-                  <div className="logo">
-                    {logoIcons[selectedPair.exchange] ?? (
-                      <Logo label={selectedPair.exchange} width={10} height={10} />
-                    )}
-                  </div>
-                  <strong>{selectedPair.exchange}</strong>
-                </div>
-              </div>
-            </div>
-            <div className="right">
-              <div className="pair">
-                <span>Pair Address: </span>
-                <strong>{firstAndLast(selectedPair.id)}</strong>
-              </div>
-
-              <div className="detail detail-volumn">
-                <span>Volume :</span> <strong>{intToWords(selectedPair.volumeUSD)}</strong>
-              </div>
-
-              <div className="widgets">
-                <span>Add a Widget:</span>
-                <div className="actions">
-                  {customActions &&
-                    customActions.map((action) => (
-                      <Action
-                        key={`action-${action.index}`}
-                        component={action.component}
-                        detail={selectedPair}></Action>
-                    ))}
-                </div>
-              </div>
-            </div>
-            <div className="up" onClick={() => handleDetail(currentIndex === index ? null : index)}>
-              <UpIcon height={7} width={7} />
-            </div>
-          </div>
-        </StyledDetailContent>
-      )}
-    </>
+          </>
+        ) : (
+          <>
+            <span>Close </span>
+            <UpIcon height={7} width={7} />
+          </>
+        )}
+      </button>
+    </StyledDetailList>
   );
 };
 export default ResultDetail;

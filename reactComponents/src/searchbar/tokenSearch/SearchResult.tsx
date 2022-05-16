@@ -66,7 +66,7 @@ const StyledResultContent = styled.div`
 
   & .header {
     display: grid;
-    grid-template-columns: 48% 10% 10% 40%;
+    grid-template-columns: 39% 10% 10% 40%;
     border-bottom: 1px solid #474f5c;
     color: #b4bbc7;
     font-size: 11px;

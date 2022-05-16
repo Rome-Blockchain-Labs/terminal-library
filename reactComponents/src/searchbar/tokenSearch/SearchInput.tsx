@@ -58,7 +58,7 @@ const StyledWrapper = styled.div`
     background: ${styleOverrides?.background || '#00070E'};  
     font-size: ${styleOverrides?.fontSize || '8px'};      
     font-family: ${styleOverrides?.fontFamily || "'Fira Code', monospace"};
-    box-shadow: 0 0 18px 2px #474f5c;
+    box-shadow: 0 0 8px 2px #474f5c;
 
     .invalid-error {
       padding: ${styleOverrides?.padding || '0 14px 5px'};   
