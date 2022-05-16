@@ -23,7 +23,7 @@ const StyledDetailList = styled.div`
     grid-template-columns: ${styleOverrides?.container?.gridTemplateColumns || '15% 1% 18% 4% 4% 35% 10%'}; 
     cursor: pointer; 
     & .token {
-      display: inherit;
+      display: flex;   
       align-items: center;
       grid-template-columns: 16px 100px; 
       color: ${styleOverrides?.token?.color || '#B4BBC7'};
@@ -33,6 +33,11 @@ const StyledDetailList = styled.div`
       
       > span {
         padding-left: 5px;
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;  
+        flex: 1;
       }
     }
 
