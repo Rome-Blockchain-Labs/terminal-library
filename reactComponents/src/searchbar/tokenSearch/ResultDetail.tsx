@@ -20,7 +20,7 @@ const StyledDetailList = styled.div`
     padding: ${styleOverrides?.container?.padding || '5px 0'};    
     background: ${styleOverrides?.container?.background || '#00070E'};
     border-bottom: ${styleOverrides?.container?.borderbottom || '1px solid #474F5C'};    
-    grid-template-columns: ${styleOverrides?.container?.gridTemplateColumns || '22% 1% 22% 5% 5% 30% 10%'}; 
+    grid-template-columns: ${styleOverrides?.container?.gridTemplateColumns || '20% 1% 20% 10% 10% 20% 10%'}; 
     cursor: pointer; 
     & .token {
       display: flex;   

@@ -66,12 +66,18 @@ const StyledResultContent = styled.div`
 
   & .header {
     display: grid;
-    grid-template-columns: 41% 5% 6% 49%;
+    grid-template-columns: 48% 10% 10% 40%;
     border-bottom: 1px solid #474f5c;
     color: #b4bbc7;
-    font-size: 8px;
+    font-size: 11px;
     font-weight: bold;
     padding-bottom: 10px;
+
+    span {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
 
     > :last-child {
       padding-left: 5px;
@@ -132,9 +138,9 @@ const SearchResult: FC<Loading> = (props: Loading) => {
       <StyledResultContent styleOverrides={customResult?.content}>
         <div className="header">
           <span>Pair</span>
-          <span>Net.</span>
-          <span>Exch.</span>
-          <span>Details.</span>
+          <span>Network</span>
+          <span>Exchange</span>
+          <span>Details</span>
         </div>
         {suggestionRendered.map((suggestions, index) => (
           <ResultDetail
