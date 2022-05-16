@@ -20,7 +20,7 @@ const StyledDetailList = styled.div`
     padding: ${styleOverrides?.container?.padding || '5px 0'};    
     background: ${styleOverrides?.container?.background || '#00070E'};
     border-bottom: ${styleOverrides?.container?.borderbottom || '1px solid #474F5C'};    
-    grid-template-columns: ${styleOverrides?.container?.gridTemplateColumns || '15% 1% 18% 4% 4% 35% 10%'}; 
+    grid-template-columns: ${styleOverrides?.container?.gridTemplateColumns || '22% 1% 22% 5% 5% 30% 10%'}; 
     cursor: pointer; 
     & .token {
       display: flex;   
@@ -49,9 +49,6 @@ const StyledDetailList = styled.div`
     & .pair {
       color: ${styleOverrides?.pair?.color || '#B4BBC7'};
       font-size: ${styleOverrides?.pair?.fontSize || '10px'};
-      display: flex;
-      align-items: center;
-      gap: 10px;
 
       & .count {
         display: flex;
@@ -238,9 +235,6 @@ export const ResultDetail: FC<DetailType> = (props: DetailType) => {
             )}
           </div>
           <div className="pair">
-            <div className="detail">
-              Pair: <strong>{firstAndLast(selectedPair.id)}</strong>
-            </div>
             <div className="count">
               <div className="detail">
                 Volume: <strong>{intToWords(selectedPair.volumeUSD)}</strong>
