@@ -132,7 +132,7 @@ const StyledDetailContent = styled.div`
           
           > strong {
             color: white;
-            padding-left: 5px;
+            padding-left: 5px;            
           }
         }
       } 
@@ -144,8 +144,14 @@ const StyledDetailContent = styled.div`
         margin-top: 4px;
 
         font-size: ${styleOverrides?.content?.detail?.fontSize || '10px'};
+        align-items: center;
         > strong {
           color: white;
+          text-transform: capitalize;
+        }
+        svg {
+          width: 16px;
+          height: 16px;
         }
       }
       & .up {
