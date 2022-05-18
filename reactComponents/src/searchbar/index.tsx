@@ -11,7 +11,6 @@ export const SearchBar: FC<RenderProps> = (renderProps: RenderProps) => {
   return (  
       <Provider store={store}>      
       {
-        !config.IS_ENV_PRODUCTION &&        
         <TokenSearch 
           customWrapper={renderProps?.customWrapper}
           customSearchInput={renderProps?.customSearchInput}

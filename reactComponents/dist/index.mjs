@@ -199,7 +199,6 @@ var config_default = {
   SEARCH_INPUT_LENGTH_MINIMUM: (_a = process.env.REACT_APP_SEARCH_INPUT_LENGTH_MINIMUM) != null ? _a : 3,
   SEARCH_ASYNC_DELAY: (_b = process.env.REACT_APP_SEARCH_ASYNC_DELAY) != null ? _b : 300,
   SEARCH_ASYNC_DATASET_LENGTH_MAXIMUM: (_c = process.env.REACT_APP_SEARCH_ASYNC_DATASET_LENGTH_MAXIMUM) != null ? _c : 500,
-  IS_ENV_PRODUCTION: process.env.REACT_APP_ROME_ENV === "production" ? true : false,
   LOAD_LIMIT: (_d = process.env.REACT_APP_LOAD_LIMIT) != null ? _d : 10
 };
 
@@ -3696,7 +3695,7 @@ var tokenSearch_default = TokenSearch;
 var SearchBar = (renderProps) => {
   return /* @__PURE__ */ React46.createElement(Provider, {
     store
-  }, !config_default.IS_ENV_PRODUCTION && /* @__PURE__ */ React46.createElement(tokenSearch_default, {
+  }, /* @__PURE__ */ React46.createElement(tokenSearch_default, {
     customWrapper: renderProps == null ? void 0 : renderProps.customWrapper,
     customSearchInput: renderProps == null ? void 0 : renderProps.customSearchInput,
     customSearchFilter: renderProps == null ? void 0 : renderProps.customSearchFilter,
