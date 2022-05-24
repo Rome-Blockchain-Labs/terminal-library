@@ -6,7 +6,7 @@ import SearchIcon from '../icons/search';
 import ResetIcon from '../icons/reset';
 import debounce from 'lodash.debounce';
 import TokenSearchContext from '../Context/TokenSearch';
-import {RootState} from '../redux/store';
+import { RootState } from '../redux/store';
 import config from '../config';
 
 const StyledInput = styled.input`
@@ -15,37 +15,47 @@ const StyledInput = styled.input`
     margin-right: auto;
     position: relative;
     outline: 0;
-    width: ${ styleOverrides?.width || "-webkit-fill-available" };
-    height: ${ styleOverrides?.height || "auto" };
-    border: ${ styleOverrides?.border || "5px solid #474F5C" };   
+    flex: auto;
+    background: transparent;
+    border: none;        
+    width: 100%;
+    height: 100%;
     color: ${ styleOverrides?.color || "#7A808A" };
-    display: ${ styleOverrides?.display || "block" };           
-    border-radius: ${ styleOverrides?.borderRadius || "4px" };  
-    background: ${ styleOverrides?.background || "#00070E" };   
-    padding: ${ styleOverrides?.padding || "10px 14px" };    
     font-size: ${ styleOverrides?.fontSize || "8px" };      
     font-family: ${ styleOverrides?.fontFamily || "'Fira Code', monospace" };
   `}  
 `;
 
 const StyledSearchIconWrapper = styled.div`    
-  ${({styleOverrides}) => `
-    cursor: pointer;
-    float: right;
-    position: absolute;
-    right: ${ styleOverrides?.right || "14px" };      
-    top: ${ styleOverrides?.top || "12px" };        
-  `}    
+  cursor: pointer;
+  svg {
+    vertical-align: middle;
+  }
 `;
 
 const StyledWrapper = styled.div`
-  position: relative;
+  ${({styleOverrides}) => `
+    position: relative;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;    
+    background: ${ styleOverrides?.background || "#00070E" };
+    border-radius: ${ styleOverrides?.borderRadius || "4px" };
+    border: ${ styleOverrides?.border || "5px solid #474F5C" };
+    padding: ${ styleOverrides?.padding || "10px 14px" };
+    width: ${ styleOverrides?.width || "100%" };
+    height: ${ styleOverrides?.height || "35px" };
+  `}
 `;
 
+const StyledActionWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+`
+
 const StyledResetBtn = styled.button`
-  position: absolute;
-  right: 40px;
-  top: 11px;  
+  margin-right: 10px;
 `
 
 const SearchInput = (): JSX.Element => {
@@ -100,16 +110,18 @@ const SearchInput = (): JSX.Element => {
         styleOverrides={customSearchInput?.input}    
         value={text}
       />
-      <StyledResetBtn onClick={handleReset}>
-        <span>Reset Search</span>
-        <ResetIcon />
-      </StyledResetBtn>      
-      <StyledSearchIconWrapper styleOverrides={customSearchInput?.icon}>       
-        <SearchIcon            
-            height={height}
-            width={width}
+      <StyledActionWrapper>
+        <StyledResetBtn onClick={handleReset}>
+          <span>Reset Search</span>
+          <ResetIcon />
+        </StyledResetBtn>      
+        <StyledSearchIconWrapper styleOverrides={customSearchInput?.icon}>       
+          <SearchIcon            
+              height={height}
+              width={width}
           />          
         </StyledSearchIconWrapper>
+      </StyledActionWrapper>      
     </StyledWrapper>
   );
 };

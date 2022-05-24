@@ -10,14 +10,14 @@ import { RenderProps } from '../../types';
 
 const StyledWrapper = styled.div`
   ${({styleOverrides}) => `
-    min-width: 420px;            
+    width: 100%;
     position: relative;
 
     & .dropDown {
       position: absolute;
       width: -webkit-fill-available;
       left: 0; 
-      top: 33px;
+      top: 32px;
       z-index: 99;
       background-color: ${ styleOverrides?.backgroundColor || "#474F5C" };          
       border-bottom-left-radius: ${ styleOverrides?.borderBottomLeftRadius || "4px" };  
