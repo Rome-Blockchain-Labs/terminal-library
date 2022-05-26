@@ -1,4 +1,4 @@
-import React, { useContext, FC, useEffect } from "react"
+import React, { useContext, FC, useEffect, useState } from "react"
 import { useDispatch, useSelector } from 'react-redux';
 import styled from  'styled-components'
 import {
@@ -10,9 +10,13 @@ import {
 } from 'react-accessible-accordion';
 import { FilterNetworkAll, FilterNetworkSelectors } from "./SearchFiltersNetworkSelectors";
 import { FilterExchangeAll, FilterExchangeSelectors } from "./SearchFiltersExchangeSelectors";
+import Button from "./Button";
+import DownIcon from "../icons/down";
+import UpIcon from "../icons/up";
 import { RootState } from "../redux/store";
 import TokenSearchContext from '../Context/TokenSearch';
 import { setViewResult } from '../redux/tokenSearchSlice';
+
 
 const FilterWrapper = styled.div`  
   ${({styleOverrides}) => `    
@@ -21,30 +25,6 @@ const FilterWrapper = styled.div`
     }
     background-color: ${ styleOverrides?.backgroundColor || "#00070E" };
     border-radius: ${ styleOverrides?.borderRadius || "4px" };
-
-    .accordion__button:first-child:after {
-      display: block;    
-      content: '';
-      position: absolute;    
-      transform: rotate(-45deg);  
-      
-      color: ${ styleOverrides?.toggleColor || "#B4BBC7" };
-      height: ${ styleOverrides?.toggleHeight || "7px" };
-      width: ${ styleOverrides?.toggleWidth || "7px" };
-      margin-right: ${ styleOverrides?.toggleMarginRight || "0" };    
-      left: ${ styleOverrides?.toggleLeft || "50%" };    
-      top: ${ styleOverrides?.toggleTop || "5px" };    
-      border-bottom: ${ styleOverrides?.toggleBorderBottom || "2px solid currentColor" }; 
-      border-right: ${ styleOverrides?.toggleBorderRight || "2px solid currentColor" }; 
-      transform: rotate(45deg);
-       
-    }
-
-    .accordion__button[aria-expanded='true']:first-child:after,
-    .accordion__button[aria-selected='true']:first-child:after {
-      transform: rotate(-135deg);
-      top: 10px;    
-    }
 
     .accordion__panel {    
       border: ${ styleOverrides?.contentBorder || "0" };       
@@ -74,7 +54,13 @@ const StyledFilterHeader = styled.div`
       background-color: ${ styleOverrides?.hoverColor || "#232C38" };
     }
   `}      
-`; 
+`;
+
+const StyledFilterHeaderActionWrapper = styled.div`
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+`;
 
 const StyledFilterContent = styled.div`
   ${({styleOverrides}) => `
@@ -139,6 +125,30 @@ const SearchDescription: FC<SelectedNetworks> = (props: SelectedNetworks) => {
   )
 }
 
+
+type AccordionToggleButtonProps = {
+  isOpen: boolean;
+  onClick: () => void;
+}
+const AccordionToggleButton: FC<AccordionToggleButtonProps> = ({ isOpen, onClick }) => {
+  return (
+    <Button className="accordion-toggle" onClick={onClick}>
+      {isOpen ? (
+        <>
+          <span>Close</span>
+          <DownIcon width={8} height={8} />
+        </>
+      ) : (
+        <>
+          <span>Open</span>
+          <UpIcon width={8} height={8} />
+        </>
+      )}
+      
+    </Button>
+  )
+}
+
 export const SearchFilters = (): JSX.Element => {
   const dispatch = useDispatch();
   const { networkMap, exchangeMap, searchText  } = useSelector((state:RootState) => state);
@@ -152,6 +162,9 @@ export const SearchFilters = (): JSX.Element => {
   const networkTitle = customSearchFilter?.fitler?.network || 'Select Network(s)'
   const exchangeTitle = customSearchFilter?.fitler?.exchange || 'Select Exchange(s)'
 
+  const [isNetworkMapExpanded, setIsNetworkMapExpanded] = useState(true);
+  const [isExchangeMapExpanded, setIsExchangeMapExpanded] = useState(false);
+
   useEffect(() => {    
     (Object.keys(networkMap).length > 0 ||
     Object.keys(exchangeMap).length > 0) && searchText.length > 0 &&
@@ -162,13 +175,16 @@ export const SearchFilters = (): JSX.Element => {
   return (
     <FilterWrapper styleOverrides={customSearchFilter?.wrapper}>
       <Accordion allowMultipleExpanded allowZeroExpanded>
-        <AccordionItem>
+        <AccordionItem dangerouslySetExpanded={isNetworkMapExpanded}>
           <AccordionItemHeading>
             <AccordionItemButton>
               <StyledFilterHeader styleOverrides={customSearchFilter?.fitler?.header}>
                 <span>{networkTitle}</span>
-                <FilterNetworkAll />
-              </StyledFilterHeader>            
+                <StyledFilterHeaderActionWrapper>
+                  <FilterNetworkAll />
+                  <AccordionToggleButton isOpen={isNetworkMapExpanded} onClick={() => setIsNetworkMapExpanded(!isNetworkMapExpanded)} />
+                </StyledFilterHeaderActionWrapper>
+              </StyledFilterHeader>
             </AccordionItemButton>
           </AccordionItemHeading>
           <AccordionItemPanel>            
@@ -186,12 +202,15 @@ export const SearchFilters = (): JSX.Element => {
             </StyledFilterWrapper>
           </AccordionItemPanel> 
         </AccordionItem>
-        { exchangesActive && <AccordionItem>
+        { exchangesActive && <AccordionItem dangerouslySetExpanded={isExchangeMapExpanded}>
             <AccordionItemHeading>
               <AccordionItemButton>
                 <StyledFilterHeader styleOverrides={customSearchFilter?.fitler?.header}>
                   <span>{exchangeTitle}</span>
-                  <FilterExchangeAll />
+                  <StyledFilterHeaderActionWrapper>
+                    <FilterExchangeAll />
+                    <AccordionToggleButton isOpen={isExchangeMapExpanded} onClick={() => setIsExchangeMapExpanded(!isExchangeMapExpanded)} />
+                  </StyledFilterHeaderActionWrapper>
                 </StyledFilterHeader>            
               </AccordionItemButton>
             </AccordionItemHeading>

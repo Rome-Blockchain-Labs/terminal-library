@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { omitBy } from "lodash"
 import { useDispatch, useSelector } from 'react-redux';
 import { setExchangeMap, setExchangeMapAll } from "../redux/tokenSearchSlice"
 import { exchangeNames } from "./helpers/config";
 import { Chip } from "./Chip"
+import Button from "./Button";
 import { RootState } from "../redux/store";
-import TokenSearchContext from '../Context/TokenSearch';
 
 export const FilterExchangeAll = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -13,34 +13,14 @@ export const FilterExchangeAll = (): JSX.Element => {
   const exchangeAll = Object.values(omitBy(exchangeMap, b => !b)).length === 0;
   const exchangeNamesActive = exchangeNames(Object.keys(omitBy(networkMap, b => !b)));
   
-  const renderProps = useContext(TokenSearchContext);
-  const { customAllChip } = renderProps
-
-  const styleOverrides = {
-    fontSize: customAllChip?.fontSize || '7px',
-    fontWeight: customAllChip?.fontWeight || '500',
-    borderRadius: customAllChip?.borderRadius || "4px",
-    backgroundColor: customAllChip?.backgroundColor || "#474F5C",
-    border: customAllChip?.border || "0",
-    padding: customAllChip?.padding || "3px 2px",
-    margin: customAllChip?.margin || "0",
-    defaultColor: customAllChip?.defaultColor || "#7A808A",   
-    width: customAllChip?.width || "auto",
-    height: customAllChip?.height || "auto",
-    textAlign: customAllChip?.textAlign || "center" ,
-    textTransform: customAllChip?.textTransform || "inherit",
-    gridTemplateColumns: customAllChip?.gridTemplateColumns || "40px",
-    justifySelf: customAllChip?.justifySelf || "center",   
-  }
-
   // RENDERING.
-  return <Chip
-    name={'AllExchanges'}
-    label={'Select All'}
-    checked={exchangeAll}
-    styleOverrides={styleOverrides}
-    onChange={() => dispatch(setExchangeMapAll({ exchangeNames: exchangeNamesActive, exchangeAll: exchangeAll }))}
-  />;
+  return (
+    <Button
+      onClick={() => dispatch(setExchangeMapAll({ exchangeNames: exchangeNamesActive, exchangeAll: exchangeAll }))}
+    >
+      {exchangeAll ? 'Select All' : 'Unselect All'}
+    </Button>
+  );
 };
 
 
