@@ -1,11 +1,11 @@
-export * from "./searchbar"
-export * from "./types"
+export * from './searchbar';
+export * from './types';
 
 // ================ DEMO TEST ===============
-import * as React from "react";
-import { render } from "react-dom";
+import * as React from 'react';
+import { render } from 'react-dom';
 
-import {SearchBar} from "./searchbar";
+import { SearchBar } from './searchbar';
 /*
 const customWrapper = {
   backgroundColor: '#474F5C',      
@@ -238,5 +238,5 @@ const customTokenDetail = {
 }
 */
 
-const rootElement = document.getElementById("root");
-render(<SearchBar />, rootElement);
+const rootElement = document.getElementById('root');
+render(<SearchBar networks={[]} />, rootElement);

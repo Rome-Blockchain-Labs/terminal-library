@@ -1,9 +1,8 @@
 import React, { useContext, FC } from 'react';
 import styled from 'styled-components';
 import TokenSearchContext from '../Context/TokenSearch';
-
-import { Logo } from './Logo'
-import CheckedIcon from '../icons/checked'
+import { Logo } from './Logo';
+import CheckedIcon from '../icons/checked';
 import UnCheckedIcon from '../icons/unchecked';
 
 const StyledChip = styled.div`
@@ -63,24 +62,32 @@ const StyledChip = styled.div`
 
 export const Chip: FC<any> = (props) => {
   const renderProps = useContext(TokenSearchContext);
-  
-  const { label, checked, onChange, name, value, styleOverrides, grayscaleFilter } = props
-  
-  const { customChip } = renderProps
-  const customStyles = styleOverrides === undefined ? customChip : styleOverrides
-  
-  const checkedStatus = checked ? <CheckedIcon /> : <UnCheckedIcon />
+
+  const { label, checked, onChange, name, value, styleOverrides, grayscaleFilter, icon } = props;
+
+  const { customChip } = renderProps;
+  const customStyles = styleOverrides === undefined ? customChip : styleOverrides;
+
+  const checkedStatus = checked ? <CheckedIcon /> : <UnCheckedIcon />;
 
   return (
-    <StyledChip styleOverrides={customStyles} 
-    >      
-      <input type="checkbox" id={`${label}-${name}`} onChange={onChange} checked={checked} name={name} value={value} />
+    <StyledChip styleOverrides={customStyles}>
+      <input
+        type="checkbox"
+        id={`${label}-${name}`}
+        onChange={onChange}
+        checked={checked}
+        name={name}
+        value={value}
+      />
       <label htmlFor={`${label}-${name}`}>
-        <Logo label={label} grayscaleFilter={grayscaleFilter} width={16} height={16}/>
+        <div className={checked ? 'chip-icon active' : 'chip-icon'}>
+          {icon ?? <Logo label={label} grayscaleFilter={grayscaleFilter} width={16} height={16} />}
+        </div>
         <span>{label}</span>
-        {label !== 'Select All' && checkedStatus}
+        {!['Select All', 'Deselect All'].includes(label) && checkedStatus}
       </label>
     </StyledChip>
   );
-}
+};
 export default Chip;

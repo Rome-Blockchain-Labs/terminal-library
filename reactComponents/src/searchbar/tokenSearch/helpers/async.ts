@@ -2,18 +2,17 @@ import BN from 'bignumber.js';
 import { stringify } from 'flatted';
 import { gql } from 'graphql-request';
 import { romePairsClient } from './graphqlClients';
-import {maxHits} from "./config";
-
+import { maxHits } from './config';
 
 const getRomeSearchTokenQuery = (networks, isPair = false) => {
   let network;
-  let pair_search = ``;
+  let pair_search = '';
   const networkDatasetLength = Math.round(maxHits / networks.length);
 
   let where = `{
     concat_ws:{_ilike:$searchText},             
     exchange:{_in:$exchanges}
-  }`
+  }`;
 
   if (isPair)
     where = `
@@ -24,7 +23,7 @@ const getRomeSearchTokenQuery = (networks, isPair = false) => {
         ],        
         exchange:{_in:$exchanges}
       }
-    `
+    `;
 
   // Looping through all networks.
   for (network of networks) {
@@ -64,8 +63,8 @@ const getRomeSearchTokenQuery = (networks, isPair = false) => {
 
   if (isPair)
     graphQl = gql`query SearchTokens($filter1:String!,$filter2:String!,$exchanges:[String!]!){${pair_search}}`;
-  
-  return graphQl
+
+  return graphQl;
 };
 
 // Function that prepares the parameters of the GraphQL query.
@@ -79,32 +78,36 @@ const searchTokenAsync_Parameters = (searchText, searchExchanges) => {
 
 // Function that prepares de search text for the GraphQL query.
 // Again, for code cleaness and possible expansion.
-const searchTokenAsync_searchString = searchString => {
+const searchTokenAsync_searchString = (searchString) => {
   //empty string turns to 0x which is found by every pair.
   return searchString ? `%${searchString}%` : '%0x%';
 };
 
 // Function that creates the actual async token.
 // eslint-disable-next-line
-export const searchTokensAsync = async (searchString: string, searchNetworks: Array<string>, searchExchanges: Array<string>) => {
+export const searchTokensAsync = async (
+  searchString: string,
+  searchNetworks: Array<string>,
+  searchExchanges: Array<string>
+) => {
   let res;
-  let isPair = false
-  const queries = searchString.split(' ')
+  let isPair = false;
+  const queries = searchString.split(' ');
 
   const searchText = searchTokenAsync_searchString(searchString);
   let parameters: any = searchTokenAsync_Parameters(searchText, searchExchanges);
-  
+
   if (queries.length > 1) {
     parameters = {
       exchanges: [...searchExchanges],
       filter1: `%${queries[0]}%`,
       filter2: `%${queries[1]}%`,
     };
-    isPair = true
+    isPair = true;
   }
 
   const query = getRomeSearchTokenQuery(searchNetworks, isPair);
-  
+
   // IMPORTANT!!!
   // IMPORTANT!!!
   // Fun fact, we are injecting ALL active exchanges for ANY network, wheter it is support or not.
@@ -114,9 +117,10 @@ export const searchTokensAsync = async (searchString: string, searchNetworks: Ar
   // IMPORTANT!!!
   try {
     res = await romePairsClient.request(query, parameters);
-  }
-  catch (e) {
-    throw new Error(`${stringify(e, Object.getOwnPropertyNames(e))}, args:${stringify({ parameters, query, })}`);
+  } catch (e) {
+    throw new Error(
+      `${stringify(e, Object.getOwnPropertyNames(e))}, args:${stringify({ parameters, query })}`
+    );
   }
   // IMPORTANT!!!
   // IMPORTANT!!!
@@ -124,31 +128,31 @@ export const searchTokensAsync = async (searchString: string, searchNetworks: Ar
   const mappedPairs = Object
     // Loading an array from each data set comprised of [{networkName},{networkResults}].
     .entries(res)
-    .map((network:any) => {
+    .map((network: any) => {
       // Adding the network to the results so we can display this information to the user.
-      network[1].map(result => result.network = network[0]);
+      network[1].map((result) => (result.network = network[0]));
 
       // Returning only the data that is of interest to us.
       return network[1];
     })
     // Flattening all the data sets into one data set.
     .flat()
-    .filter((pair:any) => pair.token0 && pair.token1)
-    .map((pair:any) => {
+    .filter((pair: any) => pair.token0 && pair.token1)
+    .map((pair: any) => {
       const tokenPrices =
-        pair.latest_token0_usd_price && pair.latest_token1_usd_price ?
-          {
-            token0Price: new BN(pair.latest_token1_usd_price)
-              .dividedBy(pair.latest_token0_usd_price)
-              .toString(),
-            token1Price: new BN(pair.latest_token0_usd_price)
-              .dividedBy(pair.latest_token1_usd_price)
-              .toString(),
-          } :
-          {
-            token0Price: 1,
-            token1Price: 1,
-          };
+        pair.latest_token0_usd_price && pair.latest_token1_usd_price
+          ? {
+              token0Price: new BN(pair.latest_token1_usd_price)
+                .dividedBy(pair.latest_token0_usd_price)
+                .toString(),
+              token1Price: new BN(pair.latest_token0_usd_price)
+                .dividedBy(pair.latest_token1_usd_price)
+                .toString(),
+            }
+          : {
+              token0Price: 1,
+              token1Price: 1,
+            };
 
       return {
         ...pair,

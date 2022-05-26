@@ -1,3 +1,4 @@
+import { NetworkId, ExchangeName } from '../../types';
 interface Token {
   decimals: number;
   id: string;
@@ -22,6 +23,12 @@ type TokenPair = {
   volumeToken1: string;
   volumeUSD: string;
 };
+type NetworkItemType = {
+  [key in NetworkId]?: boolean;
+};
+type ExchangeItemType = {
+  [key in ExchangeName]?: boolean;
+};
 
 export type TokenSearchState = {
   searchText: string;
@@ -34,7 +41,7 @@ export type TokenSearchState = {
   selectedPair: TokenPair | undefined;
   pairSearchTimestamp: number;
   serializedTradeEstimator: string;
-  exchangeMap:any//todo
-  networkMap:any//todo
+  exchangeMap: ExchangeItemType;
+  networkMap: NetworkItemType;
   viewResult: boolean;
 };

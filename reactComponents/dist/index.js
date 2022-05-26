@@ -69,47 +69,8 @@ var import_graphql_request2 = require("graphql-request");
 var import_graphql_request = require("graphql-request");
 
 // src/searchbar/tokenSearch/helpers/config.ts
-var import_lodash = require("lodash");
 var romeTokenSyncUri = String(process.env.REACT_APP_HASURA_API_ENDPOINT_WS || "https://romenet.prod.velox.global/v1/graphql").replace("ws", "http");
 var maxHits = Number(process.env.REACT_APP_SEARCH_ASYNC_DATASET_LENGTH_MAXIMUM || 500);
-var AvalanchePairs = [
-  ["avalanche", "baguette"],
-  ["avalanche", "canary"],
-  ["avalanche", "complusnetwork"],
-  ["avalanche", "elkfinance"],
-  ["avalanche", "kyberdmm"],
-  ["avalanche", "lydiafinance"],
-  ["avalanche", "oliveswap"],
-  ["avalanche", "pandaswap"],
-  ["avalanche", "pangolin"],
-  ["avalanche", "sushiswap"],
-  ["avalanche", "traderjoe"],
-  ["avalanche", "yetiswap"],
-  ["avalanche", "zeroexchange"]
-];
-var BSCPairs = [
-  ["bsc", "apeswap"],
-  ["bsc", "babyswap"],
-  ["bsc", "biswap"],
-  ["bsc", "ellipsis.finance"],
-  ["bsc", "mdex"],
-  ["bsc", "pancakeswap"],
-  ["bsc", "safeswap"],
-  ["bsc", "sushiswap"]
-];
-var moonbeamPairs = [
-  ["moonbeam", "beamswap"],
-  ["moonbeam", "solarflare"],
-  ["moonbeam", "stellaswap"],
-  ["moonbeam", "sushiswap"]
-];
-var moonriverPairs = [
-  ["moonriver", "solarbeam"],
-  ["moonriver", "sushiswap"]
-];
-var networkExchangePairs = [...BSCPairs, ...AvalanchePairs, ...moonbeamPairs, ...moonriverPairs];
-var networkNames = (0, import_lodash.uniq)(networkExchangePairs.map((pair) => pair[0]));
-var exchangeNames = (networkNames2) => (0, import_lodash.uniq)(networkExchangePairs.filter((pair) => networkNames2.includes(pair[0])).map((pair) => pair[1]));
 
 // src/searchbar/tokenSearch/helpers/graphqlClients.ts
 var romePairsClient = new import_graphql_request.GraphQLClient(romeTokenSyncUri);
@@ -117,7 +78,7 @@ var romePairsClient = new import_graphql_request.GraphQLClient(romeTokenSyncUri)
 // src/searchbar/tokenSearch/helpers/async.ts
 var getRomeSearchTokenQuery = (networks, isPair = false) => {
   let network;
-  let pair_search = ``;
+  let pair_search = "";
   const networkDatasetLength = Math.round(maxHits / networks.length);
   let where = `{
     concat_ws:{_ilike:$searchText},             
@@ -218,12 +179,12 @@ var searchTokensAsync = async (searchString, searchNetworks, searchExchanges) =>
 };
 
 // src/searchbar/redux/tokenSearchSlice.ts
-var import_lodash2 = require("lodash");
+var import_lodash = require("lodash");
 
 // src/searchbar/config.tsx
 var _a, _b, _c, _d;
 var config_default = {
-  SEARCH_INPUT_LENGTH_MINIMUM: (_a = process.env.REACT_APP_SEARCH_INPUT_LENGTH_MINIMUM) != null ? _a : 3,
+  SEARCH_INPUT_LENGTH_MINIMUM: (_a = process.env.REACT_APP_SEARCH_INPUT_LENGTH_MINIMUM) != null ? _a : 2,
   SEARCH_ASYNC_DELAY: (_b = process.env.REACT_APP_SEARCH_ASYNC_DELAY) != null ? _b : 300,
   SEARCH_ASYNC_DATASET_LENGTH_MAXIMUM: (_c = process.env.REACT_APP_SEARCH_ASYNC_DATASET_LENGTH_MAXIMUM) != null ? _c : 500,
   IS_ENV_PRODUCTION: process.env.REACT_APP_ROME_ENV === "production" ? true : false,
@@ -232,37 +193,43 @@ var config_default = {
 
 // src/searchbar/redux/tokenSearchSlice.ts
 var LOAD_LIMIT = Number(config_default.LOAD_LIMIT || 10);
-var setPairSearchTimestamp = (0, import_toolkit.createAsyncThunk)("token/saveTime", async (timestamp) => {
-  return timestamp;
-});
-var allValueHandler = (networkMap, exchangeMap) => {
+var allValueHandler = (networkMap, exchangeMap, networks) => {
   let returnedNetworkMap = networkMap;
   let returnedExchangeMap = exchangeMap;
   if (networkMap.length === 0 || networkMap.includes("All")) {
-    returnedNetworkMap = (0, import_lodash2.uniq)(networkExchangePairs.map((pair) => pair[0]));
+    returnedNetworkMap = (0, import_lodash.uniq)(networks.map((network) => network.id));
   }
   if (exchangeMap.length === 0 || exchangeMap.includes("All")) {
-    returnedExchangeMap = (0, import_lodash2.uniq)(networkExchangePairs.map((pair) => pair[1]));
   }
+  const exchanges = [];
+  networks.forEach((network) => {
+    if (returnedNetworkMap.includes(network.id)) {
+      network.exchanges.forEach((exchange) => {
+        exchanges.push(exchange.name);
+      });
+    }
+  });
+  returnedExchangeMap = exchanges;
   return [returnedNetworkMap, returnedExchangeMap];
 };
 var valueCleaner = (networkMap, exchangeMap) => {
-  networkMap = Object.keys((0, import_lodash2.omitBy)(networkMap, (b) => !b));
-  exchangeMap = Object.keys((0, import_lodash2.omitBy)(exchangeMap, (b) => !b));
+  networkMap = Object.keys((0, import_lodash.omitBy)(networkMap, (b) => !b));
+  exchangeMap = Object.keys((0, import_lodash.omitBy)(exchangeMap, (b) => !b));
   return [networkMap, exchangeMap];
 };
-var searchTokenPairs = (0, import_toolkit.createAsyncThunk)("token/search", async (searchString, thunkAPI) => {
+var searchTokenPairs = (0, import_toolkit.createAsyncThunk)("token/search", async (dataProp, thunkAPI) => {
   try {
     const { networkMap, exchangeMap } = thunkAPI.getState();
+    const { searchString, networks } = dataProp;
     let processedNetworks;
     let processedExchanges;
     const pairSearchTimestamp = new Date().getTime();
     thunkAPI.dispatch(setPairSearchTimestamp(pairSearchTimestamp));
     [processedNetworks, processedExchanges] = valueCleaner(networkMap, exchangeMap);
-    [processedNetworks, processedExchanges] = allValueHandler(processedNetworks, processedExchanges);
-    processedExchanges = processedExchanges.filter((exchange) => networkExchangePairs.filter((pair) => processedNetworks.includes(pair[0]) && pair[1] === exchange).length >= 1);
-    processedNetworks = processedNetworks.filter((network) => networkExchangePairs.filter((pair) => pair[0] === network && processedExchanges.includes(pair[1])).length >= 1);
-    const data = await (0, import_async_retry.default)(() => searchTokensAsync(searchString, processedNetworks, processedExchanges), { retries: 1 });
+    [processedNetworks, processedExchanges] = allValueHandler(processedNetworks, processedExchanges, networks);
+    const data = await (0, import_async_retry.default)(() => searchTokensAsync(searchString, processedNetworks, processedExchanges), {
+      retries: 1
+    });
     return { data, pairSearchTimestamp };
   } catch (e) {
     console.log("err searchTokenPairs", e);
@@ -291,9 +258,6 @@ var loadMoreItem = (state) => {
 };
 var tokenSearchSlice = (0, import_toolkit.createSlice)({
   extraReducers: (builder) => {
-    builder.addCase(setPairSearchTimestamp.fulfilled, (state, action) => {
-      state.pairSearchTimestamp = action.payload;
-    });
     builder.addCase(searchTokenPairs.pending, (state) => {
       state.isLoading = true;
       state.fetchError = null;
@@ -329,6 +293,9 @@ var tokenSearchSlice = (0, import_toolkit.createSlice)({
     setViewResult: (state, action) => {
       state.viewResult = action.payload;
     },
+    setPairSearchTimestamp: (state, action) => {
+      state.pairSearchTimestamp = action.payload;
+    },
     setSearchText: (state, action) => {
       state.searchText = action.payload;
     },
@@ -356,6 +323,17 @@ var tokenSearchSlice = (0, import_toolkit.createSlice)({
     },
     setNetworkMap: (state, action) => {
       state.networkMap[action.payload.networkName] = action.payload.checked;
+      if (!action.payload.checked) {
+        action.payload.networks.forEach((network) => {
+          if (network.id === action.payload.networkName) {
+            network.exchanges.forEach((exhange) => {
+              if (state.exchangeMap[exhange])
+                state.exchangeMap[exhange] = false;
+            });
+          } else
+            return false;
+        });
+      }
     },
     setNetworkMapAll: (state, action) => {
       let networkName;
@@ -383,7 +361,8 @@ var {
   setNetworkMapAll,
   setViewResult,
   resetSearch,
-  loadMore
+  loadMore,
+  setPairSearchTimestamp
 } = tokenSearchSlice.actions;
 var tokenSearchSlice_default = tokenSearchSlice.reducer;
 
@@ -391,9 +370,6 @@ var tokenSearchSlice_default = tokenSearchSlice.reducer;
 var rootReducer = tokenSearchSlice.reducer;
 var store = (0, import_toolkit2.configureStore)({
   devTools: process.env.NODE_ENV !== "production",
-  middleware: (0, import_toolkit2.getDefaultMiddleware)({
-    immutableCheck: false
-  }),
   reducer: rootReducer
 });
 
@@ -462,48 +438,68 @@ var ResetIcon = ({ height, width }) => /* @__PURE__ */ import_react3.default.cre
 var reset_default = ResetIcon;
 
 // src/searchbar/tokenSearch/SearchInput.tsx
-var import_lodash3 = __toESM(require("lodash.debounce"));
+var import_lodash2 = __toESM(require("lodash.debounce"));
 
 // src/searchbar/Context/TokenSearch.tsx
 var import_react4 = require("react");
-var TokenSearchContext = (0, import_react4.createContext)({});
+var TokenSearchContext = (0, import_react4.createContext)({ networks: [] });
 var TokenSearch_default = TokenSearchContext;
 
 // src/searchbar/tokenSearch/SearchInput.tsx
+var StyledInputGroup = import_styled_components.default.div`
+  ${({ styleOverrides }) => ` 
+    position: relative;
+    width: ${(styleOverrides == null ? void 0 : styleOverrides.width) || "-webkit-fill-available"};
+    color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "#B7BEC9"};
+    background: ${(styleOverrides == null ? void 0 : styleOverrides.background) || "#00070E"};  
+  `}
+`;
 var StyledInput = import_styled_components.default.input`
   ${({ styleOverrides }) => `    
     margin-left: auto;
     margin-right: auto;
     position: relative;
     outline: 0;
+    border: none;
     width: ${(styleOverrides == null ? void 0 : styleOverrides.width) || "-webkit-fill-available"};
-    height: ${(styleOverrides == null ? void 0 : styleOverrides.height) || "auto"};
-    border: ${(styleOverrides == null ? void 0 : styleOverrides.border) || "5px solid #474F5C"};   
-    color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "#7A808A"};
-    display: ${(styleOverrides == null ? void 0 : styleOverrides.display) || "block"};           
-    border-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderRadius) || "4px"};  
-    background: ${(styleOverrides == null ? void 0 : styleOverrides.background) || "#00070E"};   
+    height: ${(styleOverrides == null ? void 0 : styleOverrides.height) || "auto"};    
+    color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "#B7BEC9"};
+    display: ${(styleOverrides == null ? void 0 : styleOverrides.display) || "block"}; 
     padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "10px 14px"};    
-    font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "8px"};      
-    font-family: ${(styleOverrides == null ? void 0 : styleOverrides.fontFamily) || "'Fira Code', monospace"};
-  `}  
+    background: ${(styleOverrides == null ? void 0 : styleOverrides.background) || "#00070E"};  
+  `}
 `;
-var StyledSearchIconWrapper = import_styled_components.default.div`    
+var StyledSearchIconWrapper = import_styled_components.default.div`
   ${({ styleOverrides }) => `
-    cursor: pointer;
     float: right;
     position: absolute;
     right: ${(styleOverrides == null ? void 0 : styleOverrides.right) || "14px"};      
-    top: ${(styleOverrides == null ? void 0 : styleOverrides.top) || "12px"};        
-  `}    
+    top: 50%;
+    transform: translateY(-50%);   
+  `}
 `;
 var StyledWrapper = import_styled_components.default.div`
-  position: relative;
+  ${({ styleOverrides }) => `    
+    position: relative;
+    border: ${(styleOverrides == null ? void 0 : styleOverrides.border) || "4px solid #474F5C"}; 
+    border-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderRadius) || "4px"}; 
+    color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "#7A808A"};
+    background: ${(styleOverrides == null ? void 0 : styleOverrides.background) || "#00070E"};  
+    font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "8px"};      
+    font-family: ${(styleOverrides == null ? void 0 : styleOverrides.fontFamily) || "'Fira Code', monospace"};
+    box-shadow: 0 0 8px 2px #474f5c;
+
+    .invalid-error {
+      padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "0 14px 5px"};   
+      color: ${(styleOverrides == null ? void 0 : styleOverrides.colorError) || "#F52E2E"};  
+    }
+  `}
 `;
 var StyledResetBtn = import_styled_components.default.button`
   position: absolute;
   right: 40px;
-  top: 11px;  
+  top: 50%;
+  transform: translateY(-50%);
 `;
 var SearchInput = () => {
   var _a2, _b2, _c2, _d2;
@@ -511,14 +507,18 @@ var SearchInput = () => {
   const renderProps = (0, import_react5.useContext)(TokenSearch_default);
   const { customSearchInput } = renderProps;
   const [text, setText] = (0, import_react5.useState)("");
+  const [error, setError] = (0, import_react5.useState)(false);
   const { searchText, networkMap, exchangeMap } = (0, import_react_redux.useSelector)((state) => state);
   (0, import_react5.useEffect)(() => {
     if (searchText.length >= config_default.SEARCH_INPUT_LENGTH_MINIMUM) {
-      dispatch(searchTokenPairs(searchText));
+      setError(false);
+      dispatch(searchTokenPairs({ searchString: searchText, networks: renderProps.networks }));
       dispatch(setSearchText(searchText));
+    } else if (searchText.length > 0) {
+      setError(true);
     }
   }, [dispatch, networkMap, exchangeMap, searchText]);
-  const debounceChangeHandler = (0, import_react5.useCallback)((0, import_lodash3.default)((value) => dispatch(setSearchText(value)), 350), []);
+  const debounceChangeHandler = (0, import_react5.useCallback)((0, import_lodash2.default)((value) => dispatch(setSearchText(value)), 350), []);
   const onChangeFilter = (event) => {
     const value = event.target.value;
     setText(value);
@@ -536,7 +536,10 @@ var SearchInput = () => {
     dispatch(resetSearch());
   };
   return /* @__PURE__ */ import_react5.default.createElement(StyledWrapper, {
-    onClick: () => dispatch(startSelecting())
+    onClick: () => dispatch(startSelecting()),
+    styleOverrides: customSearchInput == null ? void 0 : customSearchInput.input
+  }, /* @__PURE__ */ import_react5.default.createElement(StyledInputGroup, {
+    styleOverrides: customSearchInput == null ? void 0 : customSearchInput.input
   }, /* @__PURE__ */ import_react5.default.createElement(StyledInput, {
     placeholder,
     autocomplete: "off",
@@ -551,7 +554,9 @@ var SearchInput = () => {
   }, /* @__PURE__ */ import_react5.default.createElement(search_default, {
     height,
     width
-  })));
+  }))), error && /* @__PURE__ */ import_react5.default.createElement("div", {
+    className: "invalid-error"
+  }, "Please input ", config_default.SEARCH_INPUT_LENGTH_MINIMUM, " characters minimum"));
 };
 var SearchInput_default = SearchInput;
 
@@ -2368,7 +2373,7 @@ var BeamSwapIcon = ({ height, width }) => /* @__PURE__ */ import_react31.default
   offset: "1",
   style: { stopColor: "#9123C5" }
 })), /* @__PURE__ */ import_react31.default.createElement("path", {
-  style: { fillRule: "evenodd", clipRule: "evenodd", fill: `url(#SVGID_1_)` },
+  style: { fillRule: "evenodd", clipRule: "evenodd", fill: "url(#SVGID_1_)" },
   d: "M22,184.5c7.9-91.6,84.7-163.5,178.3-163.5c93.7,0,170.5,71.9,178.4,163.5H22z M341.5,310.2H59.2\n        c-3.3-4.2-6.4-8.5-9.2-13h300.7C347.8,301.6,344.8,306,341.5,310.2z M295,352H105.8c-5.4-3.4-10.6-7-15.6-10.9h220.3\n        C305.5,345,300.3,348.7,295,352z M78.4,331.1h243.9c4.1-3.8,8-7.8,11.7-11.9H66.7C70.5,323.3,74.4,327.3,78.4,331.1z M200.4,379.1\n        c25.5,0,50.7-5.4,74-16H126.4C149.6,373.6,174.9,379.1,200.4,379.1z M21.8,187.4H379c0.3,4.2,0.5,8.4,0.5,12.6c0,1.3,0,2.6-0.1,4\n        l0,0.5c0,0.3,0,0.6,0,0.9H21.4c0-0.5,0-1,0-1.4l0,0c0-1.3-0.1-2.6-0.1-4C21.3,195.8,21.5,191.6,21.8,187.4z M23.3,226.4h354.2\n        c0.8-5.6,1.4-11.2,1.7-17H21.6C21.9,215.1,22.4,220.8,23.3,226.4z M365.9,268.3H34.8c-2-4.9-3.9-9.9-5.5-15h342\n        C369.8,258.4,368,263.4,365.9,268.3z M27.7,247.3h345.4c1.4-5.2,2.6-10.6,3.6-16H24.1C25.1,236.7,26.2,242.1,27.7,247.3z\n        M355.6,289.2H45.1c-2.6-4.5-5-9.2-7.2-14h325C360.6,280,358.2,284.7,355.6,289.2z"
 })), /* @__PURE__ */ import_react31.default.createElement("linearGradient", {
   id: "SVGID_00000183928502295634376560000004982184485435288483_",
@@ -2385,7 +2390,7 @@ var BeamSwapIcon = ({ height, width }) => /* @__PURE__ */ import_react31.default
   offset: "1",
   style: { stopColor: "#9123C5" }
 })), /* @__PURE__ */ import_react31.default.createElement("path", {
-  style: { fillRule: "evenodd", clipRule: "evenodd", fill: `url(#SVGID_00000183928502295634376560000004982184485435288483_)` },
+  style: { fillRule: "evenodd", clipRule: "evenodd", fill: "url(#SVGID_00000183928502295634376560000004982184485435288483_)" },
   d: "\n      M40.1,186c7.1-82.3,76.1-146.9,160.3-146.9c84.2,0,153.2,64.6,160.3,146.9H40.1z M327.2,299H73.6c-2.9-3.8-5.7-7.6-8.3-11.6h270.2\n      C332.9,291.3,330.1,295.2,327.2,299z M285.4,336.6h-170c-4.8-3-9.5-6.3-14-9.8h198C294.9,330.3,290.2,333.6,285.4,336.6z\n      M90.8,317.8h219.1c3.7-3.4,7.2-7,10.5-10.7H80.3C83.6,310.8,87.1,314.4,90.8,317.8z M200.4,360.9c22.9,0,45.6-4.9,66.5-14.4H133.9\n      C154.8,356,177.4,360.9,200.4,360.9z M39.9,188.7h320.9c0.3,3.8,0.4,7.5,0.4,11.3c0,1.2,0,2.4-0.1,3.5v0v0v0v0v0c0,0.4,0,0.9,0,1.3\n      H39.6c0-0.4,0-0.9,0-1.3c0-1.2-0.1-2.4-0.1-3.6C39.5,196.2,39.7,192.4,39.9,188.7z M41.2,223.7h318.3c0.7-5,1.3-10.1,1.5-15.3H39.7\n      C40,213.6,40.5,218.7,41.2,223.7z M349.2,261.3H51.6c-1.8-4.4-3.5-8.9-4.9-13.5H354C352.6,252.5,351,256.9,349.2,261.3z M45.2,242.5\n      h310.4c1.3-4.7,2.4-9.5,3.2-14.4H42C42.8,233,43.9,237.8,45.2,242.5z M339.9,280.2h-279c-2.4-4.1-4.5-8.3-6.5-12.5h292\n      C344.4,271.9,342.2,276.1,339.9,280.2z"
 }), /* @__PURE__ */ import_react31.default.createElement("g", {
   style: { opacity: 0.5 }
@@ -2404,7 +2409,7 @@ var BeamSwapIcon = ({ height, width }) => /* @__PURE__ */ import_react31.default
   offset: "1",
   style: { stopColor: "#9123C5" }
 })), /* @__PURE__ */ import_react31.default.createElement("path", {
-  style: { fillRule: "evenodd", clipRule: "evenodd", fill: `url(#SVGID_00000013889303268019635800000010446692763919938215_)` },
+  style: { fillRule: "evenodd", clipRule: "evenodd", fill: "url(#SVGID_00000013889303268019635800000010446692763919938215_)" },
   d: "\n        M51.7,187c6.6-76.4,70.6-136.3,148.7-136.3c78.1,0,142.1,60,148.7,136.3H51.7z M318,291.8H82.7c-2.7-3.5-5.3-7.1-7.7-10.8h250.8\n        C323.3,284.7,320.8,288.3,318,291.8z M279.2,326.8H121.5c-4.5-2.8-8.8-5.8-13-9.1h183.7C288.1,320.9,283.7,324,279.2,326.8z\n        M98.7,309.3H302c3.4-3.2,6.7-6.5,9.8-10H88.9C92,302.8,95.3,306.1,98.7,309.3z M200.4,349.3c21.3,0,42.3-4.5,61.7-13.3H138.7\n        C158.1,344.8,179.1,349.3,200.4,349.3z M51.5,189.5h297.8c0.2,3.5,0.4,7,0.4,10.5c0,1.1,0,2.2-0.1,3.3c0,0.4,0,0.8,0,1.2H51.2\n        c0-0.4,0-0.8,0-1.2l0,0c0-1.1-0.1-2.2-0.1-3.3C51.1,196.5,51.2,193,51.5,189.5z M52.7,222h295.4c0.7-4.7,1.2-9.4,1.4-14.2H51.3\n        C51.5,212.6,52,217.3,52.7,222z M338.4,256.9H62.3c-1.7-4.1-3.2-8.2-4.5-12.5H343C341.6,248.7,340.1,252.8,338.4,256.9z\n        M56.4,239.4h288c1.2-4.4,2.2-8.8,3-13.3h-294C54.2,230.6,55.2,235.1,56.4,239.4z M329.8,274.4H70.9c-2.2-3.8-4.2-7.7-6-11.6h271\n        C334,266.7,332,270.6,329.8,274.4z"
 })), /* @__PURE__ */ import_react31.default.createElement("g", {
   style: { opacity: 0.4 }
@@ -2423,7 +2428,7 @@ var BeamSwapIcon = ({ height, width }) => /* @__PURE__ */ import_react31.default
   offset: "1",
   style: { stopColor: "#9123C5" }
 })), /* @__PURE__ */ import_react31.default.createElement("path", {
-  style: { fillRule: "evenodd", clipRule: "evenodd", fill: `url(#SVGID_00000073699279880338609790000003861742514358607293_)` },
+  style: { fillRule: "evenodd", clipRule: "evenodd", fill: "url(#SVGID_00000073699279880338609790000003861742514358607293_)" },
   d: "        \n          M90.9,190.5C95.7,134.2,142.9,90,200.4,90c57.5,0,104.7,44.2,109.5,100.4H90.9z M287,267.6H113.7c-2-2.6-3.9-5.2-5.7-8h184.7\n          C290.9,262.4,289,265.1,287,267.6z M258.4,293.4H142.3c-3.3-2.1-6.5-4.3-9.6-6.7H268C265,289,261.8,291.3,258.4,293.4z\n          M125.5,280.5h149.7c2.5-2.3,4.9-4.8,7.2-7.3H118.3C120.6,275.7,123,278.2,125.5,280.5z M200.4,309.9c15.7,0,31.2-3.3,45.4-9.8\n          h-90.8C169.2,306.6,184.7,310,200.4,309.9z M90.7,192.3H310c0.2,2.6,0.3,5.1,0.3,7.7c0,0.8,0,1.6-0.1,2.4c0,0.3,0,0.6,0,0.9H90.5\n          c0-0.3,0-0.6,0-0.9l0,0c0-0.8-0.1-1.6-0.1-2.4C90.4,197.4,90.5,194.8,90.7,192.3z M91.6,216.2h217.5c0.5-3.4,0.9-6.9,1-10.4H90.6\n          C90.7,209.3,91.1,212.7,91.6,216.2z M302,241.9H98.7c-1.2-3-2.4-6.1-3.3-9.2h210C304.4,235.8,303.3,238.9,302,241.9z M94.3,229\n          h212.1c0.9-3.2,1.6-6.5,2.2-9.8H92.1C92.7,222.6,93.4,225.8,94.3,229z M295.7,254.8H105c-1.6-2.8-3.1-5.6-4.5-8.6h199.6\n          C298.8,249.1,297.3,252,295.7,254.8z"
 })), /* @__PURE__ */ import_react31.default.createElement("path", {
   fill: "#05113B",
@@ -2628,7 +2633,12 @@ var MdexIcon = ({ height, width }) => /* @__PURE__ */ import_react35.default.cre
 var mdex_default = MdexIcon;
 
 // src/searchbar/tokenSearch/Logo.tsx
-var Logo = ({ label, width, height, grayscaleFilter }) => {
+var Logo = ({
+  label,
+  width,
+  height,
+  grayscaleFilter
+}) => {
   let result;
   switch (label) {
     case "bsc":
@@ -2868,49 +2878,101 @@ var up_default = UpIcon;
 
 // src/searchbar/tokenSearch/ResultDetail.tsx
 var imageSize = 26;
-var StyledDetailList = import_styled_components2.default.div`  
+var StyledDetailList = import_styled_components2.default.div`
   ${({ styleOverrides }) => {
-  var _a2, _b2, _c2, _d2, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t, _u;
+  var _a2, _b2, _c2, _d2, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s;
   return `
     display: ${((_a2 = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _a2.display) || "grid"};
     grid-gap: 5px;
     align-items: ${((_b2 = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _b2.alignItems) || "center"};    
     justify-content: space-between;
     padding: ${((_c2 = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _c2.padding) || "5px 0"};    
-    background: ${((_d2 = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _d2.background) || "#00070E"};
-    border-bottom: ${((_e = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _e.borderbottom) || "1px solid #474F5C"};    
-    grid-template-columns: ${((_f = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _f.gridTemplateColumns) || "15% 1% 18% 4% 4% 35% 10%"}; 
+    background: transparent;
+    border-bottom: ${((_d2 = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _d2.borderbottom) || "1px solid #474F5C"};    
+    grid-template-columns: ${((_e = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _e.gridTemplateColumns) || "15% 1% 15% 10% 10% 29% 10%"}; 
+    
+    border-radius: ${((_f = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _f.borderRadius) || "4px"};
+    position: relative;
+    font-size: ${((_g = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _g.fontSize) || "10px"};
+    color: ${((_h = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _h.color) || "#B4BBC7"};
 
-    & .token {
-      display: inherit;
-      align-items: center;
+    .token {      
       grid-template-columns: 16px 100px; 
-      color: ${((_g = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _g.color) || "#B4BBC7"};
-      font-size: ${((_h = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _h.fontSize) || "8px"};
-      font-weight: ${((_i = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _i.fontWeight) || "600"};      
-      padding: ${((_j = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _j.padding) || "0 5px"};      
-      
+      padding: ${((_i = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _i.padding) || "0 5px"};  
+      .address {
+        position: relative;
+        padding-left: 5px;
+        > span {
+          display: none;
+          font-size: 8px;
+          margin-top: 5px;
+          span {
+            color: ${((_j = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _j.color) || "#B4BBC7"};
+          }
+        }
+      } 
+    }
+
+    &.active {
+      background: #474F5C;
+      color: white;
+      padding: 16px 0;
+      grid-template-columns: 15% 1% 15% 10% 10% 39% 0%;
+      .token {
+        font-weight: ${((_k = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _k.fontWeight) || "600"};      
+        .address {
+          font-size: 12px;
+          > span {
+            display: block;
+          }
+        }
+        svg {
+          width: 26px;
+          height: 26px;
+          margin-top: -10px;
+        }
+      }
+    }
+    .capitalize {
+      text-transform: capitalize;
+    }
+    .text-white {
+      color: white;
+    }
+    .icon-label {
+      display: flex;   
+      align-items: center;
       > span {
         padding-left: 5px;
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;  
+        flex: 1;
       }
     }
-
-    & .logo {
-      padding: 0;
-      justify-self: center;
+    .text-line-1 {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;  
+      flex: 1;
     }
-
-    & .pair {
-      color: ${((_k = styleOverrides == null ? void 0 : styleOverrides.pair) == null ? void 0 : _k.color) || "#B4BBC7"};
-      font-size: ${((_l = styleOverrides == null ? void 0 : styleOverrides.pair) == null ? void 0 : _l.fontSize) || "7px"};
-
-      & .count {
-        display: flex;
-      }
+    .flex-center {
+      display: flex;
+      align-items: center;
+    }  
+    .flex-1 {
+       flex: 1;
     }
-
+    .gap-5 {
+      gap: 20px;
+    }
+    .gap-2 {
+      gap: 8px;
+    }
     & .detail {
-      padding: ${((_m = styleOverrides == null ? void 0 : styleOverrides.detail) == null ? void 0 : _m.padding) || "3px"};
+      padding: ${((_l = styleOverrides == null ? void 0 : styleOverrides.detail) == null ? void 0 : _l.padding) || "3px"};
     }
     
     > button {      
@@ -2918,128 +2980,40 @@ var StyledDetailList = import_styled_components2.default.div`
       align-items: center;
       justify-content: center;
       justify-self: right;
-      border-color: ${((_n = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _n.borderColor) || "#474F5C"};      
-      background-color: ${((_o = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _o.backgroundColor) || "#474F5C"};      
-      color: ${((_p = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _p.color) || "#7A808A"};      
-      border-radius: ${((_q = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _q.borderRadius) || "4px"};      
-      font-size: ${((_r = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _r.fontSize) || "7px"};
+      border-color: ${((_m = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _m.borderColor) || "#474F5C"};      
+      background-color: ${((_n = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _n.backgroundColor) || "#474F5C"};      
+      color: ${((_o = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _o.color) || "#7A808A"};      
+      border-radius: ${((_p = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _p.borderRadius) || "4px"};     
+      
       border-width: 0;      
       cursor: pointer;
-      padding: ${((_s = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _s.padding) || "3px"};
-      width: ${((_t = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _t.width) || "auto"};
-
+      padding: ${((_q = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _q.padding) || "6px 8px !important"};
+      width: ${((_r = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _r.width) || "auto"};
+      &.down {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background: transparent;
+      }
       &:hover {
-        background-color: ${((_u = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _u.hoverBackColor) || "#232C38"};      
+        background-color: ${((_s = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _s.hoverBackColor) || "#232C38"};      
       }    
     }
-  `;
-}}    
-`;
-var StyledDetailContent = import_styled_components2.default.div`
-  ${({ styleOverrides }) => {
-  var _a2, _b2, _c2, _d2, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n;
-  return `
-    display: ${((_a2 = styleOverrides == null ? void 0 : styleOverrides.content) == null ? void 0 : _a2.display) || "block"};    
-    align-items: ${((_b2 = styleOverrides == null ? void 0 : styleOverrides.content) == null ? void 0 : _b2.alignItems) || "center"};    
-    padding: ${((_c2 = styleOverrides == null ? void 0 : styleOverrides.content) == null ? void 0 : _c2.padding) || "5px"};    
-    margin: ${((_d2 = styleOverrides == null ? void 0 : styleOverrides.content) == null ? void 0 : _d2.margin) || "5px 0"};    
-    background: ${((_e = styleOverrides == null ? void 0 : styleOverrides.content) == null ? void 0 : _e.background) || "#474F5C"};
-    border-bottom: ${((_f = styleOverrides == null ? void 0 : styleOverrides.content) == null ? void 0 : _f.borderbottom) || "1px solid #474F5C"};    
-    border-radius: ${((_g = styleOverrides == null ? void 0 : styleOverrides.content) == null ? void 0 : _g.borderRadius) || "4px"};      
-    transition: all 1500ms ease;
-
-    & .details {
-      display: grid;
-      padding: 3px 0;
-      font-size: ${((_h = styleOverrides == null ? void 0 : styleOverrides.content) == null ? void 0 : _h.fontSize) || "7px"};
-
-      grid-template-columns: ${((_i = styleOverrides == null ? void 0 : styleOverrides.content) == null ? void 0 : _i.gridTemplateColumns) || "53% 45% 2%"}; 
-
-      & .token {
-        display: grid;        
-        grid-template-columns: 20px;
-        > span {
-          padding-left: 5px
-        }
-        
-        & .name {
-          align-self: center;          
-          font-size: ${((_j = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _j.fontSize) || "8px"};
-          font-weight: ${((_k = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _k.fontWeight) || "600"};          
-        }
-    
-        & .address {
-          align-self: center;
-          display: flex;
-          grid-row: 2;
-          grid-column: 2;
-          color: #B4BBC7;
-          font-size: ${((_l = styleOverrides == null ? void 0 : styleOverrides.address) == null ? void 0 : _l.fontSize) || "7px"};
-          padding-bottom: 5px;
-          
-          > strong {
-            color: white;
-            padding-left: 5px;
-          }
-        }
-      } 
-
-      & .left {
-        & .pair {          
-          padding-left: 5px;
-        }
-      }
-      
-      & .detail {
-        color: #B4BBC7;
-        grid-template-columns: 40px 30px 50px;
-        display: grid;
-
-        font-size: ${((_n = (_m = styleOverrides == null ? void 0 : styleOverrides.content) == null ? void 0 : _m.detail) == null ? void 0 : _n.fontSize) || "7px"};
-        > strong {
-          color: white;
-        }
-      }
-      & .up {
-        justify-self: flex-end;
-        cursor: pointer;
-      }
-
-      & .right {
-        padding-top: 10px;        
-
-        & .widgets {          
-          color: #B4BBC7;
-        }
-
-        & .actions {
-          padding: 5px 0;
-
-          display: flex;
-  
-          > div {
-            padding-right: 5px;
-          }
-        }
-  
-        & .info {
-          display: grid;
-          grid-template-columns: 40% 55%;          
-
-          & .detail {           
-            padding-right: 5px;
-            align-items: center;
-            grid-template-columns: 40px 30px 50px;
-            display: grid;
-            
-            & .logo {
-              padding: 0 10px;
-              margin-top: 2px;
-            }
-          }
-        }
-      }     
-    } 
+    .actions {
+      display: flex;
+      flex: 1;
+      gap: 12px;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    &:not(.active):hover {
+      cursor: pointer; 
+      color: rgb(193,255,0);
+      .token, .pair, button, strong {
+        color: rgb(193,255,0);
+      }      
+    }
   `;
 }}
 `;
@@ -3055,7 +3029,8 @@ var Action = (props) => {
   }));
 };
 var ResultDetail = (props) => {
-  const { index, suggestions, handleDetail, currentIndex } = props;
+  var _a2, _b2;
+  const { index, suggestions, handleDetail, currentIndex, logoIcons } = props;
   const renderProps = (0, import_react39.useContext)(TokenSearch_default);
   const { customActions, customTokenDetail } = renderProps;
   const selectedPair = suggestions[index];
@@ -3070,98 +3045,58 @@ var ResultDetail = (props) => {
     else
       return /* @__PURE__ */ import_react39.default.createElement(default_default, null);
   };
-  return /* @__PURE__ */ import_react39.default.createElement(import_react39.default.Fragment, null, currentIndex !== index && /* @__PURE__ */ import_react39.default.createElement(StyledDetailList, {
-    styleOverrides: customTokenDetail == null ? void 0 : customTokenDetail.list
+  return /* @__PURE__ */ import_react39.default.createElement(StyledDetailList, {
+    styleOverrides: customTokenDetail == null ? void 0 : customTokenDetail.list,
+    onClick: () => currentIndex !== index ? handleDetail(index) : "",
+    className: currentIndex === index ? "active" : ""
   }, /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "token"
-  }, tokenImage(selectedPair.token0), " ", /* @__PURE__ */ import_react39.default.createElement("span", null, selectedPair.token0.name)), "/", /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "token"
-  }, tokenImage(selectedPair.token1), " ", /* @__PURE__ */ import_react39.default.createElement("span", null, selectedPair.token1.name)), /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "logo"
-  }, /* @__PURE__ */ import_react39.default.createElement(Logo, {
+    className: "token icon-label"
+  }, tokenImage(selectedPair.token0), /* @__PURE__ */ import_react39.default.createElement("div", {
+    className: "flex-1 address text-line-1"
+  }, /* @__PURE__ */ import_react39.default.createElement("div", {
+    className: "text-line-1"
+  }, selectedPair.token0.name), /* @__PURE__ */ import_react39.default.createElement("span", {
+    className: "text-line-1"
+  }, /* @__PURE__ */ import_react39.default.createElement("span", null, "Address:"), " ", /* @__PURE__ */ import_react39.default.createElement("strong", null, firstAndLast(selectedPair.token0.address))))), "/", /* @__PURE__ */ import_react39.default.createElement("div", {
+    className: "token icon-label"
+  }, tokenImage(selectedPair.token1), /* @__PURE__ */ import_react39.default.createElement("div", {
+    className: "flex-1 address text-line-1"
+  }, /* @__PURE__ */ import_react39.default.createElement("div", null, selectedPair.token1.name), /* @__PURE__ */ import_react39.default.createElement("span", null, /* @__PURE__ */ import_react39.default.createElement("span", null, "Address:"), " ", /* @__PURE__ */ import_react39.default.createElement("strong", null, firstAndLast(selectedPair.token1.address))))), /* @__PURE__ */ import_react39.default.createElement("div", {
+    className: "logo icon-label"
+  }, (_a2 = logoIcons[selectedPair.network]) != null ? _a2 : /* @__PURE__ */ import_react39.default.createElement(Logo, {
     label: selectedPair.network,
     width: 12,
     height: 12
-  })), /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "logo"
-  }, /* @__PURE__ */ import_react39.default.createElement(Logo, {
+  }), /* @__PURE__ */ import_react39.default.createElement("span", {
+    className: "capitalize"
+  }, selectedPair.network)), /* @__PURE__ */ import_react39.default.createElement("div", {
+    className: "logo icon-label"
+  }, (_b2 = logoIcons[selectedPair.exchange]) != null ? _b2 : /* @__PURE__ */ import_react39.default.createElement(Logo, {
     label: selectedPair.exchange,
     width: 12,
     height: 12
-  })), /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "pair"
-  }, /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "detail"
-  }, "Pair: ", /* @__PURE__ */ import_react39.default.createElement("strong", null, firstAndLast(selectedPair.id))), /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "count"
-  }, /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "detail"
-  }, "Volume: ", /* @__PURE__ */ import_react39.default.createElement("strong", null, intToWords(selectedPair.volumeUSD))))), /* @__PURE__ */ import_react39.default.createElement("button", {
-    onClick: () => handleDetail(currentIndex === index ? null : index)
-  }, /* @__PURE__ */ import_react39.default.createElement("span", null, "Details "), /* @__PURE__ */ import_react39.default.createElement(down_default, {
-    width: 7,
-    height: 7
-  }))), currentIndex === index && /* @__PURE__ */ import_react39.default.createElement(StyledDetailContent, {
-    styleOverrides: customTokenDetail == null ? void 0 : customTokenDetail.details
-  }, /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "details"
-  }, /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "left"
-  }, /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "token"
-  }, tokenImage(selectedPair.token0), /* @__PURE__ */ import_react39.default.createElement("span", {
-    className: "name"
-  }, selectedPair.token0.name), /* @__PURE__ */ import_react39.default.createElement("span", {
-    className: "address"
-  }, "Address: ", /* @__PURE__ */ import_react39.default.createElement("strong", null, firstAndLast(selectedPair.token0.address)))), /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "token"
-  }, tokenImage(selectedPair.token1), /* @__PURE__ */ import_react39.default.createElement("span", {
-    className: "name"
-  }, selectedPair.token1.name), /* @__PURE__ */ import_react39.default.createElement("span", {
-    className: "address"
-  }, "Address: ", /* @__PURE__ */ import_react39.default.createElement("strong", null, firstAndLast(selectedPair.token1.address)))), /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "pair"
-  }, /* @__PURE__ */ import_react39.default.createElement("span", null, "Pair Address: "), /* @__PURE__ */ import_react39.default.createElement("strong", null, firstAndLast(selectedPair.id)))), /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "right"
-  }, /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "widgets"
-  }, /* @__PURE__ */ import_react39.default.createElement("span", null, "Add a Widget:"), /* @__PURE__ */ import_react39.default.createElement("div", {
+  }), /* @__PURE__ */ import_react39.default.createElement("span", {
+    className: "capitalize"
+  }, selectedPair.exchange)), /* @__PURE__ */ import_react39.default.createElement("div", {
+    className: "pair flex-center gap-5"
+  }, /* @__PURE__ */ import_react39.default.createElement("div", null, "Volume: ", /* @__PURE__ */ import_react39.default.createElement("strong", {
+    className: "text-white"
+  }, intToWords(selectedPair.volumeUSD))), currentIndex === index && /* @__PURE__ */ import_react39.default.createElement("div", {
     className: "actions"
   }, customActions && customActions.map((action) => /* @__PURE__ */ import_react39.default.createElement(Action, {
     key: `action-${action.index}`,
     component: action.component,
     detail: selectedPair
-  })))), /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "info"
-  }, /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "detail"
-  }, /* @__PURE__ */ import_react39.default.createElement("span", null, "Volume :"), " ", /* @__PURE__ */ import_react39.default.createElement("strong", null, intToWords(selectedPair.volumeUSD))), /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "detail"
-  }, /* @__PURE__ */ import_react39.default.createElement("span", null, "Network: "), /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "logo"
-  }, /* @__PURE__ */ import_react39.default.createElement(Logo, {
-    label: selectedPair.network,
-    width: 10,
-    height: 10
-  })), /* @__PURE__ */ import_react39.default.createElement("strong", null, selectedPair.network))), /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "info"
-  }, /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "detail"
-  }), /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "detail"
-  }, /* @__PURE__ */ import_react39.default.createElement("span", null, "Exchange: "), /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "logo"
-  }, /* @__PURE__ */ import_react39.default.createElement(Logo, {
-    label: selectedPair.exchange,
-    width: 10,
-    height: 10
-  })), /* @__PURE__ */ import_react39.default.createElement("strong", null, selectedPair.exchange)))), /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "up",
-    onClick: () => handleDetail(currentIndex === index ? null : index)
-  }, /* @__PURE__ */ import_react39.default.createElement(up_default, {
+  })))), /* @__PURE__ */ import_react39.default.createElement("button", {
+    onClick: () => handleDetail(currentIndex === index ? null : index),
+    className: currentIndex === index ? "down" : "up"
+  }, currentIndex !== index ? /* @__PURE__ */ import_react39.default.createElement(import_react39.default.Fragment, null, /* @__PURE__ */ import_react39.default.createElement("span", null, "Details "), /* @__PURE__ */ import_react39.default.createElement(down_default, {
+    width: 7,
+    height: 7
+  })) : /* @__PURE__ */ import_react39.default.createElement(import_react39.default.Fragment, null, /* @__PURE__ */ import_react39.default.createElement("span", null, "Close "), /* @__PURE__ */ import_react39.default.createElement(up_default, {
     height: 7,
     width: 7
-  })))));
+  }))));
 };
 var ResultDetail_default = ResultDetail;
 
@@ -3170,9 +3105,9 @@ var StyledResult = import_styled_components3.default.div`
   background-color: inherit;
   margin-left: auto;
   margin-right: auto;
-  position: relative;  
+  position: relative;
 `;
-var StyledLoading = import_styled_components3.default.div`  
+var StyledLoading = import_styled_components3.default.div`
   ${({ styleOverrides }) => `
     position: relative;
     display: flex;
@@ -3180,21 +3115,21 @@ var StyledLoading = import_styled_components3.default.div`
     margin: 10px;
     color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "white"};
     font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "12px"};      
-  `}    
+  `}
 `;
 var StyledResultTitle = import_styled_components3.default.div`
   ${({ styleOverrides }) => `    
     display: flex;
     align-items: center;
     justify-content: space-between;
-    color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "#B4BBC7"};
-    font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "9px"};      
-    padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "4px 16px"};      
+    color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "#fff"};
+    font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "12px"};      
+    padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "7px 14px 2px;"};      
     margin: ${(styleOverrides == null ? void 0 : styleOverrides.margin) || "0"};      
     > span {
       font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize2) || "7px"};      
     }
-  `}    
+  `}
 `;
 var StyledResultContent = import_styled_components3.default.div`
   overflow: auto;
@@ -3215,23 +3150,30 @@ var StyledResultContent = import_styled_components3.default.div`
     border-width: ${(styleOverrides == null ? void 0 : styleOverrides.borderWidth) || "1px"};      
     font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "15px"};      
     font-family: ${(styleOverrides == null ? void 0 : styleOverrides.fontFamily) || "'Fira Code', monospace"};  
-  `}  
+  `}
 
   & .header {
     display: grid;
-    grid-template-columns: 41% 5% 6% 49%; 
-    border-bottom: 1px solid #474F5C; 
-    color: #B4BBC7;
-    font-size: 7px;
+    grid-template-columns: 39% 10% 10% 40%;
+    border-bottom: 1px solid #474f5c;
+    color: #b4bbc7;
+    font-size: 11px;
     font-weight: bold;
-    padding-bottom: 10px; 
+    padding-bottom: 10px;
 
-    >:last-child {
+    span {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    > :last-child {
       padding-left: 5px;
     }
   }
 `;
 var SearchResult = (props) => {
+  var _a2;
   const dispatch = (0, import_react_redux2.useDispatch)();
   const renderProps = (0, import_react40.useContext)(TokenSearch_default);
   const { customResult, customLoading } = renderProps;
@@ -3253,6 +3195,14 @@ var SearchResult = (props) => {
   const handleClose = () => {
     dispatch(setViewResult(false));
   };
+  const logoIcons = {};
+  (_a2 = renderProps.networks) == null ? void 0 : _a2.forEach((network) => {
+    var _a3;
+    logoIcons[network.id] = network.icon;
+    (_a3 = network.exchanges) == null ? void 0 : _a3.forEach((exchange) => {
+      logoIcons[exchange.name] = exchange.icon;
+    });
+  });
   return /* @__PURE__ */ import_react40.default.createElement(StyledResult, null, /* @__PURE__ */ import_react40.default.createElement(StyledResultTitle, {
     styleOverrides: customResult == null ? void 0 : customResult.title
   }, /* @__PURE__ */ import_react40.default.createElement("div", null, "Search Results ", /* @__PURE__ */ import_react40.default.createElement("span", null, "(", suggestions.length, " Results Found)")), /* @__PURE__ */ import_react40.default.createElement("button", {
@@ -3264,12 +3214,13 @@ var SearchResult = (props) => {
     styleOverrides: customResult == null ? void 0 : customResult.content
   }, /* @__PURE__ */ import_react40.default.createElement("div", {
     className: "header"
-  }, /* @__PURE__ */ import_react40.default.createElement("span", null, "Pair"), /* @__PURE__ */ import_react40.default.createElement("span", null, "Net."), /* @__PURE__ */ import_react40.default.createElement("span", null, "Exch."), /* @__PURE__ */ import_react40.default.createElement("span", null, "Details.")), suggestionRendered.map((suggestions2, index) => /* @__PURE__ */ import_react40.default.createElement(ResultDetail_default, {
+  }, /* @__PURE__ */ import_react40.default.createElement("span", null, "Pair"), /* @__PURE__ */ import_react40.default.createElement("span", null, "Network"), /* @__PURE__ */ import_react40.default.createElement("span", null, "Exchange"), /* @__PURE__ */ import_react40.default.createElement("span", null, "Details")), suggestionRendered.map((suggestions2, index) => /* @__PURE__ */ import_react40.default.createElement(ResultDetail_default, {
     suggestions: suggestionRendered,
     index,
     key: `token-detail-${index}`,
     currentIndex,
-    handleDetail: setCurrentIndex
+    handleDetail: setCurrentIndex,
+    logoIcons
   })), !!searchText && !suggestionRendered.length && /* @__PURE__ */ import_react40.default.createElement(StyledLoading, {
     styleOverrides: customLoading
   }, notFoundTitle), hasNextPage && /* @__PURE__ */ import_react40.default.createElement("div", {
@@ -3281,13 +3232,14 @@ var SearchResult_default = SearchResult;
 // src/searchbar/tokenSearch/SearchFilters.tsx
 var import_react45 = __toESM(require("react"));
 var import_react_redux5 = require("react-redux");
+var import_lodash5 = require("lodash");
 var import_styled_components5 = __toESM(require("styled-components"));
 var import_react_accessible_accordion = require("react-accessible-accordion");
 
 // src/searchbar/tokenSearch/SearchFiltersNetworkSelectors.tsx
 var import_react43 = __toESM(require("react"));
 var import_react_redux3 = require("react-redux");
-var import_lodash4 = require("lodash");
+var import_lodash3 = require("lodash");
 
 // src/searchbar/tokenSearch/Chip.tsx
 var import_react42 = __toESM(require("react"));
@@ -3311,7 +3263,7 @@ var checked_default = CheckedIcon;
 
 // src/searchbar/tokenSearch/Chip.tsx
 var StyledChip = import_styled_components4.default.div`
-    ${({ styleOverrides }) => `
+  ${({ styleOverrides }) => `
         > input {
           display: none;
         }
@@ -3328,8 +3280,7 @@ var StyledChip = import_styled_components4.default.div`
           ::-moz-user-select: -moz-none;
           ::-webkit-user-select: none;
           ::-ms-user-select: none;          
-    
-          font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "8px"};  
+          font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "10px"};  
           font-weight: ${(styleOverrides == null ? void 0 : styleOverrides.fontWeight) || "500"};  
           border-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderRadius) || "4px"};  
           background-color: ${(styleOverrides == null ? void 0 : styleOverrides.backgroundColor) || "#232B35"};  
@@ -3337,11 +3288,13 @@ var StyledChip = import_styled_components4.default.div`
           padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "2px 5px"};   
           margin: ${(styleOverrides == null ? void 0 : styleOverrides.margin) || "5px"};   
           color: ${(styleOverrides == null ? void 0 : styleOverrides.defaultColor) || "#B4BBC7"};   
-          width: ${(styleOverrides == null ? void 0 : styleOverrides.width) || "108px"};   
-          height: ${(styleOverrides == null ? void 0 : styleOverrides.height) || "auto"};   
+          width: ${(styleOverrides == null ? void 0 : styleOverrides.width) || "120px"};   
+          height: ${(styleOverrides == null ? void 0 : styleOverrides.height) || "34px"};   
           text-align: ${(styleOverrides == null ? void 0 : styleOverrides.textAlign) || "left"}; 
           text-transform: ${(styleOverrides == null ? void 0 : styleOverrides.textTransform) || "uppercase"}; 
           grid-template-columns: ${(styleOverrides == null ? void 0 : styleOverrides.gridTemplateColumns) || "22% 68% 10%"}; 
+          box-sizing: border-box;
+          
           >:last-child {      
             justify-self: ${(styleOverrides == null ? void 0 : styleOverrides.justifySelf) || "end"}; 
           }
@@ -3354,11 +3307,14 @@ var StyledChip = import_styled_components4.default.div`
           color: ${(styleOverrides == null ? void 0 : styleOverrides.checkedColor) || "white"};   
           background-color: ${(styleOverrides == null ? void 0 : styleOverrides.checkedBackgroundColor) || "#474F5C"};   
         }    
-    `}   
+        label svg {
+          max-width: 16px;
+        }
+    `}
 `;
 var Chip = (props) => {
   const renderProps = (0, import_react42.useContext)(TokenSearch_default);
-  const { label, checked, onChange, name, value, styleOverrides, grayscaleFilter } = props;
+  const { label, checked, onChange, name, value, styleOverrides, grayscaleFilter, icon } = props;
   const { customChip } = renderProps;
   const customStyles = styleOverrides === void 0 ? customChip : styleOverrides;
   const checkedStatus = checked ? /* @__PURE__ */ import_react42.default.createElement(checked_default, null) : /* @__PURE__ */ import_react42.default.createElement(unchecked_default, null);
@@ -3373,12 +3329,14 @@ var Chip = (props) => {
     value
   }), /* @__PURE__ */ import_react42.default.createElement("label", {
     htmlFor: `${label}-${name}`
-  }, /* @__PURE__ */ import_react42.default.createElement(Logo, {
+  }, /* @__PURE__ */ import_react42.default.createElement("div", {
+    className: checked ? "chip-icon active" : "chip-icon"
+  }, icon != null ? icon : /* @__PURE__ */ import_react42.default.createElement(Logo, {
     label,
     grayscaleFilter,
     width: 16,
     height: 16
-  }), /* @__PURE__ */ import_react42.default.createElement("span", null, label), label !== "Select All" && checkedStatus));
+  })), /* @__PURE__ */ import_react42.default.createElement("span", null, label), !["Select All", "Deselect All"].includes(label) && checkedStatus));
 };
 
 // src/searchbar/tokenSearch/SearchFiltersNetworkSelectors.tsx
@@ -3386,23 +3344,24 @@ var FilterNetworkAll = () => {
   const dispatch = (0, import_react_redux3.useDispatch)();
   const renderProps = (0, import_react43.useContext)(TokenSearch_default);
   const { exchangeMap, networkMap } = (0, import_react_redux3.useSelector)((state) => state);
-  const networkAll = Object.values((0, import_lodash4.omitBy)(networkMap, (b) => !b)).length === 0;
-  const exchangeNamesActive = Object.keys((0, import_lodash4.omitBy)(exchangeMap, (b) => !b));
-  const { customAllChip } = renderProps;
+  const networkAll = Object.values((0, import_lodash3.omitBy)(networkMap, (b) => !b)).length === 0;
+  const exchangeNamesActive = Object.keys((0, import_lodash3.omitBy)(exchangeMap, (b) => !b));
+  const { customAllChip, networks } = renderProps;
+  const networkNames = networks == null ? void 0 : networks.map((network) => network.id);
   const styleOverrides = {
-    fontSize: (customAllChip == null ? void 0 : customAllChip.fontSize) || "7px",
+    fontSize: (customAllChip == null ? void 0 : customAllChip.fontSize) || "10px",
     fontWeight: (customAllChip == null ? void 0 : customAllChip.fontWeight) || "500",
     borderRadius: (customAllChip == null ? void 0 : customAllChip.borderRadius) || "4px",
     backgroundColor: (customAllChip == null ? void 0 : customAllChip.backgroundColor) || "#474F5C",
     border: (customAllChip == null ? void 0 : customAllChip.border) || "0",
-    padding: (customAllChip == null ? void 0 : customAllChip.padding) || "3px 2px",
+    padding: (customAllChip == null ? void 0 : customAllChip.padding) || "3px 4px",
     margin: (customAllChip == null ? void 0 : customAllChip.margin) || "0",
     defaultColor: (customAllChip == null ? void 0 : customAllChip.defaultColor) || "#7A808A",
     width: (customAllChip == null ? void 0 : customAllChip.width) || "auto",
     height: (customAllChip == null ? void 0 : customAllChip.height) || "auto",
     textAlign: (customAllChip == null ? void 0 : customAllChip.textAlign) || "center",
     textTransform: (customAllChip == null ? void 0 : customAllChip.textTransform) || "inherit",
-    gridTemplateColumns: (customAllChip == null ? void 0 : customAllChip.gridTemplateColumns) || "40px",
+    gridTemplateColumns: (customAllChip == null ? void 0 : customAllChip.gridTemplateColumns) || "unset",
     justifySelf: (customAllChip == null ? void 0 : customAllChip.justifySelf) || "center"
   };
   const handleChange = () => {
@@ -3411,81 +3370,116 @@ var FilterNetworkAll = () => {
   };
   return /* @__PURE__ */ import_react43.default.createElement(Chip, {
     name: "AllNetworks",
-    label: "Select All",
+    icon: true,
+    label: networkAll ? "Select All" : "Deselect All",
     checked: networkAll,
     styleOverrides,
     onChange: handleChange
   });
 };
 var FilterNetworkSelectors = () => {
+  const renderProps = (0, import_react43.useContext)(TokenSearch_default);
+  const networks = [...renderProps.networks];
+  const networkItems = (0, import_react43.useMemo)(() => networks.map((network) => {
+    return { id: network.id, exchanges: network.exchanges.map((exhange) => exhange.name) };
+  }), [networks]);
   const dispatch = (0, import_react_redux3.useDispatch)();
   const { networkMap } = (0, import_react_redux3.useSelector)((state) => state);
-  const networkElement = (networkName) => {
+  const networkElement = (network) => {
     return /* @__PURE__ */ import_react43.default.createElement(Chip, {
-      key: networkName,
-      name: networkName,
-      label: networkName,
-      checked: networkMap[networkName] || false,
-      onChange: (e) => dispatch(setNetworkMap({ networkName, checked: e.target.checked }))
+      key: network.id,
+      name: network.id,
+      label: network.name || network.id,
+      icon: network.icon,
+      checked: networkMap[network.id] || false,
+      onChange: (e) => dispatch(setNetworkMap({
+        networkName: network.id,
+        checked: e.target.checked,
+        networks: networkItems
+      }))
     });
   };
-  return networkNames.map((networkName) => networkElement(networkName));
+  return networks.map((network) => networkElement(network));
 };
 
 // src/searchbar/tokenSearch/SearchFiltersExchangeSelectors.tsx
 var import_react44 = __toESM(require("react"));
-var import_lodash5 = require("lodash");
+var import_lodash4 = require("lodash");
 var import_react_redux4 = require("react-redux");
 var FilterExchangeAll = () => {
   const dispatch = (0, import_react_redux4.useDispatch)();
   const { exchangeMap, networkMap } = (0, import_react_redux4.useSelector)((state) => state);
-  const exchangeAll = Object.values((0, import_lodash5.omitBy)(exchangeMap, (b) => !b)).length === 0;
-  const exchangeNamesActive = exchangeNames(Object.keys((0, import_lodash5.omitBy)(networkMap, (b) => !b)));
+  const exchangeAll = Object.values((0, import_lodash4.omitBy)(exchangeMap, (b) => !b)).length === 0;
+  const selectedNetworks = Object.keys((0, import_lodash4.omitBy)(networkMap, (b) => !b));
   const renderProps = (0, import_react44.useContext)(TokenSearch_default);
-  const { customAllChip } = renderProps;
+  const { customAllChip, networks } = renderProps;
+  const exchangeNames = [];
+  networks == null ? void 0 : networks.forEach((network) => {
+    var _a2;
+    if (selectedNetworks.includes(network.id)) {
+      (_a2 = network.exchanges) == null ? void 0 : _a2.forEach((exchange) => {
+        exchangeNames.push(exchange.name);
+      });
+    }
+  });
   const styleOverrides = {
-    fontSize: (customAllChip == null ? void 0 : customAllChip.fontSize) || "7px",
+    fontSize: (customAllChip == null ? void 0 : customAllChip.fontSize) || "10px",
     fontWeight: (customAllChip == null ? void 0 : customAllChip.fontWeight) || "500",
     borderRadius: (customAllChip == null ? void 0 : customAllChip.borderRadius) || "4px",
     backgroundColor: (customAllChip == null ? void 0 : customAllChip.backgroundColor) || "#474F5C",
     border: (customAllChip == null ? void 0 : customAllChip.border) || "0",
-    padding: (customAllChip == null ? void 0 : customAllChip.padding) || "3px 2px",
+    padding: (customAllChip == null ? void 0 : customAllChip.padding) || "3px 4px",
     margin: (customAllChip == null ? void 0 : customAllChip.margin) || "0",
     defaultColor: (customAllChip == null ? void 0 : customAllChip.defaultColor) || "#7A808A",
     width: (customAllChip == null ? void 0 : customAllChip.width) || "auto",
     height: (customAllChip == null ? void 0 : customAllChip.height) || "auto",
     textAlign: (customAllChip == null ? void 0 : customAllChip.textAlign) || "center",
     textTransform: (customAllChip == null ? void 0 : customAllChip.textTransform) || "inherit",
-    gridTemplateColumns: (customAllChip == null ? void 0 : customAllChip.gridTemplateColumns) || "40px",
+    gridTemplateColumns: (customAllChip == null ? void 0 : customAllChip.gridTemplateColumns) || "unset",
     justifySelf: (customAllChip == null ? void 0 : customAllChip.justifySelf) || "center"
   };
   return /* @__PURE__ */ import_react44.default.createElement(Chip, {
     name: "AllExchanges",
-    label: "Select All",
+    icon: true,
+    label: exchangeAll ? "Select All" : "Deselect All",
     checked: exchangeAll,
     styleOverrides,
-    onChange: () => dispatch(setExchangeMapAll({ exchangeNames: exchangeNamesActive, exchangeAll }))
+    onChange: () => dispatch(setExchangeMapAll({ exchangeNames, exchangeAll }))
   });
 };
 var FilterExchangeSelectors = () => {
+  var _a2;
   const dispatch = (0, import_react_redux4.useDispatch)();
   const { networkMap, exchangeMap } = (0, import_react_redux4.useSelector)((state) => state);
-  const exchangeNamesActive = exchangeNames(Object.keys((0, import_lodash5.omitBy)(networkMap, (b) => !b)));
-  const exchangeElement = (exchangeName) => {
+  const renderProps = (0, import_react44.useContext)(TokenSearch_default);
+  const selectedNetworks = Object.keys((0, import_lodash4.omitBy)(networkMap, (b) => !b));
+  const exchanges = [];
+  (_a2 = renderProps.networks) == null ? void 0 : _a2.forEach((network) => {
+    var _a3;
+    if (selectedNetworks.includes(network.id)) {
+      if ((_a3 = network.exchanges) == null ? void 0 : _a3.length)
+        exchanges.push(...network.exchanges);
+    }
+  });
+  const exchangeElement = (exchange) => {
     return /* @__PURE__ */ import_react44.default.createElement(Chip, {
-      key: exchangeName,
-      name: exchangeName,
-      label: exchangeName,
+      key: exchange.name,
+      name: exchange.name,
+      label: exchange.name,
+      icon: exchange.icon,
       grayscaleFilter: 1,
-      checked: exchangeMap[exchangeName] || false,
-      onChange: (e) => dispatch(setExchangeMap({ exchangeName, checked: e.target.checked }))
+      checked: exchangeMap[exchange.name] || false,
+      onChange: (e) => dispatch(setExchangeMap({
+        exchangeName: exchange.name,
+        checked: e.target.checked
+      }))
     });
   };
-  return exchangeNamesActive.map((exchangeName) => exchangeElement(exchangeName));
+  return exchanges.map((exchange) => exchangeElement(exchange));
 };
 
 // src/searchbar/tokenSearch/SearchFilters.tsx
-var FilterWrapper = import_styled_components5.default.div`  
+var FilterWrapper = import_styled_components5.default.div`
   ${({ styleOverrides }) => `    
     .accordion__button {
       position: relative;
@@ -3503,8 +3497,8 @@ var FilterWrapper = import_styled_components5.default.div`
       height: ${(styleOverrides == null ? void 0 : styleOverrides.toggleHeight) || "7px"};
       width: ${(styleOverrides == null ? void 0 : styleOverrides.toggleWidth) || "7px"};
       margin-right: ${(styleOverrides == null ? void 0 : styleOverrides.toggleMarginRight) || "0"};    
-      left: ${(styleOverrides == null ? void 0 : styleOverrides.toggleLeft) || "50%"};    
-      top: ${(styleOverrides == null ? void 0 : styleOverrides.toggleTop) || "5px"};    
+      left: ${(styleOverrides == null ? void 0 : styleOverrides.toggleLeft) || "calc(50% - 3.5px);"};    
+      top: ${(styleOverrides == null ? void 0 : styleOverrides.toggleTop) || "calc(50% - 4.9px);"};    
       border-bottom: ${(styleOverrides == null ? void 0 : styleOverrides.toggleBorderBottom) || "2px solid currentColor"}; 
       border-right: ${(styleOverrides == null ? void 0 : styleOverrides.toggleBorderRight) || "2px solid currentColor"}; 
       transform: rotate(45deg);
@@ -3514,7 +3508,6 @@ var FilterWrapper = import_styled_components5.default.div`
     .accordion__button[aria-expanded='true']:first-child:after,
     .accordion__button[aria-selected='true']:first-child:after {
       transform: rotate(-135deg);
-      top: 10px;    
     }
 
     .accordion__panel {    
@@ -3522,9 +3515,9 @@ var FilterWrapper = import_styled_components5.default.div`
       border-radius: ${(styleOverrides == null ? void 0 : styleOverrides.contentBorderRadius) || "0"}; 
       margin:  ${(styleOverrides == null ? void 0 : styleOverrides.margin) || "0"};
     }
-  `}  
+  `}
 `;
-var StyledFilterHeader = import_styled_components5.default.div`  
+var StyledFilterHeader = import_styled_components5.default.div`
   ${({ styleOverrides }) => `
     display: ${(styleOverrides == null ? void 0 : styleOverrides.display) || "flex"};
     justify-content: ${(styleOverrides == null ? void 0 : styleOverrides.justifyContent) || "space-between"};
@@ -3532,18 +3525,18 @@ var StyledFilterHeader = import_styled_components5.default.div`
     width: ${(styleOverrides == null ? void 0 : styleOverrides.width) || "auto"};
     border: ${(styleOverrides == null ? void 0 : styleOverrides.border) || "none"}; 
     background-color: ${(styleOverrides == null ? void 0 : styleOverrides.backgroundColor) || "#00070E"}; 
-    color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "#B4BBC7"};    
+    color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "#fff"};    
     cursor: pointer;
     padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "6px 14px"};   
     text-align: ${(styleOverrides == null ? void 0 : styleOverrides.textAlign) || "left"};     
     margin: ${(styleOverrides == null ? void 0 : styleOverrides.margin) || "5px 0 0"};     
     border-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderRadius) || "4px"};     
-    font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "9px"};     
+    font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "13px"};     
     font-weight: ${(styleOverrides == null ? void 0 : styleOverrides.fontWeight) || "500"};     
     &:hover {
       background-color: ${(styleOverrides == null ? void 0 : styleOverrides.hoverColor) || "#232C38"};
     }
-  `}      
+  `}
 `;
 var StyledFilterContent = import_styled_components5.default.div`
   ${({ styleOverrides }) => `
@@ -3553,20 +3546,25 @@ var StyledFilterContent = import_styled_components5.default.div`
     margin-left: 10px;
     justify-content: ${(styleOverrides == null ? void 0 : styleOverrides.justifyContent) || "start"};
     align-items: ${(styleOverrides == null ? void 0 : styleOverrides.alignItems) || "center"};  
-    padding:  ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "0 0 5px"};           
-  `}      
+    padding:  ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "0 0 5px"};    
+    .chip-icon {
+      filter: grayscale(1);
+      &.active{
+        filter: unset;
+      }     
+    }
+  `}
 `;
 var StyledDescription = import_styled_components5.default.div`
   ${({ styleOverrides }) => `
     text-align: ${(styleOverrides == null ? void 0 : styleOverrides.textAlign) || "right"};
-    font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "9px"};
-    font-weight: ${(styleOverrides == null ? void 0 : styleOverrides.fontWeight) || "100"};
+    font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "12px"};
     padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "10px 10px 5px"};       
     background-color: ${(styleOverrides == null ? void 0 : styleOverrides.backgroundColor) || "#00070E"};
-    color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "#7A808A"};       
+    color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "#c4c5c7"};       
   `}
 `;
-var StyledFilterWrapper = import_styled_components5.default.div`  
+var StyledFilterWrapper = import_styled_components5.default.div`
   ${({ styleOverrides }) => `
     display: block;
     justify-content: ${(styleOverrides == null ? void 0 : styleOverrides.justifyContent) || "center"};
@@ -3574,11 +3572,11 @@ var StyledFilterWrapper = import_styled_components5.default.div`
     padding:  ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "0 0 5px"};       
     background-color: ${(styleOverrides == null ? void 0 : styleOverrides.backgroundColor) || "#00070E"};    
     border-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderRadius) || "4px"};    
-  `}      
+  `}
 `;
 var StyledCount = import_styled_components5.default.div`
   color: white;
-  font-weight: 400;  
+  font-weight: 400;
 `;
 var SearchDescription = (props) => {
   const { networkCount, exchangeCount, type } = props;
@@ -3589,11 +3587,11 @@ var SearchDescription = (props) => {
     if (type === "network")
       desc = /* @__PURE__ */ import_react45.default.createElement("div", {
         style: { display: "flex", justifyContent: "right" }
-      }, "Searching\xA0", /* @__PURE__ */ import_react45.default.createElement(StyledCount, null, networkCount, " network(s)"), "\xA0within\xA0", /* @__PURE__ */ import_react45.default.createElement(StyledCount, null, exchangeCount, " exchange(s)"));
+      }, "Searching\xA0", /* @__PURE__ */ import_react45.default.createElement(StyledCount, null, networkCount, " network", networkCount > 1 ? "s" : ""), exchangeCount > 0 && /* @__PURE__ */ import_react45.default.createElement(import_react45.default.Fragment, null, "\xA0within\xA0", /* @__PURE__ */ import_react45.default.createElement(StyledCount, null, exchangeCount, " exchange", exchangeCount > 1 ? "s" : "")));
     else
       desc = /* @__PURE__ */ import_react45.default.createElement("div", {
         style: { display: "flex", justifyContent: "right" }
-      }, "Searching\xA0", /* @__PURE__ */ import_react45.default.createElement(StyledCount, null, exchangeCount, " exchange(s)"), "\xA0within\xA0", /* @__PURE__ */ import_react45.default.createElement(StyledCount, null, networkCount, " network(s)"));
+      }, "Searching\xA0", /* @__PURE__ */ import_react45.default.createElement(StyledCount, null, exchangeCount, " exchange", exchangeCount > 1 ? "s" : ""), "\xA0within\xA0", /* @__PURE__ */ import_react45.default.createElement(StyledCount, null, networkCount, " network", networkCount > 1 ? "s" : ""));
   }
   return /* @__PURE__ */ import_react45.default.createElement(import_react45.default.Fragment, null, desc);
 };
@@ -3602,12 +3600,28 @@ var SearchFilters = () => {
   const dispatch = (0, import_react_redux5.useDispatch)();
   const { networkMap, exchangeMap, searchText } = (0, import_react_redux5.useSelector)((state) => state);
   const renderProps = (0, import_react45.useContext)(TokenSearch_default);
-  const { customSearchFilter } = renderProps;
+  const { customSearchFilter, networks } = renderProps;
   const exchangesActive = Object.values(networkMap).filter((b) => b).length !== 0;
-  const networkCount = Object.values(networkMap).filter((b) => b).length;
-  const exchangeCount = Object.values(exchangeMap).filter((b) => b).length;
-  const networkTitle = ((_a2 = customSearchFilter == null ? void 0 : customSearchFilter.fitler) == null ? void 0 : _a2.network) || "Select Network(s)";
-  const exchangeTitle = ((_b2 = customSearchFilter == null ? void 0 : customSearchFilter.fitler) == null ? void 0 : _b2.exchange) || "Select Exchange(s)";
+  let networkIds = Object.keys((0, import_lodash5.omitBy)(networkMap, (b) => !b));
+  const exchangeIds = Object.keys((0, import_lodash5.omitBy)(exchangeMap, (b) => !b)) || [];
+  if (!networkIds.length) {
+    networkIds = (networks == null ? void 0 : networks.map((network) => network.id)) || [];
+  }
+  const networkCount = networkIds.length;
+  const exchangeCount = exchangeIds.length;
+  if (!exchangeIds.length) {
+    networks == null ? void 0 : networks.forEach((network) => {
+      var _a3;
+      if (networkIds.includes(network.id)) {
+        (_a3 = network.exchanges) == null ? void 0 : _a3.forEach((exchange) => {
+          exchangeIds.push(exchange.name);
+        });
+      }
+    });
+  }
+  const totalExchangeCount = exchangeIds.length;
+  const networkTitle = ((_a2 = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _a2.network) || "Select Network(s)";
+  const exchangeTitle = ((_b2 = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _b2.exchange) || "Select Exchange(s)";
   (0, import_react45.useEffect)(() => {
     (Object.keys(networkMap).length > 0 || Object.keys(exchangeMap).length > 0) && searchText.length > 0 && dispatch(setViewResult(true));
   }, [networkMap, exchangeMap, searchText]);
@@ -3617,28 +3631,28 @@ var SearchFilters = () => {
     allowMultipleExpanded: true,
     allowZeroExpanded: true
   }, /* @__PURE__ */ import_react45.default.createElement(import_react_accessible_accordion.AccordionItem, null, /* @__PURE__ */ import_react45.default.createElement(import_react_accessible_accordion.AccordionItemHeading, null, /* @__PURE__ */ import_react45.default.createElement(import_react_accessible_accordion.AccordionItemButton, null, /* @__PURE__ */ import_react45.default.createElement(StyledFilterHeader, {
-    styleOverrides: (_c2 = customSearchFilter == null ? void 0 : customSearchFilter.fitler) == null ? void 0 : _c2.header
+    styleOverrides: (_c2 = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _c2.header
   }, /* @__PURE__ */ import_react45.default.createElement("span", null, networkTitle), /* @__PURE__ */ import_react45.default.createElement(FilterNetworkAll, null)))), /* @__PURE__ */ import_react45.default.createElement(import_react_accessible_accordion.AccordionItemPanel, null, /* @__PURE__ */ import_react45.default.createElement(StyledFilterWrapper, {
-    styleOverrides: (_d2 = customSearchFilter == null ? void 0 : customSearchFilter.fitler) == null ? void 0 : _d2.wrapper
+    styleOverrides: (_d2 = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _d2.wrapper
   }, /* @__PURE__ */ import_react45.default.createElement(StyledFilterContent, {
-    styleOverrides: (_e = customSearchFilter == null ? void 0 : customSearchFilter.fitler) == null ? void 0 : _e.content
+    styleOverrides: (_e = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _e.content
   }, /* @__PURE__ */ import_react45.default.createElement(FilterNetworkSelectors, null)), /* @__PURE__ */ import_react45.default.createElement(StyledDescription, {
-    styleOverrides: (_f = customSearchFilter == null ? void 0 : customSearchFilter.fitler) == null ? void 0 : _f.description
+    styleOverrides: (_f = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _f.description
   }, /* @__PURE__ */ import_react45.default.createElement(SearchDescription, {
     networkCount,
     exchangeCount,
     type: "network"
   }))))), exchangesActive && /* @__PURE__ */ import_react45.default.createElement(import_react_accessible_accordion.AccordionItem, null, /* @__PURE__ */ import_react45.default.createElement(import_react_accessible_accordion.AccordionItemHeading, null, /* @__PURE__ */ import_react45.default.createElement(import_react_accessible_accordion.AccordionItemButton, null, /* @__PURE__ */ import_react45.default.createElement(StyledFilterHeader, {
-    styleOverrides: (_g = customSearchFilter == null ? void 0 : customSearchFilter.fitler) == null ? void 0 : _g.header
+    styleOverrides: (_g = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _g.header
   }, /* @__PURE__ */ import_react45.default.createElement("span", null, exchangeTitle), /* @__PURE__ */ import_react45.default.createElement(FilterExchangeAll, null)))), /* @__PURE__ */ import_react45.default.createElement(import_react_accessible_accordion.AccordionItemPanel, null, /* @__PURE__ */ import_react45.default.createElement(StyledFilterWrapper, {
-    styleOverrides: (_h = customSearchFilter == null ? void 0 : customSearchFilter.fitler) == null ? void 0 : _h.wrapper
+    styleOverrides: (_h = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _h.wrapper
   }, /* @__PURE__ */ import_react45.default.createElement(StyledFilterContent, {
-    styleOverrides: (_i = customSearchFilter == null ? void 0 : customSearchFilter.fitler) == null ? void 0 : _i.content
+    styleOverrides: (_i = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _i.content
   }, /* @__PURE__ */ import_react45.default.createElement(FilterExchangeSelectors, null)), /* @__PURE__ */ import_react45.default.createElement(StyledDescription, {
-    styleOverrides: (_j = customSearchFilter == null ? void 0 : customSearchFilter.fitler) == null ? void 0 : _j.description
+    styleOverrides: (_j = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _j.description
   }, /* @__PURE__ */ import_react45.default.createElement(SearchDescription, {
     networkCount,
-    exchangeCount,
+    exchangeCount: exchangeCount || totalExchangeCount,
     type: "exchange"
   })))))));
 };
@@ -3654,7 +3668,8 @@ var StyledWrapper2 = import_styled_components6.default.div`
       position: absolute;
       width: -webkit-fill-available;
       left: 0; 
-      top: 33px;
+      bottom: ${(styleOverrides == null ? void 0 : styleOverrides.borderBottomLeftRadius) || "5px"};  
+      transform: translateY(100%);
       z-index: 99;
       background-color: ${(styleOverrides == null ? void 0 : styleOverrides.backgroundColor) || "#474F5C"};          
       border-bottom-left-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderBottomLeftRadius) || "4px"};  
@@ -3670,10 +3685,10 @@ var StyledWrapper2 = import_styled_components6.default.div`
       align-items: center;
       border-color: ${(styleOverrides == null ? void 0 : styleOverrides.button.borderColor) || "#232C38"};      
       background-color: ${(styleOverrides == null ? void 0 : styleOverrides.button.backColor) || "#232C38"};      
-      color: ${(styleOverrides == null ? void 0 : styleOverrides.button.color) || "#7A808A"};      
+      color: ${(styleOverrides == null ? void 0 : styleOverrides.button.color) || "#B1B8C3"};      
       border-radius: ${(styleOverrides == null ? void 0 : styleOverrides.button.borderRadius) || "4px"};      
-      font-size: ${(styleOverrides == null ? void 0 : styleOverrides.button.fontSize) || "7px"};      
-      padding: ${(styleOverrides == null ? void 0 : styleOverrides.button.padding) || "3px 6px"};      
+      font-size: ${(styleOverrides == null ? void 0 : styleOverrides.button.fontSize) || "10px"};      
+      padding: ${(styleOverrides == null ? void 0 : styleOverrides.button.padding) || "4px 6px"};      
       border-width: 0;      
       cursor: pointer;
       &:hover {
@@ -3684,22 +3699,26 @@ var StyledWrapper2 = import_styled_components6.default.div`
         padding-right: 3px;
       }
     }
-  `}  
+  `}
 `;
 var TokenSearch = (renderProps) => {
   const { customWrapper } = renderProps;
   const dispatch = (0, import_react_redux6.useDispatch)();
   const { isSelecting, isLoading, viewResult } = (0, import_react_redux6.useSelector)((state) => state);
   const searchRef = (0, import_react46.useRef)();
+  const closeResultPanel = () => {
+    dispatch(stopSelecting());
+    dispatch(setViewResult(false));
+  };
   (0, import_react46.useEffect)(() => {
     window.onmousedown = (e) => {
       var _a2;
       if (!((_a2 = searchRef == null ? void 0 : searchRef.current) == null ? void 0 : _a2.contains(e.target))) {
-        dispatch(stopSelecting());
-        dispatch(setViewResult(false));
+        closeResultPanel();
       }
     };
-  }, [dispatch]);
+    window.addEventListener("searchBarClose", closeResultPanel);
+  }, []);
   return /* @__PURE__ */ import_react46.default.createElement(TokenSearch_default.Provider, {
     value: renderProps
   }, /* @__PURE__ */ import_react46.default.createElement(StyledWrapper2, {
@@ -3718,15 +3737,16 @@ var SearchBar = (renderProps) => {
   return /* @__PURE__ */ import_react47.default.createElement(import_react_redux7.Provider, {
     store
   }, !config_default.IS_ENV_PRODUCTION && /* @__PURE__ */ import_react47.default.createElement(tokenSearch_default, {
-    customWrapper: renderProps == null ? void 0 : renderProps.customWrapper,
-    customSearchInput: renderProps == null ? void 0 : renderProps.customSearchInput,
-    customSearchFilter: renderProps == null ? void 0 : renderProps.customSearchFilter,
-    customLoading: renderProps == null ? void 0 : renderProps.customLoading,
-    customChip: renderProps == null ? void 0 : renderProps.customChip,
-    customResult: renderProps == null ? void 0 : renderProps.customResult,
-    customTokenDetail: renderProps == null ? void 0 : renderProps.customTokenDetail,
-    customActions: renderProps == null ? void 0 : renderProps.customActions,
-    customAllChip: renderProps == null ? void 0 : renderProps.customAllChip
+    customWrapper: renderProps.customWrapper,
+    customSearchInput: renderProps.customSearchInput,
+    customSearchFilter: renderProps.customSearchFilter,
+    customLoading: renderProps.customLoading,
+    customChip: renderProps.customChip,
+    customResult: renderProps.customResult,
+    customTokenDetail: renderProps.customTokenDetail,
+    customActions: renderProps.customActions,
+    customAllChip: renderProps.customAllChip,
+    networks: renderProps.networks
   }));
 };
 
@@ -3737,7 +3757,9 @@ var import_react_accessible_accordion2 = require("react-accessible-accordion");
 var React47 = __toESM(require("react"));
 var import_react_dom = require("react-dom");
 var rootElement = document.getElementById("root");
-(0, import_react_dom.render)(/* @__PURE__ */ React47.createElement(SearchBar, null), rootElement);
+(0, import_react_dom.render)(/* @__PURE__ */ React47.createElement(SearchBar, {
+  networks: []
+}), rootElement);
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   Accordion,

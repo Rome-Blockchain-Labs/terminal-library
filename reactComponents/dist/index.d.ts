@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { ReactNode, FC } from 'react';
 export { Accordion, AccordionItem, AccordionItemButton, AccordionItemHeading, AccordionItemPanel } from 'react-accessible-accordion';
 
 declare type CustomWrapperType = {
@@ -54,7 +54,7 @@ declare type CustomSearchFilterType = {
         contentBorderRadius?: string;
         margin?: string;
     };
-    fitler?: {
+    content?: {
         network?: string;
         exchange?: string;
         header?: {
@@ -212,6 +212,18 @@ declare type ActionComponentType = {
     index?: number;
     component?: FC;
 };
+declare type NetworkId = 'ethereum' | 'avalanche' | 'bsc' | 'moonriver' | 'moonbeam';
+declare type ExchangeName = 'uniswapv2' | 'uniswapv3' | 'sushiswap' | 'pangolin' | 'traderjoe' | 'pancakeswap' | 'safeswap' | 'kyberdmm' | 'zeroexchange' | 'yetiswap' | 'baguette' | 'canary' | 'lydiafinance' | 'elkfinance' | 'pandaswap' | 'complusnetwork' | 'oliveswap' | 'mdex' | 'ellipsis.finance' | 'biswap' | 'apeswap' | 'knightswap.finance' | 'babyswap' | 'synapse' | 'beamswap' | 'solarflare' | 'stellaswap' | 'zenlink' | 'solarbeam' | 'shibaswap' | 'quickswap' | 'solidex' | 'spookyswap' | 'spiritswap' | 'vvs.finance' | 'mm.finance' | 'cronaswap' | 'crodex' | 'cyborgswap';
+declare type ExchangeType = {
+    name: ExchangeName;
+    icon?: ReactNode;
+};
+declare type NetworkType = {
+    id: NetworkId;
+    name?: string;
+    icon?: ReactNode;
+    exchanges: ExchangeType[];
+};
 declare type RenderProps = {
     customWrapper?: CustomWrapperType;
     customSearchInput?: CustomSerchInputType;
@@ -222,8 +234,9 @@ declare type RenderProps = {
     customLoading?: CustomLoadingType;
     customActions?: Array<ActionComponentType>;
     customAllChip?: CustomAllChipType;
+    networks: Array<NetworkType>;
 };
 
 declare const SearchBar: FC<RenderProps>;
 
-export { RenderProps, SearchBar };
+export { ExchangeName, ExchangeType, NetworkId, NetworkType, RenderProps, SearchBar };
