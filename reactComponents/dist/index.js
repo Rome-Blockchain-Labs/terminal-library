@@ -49,7 +49,7 @@ __export(src_exports, {
 module.exports = __toCommonJS(src_exports);
 
 // src/searchbar/index.tsx
-var import_react47 = __toESM(require("react"));
+var import_react48 = __toESM(require("react"));
 var import_react_redux7 = require("react-redux");
 
 // src/searchbar/redux/store.ts
@@ -69,8 +69,8 @@ var import_graphql_request2 = require("graphql-request");
 var import_graphql_request = require("graphql-request");
 
 // src/searchbar/tokenSearch/helpers/config.ts
-var romeTokenSyncUri = String(process.env.REACT_APP_HASURA_API_ENDPOINT_WS || "https://romenet.prod.velox.global/v1/graphql").replace("ws", "http");
-var maxHits = Number(process.env.REACT_APP_SEARCH_ASYNC_DATASET_LENGTH_MAXIMUM || 500);
+var romeTokenSyncUri = "https://romenet.prod.velox.global/v1/graphql";
+var maxHits = 500;
 
 // src/searchbar/tokenSearch/helpers/graphqlClients.ts
 var romePairsClient = new import_graphql_request.GraphQLClient(romeTokenSyncUri);
@@ -182,13 +182,12 @@ var searchTokensAsync = async (searchString, searchNetworks, searchExchanges) =>
 var import_lodash = require("lodash");
 
 // src/searchbar/config.tsx
-var _a, _b, _c, _d;
 var config_default = {
-  SEARCH_INPUT_LENGTH_MINIMUM: (_a = process.env.REACT_APP_SEARCH_INPUT_LENGTH_MINIMUM) != null ? _a : 2,
-  SEARCH_ASYNC_DELAY: (_b = process.env.REACT_APP_SEARCH_ASYNC_DELAY) != null ? _b : 300,
-  SEARCH_ASYNC_DATASET_LENGTH_MAXIMUM: (_c = process.env.REACT_APP_SEARCH_ASYNC_DATASET_LENGTH_MAXIMUM) != null ? _c : 500,
-  IS_ENV_PRODUCTION: process.env.REACT_APP_ROME_ENV === "production" ? true : false,
-  LOAD_LIMIT: (_d = process.env.REACT_APP_LOAD_LIMIT) != null ? _d : 10
+  SEARCH_INPUT_LENGTH_MINIMUM: 3,
+  SEARCH_ASYNC_DELAY: 300,
+  SEARCH_ASYNC_DATASET_LENGTH_MAXIMUM: 500,
+  IS_ENV_PRODUCTION: false,
+  LOAD_LIMIT: 10
 };
 
 // src/searchbar/redux/tokenSearchSlice.ts
@@ -263,8 +262,8 @@ var tokenSearchSlice = (0, import_toolkit.createSlice)({
       state.fetchError = null;
     });
     builder.addCase(searchTokenPairs.fulfilled, (state, action) => {
-      var _a2;
-      if (((_a2 = action.payload) == null ? void 0 : _a2.pairSearchTimestamp) >= state.pairSearchTimestamp) {
+      var _a;
+      if (((_a = action.payload) == null ? void 0 : _a.pairSearchTimestamp) >= state.pairSearchTimestamp) {
         state.pairSearchTimestamp = action.payload.pairSearchTimestamp;
         const suggestions = action.payload.data;
         suggestions.sort((pair1, pair2) => pair2.volumeUSD - pair1.volumeUSD);
@@ -374,9 +373,9 @@ var store = (0, import_toolkit2.configureStore)({
 });
 
 // src/searchbar/tokenSearch/index.tsx
-var import_react46 = __toESM(require("react"));
+var import_react47 = __toESM(require("react"));
 var import_react_redux6 = require("react-redux");
-var import_styled_components6 = __toESM(require("styled-components"));
+var import_styled_components7 = __toESM(require("styled-components"));
 
 // src/searchbar/tokenSearch/SearchInput.tsx
 var import_react5 = __toESM(require("react"));
@@ -449,9 +448,15 @@ var TokenSearch_default = TokenSearchContext;
 var StyledInputGroup = import_styled_components.default.div`
   ${({ styleOverrides }) => ` 
     position: relative;
-    width: ${(styleOverrides == null ? void 0 : styleOverrides.width) || "-webkit-fill-available"};
-    color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "#B7BEC9"};
-    background: ${(styleOverrides == null ? void 0 : styleOverrides.background) || "#00070E"};  
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;    
+    background: ${(styleOverrides == null ? void 0 : styleOverrides.background) || "#00070E"};
+    border-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderRadius) || "4px"};
+    border: ${(styleOverrides == null ? void 0 : styleOverrides.border) || "5px solid #474F5C"};
+    padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "10px 14px"};
+    width: ${(styleOverrides == null ? void 0 : styleOverrides.width) || "100%"};
+    height: ${(styleOverrides == null ? void 0 : styleOverrides.height) || "35px"};
   `}
 `;
 var StyledInput = import_styled_components.default.input`
@@ -460,49 +465,35 @@ var StyledInput = import_styled_components.default.input`
     margin-right: auto;
     position: relative;
     outline: 0;
-    border: none;
-    width: ${(styleOverrides == null ? void 0 : styleOverrides.width) || "-webkit-fill-available"};
-    height: ${(styleOverrides == null ? void 0 : styleOverrides.height) || "auto"};    
-    color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "#B7BEC9"};
-    display: ${(styleOverrides == null ? void 0 : styleOverrides.display) || "block"}; 
-    padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "10px 14px"};    
-    background: ${(styleOverrides == null ? void 0 : styleOverrides.background) || "#00070E"};  
-  `}
-`;
-var StyledSearchIconWrapper = import_styled_components.default.div`
-  ${({ styleOverrides }) => `
-    float: right;
-    position: absolute;
-    right: ${(styleOverrides == null ? void 0 : styleOverrides.right) || "14px"};      
-    top: 50%;
-    transform: translateY(-50%);   
-  `}
-`;
-var StyledWrapper = import_styled_components.default.div`
-  ${({ styleOverrides }) => `    
-    position: relative;
-    border: ${(styleOverrides == null ? void 0 : styleOverrides.border) || "4px solid #474F5C"}; 
-    border-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderRadius) || "4px"}; 
+    flex: auto;
+    background: transparent;
+    border: none;        
+    width: 100%;
+    height: 100%;
     color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "#7A808A"};
-    background: ${(styleOverrides == null ? void 0 : styleOverrides.background) || "#00070E"};  
     font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "8px"};      
     font-family: ${(styleOverrides == null ? void 0 : styleOverrides.fontFamily) || "'Fira Code', monospace"};
-    box-shadow: 0 0 8px 2px #474f5c;
-
-    .invalid-error {
-      padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "0 14px 5px"};   
-      color: ${(styleOverrides == null ? void 0 : styleOverrides.colorError) || "#F52E2E"};  
-    }
-  `}
+  `}  
+`;
+var StyledSearchIconWrapper = import_styled_components.default.div`    
+  cursor: pointer;
+  svg {
+    vertical-align: middle;
+  }
+`;
+var StyledWrapper = import_styled_components.default.div`
+  position: relative;
+`;
+var StyledActionWrapper = import_styled_components.default.div`
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
 `;
 var StyledResetBtn = import_styled_components.default.button`
-  position: absolute;
-  right: 40px;
-  top: 50%;
-  transform: translateY(-50%);
+  margin-right: 10px;
 `;
 var SearchInput = () => {
-  var _a2, _b2, _c2, _d2;
+  var _a, _b, _c, _d;
   const dispatch = (0, import_react_redux.useDispatch)();
   const renderProps = (0, import_react5.useContext)(TokenSearch_default);
   const { customSearchInput } = renderProps;
@@ -529,15 +520,14 @@ var SearchInput = () => {
     text.length > 0 && dispatch(setViewResult(true));
   };
   const placeholder = (customSearchInput == null ? void 0 : customSearchInput.placeholder) ? customSearchInput == null ? void 0 : customSearchInput.placeholder : "Search pair by symbol, name, contract or token";
-  const height = ((_a2 = customSearchInput == null ? void 0 : customSearchInput.icon) == null ? void 0 : _a2.height) ? (_b2 = customSearchInput == null ? void 0 : customSearchInput.icon) == null ? void 0 : _b2.height : 14;
-  const width = ((_c2 = customSearchInput == null ? void 0 : customSearchInput.icon) == null ? void 0 : _c2.width) ? (_d2 = customSearchInput == null ? void 0 : customSearchInput.icon) == null ? void 0 : _d2.width : 14;
+  const height = ((_a = customSearchInput == null ? void 0 : customSearchInput.icon) == null ? void 0 : _a.height) ? (_b = customSearchInput == null ? void 0 : customSearchInput.icon) == null ? void 0 : _b.height : 14;
+  const width = ((_c = customSearchInput == null ? void 0 : customSearchInput.icon) == null ? void 0 : _c.width) ? (_d = customSearchInput == null ? void 0 : customSearchInput.icon) == null ? void 0 : _d.width : 14;
   const handleReset = () => {
     setText("");
     dispatch(resetSearch());
   };
   return /* @__PURE__ */ import_react5.default.createElement(StyledWrapper, {
-    onClick: () => dispatch(startSelecting()),
-    styleOverrides: customSearchInput == null ? void 0 : customSearchInput.input
+    onClick: () => dispatch(startSelecting())
   }, /* @__PURE__ */ import_react5.default.createElement(StyledInputGroup, {
     styleOverrides: customSearchInput == null ? void 0 : customSearchInput.input
   }, /* @__PURE__ */ import_react5.default.createElement(StyledInput, {
@@ -547,14 +537,14 @@ var SearchInput = () => {
     onClick: handleClick,
     styleOverrides: customSearchInput == null ? void 0 : customSearchInput.input,
     value: text
-  }), /* @__PURE__ */ import_react5.default.createElement(StyledResetBtn, {
+  }), /* @__PURE__ */ import_react5.default.createElement(StyledActionWrapper, null, /* @__PURE__ */ import_react5.default.createElement(StyledResetBtn, {
     onClick: handleReset
   }, /* @__PURE__ */ import_react5.default.createElement("span", null, "Reset Search"), /* @__PURE__ */ import_react5.default.createElement(reset_default, null)), /* @__PURE__ */ import_react5.default.createElement(StyledSearchIconWrapper, {
     styleOverrides: customSearchInput == null ? void 0 : customSearchInput.icon
   }, /* @__PURE__ */ import_react5.default.createElement(search_default, {
     height,
     width
-  }))), error && /* @__PURE__ */ import_react5.default.createElement("div", {
+  })))), error && /* @__PURE__ */ import_react5.default.createElement("div", {
     className: "invalid-error"
   }, "Please input ", config_default.SEARCH_INPUT_LENGTH_MINIMUM, " characters minimum"));
 };
@@ -2880,16 +2870,16 @@ var up_default = UpIcon;
 var imageSize = 26;
 var StyledDetailList = import_styled_components2.default.div`
   ${({ styleOverrides }) => {
-  var _a2, _b2, _c2, _d2, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s;
+  var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s;
   return `
-    display: ${((_a2 = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _a2.display) || "grid"};
+    display: ${((_a = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _a.display) || "grid"};
     grid-gap: 5px;
-    align-items: ${((_b2 = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _b2.alignItems) || "center"};    
+    align-items: ${((_b = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _b.alignItems) || "center"};    
     justify-content: space-between;
-    padding: ${((_c2 = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _c2.padding) || "5px 0"};    
+    padding: ${((_c = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _c.padding) || "5px 0"};    
     background: transparent;
-    border-bottom: ${((_d2 = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _d2.borderbottom) || "1px solid #474F5C"};    
-    grid-template-columns: ${((_e = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _e.gridTemplateColumns) || "15% 1% 15% 10% 10% 29% 10%"}; 
+    border-bottom: ${((_d = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _d.borderbottom) || "1px solid #474F5C"};    
+    grid-template-columns: ${((_e = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _e.gridTemplateColumns) || "19% 1% 19% 10% 10% 23% 14%"}; 
     
     border-radius: ${((_f = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _f.borderRadius) || "4px"};
     position: relative;
@@ -2916,8 +2906,8 @@ var StyledDetailList = import_styled_components2.default.div`
     &.active {
       background: #474F5C;
       color: white;
-      padding: 16px 0;
-      grid-template-columns: 15% 1% 15% 10% 10% 39% 0%;
+      padding: 24px 0;
+      grid-template-columns: 19% 1% 19% 10% 10% 38% 0%;
       .token {
         font-weight: ${((_k = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _k.fontWeight) || "600"};      
         .address {
@@ -3029,7 +3019,7 @@ var Action = (props) => {
   }));
 };
 var ResultDetail = (props) => {
-  var _a2, _b2;
+  var _a, _b;
   const { index, suggestions, handleDetail, currentIndex, logoIcons } = props;
   const renderProps = (0, import_react39.useContext)(TokenSearch_default);
   const { customActions, customTokenDetail } = renderProps;
@@ -3063,7 +3053,7 @@ var ResultDetail = (props) => {
     className: "flex-1 address text-line-1"
   }, /* @__PURE__ */ import_react39.default.createElement("div", null, selectedPair.token1.name), /* @__PURE__ */ import_react39.default.createElement("span", null, /* @__PURE__ */ import_react39.default.createElement("span", null, "Address:"), " ", /* @__PURE__ */ import_react39.default.createElement("strong", null, firstAndLast(selectedPair.token1.address))))), /* @__PURE__ */ import_react39.default.createElement("div", {
     className: "logo icon-label"
-  }, (_a2 = logoIcons[selectedPair.network]) != null ? _a2 : /* @__PURE__ */ import_react39.default.createElement(Logo, {
+  }, (_a = logoIcons[selectedPair.network]) != null ? _a : /* @__PURE__ */ import_react39.default.createElement(Logo, {
     label: selectedPair.network,
     width: 12,
     height: 12
@@ -3071,7 +3061,7 @@ var ResultDetail = (props) => {
     className: "capitalize"
   }, selectedPair.network)), /* @__PURE__ */ import_react39.default.createElement("div", {
     className: "logo icon-label"
-  }, (_b2 = logoIcons[selectedPair.exchange]) != null ? _b2 : /* @__PURE__ */ import_react39.default.createElement(Logo, {
+  }, (_b = logoIcons[selectedPair.exchange]) != null ? _b : /* @__PURE__ */ import_react39.default.createElement(Logo, {
     label: selectedPair.exchange,
     width: 12,
     height: 12
@@ -3173,7 +3163,7 @@ var StyledResultContent = import_styled_components3.default.div`
   }
 `;
 var SearchResult = (props) => {
-  var _a2;
+  var _a;
   const dispatch = (0, import_react_redux2.useDispatch)();
   const renderProps = (0, import_react40.useContext)(TokenSearch_default);
   const { customResult, customLoading } = renderProps;
@@ -3196,10 +3186,10 @@ var SearchResult = (props) => {
     dispatch(setViewResult(false));
   };
   const logoIcons = {};
-  (_a2 = renderProps.networks) == null ? void 0 : _a2.forEach((network) => {
-    var _a3;
+  (_a = renderProps.networks) == null ? void 0 : _a.forEach((network) => {
+    var _a2;
     logoIcons[network.id] = network.icon;
-    (_a3 = network.exchanges) == null ? void 0 : _a3.forEach((exchange) => {
+    (_a2 = network.exchanges) == null ? void 0 : _a2.forEach((exchange) => {
       logoIcons[exchange.name] = exchange.icon;
     });
   });
@@ -3230,14 +3220,14 @@ var SearchResult = (props) => {
 var SearchResult_default = SearchResult;
 
 // src/searchbar/tokenSearch/SearchFilters.tsx
-var import_react45 = __toESM(require("react"));
+var import_react46 = __toESM(require("react"));
 var import_react_redux5 = require("react-redux");
 var import_lodash5 = require("lodash");
-var import_styled_components5 = __toESM(require("styled-components"));
+var import_styled_components6 = __toESM(require("styled-components"));
 var import_react_accessible_accordion = require("react-accessible-accordion");
 
 // src/searchbar/tokenSearch/SearchFiltersNetworkSelectors.tsx
-var import_react43 = __toESM(require("react"));
+var import_react44 = __toESM(require("react"));
 var import_react_redux3 = require("react-redux");
 var import_lodash3 = require("lodash");
 
@@ -3264,53 +3254,57 @@ var checked_default = CheckedIcon;
 // src/searchbar/tokenSearch/Chip.tsx
 var StyledChip = import_styled_components4.default.div`
   ${({ styleOverrides }) => `
-        > input {
-          display: none;
-        }
+    > input {
+      display: none;
+    }
 
-        > input + label {
-          
-          transition: all 500ms ease;    
-          cursor: pointer;    
-          display: grid;
-          align-items: center;
-          user-select: none;
+    > input + label {
+      
+      transition: all 500ms ease;    
+      cursor: pointer;    
+      display: grid;
+      align-items: center;
+      user-select: none;
 
-          ::-webkit-transition: all 500ms ease;    
-          ::-moz-user-select: -moz-none;
-          ::-webkit-user-select: none;
-          ::-ms-user-select: none;          
-          font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "10px"};  
-          font-weight: ${(styleOverrides == null ? void 0 : styleOverrides.fontWeight) || "500"};  
-          border-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderRadius) || "4px"};  
-          background-color: ${(styleOverrides == null ? void 0 : styleOverrides.backgroundColor) || "#232B35"};  
-          border: ${(styleOverrides == null ? void 0 : styleOverrides.border) || "solid 2px #232B35"};   
-          padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "2px 5px"};   
-          margin: ${(styleOverrides == null ? void 0 : styleOverrides.margin) || "5px"};   
-          color: ${(styleOverrides == null ? void 0 : styleOverrides.defaultColor) || "#B4BBC7"};   
-          width: ${(styleOverrides == null ? void 0 : styleOverrides.width) || "120px"};   
-          height: ${(styleOverrides == null ? void 0 : styleOverrides.height) || "34px"};   
-          text-align: ${(styleOverrides == null ? void 0 : styleOverrides.textAlign) || "left"}; 
-          text-transform: ${(styleOverrides == null ? void 0 : styleOverrides.textTransform) || "uppercase"}; 
-          grid-template-columns: ${(styleOverrides == null ? void 0 : styleOverrides.gridTemplateColumns) || "22% 68% 10%"}; 
-          box-sizing: border-box;
-          
-          >:last-child {      
-            justify-self: ${(styleOverrides == null ? void 0 : styleOverrides.justifySelf) || "end"}; 
-          }
-        }
-        
-        > input:checked + label {   
-          ::-webkit-transition: all 500ms ease;
-          transition: all 500ms ease;   
-          border-color: ${(styleOverrides == null ? void 0 : styleOverrides.checkedBorderColor) || "#474F5C"};    
-          color: ${(styleOverrides == null ? void 0 : styleOverrides.checkedColor) || "white"};   
-          background-color: ${(styleOverrides == null ? void 0 : styleOverrides.checkedBackgroundColor) || "#474F5C"};   
-        }    
-        label svg {
-          max-width: 16px;
-        }
-    `}
+      ::-webkit-transition: all 500ms ease;    
+      ::-moz-user-select: -moz-none;
+      ::-webkit-user-select: none;
+      ::-ms-user-select: none;          
+
+      font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "8px"};  
+      font-weight: ${(styleOverrides == null ? void 0 : styleOverrides.fontWeight) || "500"};  
+      border-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderRadius) || "4px"};  
+      background-color: ${(styleOverrides == null ? void 0 : styleOverrides.backgroundColor) || "#232B35"};  
+      border: ${(styleOverrides == null ? void 0 : styleOverrides.border) || "solid 2px #232B35"};   
+      padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "2px 5px"};   
+      margin: ${(styleOverrides == null ? void 0 : styleOverrides.margin) || "5px"};   
+      color: ${(styleOverrides == null ? void 0 : styleOverrides.defaultColor) || "#B4BBC7"};   
+      width: ${(styleOverrides == null ? void 0 : styleOverrides.width) || "108px"};   
+      height: ${(styleOverrides == null ? void 0 : styleOverrides.height) || "auto"};   
+      text-align: ${(styleOverrides == null ? void 0 : styleOverrides.textAlign) || "left"}; 
+      text-transform: ${(styleOverrides == null ? void 0 : styleOverrides.textTransform) || "uppercase"}; 
+      grid-template-columns: ${(styleOverrides == null ? void 0 : styleOverrides.gridTemplateColumns) || "22% 68% 10%"}; 
+      >:last-child {      
+        justify-self: ${(styleOverrides == null ? void 0 : styleOverrides.justifySelf) || "end"}; 
+      }
+    }
+    
+    > input:checked + label {   
+      ::-webkit-transition: all 500ms ease;
+      transition: all 500ms ease;   
+      border-color: ${(styleOverrides == null ? void 0 : styleOverrides.checkedBorderColor) || "#474F5C"};    
+      color: ${(styleOverrides == null ? void 0 : styleOverrides.checkedColor) || "white"};   
+      background-color: ${(styleOverrides == null ? void 0 : styleOverrides.checkedBackgroundColor) || "#474F5C"};   
+    }    
+  `}
+  
+  @media (max-width: 375px) {
+    width: 50%;
+
+    > input + label {
+      width: auto;
+    }
+  }
 `;
 var Chip = (props) => {
   const renderProps = (0, import_react42.useContext)(TokenSearch_default);
@@ -3339,54 +3333,57 @@ var Chip = (props) => {
   })), /* @__PURE__ */ import_react42.default.createElement("span", null, label), !["Select All", "Deselect All"].includes(label) && checkedStatus));
 };
 
+// src/searchbar/tokenSearch/Button.tsx
+var import_react43 = __toESM(require("react"));
+var import_styled_components5 = __toESM(require("styled-components"));
+var StyledButton = import_styled_components5.default.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  box-sizing: border-box;
+  outline: none;
+  padding: 3px 6px;
+  margin: 3px;
+  color: #B4BBC7;
+  background-color: #474F5C;
+`;
+var Button = ({ className, styleOverrides, onClick, children }) => {
+  return /* @__PURE__ */ import_react43.default.createElement(StyledButton, {
+    className,
+    onClick,
+    style: styleOverrides
+  }, children);
+};
+var Button_default = Button;
+
 // src/searchbar/tokenSearch/SearchFiltersNetworkSelectors.tsx
 var FilterNetworkAll = () => {
   const dispatch = (0, import_react_redux3.useDispatch)();
-  const renderProps = (0, import_react43.useContext)(TokenSearch_default);
+  const renderProps = (0, import_react44.useContext)(TokenSearch_default);
   const { exchangeMap, networkMap } = (0, import_react_redux3.useSelector)((state) => state);
   const networkAll = Object.values((0, import_lodash3.omitBy)(networkMap, (b) => !b)).length === 0;
   const exchangeNamesActive = Object.keys((0, import_lodash3.omitBy)(exchangeMap, (b) => !b));
-  const { customAllChip, networks } = renderProps;
+  const { networks } = renderProps;
   const networkNames = networks == null ? void 0 : networks.map((network) => network.id);
-  const styleOverrides = {
-    fontSize: (customAllChip == null ? void 0 : customAllChip.fontSize) || "10px",
-    fontWeight: (customAllChip == null ? void 0 : customAllChip.fontWeight) || "500",
-    borderRadius: (customAllChip == null ? void 0 : customAllChip.borderRadius) || "4px",
-    backgroundColor: (customAllChip == null ? void 0 : customAllChip.backgroundColor) || "#474F5C",
-    border: (customAllChip == null ? void 0 : customAllChip.border) || "0",
-    padding: (customAllChip == null ? void 0 : customAllChip.padding) || "3px 4px",
-    margin: (customAllChip == null ? void 0 : customAllChip.margin) || "0",
-    defaultColor: (customAllChip == null ? void 0 : customAllChip.defaultColor) || "#7A808A",
-    width: (customAllChip == null ? void 0 : customAllChip.width) || "auto",
-    height: (customAllChip == null ? void 0 : customAllChip.height) || "auto",
-    textAlign: (customAllChip == null ? void 0 : customAllChip.textAlign) || "center",
-    textTransform: (customAllChip == null ? void 0 : customAllChip.textTransform) || "inherit",
-    gridTemplateColumns: (customAllChip == null ? void 0 : customAllChip.gridTemplateColumns) || "unset",
-    justifySelf: (customAllChip == null ? void 0 : customAllChip.justifySelf) || "center"
-  };
   const handleChange = () => {
     dispatch(setNetworkMapAll({ networkNames, networkAll }));
     dispatch(setExchangeMapAll({ exchangeNames: exchangeNamesActive, exchangeAll: false }));
   };
-  return /* @__PURE__ */ import_react43.default.createElement(Chip, {
-    name: "AllNetworks",
-    icon: true,
-    label: networkAll ? "Select All" : "Deselect All",
-    checked: networkAll,
-    styleOverrides,
-    onChange: handleChange
-  });
+  return /* @__PURE__ */ import_react44.default.createElement(Button_default, {
+    onClick: handleChange
+  }, networkAll ? "Select All" : "Unselect All");
 };
 var FilterNetworkSelectors = () => {
-  const renderProps = (0, import_react43.useContext)(TokenSearch_default);
+  const renderProps = (0, import_react44.useContext)(TokenSearch_default);
   const networks = [...renderProps.networks];
-  const networkItems = (0, import_react43.useMemo)(() => networks.map((network) => {
+  const networkItems = (0, import_react44.useMemo)(() => networks.map((network) => {
     return { id: network.id, exchanges: network.exchanges.map((exhange) => exhange.name) };
   }), [networks]);
   const dispatch = (0, import_react_redux3.useDispatch)();
   const { networkMap } = (0, import_react_redux3.useSelector)((state) => state);
   const networkElement = (network) => {
-    return /* @__PURE__ */ import_react43.default.createElement(Chip, {
+    return /* @__PURE__ */ import_react44.default.createElement(Chip, {
       key: network.id,
       name: network.id,
       label: network.name || network.id,
@@ -3403,7 +3400,7 @@ var FilterNetworkSelectors = () => {
 };
 
 // src/searchbar/tokenSearch/SearchFiltersExchangeSelectors.tsx
-var import_react44 = __toESM(require("react"));
+var import_react45 = __toESM(require("react"));
 var import_lodash4 = require("lodash");
 var import_react_redux4 = require("react-redux");
 var FilterExchangeAll = () => {
@@ -3411,58 +3408,37 @@ var FilterExchangeAll = () => {
   const { exchangeMap, networkMap } = (0, import_react_redux4.useSelector)((state) => state);
   const exchangeAll = Object.values((0, import_lodash4.omitBy)(exchangeMap, (b) => !b)).length === 0;
   const selectedNetworks = Object.keys((0, import_lodash4.omitBy)(networkMap, (b) => !b));
-  const renderProps = (0, import_react44.useContext)(TokenSearch_default);
-  const { customAllChip, networks } = renderProps;
+  const renderProps = (0, import_react45.useContext)(TokenSearch_default);
+  const { networks } = renderProps;
   const exchangeNames = [];
   networks == null ? void 0 : networks.forEach((network) => {
-    var _a2;
+    var _a;
     if (selectedNetworks.includes(network.id)) {
-      (_a2 = network.exchanges) == null ? void 0 : _a2.forEach((exchange) => {
+      (_a = network.exchanges) == null ? void 0 : _a.forEach((exchange) => {
         exchangeNames.push(exchange.name);
       });
     }
   });
-  const styleOverrides = {
-    fontSize: (customAllChip == null ? void 0 : customAllChip.fontSize) || "10px",
-    fontWeight: (customAllChip == null ? void 0 : customAllChip.fontWeight) || "500",
-    borderRadius: (customAllChip == null ? void 0 : customAllChip.borderRadius) || "4px",
-    backgroundColor: (customAllChip == null ? void 0 : customAllChip.backgroundColor) || "#474F5C",
-    border: (customAllChip == null ? void 0 : customAllChip.border) || "0",
-    padding: (customAllChip == null ? void 0 : customAllChip.padding) || "3px 4px",
-    margin: (customAllChip == null ? void 0 : customAllChip.margin) || "0",
-    defaultColor: (customAllChip == null ? void 0 : customAllChip.defaultColor) || "#7A808A",
-    width: (customAllChip == null ? void 0 : customAllChip.width) || "auto",
-    height: (customAllChip == null ? void 0 : customAllChip.height) || "auto",
-    textAlign: (customAllChip == null ? void 0 : customAllChip.textAlign) || "center",
-    textTransform: (customAllChip == null ? void 0 : customAllChip.textTransform) || "inherit",
-    gridTemplateColumns: (customAllChip == null ? void 0 : customAllChip.gridTemplateColumns) || "unset",
-    justifySelf: (customAllChip == null ? void 0 : customAllChip.justifySelf) || "center"
-  };
-  return /* @__PURE__ */ import_react44.default.createElement(Chip, {
-    name: "AllExchanges",
-    icon: true,
-    label: exchangeAll ? "Select All" : "Deselect All",
-    checked: exchangeAll,
-    styleOverrides,
-    onChange: () => dispatch(setExchangeMapAll({ exchangeNames, exchangeAll }))
-  });
+  return /* @__PURE__ */ import_react45.default.createElement(Button_default, {
+    onClick: () => dispatch(setExchangeMapAll({ exchangeNames, exchangeAll }))
+  }, exchangeAll ? "Select All" : "Unselect All");
 };
 var FilterExchangeSelectors = () => {
-  var _a2;
+  var _a;
   const dispatch = (0, import_react_redux4.useDispatch)();
   const { networkMap, exchangeMap } = (0, import_react_redux4.useSelector)((state) => state);
-  const renderProps = (0, import_react44.useContext)(TokenSearch_default);
+  const renderProps = (0, import_react45.useContext)(TokenSearch_default);
   const selectedNetworks = Object.keys((0, import_lodash4.omitBy)(networkMap, (b) => !b));
   const exchanges = [];
-  (_a2 = renderProps.networks) == null ? void 0 : _a2.forEach((network) => {
-    var _a3;
+  (_a = renderProps.networks) == null ? void 0 : _a.forEach((network) => {
+    var _a2;
     if (selectedNetworks.includes(network.id)) {
-      if ((_a3 = network.exchanges) == null ? void 0 : _a3.length)
+      if ((_a2 = network.exchanges) == null ? void 0 : _a2.length)
         exchanges.push(...network.exchanges);
     }
   });
   const exchangeElement = (exchange) => {
-    return /* @__PURE__ */ import_react44.default.createElement(Chip, {
+    return /* @__PURE__ */ import_react45.default.createElement(Chip, {
       key: exchange.name,
       name: exchange.name,
       label: exchange.name,
@@ -3479,36 +3455,13 @@ var FilterExchangeSelectors = () => {
 };
 
 // src/searchbar/tokenSearch/SearchFilters.tsx
-var FilterWrapper = import_styled_components5.default.div`
+var FilterWrapper = import_styled_components6.default.div`  
   ${({ styleOverrides }) => `    
     .accordion__button {
       position: relative;
     }
     background-color: ${(styleOverrides == null ? void 0 : styleOverrides.backgroundColor) || "#00070E"};
     border-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderRadius) || "4px"};
-
-    .accordion__button:first-child:after {
-      display: block;    
-      content: '';
-      position: absolute;    
-      transform: rotate(-45deg);  
-      
-      color: ${(styleOverrides == null ? void 0 : styleOverrides.toggleColor) || "#B4BBC7"};
-      height: ${(styleOverrides == null ? void 0 : styleOverrides.toggleHeight) || "7px"};
-      width: ${(styleOverrides == null ? void 0 : styleOverrides.toggleWidth) || "7px"};
-      margin-right: ${(styleOverrides == null ? void 0 : styleOverrides.toggleMarginRight) || "0"};    
-      left: ${(styleOverrides == null ? void 0 : styleOverrides.toggleLeft) || "calc(50% - 3.5px);"};    
-      top: ${(styleOverrides == null ? void 0 : styleOverrides.toggleTop) || "calc(50% - 4.9px);"};    
-      border-bottom: ${(styleOverrides == null ? void 0 : styleOverrides.toggleBorderBottom) || "2px solid currentColor"}; 
-      border-right: ${(styleOverrides == null ? void 0 : styleOverrides.toggleBorderRight) || "2px solid currentColor"}; 
-      transform: rotate(45deg);
-       
-    }
-
-    .accordion__button[aria-expanded='true']:first-child:after,
-    .accordion__button[aria-selected='true']:first-child:after {
-      transform: rotate(-135deg);
-    }
 
     .accordion__panel {    
       border: ${(styleOverrides == null ? void 0 : styleOverrides.contentBorder) || "0"};       
@@ -3517,7 +3470,7 @@ var FilterWrapper = import_styled_components5.default.div`
     }
   `}
 `;
-var StyledFilterHeader = import_styled_components5.default.div`
+var StyledFilterHeader = import_styled_components6.default.div`
   ${({ styleOverrides }) => `
     display: ${(styleOverrides == null ? void 0 : styleOverrides.display) || "flex"};
     justify-content: ${(styleOverrides == null ? void 0 : styleOverrides.justifyContent) || "space-between"};
@@ -3536,9 +3489,14 @@ var StyledFilterHeader = import_styled_components5.default.div`
     &:hover {
       background-color: ${(styleOverrides == null ? void 0 : styleOverrides.hoverColor) || "#232C38"};
     }
-  `}
+  `}      
 `;
-var StyledFilterContent = import_styled_components5.default.div`
+var StyledFilterHeaderActionWrapper = import_styled_components6.default.div`
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+`;
+var StyledFilterContent = import_styled_components6.default.div`
   ${({ styleOverrides }) => `
     display: flex;
     flex-wrap: wrap;
@@ -3555,7 +3513,7 @@ var StyledFilterContent = import_styled_components5.default.div`
     }
   `}
 `;
-var StyledDescription = import_styled_components5.default.div`
+var StyledDescription = import_styled_components6.default.div`
   ${({ styleOverrides }) => `
     text-align: ${(styleOverrides == null ? void 0 : styleOverrides.textAlign) || "right"};
     font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "12px"};
@@ -3564,7 +3522,7 @@ var StyledDescription = import_styled_components5.default.div`
     color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "#c4c5c7"};       
   `}
 `;
-var StyledFilterWrapper = import_styled_components5.default.div`
+var StyledFilterWrapper = import_styled_components6.default.div`
   ${({ styleOverrides }) => `
     display: block;
     justify-content: ${(styleOverrides == null ? void 0 : styleOverrides.justifyContent) || "center"};
@@ -3574,7 +3532,7 @@ var StyledFilterWrapper = import_styled_components5.default.div`
     border-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderRadius) || "4px"};    
   `}
 `;
-var StyledCount = import_styled_components5.default.div`
+var StyledCount = import_styled_components6.default.div`
   color: white;
   font-weight: 400;
 `;
@@ -3585,21 +3543,33 @@ var SearchDescription = (props) => {
     desc = "Searching all networks and exchanges";
   } else {
     if (type === "network")
-      desc = /* @__PURE__ */ import_react45.default.createElement("div", {
+      desc = /* @__PURE__ */ import_react46.default.createElement("div", {
         style: { display: "flex", justifyContent: "right" }
-      }, "Searching\xA0", /* @__PURE__ */ import_react45.default.createElement(StyledCount, null, networkCount, " network", networkCount > 1 ? "s" : ""), exchangeCount > 0 && /* @__PURE__ */ import_react45.default.createElement(import_react45.default.Fragment, null, "\xA0within\xA0", /* @__PURE__ */ import_react45.default.createElement(StyledCount, null, exchangeCount, " exchange", exchangeCount > 1 ? "s" : "")));
+      }, "Searching\xA0", /* @__PURE__ */ import_react46.default.createElement(StyledCount, null, networkCount, " network", networkCount > 1 ? "s" : ""), exchangeCount > 0 && /* @__PURE__ */ import_react46.default.createElement(import_react46.default.Fragment, null, "\xA0within\xA0", /* @__PURE__ */ import_react46.default.createElement(StyledCount, null, exchangeCount, " exchange", exchangeCount > 1 ? "s" : "")));
     else
-      desc = /* @__PURE__ */ import_react45.default.createElement("div", {
+      desc = /* @__PURE__ */ import_react46.default.createElement("div", {
         style: { display: "flex", justifyContent: "right" }
-      }, "Searching\xA0", /* @__PURE__ */ import_react45.default.createElement(StyledCount, null, exchangeCount, " exchange", exchangeCount > 1 ? "s" : ""), "\xA0within\xA0", /* @__PURE__ */ import_react45.default.createElement(StyledCount, null, networkCount, " network", networkCount > 1 ? "s" : ""));
+      }, "Searching\xA0", /* @__PURE__ */ import_react46.default.createElement(StyledCount, null, exchangeCount, " exchange", exchangeCount > 1 ? "s" : ""), "\xA0within\xA0", /* @__PURE__ */ import_react46.default.createElement(StyledCount, null, networkCount, " network", networkCount > 1 ? "s" : ""));
   }
-  return /* @__PURE__ */ import_react45.default.createElement(import_react45.default.Fragment, null, desc);
+  return /* @__PURE__ */ import_react46.default.createElement(import_react46.default.Fragment, null, desc);
+};
+var AccordionToggleButton = ({ isOpen, onClick }) => {
+  return /* @__PURE__ */ import_react46.default.createElement(Button_default, {
+    className: "accordion-toggle",
+    onClick
+  }, isOpen ? /* @__PURE__ */ import_react46.default.createElement(import_react46.default.Fragment, null, /* @__PURE__ */ import_react46.default.createElement("span", null, "Close"), /* @__PURE__ */ import_react46.default.createElement(down_default, {
+    width: 8,
+    height: 8
+  })) : /* @__PURE__ */ import_react46.default.createElement(import_react46.default.Fragment, null, /* @__PURE__ */ import_react46.default.createElement("span", null, "Open"), /* @__PURE__ */ import_react46.default.createElement(up_default, {
+    width: 8,
+    height: 8
+  })));
 };
 var SearchFilters = () => {
-  var _a2, _b2, _c2, _d2, _e, _f, _g, _h, _i, _j;
+  var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j;
   const dispatch = (0, import_react_redux5.useDispatch)();
   const { networkMap, exchangeMap, searchText } = (0, import_react_redux5.useSelector)((state) => state);
-  const renderProps = (0, import_react45.useContext)(TokenSearch_default);
+  const renderProps = (0, import_react46.useContext)(TokenSearch_default);
   const { customSearchFilter, networks } = renderProps;
   const exchangesActive = Object.values(networkMap).filter((b) => b).length !== 0;
   let networkIds = Object.keys((0, import_lodash5.omitBy)(networkMap, (b) => !b));
@@ -3611,46 +3581,58 @@ var SearchFilters = () => {
   const exchangeCount = exchangeIds.length;
   if (!exchangeIds.length) {
     networks == null ? void 0 : networks.forEach((network) => {
-      var _a3;
+      var _a2;
       if (networkIds.includes(network.id)) {
-        (_a3 = network.exchanges) == null ? void 0 : _a3.forEach((exchange) => {
+        (_a2 = network.exchanges) == null ? void 0 : _a2.forEach((exchange) => {
           exchangeIds.push(exchange.name);
         });
       }
     });
   }
   const totalExchangeCount = exchangeIds.length;
-  const networkTitle = ((_a2 = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _a2.network) || "Select Network(s)";
-  const exchangeTitle = ((_b2 = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _b2.exchange) || "Select Exchange(s)";
-  (0, import_react45.useEffect)(() => {
+  const networkTitle = ((_a = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _a.network) || "Select Network(s)";
+  const exchangeTitle = ((_b = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _b.exchange) || "Select Exchange(s)";
+  const [isNetworkMapExpanded, setIsNetworkMapExpanded] = (0, import_react46.useState)(true);
+  const [isExchangeMapExpanded, setIsExchangeMapExpanded] = (0, import_react46.useState)(false);
+  (0, import_react46.useEffect)(() => {
     (Object.keys(networkMap).length > 0 || Object.keys(exchangeMap).length > 0) && searchText.length > 0 && dispatch(setViewResult(true));
   }, [networkMap, exchangeMap, searchText]);
-  return /* @__PURE__ */ import_react45.default.createElement(FilterWrapper, {
+  return /* @__PURE__ */ import_react46.default.createElement(FilterWrapper, {
     styleOverrides: customSearchFilter == null ? void 0 : customSearchFilter.wrapper
-  }, /* @__PURE__ */ import_react45.default.createElement(import_react_accessible_accordion.Accordion, {
+  }, /* @__PURE__ */ import_react46.default.createElement(import_react_accessible_accordion.Accordion, {
     allowMultipleExpanded: true,
     allowZeroExpanded: true
-  }, /* @__PURE__ */ import_react45.default.createElement(import_react_accessible_accordion.AccordionItem, null, /* @__PURE__ */ import_react45.default.createElement(import_react_accessible_accordion.AccordionItemHeading, null, /* @__PURE__ */ import_react45.default.createElement(import_react_accessible_accordion.AccordionItemButton, null, /* @__PURE__ */ import_react45.default.createElement(StyledFilterHeader, {
-    styleOverrides: (_c2 = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _c2.header
-  }, /* @__PURE__ */ import_react45.default.createElement("span", null, networkTitle), /* @__PURE__ */ import_react45.default.createElement(FilterNetworkAll, null)))), /* @__PURE__ */ import_react45.default.createElement(import_react_accessible_accordion.AccordionItemPanel, null, /* @__PURE__ */ import_react45.default.createElement(StyledFilterWrapper, {
-    styleOverrides: (_d2 = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _d2.wrapper
-  }, /* @__PURE__ */ import_react45.default.createElement(StyledFilterContent, {
+  }, /* @__PURE__ */ import_react46.default.createElement(import_react_accessible_accordion.AccordionItem, {
+    dangerouslySetExpanded: isNetworkMapExpanded
+  }, /* @__PURE__ */ import_react46.default.createElement(import_react_accessible_accordion.AccordionItemHeading, null, /* @__PURE__ */ import_react46.default.createElement(import_react_accessible_accordion.AccordionItemButton, null, /* @__PURE__ */ import_react46.default.createElement(StyledFilterHeader, {
+    styleOverrides: (_c = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _c.header
+  }, /* @__PURE__ */ import_react46.default.createElement("span", null, networkTitle), /* @__PURE__ */ import_react46.default.createElement(StyledFilterHeaderActionWrapper, null, /* @__PURE__ */ import_react46.default.createElement(FilterNetworkAll, null), /* @__PURE__ */ import_react46.default.createElement(AccordionToggleButton, {
+    isOpen: isNetworkMapExpanded,
+    onClick: () => setIsNetworkMapExpanded(!isNetworkMapExpanded)
+  }))))), /* @__PURE__ */ import_react46.default.createElement(import_react_accessible_accordion.AccordionItemPanel, null, /* @__PURE__ */ import_react46.default.createElement(StyledFilterWrapper, {
+    styleOverrides: (_d = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _d.wrapper
+  }, /* @__PURE__ */ import_react46.default.createElement(StyledFilterContent, {
     styleOverrides: (_e = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _e.content
-  }, /* @__PURE__ */ import_react45.default.createElement(FilterNetworkSelectors, null)), /* @__PURE__ */ import_react45.default.createElement(StyledDescription, {
+  }, /* @__PURE__ */ import_react46.default.createElement(FilterNetworkSelectors, null)), /* @__PURE__ */ import_react46.default.createElement(StyledDescription, {
     styleOverrides: (_f = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _f.description
-  }, /* @__PURE__ */ import_react45.default.createElement(SearchDescription, {
+  }, /* @__PURE__ */ import_react46.default.createElement(SearchDescription, {
     networkCount,
     exchangeCount,
     type: "network"
-  }))))), exchangesActive && /* @__PURE__ */ import_react45.default.createElement(import_react_accessible_accordion.AccordionItem, null, /* @__PURE__ */ import_react45.default.createElement(import_react_accessible_accordion.AccordionItemHeading, null, /* @__PURE__ */ import_react45.default.createElement(import_react_accessible_accordion.AccordionItemButton, null, /* @__PURE__ */ import_react45.default.createElement(StyledFilterHeader, {
+  }))))), exchangesActive && /* @__PURE__ */ import_react46.default.createElement(import_react_accessible_accordion.AccordionItem, {
+    dangerouslySetExpanded: isExchangeMapExpanded
+  }, /* @__PURE__ */ import_react46.default.createElement(import_react_accessible_accordion.AccordionItemHeading, null, /* @__PURE__ */ import_react46.default.createElement(import_react_accessible_accordion.AccordionItemButton, null, /* @__PURE__ */ import_react46.default.createElement(StyledFilterHeader, {
     styleOverrides: (_g = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _g.header
-  }, /* @__PURE__ */ import_react45.default.createElement("span", null, exchangeTitle), /* @__PURE__ */ import_react45.default.createElement(FilterExchangeAll, null)))), /* @__PURE__ */ import_react45.default.createElement(import_react_accessible_accordion.AccordionItemPanel, null, /* @__PURE__ */ import_react45.default.createElement(StyledFilterWrapper, {
+  }, /* @__PURE__ */ import_react46.default.createElement("span", null, exchangeTitle), /* @__PURE__ */ import_react46.default.createElement(StyledFilterHeaderActionWrapper, null, /* @__PURE__ */ import_react46.default.createElement(FilterExchangeAll, null), /* @__PURE__ */ import_react46.default.createElement(AccordionToggleButton, {
+    isOpen: isExchangeMapExpanded,
+    onClick: () => setIsExchangeMapExpanded(!isExchangeMapExpanded)
+  }))))), /* @__PURE__ */ import_react46.default.createElement(import_react_accessible_accordion.AccordionItemPanel, null, /* @__PURE__ */ import_react46.default.createElement(StyledFilterWrapper, {
     styleOverrides: (_h = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _h.wrapper
-  }, /* @__PURE__ */ import_react45.default.createElement(StyledFilterContent, {
+  }, /* @__PURE__ */ import_react46.default.createElement(StyledFilterContent, {
     styleOverrides: (_i = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _i.content
-  }, /* @__PURE__ */ import_react45.default.createElement(FilterExchangeSelectors, null)), /* @__PURE__ */ import_react45.default.createElement(StyledDescription, {
+  }, /* @__PURE__ */ import_react46.default.createElement(FilterExchangeSelectors, null)), /* @__PURE__ */ import_react46.default.createElement(StyledDescription, {
     styleOverrides: (_j = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _j.description
-  }, /* @__PURE__ */ import_react45.default.createElement(SearchDescription, {
+  }, /* @__PURE__ */ import_react46.default.createElement(SearchDescription, {
     networkCount,
     exchangeCount: exchangeCount || totalExchangeCount,
     type: "exchange"
@@ -3659,17 +3641,16 @@ var SearchFilters = () => {
 var SearchFilters_default = SearchFilters;
 
 // src/searchbar/tokenSearch/index.tsx
-var StyledWrapper2 = import_styled_components6.default.div`
+var StyledWrapper2 = import_styled_components7.default.div`
   ${({ styleOverrides }) => `
-    min-width: 420px;            
+    width: 100%;
     position: relative;
 
     & .dropDown {
       position: absolute;
       width: -webkit-fill-available;
       left: 0; 
-      bottom: ${(styleOverrides == null ? void 0 : styleOverrides.borderBottomLeftRadius) || "5px"};  
-      transform: translateY(100%);
+      top: 30px;
       z-index: 99;
       background-color: ${(styleOverrides == null ? void 0 : styleOverrides.backgroundColor) || "#474F5C"};          
       border-bottom-left-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderBottomLeftRadius) || "4px"};  
@@ -3705,28 +3686,28 @@ var TokenSearch = (renderProps) => {
   const { customWrapper } = renderProps;
   const dispatch = (0, import_react_redux6.useDispatch)();
   const { isSelecting, isLoading, viewResult } = (0, import_react_redux6.useSelector)((state) => state);
-  const searchRef = (0, import_react46.useRef)();
+  const searchRef = (0, import_react47.useRef)();
   const closeResultPanel = () => {
     dispatch(stopSelecting());
     dispatch(setViewResult(false));
   };
-  (0, import_react46.useEffect)(() => {
+  (0, import_react47.useEffect)(() => {
     window.onmousedown = (e) => {
-      var _a2;
-      if (!((_a2 = searchRef == null ? void 0 : searchRef.current) == null ? void 0 : _a2.contains(e.target))) {
+      var _a;
+      if (!((_a = searchRef == null ? void 0 : searchRef.current) == null ? void 0 : _a.contains(e.target))) {
         closeResultPanel();
       }
     };
     window.addEventListener("searchBarClose", closeResultPanel);
   }, []);
-  return /* @__PURE__ */ import_react46.default.createElement(TokenSearch_default.Provider, {
+  return /* @__PURE__ */ import_react47.default.createElement(TokenSearch_default.Provider, {
     value: renderProps
-  }, /* @__PURE__ */ import_react46.default.createElement(StyledWrapper2, {
+  }, /* @__PURE__ */ import_react47.default.createElement(StyledWrapper2, {
     ref: searchRef,
     styleOverrides: customWrapper
-  }, /* @__PURE__ */ import_react46.default.createElement(SearchInput_default, null), isSelecting && /* @__PURE__ */ import_react46.default.createElement("div", {
+  }, /* @__PURE__ */ import_react47.default.createElement(SearchInput_default, null), isSelecting && /* @__PURE__ */ import_react47.default.createElement("div", {
     className: "dropDown"
-  }, /* @__PURE__ */ import_react46.default.createElement(SearchFilters_default, null), viewResult && /* @__PURE__ */ import_react46.default.createElement(SearchResult_default, {
+  }, /* @__PURE__ */ import_react47.default.createElement(SearchFilters_default, null), viewResult && /* @__PURE__ */ import_react47.default.createElement(SearchResult_default, {
     loading: isLoading
   }))));
 };
@@ -3734,9 +3715,9 @@ var tokenSearch_default = TokenSearch;
 
 // src/searchbar/index.tsx
 var SearchBar = (renderProps) => {
-  return /* @__PURE__ */ import_react47.default.createElement(import_react_redux7.Provider, {
+  return /* @__PURE__ */ import_react48.default.createElement(import_react_redux7.Provider, {
     store
-  }, !config_default.IS_ENV_PRODUCTION && /* @__PURE__ */ import_react47.default.createElement(tokenSearch_default, {
+  }, !config_default.IS_ENV_PRODUCTION && /* @__PURE__ */ import_react48.default.createElement(tokenSearch_default, {
     customWrapper: renderProps.customWrapper,
     customSearchInput: renderProps.customSearchInput,
     customSearchFilter: renderProps.customSearchFilter,
@@ -3754,10 +3735,10 @@ var SearchBar = (renderProps) => {
 var import_react_accessible_accordion2 = require("react-accessible-accordion");
 
 // src/index.tsx
-var React47 = __toESM(require("react"));
+var React48 = __toESM(require("react"));
 var import_react_dom = require("react-dom");
 var rootElement = document.getElementById("root");
-(0, import_react_dom.render)(/* @__PURE__ */ React47.createElement(SearchBar, {
+(0, import_react_dom.render)(/* @__PURE__ */ React48.createElement(SearchBar, {
   networks: []
 }), rootElement);
 // Annotate the CommonJS export names for ESM import in node:

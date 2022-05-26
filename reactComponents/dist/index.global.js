@@ -1370,7 +1370,7 @@
             }
             return dispatcher.useContext(Context2, unstable_observedBits);
           }
-          function useState5(initialState2) {
+          function useState6(initialState2) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState2);
           }
@@ -1958,7 +1958,7 @@
           exports.useMemo = useMemo6;
           exports.useReducer = useReducer3;
           exports.useRef = useRef5;
-          exports.useState = useState5;
+          exports.useState = useState6;
           exports.version = ReactVersion;
         })();
       }
@@ -10985,11 +10985,11 @@
       if (process.env.NODE_ENV !== "production") {
         (function() {
           "use strict";
-          var React51 = require_react();
+          var React52 = require_react();
           var _assign = require_object_assign();
           var Scheduler = require_scheduler();
           var tracing = require_tracing();
-          var ReactSharedInternals = React51.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React52.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           function warn(format) {
             {
               for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -11021,7 +11021,7 @@
               Function.prototype.apply.call(console[level], console, argsWithFormat);
             }
           }
-          if (!React51) {
+          if (!React52) {
             {
               throw Error("ReactDOM was loaded before React. Make sure you load the React package before loading ReactDOM.");
             }
@@ -12237,7 +12237,7 @@
           var didWarnInvalidChild = false;
           function flattenChildren(children) {
             var content = "";
-            React51.Children.forEach(children, function(child) {
+            React52.Children.forEach(children, function(child) {
               if (child == null) {
                 return;
               }
@@ -12248,7 +12248,7 @@
           function validateProps(element, props) {
             {
               if (typeof props.children === "object" && props.children !== null) {
-                React51.Children.forEach(props.children, function(child) {
+                React52.Children.forEach(props.children, function(child) {
                   if (child == null) {
                     return;
                   }
@@ -19441,7 +19441,7 @@
           }
           var fakeInternalInstance = {};
           var isArray = Array.isArray;
-          var emptyRefsObject = new React51.Component().refs;
+          var emptyRefsObject = new React52.Component().refs;
           var didWarnAboutStateAssignmentForComponent;
           var didWarnAboutUninitializedState;
           var didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate;
@@ -32241,7 +32241,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       var _isObjectLike = require_isObjectLike();
       var _location = require_location();
       var _printLocation = require_printLocation();
-      function toNormalizedArgs(args) {
+      function toNormalizedOptions(args) {
         const firstArg = args[0];
         if (firstArg == null || "kind" in firstArg || "length" in firstArg) {
           return {
@@ -32258,7 +32258,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       var GraphQLError = class extends Error {
         constructor(message, ...rawArgs) {
           var _this$nodes, _nodeLocations$, _ref;
-          const { nodes, source, positions, path, originalError, extensions } = toNormalizedArgs(rawArgs);
+          const { nodes, source, positions, path, originalError, extensions } = toNormalizedOptions(rawArgs);
           super(message);
           this.name = "GraphQLError";
           this.path = path !== null && path !== void 0 ? path : void 0;
@@ -44377,7 +44377,7 @@ spurious results.`);
         if (jsonSerializer === void 0) {
           jsonSerializer = defaultJsonSerializer_1.defaultJsonSerializer;
         }
-        var _a2 = extract_files_1.extractFiles({ query, variables, operationName }, "", isExtractableFileEnhanced), clone3 = _a2.clone, files = _a2.files;
+        var _a = extract_files_1.extractFiles({ query, variables, operationName }, "", isExtractableFileEnhanced), clone3 = _a.clone, files = _a.files;
         if (files.size === 0) {
           if (!Array.isArray(query)) {
             return jsonSerializer.stringify(clone3);
@@ -44712,8 +44712,8 @@ spurious results.`);
           if (typeof Headers !== "undefined" && headers instanceof Headers || headers instanceof CrossFetch.Headers) {
             oHeaders = HeadersInstanceToPlainObject(headers);
           } else if (Array.isArray(headers)) {
-            headers.forEach(function(_a2) {
-              var name = _a2[0], value = _a2[1];
+            headers.forEach(function(_a) {
+              var name = _a[0], value = _a[1];
               oHeaders[name] = value;
             });
           } else {
@@ -44725,8 +44725,8 @@ spurious results.`);
       var queryCleanner = function(str) {
         return str.replace(/([\s,]|#[^\n\r]+)+/g, " ").trim();
       };
-      var buildGetQueryParams = function(_a2) {
-        var query = _a2.query, variables = _a2.variables, operationName = _a2.operationName, jsonSerializer = _a2.jsonSerializer;
+      var buildGetQueryParams = function(_a) {
+        var query = _a.query, variables = _a.variables, operationName = _a.operationName, jsonSerializer = _a.jsonSerializer;
         if (!Array.isArray(query)) {
           var search = ["query=" + encodeURIComponent(queryCleanner(query))];
           if (variables) {
@@ -44749,27 +44749,27 @@ spurious results.`);
         }, []);
         return "query=" + encodeURIComponent(jsonSerializer.stringify(payload));
       };
-      var post = function(_a2) {
-        var url = _a2.url, query = _a2.query, variables = _a2.variables, operationName = _a2.operationName, headers = _a2.headers, fetch2 = _a2.fetch, fetchOptions = _a2.fetchOptions;
+      var post = function(_a) {
+        var url = _a.url, query = _a.query, variables = _a.variables, operationName = _a.operationName, headers = _a.headers, fetch2 = _a.fetch, fetchOptions = _a.fetchOptions;
         return __awaiter(void 0, void 0, void 0, function() {
           var body;
-          return __generator2(this, function(_b2) {
-            switch (_b2.label) {
+          return __generator2(this, function(_b) {
+            switch (_b.label) {
               case 0:
                 body = createRequestBody_1.default(query, variables, operationName, fetchOptions.jsonSerializer);
                 return [4, fetch2(url, __assign({ method: "POST", headers: __assign(__assign({}, typeof body === "string" ? { "Content-Type": "application/json" } : {}), headers), body }, fetchOptions))];
               case 1:
-                return [2, _b2.sent()];
+                return [2, _b.sent()];
             }
           });
         });
       };
-      var get2 = function(_a2) {
-        var url = _a2.url, query = _a2.query, variables = _a2.variables, operationName = _a2.operationName, headers = _a2.headers, fetch2 = _a2.fetch, fetchOptions = _a2.fetchOptions;
+      var get2 = function(_a) {
+        var url = _a.url, query = _a.query, variables = _a.variables, operationName = _a.operationName, headers = _a.headers, fetch2 = _a.fetch, fetchOptions = _a.fetchOptions;
         return __awaiter(void 0, void 0, void 0, function() {
           var queryParams;
-          return __generator2(this, function(_b2) {
-            switch (_b2.label) {
+          return __generator2(this, function(_b) {
+            switch (_b.label) {
               case 0:
                 queryParams = buildGetQueryParams({
                   query,
@@ -44779,7 +44779,7 @@ spurious results.`);
                 });
                 return [4, fetch2(url + "?" + queryParams, __assign({ method: "GET", headers }, fetchOptions))];
               case 1:
-                return [2, _b2.sent()];
+                return [2, _b.sent()];
             }
           });
         });
@@ -44791,10 +44791,10 @@ spurious results.`);
         }
         GraphQLClient3.prototype.rawRequest = function(queryOrOptions, variables, requestHeaders) {
           return __awaiter(this, void 0, void 0, function() {
-            var rawRequestOptions, _a2, headers, _b2, fetch2, _c2, method, fetchOptions, url, operationName;
-            return __generator2(this, function(_d2) {
+            var rawRequestOptions, _a, headers, _b, fetch2, _c, method, fetchOptions, url, operationName;
+            return __generator2(this, function(_d) {
               rawRequestOptions = parseArgs_1.parseRawRequestArgs(queryOrOptions, variables, requestHeaders);
-              _a2 = this.options, headers = _a2.headers, _b2 = _a2.fetch, fetch2 = _b2 === void 0 ? cross_fetch_1.default : _b2, _c2 = _a2.method, method = _c2 === void 0 ? "POST" : _c2, fetchOptions = __rest(_a2, ["headers", "fetch", "method"]);
+              _a = this.options, headers = _a.headers, _b = _a.fetch, fetch2 = _b === void 0 ? cross_fetch_1.default : _b, _c = _a.method, method = _c === void 0 ? "POST" : _c, fetchOptions = __rest(_a, ["headers", "fetch", "method"]);
               url = this.url;
               if (rawRequestOptions.signal !== void 0) {
                 fetchOptions.signal = rawRequestOptions.signal;
@@ -44815,17 +44815,17 @@ spurious results.`);
         };
         GraphQLClient3.prototype.request = function(documentOrOptions, variables, requestHeaders) {
           return __awaiter(this, void 0, void 0, function() {
-            var requestOptions, _a2, headers, _b2, fetch2, _c2, method, fetchOptions, url, _d2, query, operationName, data;
+            var requestOptions, _a, headers, _b, fetch2, _c, method, fetchOptions, url, _d, query, operationName, data;
             return __generator2(this, function(_e2) {
               switch (_e2.label) {
                 case 0:
                   requestOptions = parseArgs_1.parseRequestArgs(documentOrOptions, variables, requestHeaders);
-                  _a2 = this.options, headers = _a2.headers, _b2 = _a2.fetch, fetch2 = _b2 === void 0 ? cross_fetch_1.default : _b2, _c2 = _a2.method, method = _c2 === void 0 ? "POST" : _c2, fetchOptions = __rest(_a2, ["headers", "fetch", "method"]);
+                  _a = this.options, headers = _a.headers, _b = _a.fetch, fetch2 = _b === void 0 ? cross_fetch_1.default : _b, _c = _a.method, method = _c === void 0 ? "POST" : _c, fetchOptions = __rest(_a, ["headers", "fetch", "method"]);
                   url = this.url;
                   if (requestOptions.signal !== void 0) {
                     fetchOptions.signal = requestOptions.signal;
                   }
-                  _d2 = resolveRequestDocument(requestOptions.document), query = _d2.query, operationName = _d2.operationName;
+                  _d = resolveRequestDocument(requestOptions.document), query = _d.query, operationName = _d.operationName;
                   return [4, makeRequest({
                     url,
                     query,
@@ -44845,22 +44845,22 @@ spurious results.`);
         };
         GraphQLClient3.prototype.batchRequests = function(documentsOrOptions, requestHeaders) {
           return __awaiter(this, void 0, void 0, function() {
-            var batchRequestOptions, _a2, headers, _b2, fetch2, _c2, method, fetchOptions, url, queries, variables, data;
-            return __generator2(this, function(_d2) {
-              switch (_d2.label) {
+            var batchRequestOptions, _a, headers, _b, fetch2, _c, method, fetchOptions, url, queries, variables, data;
+            return __generator2(this, function(_d) {
+              switch (_d.label) {
                 case 0:
                   batchRequestOptions = parseArgs_1.parseBatchRequestArgs(documentsOrOptions, requestHeaders);
-                  _a2 = this.options, headers = _a2.headers, _b2 = _a2.fetch, fetch2 = _b2 === void 0 ? cross_fetch_1.default : _b2, _c2 = _a2.method, method = _c2 === void 0 ? "POST" : _c2, fetchOptions = __rest(_a2, ["headers", "fetch", "method"]);
+                  _a = this.options, headers = _a.headers, _b = _a.fetch, fetch2 = _b === void 0 ? cross_fetch_1.default : _b, _c = _a.method, method = _c === void 0 ? "POST" : _c, fetchOptions = __rest(_a, ["headers", "fetch", "method"]);
                   url = this.url;
                   if (batchRequestOptions.signal !== void 0) {
                     fetchOptions.signal = batchRequestOptions.signal;
                   }
-                  queries = batchRequestOptions.documents.map(function(_a3) {
-                    var document2 = _a3.document;
+                  queries = batchRequestOptions.documents.map(function(_a2) {
+                    var document2 = _a2.document;
                     return resolveRequestDocument(document2).query;
                   });
-                  variables = batchRequestOptions.documents.map(function(_a3) {
-                    var variables2 = _a3.variables;
+                  variables = batchRequestOptions.documents.map(function(_a2) {
+                    var variables2 = _a2.variables;
                     return variables2;
                   });
                   return [4, makeRequest({
@@ -44874,7 +44874,7 @@ spurious results.`);
                     fetchOptions
                   })];
                 case 1:
-                  data = _d2.sent().data;
+                  data = _d.sent().data;
                   return [2, data];
               }
             });
@@ -44885,12 +44885,12 @@ spurious results.`);
           return this;
         };
         GraphQLClient3.prototype.setHeader = function(key, value) {
-          var _a2;
+          var _a;
           var headers = this.options.headers;
           if (headers) {
             headers[key] = value;
           } else {
-            this.options.headers = (_a2 = {}, _a2[key] = value, _a2);
+            this.options.headers = (_a = {}, _a[key] = value, _a);
           }
           return this;
         };
@@ -44901,12 +44901,12 @@ spurious results.`);
         return GraphQLClient3;
       }();
       exports.GraphQLClient = GraphQLClient2;
-      function makeRequest(_a2) {
-        var url = _a2.url, query = _a2.query, variables = _a2.variables, headers = _a2.headers, operationName = _a2.operationName, fetch2 = _a2.fetch, _b2 = _a2.method, method = _b2 === void 0 ? "POST" : _b2, fetchOptions = _a2.fetchOptions;
+      function makeRequest(_a) {
+        var url = _a.url, query = _a.query, variables = _a.variables, headers = _a.headers, operationName = _a.operationName, fetch2 = _a.fetch, _b = _a.method, method = _b === void 0 ? "POST" : _b, fetchOptions = _a.fetchOptions;
         return __awaiter(this, void 0, void 0, function() {
           var fetcher, isBathchingQuery, response, result, successfullyReceivedData, headers_1, status_1, errorResult;
-          return __generator2(this, function(_c2) {
-            switch (_c2.label) {
+          return __generator2(this, function(_c) {
+            switch (_c.label) {
               case 0:
                 fetcher = method.toUpperCase() === "POST" ? post : get2;
                 isBathchingQuery = Array.isArray(query);
@@ -44920,12 +44920,12 @@ spurious results.`);
                   fetchOptions
                 })];
               case 1:
-                response = _c2.sent();
+                response = _c.sent();
                 return [4, getResult(response, fetchOptions.jsonSerializer)];
               case 2:
-                result = _c2.sent();
-                successfullyReceivedData = isBathchingQuery && Array.isArray(result) ? !result.some(function(_a3) {
-                  var data = _a3.data;
+                result = _c.sent();
+                successfullyReceivedData = isBathchingQuery && Array.isArray(result) ? !result.some(function(_a2) {
+                  var data = _a2.data;
                   return !data;
                 }) : !!result.data;
                 if (response.ok && !result.errors && successfullyReceivedData) {
@@ -44943,7 +44943,7 @@ spurious results.`);
       function rawRequest(urlOrOptions, query, variables, requestHeaders) {
         return __awaiter(this, void 0, void 0, function() {
           var requestOptions, client;
-          return __generator2(this, function(_a2) {
+          return __generator2(this, function(_a) {
             requestOptions = parseArgs_1.parseRawRequestExtendedArgs(urlOrOptions, query, variables, requestHeaders);
             client = new GraphQLClient2(requestOptions.url);
             return [2, client.rawRequest(__assign({}, requestOptions))];
@@ -44954,7 +44954,7 @@ spurious results.`);
       function request(urlOrOptions, document2, variables, requestHeaders) {
         return __awaiter(this, void 0, void 0, function() {
           var requestOptions, client;
-          return __generator2(this, function(_a2) {
+          return __generator2(this, function(_a) {
             requestOptions = parseArgs_1.parseRequestExtendedArgs(urlOrOptions, document2, variables, requestHeaders);
             client = new GraphQLClient2(requestOptions.url);
             return [2, client.request(__assign({}, requestOptions))];
@@ -44965,7 +44965,7 @@ spurious results.`);
       function batchRequests(urlOrOptions, documents, requestHeaders) {
         return __awaiter(this, void 0, void 0, function() {
           var requestOptions, client;
-          return __generator2(this, function(_a2) {
+          return __generator2(this, function(_a) {
             requestOptions = parseArgs_1.parseBatchRequestsExtendedArgs(urlOrOptions, documents, requestHeaders);
             client = new GraphQLClient2(requestOptions.url);
             return [2, client.batchRequests(__assign({}, requestOptions))];
@@ -44979,9 +44979,9 @@ spurious results.`);
           jsonSerializer = defaultJsonSerializer_1.defaultJsonSerializer;
         }
         return __awaiter(this, void 0, void 0, function() {
-          var contentType, _a2, _b2;
-          return __generator2(this, function(_c2) {
-            switch (_c2.label) {
+          var contentType, _a, _b;
+          return __generator2(this, function(_c) {
+            switch (_c.label) {
               case 0:
                 response.headers.forEach(function(value, key) {
                   if (key.toLowerCase() === "content-type") {
@@ -44990,10 +44990,10 @@ spurious results.`);
                 });
                 if (!(contentType && contentType.toLowerCase().startsWith("application/json")))
                   return [3, 2];
-                _b2 = (_a2 = jsonSerializer).parse;
+                _b = (_a = jsonSerializer).parse;
                 return [4, response.text()];
               case 1:
-                return [2, _b2.apply(_a2, [_c2.sent()])];
+                return [2, _b.apply(_a, [_c.sent()])];
               case 2:
                 return [2, response.text()];
             }
@@ -45001,13 +45001,13 @@ spurious results.`);
         });
       }
       function extractOperationName(document2) {
-        var _a2;
+        var _a;
         var operationName = void 0;
         var operationDefinitions = document2.definitions.filter(function(definition) {
           return definition.kind === "OperationDefinition";
         });
         if (operationDefinitions.length === 1) {
-          operationName = (_a2 = operationDefinitions[0].name) === null || _a2 === void 0 ? void 0 : _a2.value;
+          operationName = (_a = operationDefinitions[0].name) === null || _a === void 0 ? void 0 : _a.value;
         }
         return operationName;
       }
@@ -50473,7 +50473,8 @@ spurious results.`);
       var p2 = Symbol.for("react.memo");
       var q3 = Symbol.for("react.lazy");
       var t3 = Symbol.for("react.offscreen");
-      var u3 = Symbol.for("react.module.reference");
+      var u3;
+      u3 = Symbol.for("react.module.reference");
       function v3(a3) {
         if (typeof a3 === "object" && a3 !== null) {
           var r3 = a3.$$typeof;
@@ -50572,6 +50573,11 @@ spurious results.`);
       if (process.env.NODE_ENV !== "production") {
         (function() {
           "use strict";
+          var enableScopeAPI = false;
+          var enableCacheElement = false;
+          var enableTransitionTracing = false;
+          var enableLegacyHidden = false;
+          var enableDebugTracing = false;
           var REACT_ELEMENT_TYPE = Symbol.for("react.element");
           var REACT_PORTAL_TYPE = Symbol.for("react.portal");
           var REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
@@ -50586,12 +50592,10 @@ spurious results.`);
           var REACT_MEMO_TYPE = Symbol.for("react.memo");
           var REACT_LAZY_TYPE = Symbol.for("react.lazy");
           var REACT_OFFSCREEN_TYPE = Symbol.for("react.offscreen");
-          var enableScopeAPI = false;
-          var enableCacheElement = false;
-          var enableTransitionTracing = false;
-          var enableLegacyHidden = false;
-          var enableDebugTracing = false;
-          var REACT_MODULE_REFERENCE = Symbol.for("react.module.reference");
+          var REACT_MODULE_REFERENCE;
+          {
+            REACT_MODULE_REFERENCE = Symbol.for("react.module.reference");
+          }
           function isValidElementType2(type) {
             if (typeof type === "string" || typeof type === "function") {
               return true;
@@ -50923,7 +50927,7 @@ spurious results.`);
   });
 
   // src/searchbar/index.tsx
-  var import_react58 = __toESM(require_react());
+  var import_react59 = __toESM(require_react());
 
   // node_modules/react-redux/es/components/Provider.js
   var import_react3 = __toESM(require_react());
@@ -51256,7 +51260,7 @@ spurious results.`);
   // node_modules/react-redux/es/index.js
   setBatch(import_react_dom.unstable_batchedUpdates);
 
-  // node_modules/immer/dist/immer.esm.js
+  // node_modules/immer/dist/immer.esm.mjs
   function n(n3) {
     for (var r3 = arguments.length, t3 = Array(r3 > 1 ? r3 - 1 : 0), e3 = 1; e3 < r3; e3++)
       t3[e3 - 1] = arguments[e3];
@@ -52267,8 +52271,8 @@ spurious results.`);
       if (__hasOwnProp2.call(b3, prop))
         __defNormalProp2(a3, prop, b3[prop]);
     if (__getOwnPropSymbols2)
-      for (var _i = 0, _c2 = __getOwnPropSymbols2(b3); _i < _c2.length; _i++) {
-        var prop = _c2[_i];
+      for (var _i = 0, _c = __getOwnPropSymbols2(b3); _i < _c.length; _i++) {
+        var prop = _c[_i];
         if (__propIsEnum2.call(b3, prop))
           __defNormalProp2(a3, prop, b3[prop]);
       }
@@ -52494,11 +52498,11 @@ spurious results.`);
         };
       };
     }
-    var _c2 = options.isImmutable, isImmutable = _c2 === void 0 ? isImmutableDefault : _c2, ignoredPaths = options.ignoredPaths, _d2 = options.warnAfter, warnAfter = _d2 === void 0 ? 32 : _d2, ignore = options.ignore;
+    var _c = options.isImmutable, isImmutable = _c === void 0 ? isImmutableDefault : _c, ignoredPaths = options.ignoredPaths, _d = options.warnAfter, warnAfter = _d === void 0 ? 32 : _d, ignore = options.ignore;
     ignoredPaths = ignoredPaths || ignore;
     var track = trackForMutations.bind(null, isImmutable, ignoredPaths);
-    return function(_c3) {
-      var getState = _c3.getState;
+    return function(_c2) {
+      var getState = _c2.getState;
       var state = getState();
       var tracker = track(state);
       var result;
@@ -52551,7 +52555,7 @@ spurious results.`);
     var entries = getEntries != null ? getEntries(value) : Object.entries(value);
     var hasIgnoredPaths = ignoredPaths.length > 0;
     for (var _i = 0, entries_1 = entries; _i < entries_1.length; _i++) {
-      var _c2 = entries_1[_i], key = _c2[0], nestedValue = _c2[1];
+      var _c = entries_1[_i], key = _c[0], nestedValue = _c[1];
       var nestedPath = path ? path + "." + key : key;
       if (hasIgnoredPaths && ignoredPaths.indexOf(nestedPath) >= 0) {
         continue;
@@ -52584,7 +52588,7 @@ spurious results.`);
         };
       };
     }
-    var _c2 = options.isSerializable, isSerializable = _c2 === void 0 ? isPlain : _c2, getEntries = options.getEntries, _d2 = options.ignoredActions, ignoredActions = _d2 === void 0 ? [] : _d2, _e2 = options.ignoredActionPaths, ignoredActionPaths = _e2 === void 0 ? ["meta.arg", "meta.baseQueryMeta"] : _e2, _f = options.ignoredPaths, ignoredPaths = _f === void 0 ? [] : _f, _g = options.warnAfter, warnAfter = _g === void 0 ? 32 : _g, _h = options.ignoreState, ignoreState = _h === void 0 ? false : _h, _j = options.ignoreActions, ignoreActions = _j === void 0 ? false : _j;
+    var _c = options.isSerializable, isSerializable = _c === void 0 ? isPlain : _c, getEntries = options.getEntries, _d = options.ignoredActions, ignoredActions = _d === void 0 ? [] : _d, _e2 = options.ignoredActionPaths, ignoredActionPaths = _e2 === void 0 ? ["meta.arg", "meta.baseQueryMeta"] : _e2, _f = options.ignoredPaths, ignoredPaths = _f === void 0 ? [] : _f, _g = options.warnAfter, warnAfter = _g === void 0 ? 32 : _g, _h = options.ignoreState, ignoreState = _h === void 0 ? false : _h, _j = options.ignoreActions, ignoreActions = _j === void 0 ? false : _j;
     return function(storeAPI) {
       return function(next) {
         return function(action) {
@@ -52627,7 +52631,7 @@ spurious results.`);
     if (options === void 0) {
       options = {};
     }
-    var _c2 = options.thunk, thunk2 = _c2 === void 0 ? true : _c2, _d2 = options.immutableCheck, immutableCheck = _d2 === void 0 ? true : _d2, _e2 = options.serializableCheck, serializableCheck = _e2 === void 0 ? true : _e2;
+    var _c = options.thunk, thunk2 = _c === void 0 ? true : _c, _d = options.immutableCheck, immutableCheck = _d === void 0 ? true : _d, _e2 = options.serializableCheck, serializableCheck = _e2 === void 0 ? true : _e2;
     var middlewareArray = new MiddlewareArray();
     if (thunk2) {
       if (isBoolean(thunk2)) {
@@ -52657,7 +52661,7 @@ spurious results.`);
   var IS_PRODUCTION = process.env.NODE_ENV === "production";
   function configureStore(options) {
     var curriedGetDefaultMiddleware = curryGetDefaultMiddleware();
-    var _c2 = options || {}, _d2 = _c2.reducer, reducer = _d2 === void 0 ? void 0 : _d2, _e2 = _c2.middleware, middleware = _e2 === void 0 ? curriedGetDefaultMiddleware() : _e2, _f = _c2.devTools, devTools = _f === void 0 ? true : _f, _g = _c2.preloadedState, preloadedState = _g === void 0 ? void 0 : _g, _h = _c2.enhancers, enhancers = _h === void 0 ? void 0 : _h;
+    var _c = options || {}, _d = _c.reducer, reducer = _d === void 0 ? void 0 : _d, _e2 = _c.middleware, middleware = _e2 === void 0 ? curriedGetDefaultMiddleware() : _e2, _f = _c.devTools, devTools = _f === void 0 ? true : _f, _g = _c.preloadedState, preloadedState = _g === void 0 ? void 0 : _g, _h = _c.enhancers, enhancers = _h === void 0 ? void 0 : _h;
     var rootReducer2;
     if (typeof reducer === "function") {
       rootReducer2 = reducer;
@@ -52771,7 +52775,7 @@ spurious results.`);
     if (actionMatchers === void 0) {
       actionMatchers = [];
     }
-    var _c2 = typeof mapOrBuilderCallback === "function" ? executeReducerBuilderCallback(mapOrBuilderCallback) : [mapOrBuilderCallback, actionMatchers, defaultCaseReducer], actionsMap = _c2[0], finalActionMatchers = _c2[1], finalDefaultCaseReducer = _c2[2];
+    var _c = typeof mapOrBuilderCallback === "function" ? executeReducerBuilderCallback(mapOrBuilderCallback) : [mapOrBuilderCallback, actionMatchers, defaultCaseReducer], actionsMap = _c[0], finalActionMatchers = _c[1], finalDefaultCaseReducer = _c[2];
     var getInitialState;
     if (isStateFunction(initialState2)) {
       getInitialState = function() {
@@ -52791,11 +52795,11 @@ spurious results.`);
       }
       var caseReducers = __spreadArray([
         actionsMap[action.type]
-      ], finalActionMatchers.filter(function(_c3) {
-        var matcher = _c3.matcher;
+      ], finalActionMatchers.filter(function(_c2) {
+        var matcher = _c2.matcher;
         return matcher(action);
-      }).map(function(_c3) {
-        var reducer2 = _c3.reducer;
+      }).map(function(_c2) {
+        var reducer2 = _c2.reducer;
         return reducer2;
       }));
       if (caseReducers.filter(function(cr) {
@@ -52864,7 +52868,7 @@ spurious results.`);
       actionCreators[reducerName] = prepareCallback ? createAction(type, prepareCallback) : createAction(type);
     });
     function buildReducer() {
-      var _c2 = typeof options.extraReducers === "function" ? executeReducerBuilderCallback(options.extraReducers) : [options.extraReducers], _d2 = _c2[0], extraReducers = _d2 === void 0 ? {} : _d2, _e2 = _c2[1], actionMatchers = _e2 === void 0 ? [] : _e2, _f = _c2[2], defaultCaseReducer = _f === void 0 ? void 0 : _f;
+      var _c = typeof options.extraReducers === "function" ? executeReducerBuilderCallback(options.extraReducers) : [options.extraReducers], _d = _c[0], extraReducers = _d === void 0 ? {} : _d, _e2 = _c[1], actionMatchers = _e2 === void 0 ? [] : _e2, _f = _c[2], defaultCaseReducer = _f === void 0 ? void 0 : _f;
       var finalCaseReducers = __spreadValues2(__spreadValues2({}, extraReducers), sliceCaseReducersByType);
       return createReducer(initialState2, finalCaseReducers, actionMatchers, defaultCaseReducer);
     }
@@ -53010,18 +53014,18 @@ spurious results.`);
         }
         var promise = function() {
           return __async(this, null, function() {
-            var _a2, _b2, finalAction, conditionResult, err_1, skipDispatch;
-            return __generator(this, function(_c2) {
-              switch (_c2.label) {
+            var _a, _b, finalAction, conditionResult, err_1, skipDispatch;
+            return __generator(this, function(_c) {
+              switch (_c.label) {
                 case 0:
-                  _c2.trys.push([0, 4, , 5]);
-                  conditionResult = (_a2 = options == null ? void 0 : options.condition) == null ? void 0 : _a2.call(options, arg, { getState, extra });
+                  _c.trys.push([0, 4, , 5]);
+                  conditionResult = (_a = options == null ? void 0 : options.condition) == null ? void 0 : _a.call(options, arg, { getState, extra });
                   if (!isThenable(conditionResult))
                     return [3, 2];
                   return [4, conditionResult];
                 case 1:
-                  conditionResult = _c2.sent();
-                  _c2.label = 2;
+                  conditionResult = _c.sent();
+                  _c.label = 2;
                 case 2:
                   if (conditionResult === false) {
                     throw {
@@ -53030,7 +53034,7 @@ spurious results.`);
                     };
                   }
                   started = true;
-                  dispatch(pending(requestId, arg, (_b2 = options == null ? void 0 : options.getPendingMeta) == null ? void 0 : _b2.call(options, { requestId, arg }, { getState, extra })));
+                  dispatch(pending(requestId, arg, (_b = options == null ? void 0 : options.getPendingMeta) == null ? void 0 : _b.call(options, { requestId, arg }, { getState, extra })));
                   return [4, Promise.race([
                     abortedPromise,
                     Promise.resolve(payloadCreator(arg, {
@@ -53056,10 +53060,10 @@ spurious results.`);
                     })
                   ])];
                 case 3:
-                  finalAction = _c2.sent();
+                  finalAction = _c.sent();
                   return [3, 5];
                 case 4:
-                  err_1 = _c2.sent();
+                  err_1 = _c.sent();
                   finalAction = err_1 instanceof RejectWithValue ? rejected(null, requestId, arg, err_1.payload, err_1.meta) : rejected(err_1, requestId, arg);
                   return [3, 5];
                 case 5:
@@ -54609,8 +54613,8 @@ spurious results.`);
   var import_graphql_request = __toESM(require_dist());
 
   // src/searchbar/tokenSearch/helpers/config.ts
-  var romeTokenSyncUri = String(process.env.REACT_APP_HASURA_API_ENDPOINT_WS || "https://romenet.prod.velox.global/v1/graphql").replace("ws", "http");
-  var maxHits = Number(process.env.REACT_APP_SEARCH_ASYNC_DATASET_LENGTH_MAXIMUM || 500);
+  var romeTokenSyncUri = "https://romenet.prod.velox.global/v1/graphql";
+  var maxHits = 500;
 
   // src/searchbar/tokenSearch/helpers/graphqlClients.ts
   var romePairsClient = new import_graphql_request.GraphQLClient(romeTokenSyncUri);
@@ -54722,13 +54726,12 @@ spurious results.`);
   var import_lodash = __toESM(require_lodash());
 
   // src/searchbar/config.tsx
-  var _a, _b, _c, _d;
   var config_default = {
-    SEARCH_INPUT_LENGTH_MINIMUM: (_a = process.env.REACT_APP_SEARCH_INPUT_LENGTH_MINIMUM) != null ? _a : 2,
-    SEARCH_ASYNC_DELAY: (_b = process.env.REACT_APP_SEARCH_ASYNC_DELAY) != null ? _b : 300,
-    SEARCH_ASYNC_DATASET_LENGTH_MAXIMUM: (_c = process.env.REACT_APP_SEARCH_ASYNC_DATASET_LENGTH_MAXIMUM) != null ? _c : 500,
-    IS_ENV_PRODUCTION: process.env.REACT_APP_ROME_ENV === "production" ? true : false,
-    LOAD_LIMIT: (_d = process.env.REACT_APP_LOAD_LIMIT) != null ? _d : 10
+    SEARCH_INPUT_LENGTH_MINIMUM: 3,
+    SEARCH_ASYNC_DELAY: 300,
+    SEARCH_ASYNC_DATASET_LENGTH_MAXIMUM: 500,
+    IS_ENV_PRODUCTION: false,
+    LOAD_LIMIT: 10
   };
 
   // src/searchbar/redux/tokenSearchSlice.ts
@@ -54803,8 +54806,8 @@ spurious results.`);
         state.fetchError = null;
       });
       builder.addCase(searchTokenPairs.fulfilled, (state, action) => {
-        var _a2;
-        if (((_a2 = action.payload) == null ? void 0 : _a2.pairSearchTimestamp) >= state.pairSearchTimestamp) {
+        var _a;
+        if (((_a = action.payload) == null ? void 0 : _a.pairSearchTimestamp) >= state.pairSearchTimestamp) {
           state.pairSearchTimestamp = action.payload.pairSearchTimestamp;
           const suggestions = action.payload.data;
           suggestions.sort((pair1, pair2) => pair2.volumeUSD - pair1.volumeUSD);
@@ -54914,7 +54917,7 @@ spurious results.`);
   });
 
   // src/searchbar/tokenSearch/index.tsx
-  var import_react57 = __toESM(require_react());
+  var import_react58 = __toESM(require_react());
 
   // node_modules/styled-components/dist/styled-components.esm.js
   var import_react_is2 = __toESM(require_react_is4());
@@ -56196,9 +56199,15 @@ spurious results.`);
   var StyledInputGroup = styled_components_esm_default.div`
   ${({ styleOverrides }) => ` 
     position: relative;
-    width: ${(styleOverrides == null ? void 0 : styleOverrides.width) || "-webkit-fill-available"};
-    color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "#B7BEC9"};
-    background: ${(styleOverrides == null ? void 0 : styleOverrides.background) || "#00070E"};  
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;    
+    background: ${(styleOverrides == null ? void 0 : styleOverrides.background) || "#00070E"};
+    border-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderRadius) || "4px"};
+    border: ${(styleOverrides == null ? void 0 : styleOverrides.border) || "5px solid #474F5C"};
+    padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "10px 14px"};
+    width: ${(styleOverrides == null ? void 0 : styleOverrides.width) || "100%"};
+    height: ${(styleOverrides == null ? void 0 : styleOverrides.height) || "35px"};
   `}
 `;
   var StyledInput = styled_components_esm_default.input`
@@ -56207,49 +56216,35 @@ spurious results.`);
     margin-right: auto;
     position: relative;
     outline: 0;
-    border: none;
-    width: ${(styleOverrides == null ? void 0 : styleOverrides.width) || "-webkit-fill-available"};
-    height: ${(styleOverrides == null ? void 0 : styleOverrides.height) || "auto"};    
-    color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "#B7BEC9"};
-    display: ${(styleOverrides == null ? void 0 : styleOverrides.display) || "block"}; 
-    padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "10px 14px"};    
-    background: ${(styleOverrides == null ? void 0 : styleOverrides.background) || "#00070E"};  
-  `}
-`;
-  var StyledSearchIconWrapper = styled_components_esm_default.div`
-  ${({ styleOverrides }) => `
-    float: right;
-    position: absolute;
-    right: ${(styleOverrides == null ? void 0 : styleOverrides.right) || "14px"};      
-    top: 50%;
-    transform: translateY(-50%);   
-  `}
-`;
-  var StyledWrapper = styled_components_esm_default.div`
-  ${({ styleOverrides }) => `    
-    position: relative;
-    border: ${(styleOverrides == null ? void 0 : styleOverrides.border) || "4px solid #474F5C"}; 
-    border-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderRadius) || "4px"}; 
+    flex: auto;
+    background: transparent;
+    border: none;        
+    width: 100%;
+    height: 100%;
     color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "#7A808A"};
-    background: ${(styleOverrides == null ? void 0 : styleOverrides.background) || "#00070E"};  
     font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "8px"};      
     font-family: ${(styleOverrides == null ? void 0 : styleOverrides.fontFamily) || "'Fira Code', monospace"};
-    box-shadow: 0 0 8px 2px #474f5c;
-
-    .invalid-error {
-      padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "0 14px 5px"};   
-      color: ${(styleOverrides == null ? void 0 : styleOverrides.colorError) || "#F52E2E"};  
-    }
-  `}
+  `}  
+`;
+  var StyledSearchIconWrapper = styled_components_esm_default.div`    
+  cursor: pointer;
+  svg {
+    vertical-align: middle;
+  }
+`;
+  var StyledWrapper = styled_components_esm_default.div`
+  position: relative;
+`;
+  var StyledActionWrapper = styled_components_esm_default.div`
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
 `;
   var StyledResetBtn = styled_components_esm_default.button`
-  position: absolute;
-  right: 40px;
-  top: 50%;
-  transform: translateY(-50%);
+  margin-right: 10px;
 `;
   var SearchInput = () => {
-    var _a2, _b2, _c2, _d2;
+    var _a, _b, _c, _d;
     const dispatch = useDispatch();
     const renderProps = (0, import_react13.useContext)(TokenSearch_default);
     const { customSearchInput } = renderProps;
@@ -56276,15 +56271,14 @@ spurious results.`);
       text.length > 0 && dispatch(setViewResult(true));
     };
     const placeholder = (customSearchInput == null ? void 0 : customSearchInput.placeholder) ? customSearchInput == null ? void 0 : customSearchInput.placeholder : "Search pair by symbol, name, contract or token";
-    const height = ((_a2 = customSearchInput == null ? void 0 : customSearchInput.icon) == null ? void 0 : _a2.height) ? (_b2 = customSearchInput == null ? void 0 : customSearchInput.icon) == null ? void 0 : _b2.height : 14;
-    const width = ((_c2 = customSearchInput == null ? void 0 : customSearchInput.icon) == null ? void 0 : _c2.width) ? (_d2 = customSearchInput == null ? void 0 : customSearchInput.icon) == null ? void 0 : _d2.width : 14;
+    const height = ((_a = customSearchInput == null ? void 0 : customSearchInput.icon) == null ? void 0 : _a.height) ? (_b = customSearchInput == null ? void 0 : customSearchInput.icon) == null ? void 0 : _b.height : 14;
+    const width = ((_c = customSearchInput == null ? void 0 : customSearchInput.icon) == null ? void 0 : _c.width) ? (_d = customSearchInput == null ? void 0 : customSearchInput.icon) == null ? void 0 : _d.width : 14;
     const handleReset = () => {
       setText("");
       dispatch(resetSearch());
     };
     return /* @__PURE__ */ import_react13.default.createElement(StyledWrapper, {
-      onClick: () => dispatch(startSelecting()),
-      styleOverrides: customSearchInput == null ? void 0 : customSearchInput.input
+      onClick: () => dispatch(startSelecting())
     }, /* @__PURE__ */ import_react13.default.createElement(StyledInputGroup, {
       styleOverrides: customSearchInput == null ? void 0 : customSearchInput.input
     }, /* @__PURE__ */ import_react13.default.createElement(StyledInput, {
@@ -56294,14 +56288,14 @@ spurious results.`);
       onClick: handleClick,
       styleOverrides: customSearchInput == null ? void 0 : customSearchInput.input,
       value: text
-    }), /* @__PURE__ */ import_react13.default.createElement(StyledResetBtn, {
+    }), /* @__PURE__ */ import_react13.default.createElement(StyledActionWrapper, null, /* @__PURE__ */ import_react13.default.createElement(StyledResetBtn, {
       onClick: handleReset
     }, /* @__PURE__ */ import_react13.default.createElement("span", null, "Reset Search"), /* @__PURE__ */ import_react13.default.createElement(reset_default, null)), /* @__PURE__ */ import_react13.default.createElement(StyledSearchIconWrapper, {
       styleOverrides: customSearchInput == null ? void 0 : customSearchInput.icon
     }, /* @__PURE__ */ import_react13.default.createElement(search_default, {
       height,
       width
-    }))), error && /* @__PURE__ */ import_react13.default.createElement("div", {
+    })))), error && /* @__PURE__ */ import_react13.default.createElement("div", {
       className: "invalid-error"
     }, "Please input ", config_default.SEARCH_INPUT_LENGTH_MINIMUM, " characters minimum"));
   };
@@ -56313,7 +56307,7 @@ spurious results.`);
   // node_modules/react-infinite-scroll-hook/dist/react-infinite-scroll-hook.esm.js
   var import_react15 = __toESM(require_react());
 
-  // node_modules/react-infinite-scroll-hook/node_modules/react-intersection-observer-hook/dist/react-intersection-observer-hook.esm.js
+  // node_modules/react-intersection-observer-hook/dist/react-intersection-observer-hook.esm.js
   var import_react14 = __toESM(require_react());
   var DEFAULT_ROOT_MARGIN = "0px";
   var DEFAULT_THRESHOLD = [0];
@@ -58737,16 +58731,16 @@ spurious results.`);
   var imageSize = 26;
   var StyledDetailList = styled_components_esm_default.div`
   ${({ styleOverrides }) => {
-    var _a2, _b2, _c2, _d2, _e2, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s;
+    var _a, _b, _c, _d, _e2, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s;
     return `
-    display: ${((_a2 = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _a2.display) || "grid"};
+    display: ${((_a = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _a.display) || "grid"};
     grid-gap: 5px;
-    align-items: ${((_b2 = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _b2.alignItems) || "center"};    
+    align-items: ${((_b = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _b.alignItems) || "center"};    
     justify-content: space-between;
-    padding: ${((_c2 = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _c2.padding) || "5px 0"};    
+    padding: ${((_c = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _c.padding) || "5px 0"};    
     background: transparent;
-    border-bottom: ${((_d2 = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _d2.borderbottom) || "1px solid #474F5C"};    
-    grid-template-columns: ${((_e2 = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _e2.gridTemplateColumns) || "15% 1% 15% 10% 10% 29% 10%"}; 
+    border-bottom: ${((_d = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _d.borderbottom) || "1px solid #474F5C"};    
+    grid-template-columns: ${((_e2 = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _e2.gridTemplateColumns) || "19% 1% 19% 10% 10% 23% 14%"}; 
     
     border-radius: ${((_f = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _f.borderRadius) || "4px"};
     position: relative;
@@ -58773,8 +58767,8 @@ spurious results.`);
     &.active {
       background: #474F5C;
       color: white;
-      padding: 16px 0;
-      grid-template-columns: 15% 1% 15% 10% 10% 39% 0%;
+      padding: 24px 0;
+      grid-template-columns: 19% 1% 19% 10% 10% 38% 0%;
       .token {
         font-weight: ${((_k = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _k.fontWeight) || "600"};      
         .address {
@@ -58886,7 +58880,7 @@ spurious results.`);
     }));
   };
   var ResultDetail = (props) => {
-    var _a2, _b2;
+    var _a, _b;
     const { index, suggestions, handleDetail, currentIndex, logoIcons } = props;
     const renderProps = (0, import_react49.useContext)(TokenSearch_default);
     const { customActions, customTokenDetail } = renderProps;
@@ -58920,7 +58914,7 @@ spurious results.`);
       className: "flex-1 address text-line-1"
     }, /* @__PURE__ */ import_react49.default.createElement("div", null, selectedPair.token1.name), /* @__PURE__ */ import_react49.default.createElement("span", null, /* @__PURE__ */ import_react49.default.createElement("span", null, "Address:"), " ", /* @__PURE__ */ import_react49.default.createElement("strong", null, firstAndLast(selectedPair.token1.address))))), /* @__PURE__ */ import_react49.default.createElement("div", {
       className: "logo icon-label"
-    }, (_a2 = logoIcons[selectedPair.network]) != null ? _a2 : /* @__PURE__ */ import_react49.default.createElement(Logo, {
+    }, (_a = logoIcons[selectedPair.network]) != null ? _a : /* @__PURE__ */ import_react49.default.createElement(Logo, {
       label: selectedPair.network,
       width: 12,
       height: 12
@@ -58928,7 +58922,7 @@ spurious results.`);
       className: "capitalize"
     }, selectedPair.network)), /* @__PURE__ */ import_react49.default.createElement("div", {
       className: "logo icon-label"
-    }, (_b2 = logoIcons[selectedPair.exchange]) != null ? _b2 : /* @__PURE__ */ import_react49.default.createElement(Logo, {
+    }, (_b = logoIcons[selectedPair.exchange]) != null ? _b : /* @__PURE__ */ import_react49.default.createElement(Logo, {
       label: selectedPair.exchange,
       width: 12,
       height: 12
@@ -59030,7 +59024,7 @@ spurious results.`);
   }
 `;
   var SearchResult = (props) => {
-    var _a2;
+    var _a;
     const dispatch = useDispatch();
     const renderProps = (0, import_react50.useContext)(TokenSearch_default);
     const { customResult, customLoading } = renderProps;
@@ -59053,10 +59047,10 @@ spurious results.`);
       dispatch(setViewResult(false));
     };
     const logoIcons = {};
-    (_a2 = renderProps.networks) == null ? void 0 : _a2.forEach((network) => {
-      var _a3;
+    (_a = renderProps.networks) == null ? void 0 : _a.forEach((network) => {
+      var _a2;
       logoIcons[network.id] = network.icon;
-      (_a3 = network.exchanges) == null ? void 0 : _a3.forEach((exchange) => {
+      (_a2 = network.exchanges) == null ? void 0 : _a2.forEach((exchange) => {
         logoIcons[exchange.name] = exchange.icon;
       });
     });
@@ -59087,7 +59081,7 @@ spurious results.`);
   var SearchResult_default = SearchResult;
 
   // src/searchbar/tokenSearch/SearchFilters.tsx
-  var import_react56 = __toESM(require_react());
+  var import_react57 = __toESM(require_react());
   var import_lodash5 = __toESM(require_lodash());
 
   // node_modules/react-accessible-accordion/dist/es/index.js
@@ -59292,7 +59286,7 @@ spurious results.`);
       return;
     var _arr = [];
     var _n = true;
-    var _d2 = false;
+    var _d = false;
     var _e2 = void 0;
     try {
       for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
@@ -59301,14 +59295,14 @@ spurious results.`);
           break;
       }
     } catch (err) {
-      _d2 = true;
+      _d = true;
       _e2 = err;
     } finally {
       try {
         if (!_n && _i["return"] != null)
           _i["return"]();
       } finally {
-        if (_d2)
+        if (_d)
           throw _e2;
       }
     }
@@ -59796,7 +59790,7 @@ spurious results.`);
   };
 
   // src/searchbar/tokenSearch/SearchFiltersNetworkSelectors.tsx
-  var import_react54 = __toESM(require_react());
+  var import_react55 = __toESM(require_react());
   var import_lodash3 = __toESM(require_lodash());
 
   // src/searchbar/tokenSearch/Chip.tsx
@@ -59821,53 +59815,57 @@ spurious results.`);
   // src/searchbar/tokenSearch/Chip.tsx
   var StyledChip = styled_components_esm_default.div`
   ${({ styleOverrides }) => `
-        > input {
-          display: none;
-        }
+    > input {
+      display: none;
+    }
 
-        > input + label {
-          
-          transition: all 500ms ease;    
-          cursor: pointer;    
-          display: grid;
-          align-items: center;
-          user-select: none;
+    > input + label {
+      
+      transition: all 500ms ease;    
+      cursor: pointer;    
+      display: grid;
+      align-items: center;
+      user-select: none;
 
-          ::-webkit-transition: all 500ms ease;    
-          ::-moz-user-select: -moz-none;
-          ::-webkit-user-select: none;
-          ::-ms-user-select: none;          
-          font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "10px"};  
-          font-weight: ${(styleOverrides == null ? void 0 : styleOverrides.fontWeight) || "500"};  
-          border-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderRadius) || "4px"};  
-          background-color: ${(styleOverrides == null ? void 0 : styleOverrides.backgroundColor) || "#232B35"};  
-          border: ${(styleOverrides == null ? void 0 : styleOverrides.border) || "solid 2px #232B35"};   
-          padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "2px 5px"};   
-          margin: ${(styleOverrides == null ? void 0 : styleOverrides.margin) || "5px"};   
-          color: ${(styleOverrides == null ? void 0 : styleOverrides.defaultColor) || "#B4BBC7"};   
-          width: ${(styleOverrides == null ? void 0 : styleOverrides.width) || "120px"};   
-          height: ${(styleOverrides == null ? void 0 : styleOverrides.height) || "34px"};   
-          text-align: ${(styleOverrides == null ? void 0 : styleOverrides.textAlign) || "left"}; 
-          text-transform: ${(styleOverrides == null ? void 0 : styleOverrides.textTransform) || "uppercase"}; 
-          grid-template-columns: ${(styleOverrides == null ? void 0 : styleOverrides.gridTemplateColumns) || "22% 68% 10%"}; 
-          box-sizing: border-box;
-          
-          >:last-child {      
-            justify-self: ${(styleOverrides == null ? void 0 : styleOverrides.justifySelf) || "end"}; 
-          }
-        }
-        
-        > input:checked + label {   
-          ::-webkit-transition: all 500ms ease;
-          transition: all 500ms ease;   
-          border-color: ${(styleOverrides == null ? void 0 : styleOverrides.checkedBorderColor) || "#474F5C"};    
-          color: ${(styleOverrides == null ? void 0 : styleOverrides.checkedColor) || "white"};   
-          background-color: ${(styleOverrides == null ? void 0 : styleOverrides.checkedBackgroundColor) || "#474F5C"};   
-        }    
-        label svg {
-          max-width: 16px;
-        }
-    `}
+      ::-webkit-transition: all 500ms ease;    
+      ::-moz-user-select: -moz-none;
+      ::-webkit-user-select: none;
+      ::-ms-user-select: none;          
+
+      font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "8px"};  
+      font-weight: ${(styleOverrides == null ? void 0 : styleOverrides.fontWeight) || "500"};  
+      border-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderRadius) || "4px"};  
+      background-color: ${(styleOverrides == null ? void 0 : styleOverrides.backgroundColor) || "#232B35"};  
+      border: ${(styleOverrides == null ? void 0 : styleOverrides.border) || "solid 2px #232B35"};   
+      padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "2px 5px"};   
+      margin: ${(styleOverrides == null ? void 0 : styleOverrides.margin) || "5px"};   
+      color: ${(styleOverrides == null ? void 0 : styleOverrides.defaultColor) || "#B4BBC7"};   
+      width: ${(styleOverrides == null ? void 0 : styleOverrides.width) || "108px"};   
+      height: ${(styleOverrides == null ? void 0 : styleOverrides.height) || "auto"};   
+      text-align: ${(styleOverrides == null ? void 0 : styleOverrides.textAlign) || "left"}; 
+      text-transform: ${(styleOverrides == null ? void 0 : styleOverrides.textTransform) || "uppercase"}; 
+      grid-template-columns: ${(styleOverrides == null ? void 0 : styleOverrides.gridTemplateColumns) || "22% 68% 10%"}; 
+      >:last-child {      
+        justify-self: ${(styleOverrides == null ? void 0 : styleOverrides.justifySelf) || "end"}; 
+      }
+    }
+    
+    > input:checked + label {   
+      ::-webkit-transition: all 500ms ease;
+      transition: all 500ms ease;   
+      border-color: ${(styleOverrides == null ? void 0 : styleOverrides.checkedBorderColor) || "#474F5C"};    
+      color: ${(styleOverrides == null ? void 0 : styleOverrides.checkedColor) || "white"};   
+      background-color: ${(styleOverrides == null ? void 0 : styleOverrides.checkedBackgroundColor) || "#474F5C"};   
+    }    
+  `}
+  
+  @media (max-width: 375px) {
+    width: 50%;
+
+    > input + label {
+      width: auto;
+    }
+  }
 `;
   var Chip = (props) => {
     const renderProps = (0, import_react53.useContext)(TokenSearch_default);
@@ -59896,54 +59894,56 @@ spurious results.`);
     })), /* @__PURE__ */ import_react53.default.createElement("span", null, label), !["Select All", "Deselect All"].includes(label) && checkedStatus));
   };
 
+  // src/searchbar/tokenSearch/Button.tsx
+  var import_react54 = __toESM(require_react());
+  var StyledButton = styled_components_esm_default.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  box-sizing: border-box;
+  outline: none;
+  padding: 3px 6px;
+  margin: 3px;
+  color: #B4BBC7;
+  background-color: #474F5C;
+`;
+  var Button = ({ className, styleOverrides, onClick, children }) => {
+    return /* @__PURE__ */ import_react54.default.createElement(StyledButton, {
+      className,
+      onClick,
+      style: styleOverrides
+    }, children);
+  };
+  var Button_default = Button;
+
   // src/searchbar/tokenSearch/SearchFiltersNetworkSelectors.tsx
   var FilterNetworkAll = () => {
     const dispatch = useDispatch();
-    const renderProps = (0, import_react54.useContext)(TokenSearch_default);
+    const renderProps = (0, import_react55.useContext)(TokenSearch_default);
     const { exchangeMap, networkMap } = useSelector((state) => state);
     const networkAll = Object.values((0, import_lodash3.omitBy)(networkMap, (b3) => !b3)).length === 0;
     const exchangeNamesActive = Object.keys((0, import_lodash3.omitBy)(exchangeMap, (b3) => !b3));
-    const { customAllChip, networks } = renderProps;
+    const { networks } = renderProps;
     const networkNames = networks == null ? void 0 : networks.map((network) => network.id);
-    const styleOverrides = {
-      fontSize: (customAllChip == null ? void 0 : customAllChip.fontSize) || "10px",
-      fontWeight: (customAllChip == null ? void 0 : customAllChip.fontWeight) || "500",
-      borderRadius: (customAllChip == null ? void 0 : customAllChip.borderRadius) || "4px",
-      backgroundColor: (customAllChip == null ? void 0 : customAllChip.backgroundColor) || "#474F5C",
-      border: (customAllChip == null ? void 0 : customAllChip.border) || "0",
-      padding: (customAllChip == null ? void 0 : customAllChip.padding) || "3px 4px",
-      margin: (customAllChip == null ? void 0 : customAllChip.margin) || "0",
-      defaultColor: (customAllChip == null ? void 0 : customAllChip.defaultColor) || "#7A808A",
-      width: (customAllChip == null ? void 0 : customAllChip.width) || "auto",
-      height: (customAllChip == null ? void 0 : customAllChip.height) || "auto",
-      textAlign: (customAllChip == null ? void 0 : customAllChip.textAlign) || "center",
-      textTransform: (customAllChip == null ? void 0 : customAllChip.textTransform) || "inherit",
-      gridTemplateColumns: (customAllChip == null ? void 0 : customAllChip.gridTemplateColumns) || "unset",
-      justifySelf: (customAllChip == null ? void 0 : customAllChip.justifySelf) || "center"
-    };
     const handleChange = () => {
       dispatch(setNetworkMapAll({ networkNames, networkAll }));
       dispatch(setExchangeMapAll({ exchangeNames: exchangeNamesActive, exchangeAll: false }));
     };
-    return /* @__PURE__ */ import_react54.default.createElement(Chip, {
-      name: "AllNetworks",
-      icon: true,
-      label: networkAll ? "Select All" : "Deselect All",
-      checked: networkAll,
-      styleOverrides,
-      onChange: handleChange
-    });
+    return /* @__PURE__ */ import_react55.default.createElement(Button_default, {
+      onClick: handleChange
+    }, networkAll ? "Select All" : "Unselect All");
   };
   var FilterNetworkSelectors = () => {
-    const renderProps = (0, import_react54.useContext)(TokenSearch_default);
+    const renderProps = (0, import_react55.useContext)(TokenSearch_default);
     const networks = [...renderProps.networks];
-    const networkItems = (0, import_react54.useMemo)(() => networks.map((network) => {
+    const networkItems = (0, import_react55.useMemo)(() => networks.map((network) => {
       return { id: network.id, exchanges: network.exchanges.map((exhange) => exhange.name) };
     }), [networks]);
     const dispatch = useDispatch();
     const { networkMap } = useSelector((state) => state);
     const networkElement = (network) => {
-      return /* @__PURE__ */ import_react54.default.createElement(Chip, {
+      return /* @__PURE__ */ import_react55.default.createElement(Chip, {
         key: network.id,
         name: network.id,
         label: network.name || network.id,
@@ -59960,65 +59960,44 @@ spurious results.`);
   };
 
   // src/searchbar/tokenSearch/SearchFiltersExchangeSelectors.tsx
-  var import_react55 = __toESM(require_react());
+  var import_react56 = __toESM(require_react());
   var import_lodash4 = __toESM(require_lodash());
   var FilterExchangeAll = () => {
     const dispatch = useDispatch();
     const { exchangeMap, networkMap } = useSelector((state) => state);
     const exchangeAll = Object.values((0, import_lodash4.omitBy)(exchangeMap, (b3) => !b3)).length === 0;
     const selectedNetworks = Object.keys((0, import_lodash4.omitBy)(networkMap, (b3) => !b3));
-    const renderProps = (0, import_react55.useContext)(TokenSearch_default);
-    const { customAllChip, networks } = renderProps;
+    const renderProps = (0, import_react56.useContext)(TokenSearch_default);
+    const { networks } = renderProps;
     const exchangeNames = [];
     networks == null ? void 0 : networks.forEach((network) => {
-      var _a2;
+      var _a;
       if (selectedNetworks.includes(network.id)) {
-        (_a2 = network.exchanges) == null ? void 0 : _a2.forEach((exchange) => {
+        (_a = network.exchanges) == null ? void 0 : _a.forEach((exchange) => {
           exchangeNames.push(exchange.name);
         });
       }
     });
-    const styleOverrides = {
-      fontSize: (customAllChip == null ? void 0 : customAllChip.fontSize) || "10px",
-      fontWeight: (customAllChip == null ? void 0 : customAllChip.fontWeight) || "500",
-      borderRadius: (customAllChip == null ? void 0 : customAllChip.borderRadius) || "4px",
-      backgroundColor: (customAllChip == null ? void 0 : customAllChip.backgroundColor) || "#474F5C",
-      border: (customAllChip == null ? void 0 : customAllChip.border) || "0",
-      padding: (customAllChip == null ? void 0 : customAllChip.padding) || "3px 4px",
-      margin: (customAllChip == null ? void 0 : customAllChip.margin) || "0",
-      defaultColor: (customAllChip == null ? void 0 : customAllChip.defaultColor) || "#7A808A",
-      width: (customAllChip == null ? void 0 : customAllChip.width) || "auto",
-      height: (customAllChip == null ? void 0 : customAllChip.height) || "auto",
-      textAlign: (customAllChip == null ? void 0 : customAllChip.textAlign) || "center",
-      textTransform: (customAllChip == null ? void 0 : customAllChip.textTransform) || "inherit",
-      gridTemplateColumns: (customAllChip == null ? void 0 : customAllChip.gridTemplateColumns) || "unset",
-      justifySelf: (customAllChip == null ? void 0 : customAllChip.justifySelf) || "center"
-    };
-    return /* @__PURE__ */ import_react55.default.createElement(Chip, {
-      name: "AllExchanges",
-      icon: true,
-      label: exchangeAll ? "Select All" : "Deselect All",
-      checked: exchangeAll,
-      styleOverrides,
-      onChange: () => dispatch(setExchangeMapAll({ exchangeNames, exchangeAll }))
-    });
+    return /* @__PURE__ */ import_react56.default.createElement(Button_default, {
+      onClick: () => dispatch(setExchangeMapAll({ exchangeNames, exchangeAll }))
+    }, exchangeAll ? "Select All" : "Unselect All");
   };
   var FilterExchangeSelectors = () => {
-    var _a2;
+    var _a;
     const dispatch = useDispatch();
     const { networkMap, exchangeMap } = useSelector((state) => state);
-    const renderProps = (0, import_react55.useContext)(TokenSearch_default);
+    const renderProps = (0, import_react56.useContext)(TokenSearch_default);
     const selectedNetworks = Object.keys((0, import_lodash4.omitBy)(networkMap, (b3) => !b3));
     const exchanges = [];
-    (_a2 = renderProps.networks) == null ? void 0 : _a2.forEach((network) => {
-      var _a3;
+    (_a = renderProps.networks) == null ? void 0 : _a.forEach((network) => {
+      var _a2;
       if (selectedNetworks.includes(network.id)) {
-        if ((_a3 = network.exchanges) == null ? void 0 : _a3.length)
+        if ((_a2 = network.exchanges) == null ? void 0 : _a2.length)
           exchanges.push(...network.exchanges);
       }
     });
     const exchangeElement = (exchange) => {
-      return /* @__PURE__ */ import_react55.default.createElement(Chip, {
+      return /* @__PURE__ */ import_react56.default.createElement(Chip, {
         key: exchange.name,
         name: exchange.name,
         label: exchange.name,
@@ -60035,36 +60014,13 @@ spurious results.`);
   };
 
   // src/searchbar/tokenSearch/SearchFilters.tsx
-  var FilterWrapper = styled_components_esm_default.div`
+  var FilterWrapper = styled_components_esm_default.div`  
   ${({ styleOverrides }) => `    
     .accordion__button {
       position: relative;
     }
     background-color: ${(styleOverrides == null ? void 0 : styleOverrides.backgroundColor) || "#00070E"};
     border-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderRadius) || "4px"};
-
-    .accordion__button:first-child:after {
-      display: block;    
-      content: '';
-      position: absolute;    
-      transform: rotate(-45deg);  
-      
-      color: ${(styleOverrides == null ? void 0 : styleOverrides.toggleColor) || "#B4BBC7"};
-      height: ${(styleOverrides == null ? void 0 : styleOverrides.toggleHeight) || "7px"};
-      width: ${(styleOverrides == null ? void 0 : styleOverrides.toggleWidth) || "7px"};
-      margin-right: ${(styleOverrides == null ? void 0 : styleOverrides.toggleMarginRight) || "0"};    
-      left: ${(styleOverrides == null ? void 0 : styleOverrides.toggleLeft) || "calc(50% - 3.5px);"};    
-      top: ${(styleOverrides == null ? void 0 : styleOverrides.toggleTop) || "calc(50% - 4.9px);"};    
-      border-bottom: ${(styleOverrides == null ? void 0 : styleOverrides.toggleBorderBottom) || "2px solid currentColor"}; 
-      border-right: ${(styleOverrides == null ? void 0 : styleOverrides.toggleBorderRight) || "2px solid currentColor"}; 
-      transform: rotate(45deg);
-       
-    }
-
-    .accordion__button[aria-expanded='true']:first-child:after,
-    .accordion__button[aria-selected='true']:first-child:after {
-      transform: rotate(-135deg);
-    }
 
     .accordion__panel {    
       border: ${(styleOverrides == null ? void 0 : styleOverrides.contentBorder) || "0"};       
@@ -60092,7 +60048,12 @@ spurious results.`);
     &:hover {
       background-color: ${(styleOverrides == null ? void 0 : styleOverrides.hoverColor) || "#232C38"};
     }
-  `}
+  `}      
+`;
+  var StyledFilterHeaderActionWrapper = styled_components_esm_default.div`
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
 `;
   var StyledFilterContent = styled_components_esm_default.div`
   ${({ styleOverrides }) => `
@@ -60141,21 +60102,33 @@ spurious results.`);
       desc = "Searching all networks and exchanges";
     } else {
       if (type === "network")
-        desc = /* @__PURE__ */ import_react56.default.createElement("div", {
+        desc = /* @__PURE__ */ import_react57.default.createElement("div", {
           style: { display: "flex", justifyContent: "right" }
-        }, "Searching\xA0", /* @__PURE__ */ import_react56.default.createElement(StyledCount, null, networkCount, " network", networkCount > 1 ? "s" : ""), exchangeCount > 0 && /* @__PURE__ */ import_react56.default.createElement(import_react56.default.Fragment, null, "\xA0within\xA0", /* @__PURE__ */ import_react56.default.createElement(StyledCount, null, exchangeCount, " exchange", exchangeCount > 1 ? "s" : "")));
+        }, "Searching\xA0", /* @__PURE__ */ import_react57.default.createElement(StyledCount, null, networkCount, " network", networkCount > 1 ? "s" : ""), exchangeCount > 0 && /* @__PURE__ */ import_react57.default.createElement(import_react57.default.Fragment, null, "\xA0within\xA0", /* @__PURE__ */ import_react57.default.createElement(StyledCount, null, exchangeCount, " exchange", exchangeCount > 1 ? "s" : "")));
       else
-        desc = /* @__PURE__ */ import_react56.default.createElement("div", {
+        desc = /* @__PURE__ */ import_react57.default.createElement("div", {
           style: { display: "flex", justifyContent: "right" }
-        }, "Searching\xA0", /* @__PURE__ */ import_react56.default.createElement(StyledCount, null, exchangeCount, " exchange", exchangeCount > 1 ? "s" : ""), "\xA0within\xA0", /* @__PURE__ */ import_react56.default.createElement(StyledCount, null, networkCount, " network", networkCount > 1 ? "s" : ""));
+        }, "Searching\xA0", /* @__PURE__ */ import_react57.default.createElement(StyledCount, null, exchangeCount, " exchange", exchangeCount > 1 ? "s" : ""), "\xA0within\xA0", /* @__PURE__ */ import_react57.default.createElement(StyledCount, null, networkCount, " network", networkCount > 1 ? "s" : ""));
     }
-    return /* @__PURE__ */ import_react56.default.createElement(import_react56.default.Fragment, null, desc);
+    return /* @__PURE__ */ import_react57.default.createElement(import_react57.default.Fragment, null, desc);
+  };
+  var AccordionToggleButton = ({ isOpen, onClick }) => {
+    return /* @__PURE__ */ import_react57.default.createElement(Button_default, {
+      className: "accordion-toggle",
+      onClick
+    }, isOpen ? /* @__PURE__ */ import_react57.default.createElement(import_react57.default.Fragment, null, /* @__PURE__ */ import_react57.default.createElement("span", null, "Close"), /* @__PURE__ */ import_react57.default.createElement(down_default, {
+      width: 8,
+      height: 8
+    })) : /* @__PURE__ */ import_react57.default.createElement(import_react57.default.Fragment, null, /* @__PURE__ */ import_react57.default.createElement("span", null, "Open"), /* @__PURE__ */ import_react57.default.createElement(up_default, {
+      width: 8,
+      height: 8
+    })));
   };
   var SearchFilters = () => {
-    var _a2, _b2, _c2, _d2, _e2, _f, _g, _h, _i, _j;
+    var _a, _b, _c, _d, _e2, _f, _g, _h, _i, _j;
     const dispatch = useDispatch();
     const { networkMap, exchangeMap, searchText } = useSelector((state) => state);
-    const renderProps = (0, import_react56.useContext)(TokenSearch_default);
+    const renderProps = (0, import_react57.useContext)(TokenSearch_default);
     const { customSearchFilter, networks } = renderProps;
     const exchangesActive = Object.values(networkMap).filter((b3) => b3).length !== 0;
     let networkIds = Object.keys((0, import_lodash5.omitBy)(networkMap, (b3) => !b3));
@@ -60167,46 +60140,58 @@ spurious results.`);
     const exchangeCount = exchangeIds.length;
     if (!exchangeIds.length) {
       networks == null ? void 0 : networks.forEach((network) => {
-        var _a3;
+        var _a2;
         if (networkIds.includes(network.id)) {
-          (_a3 = network.exchanges) == null ? void 0 : _a3.forEach((exchange) => {
+          (_a2 = network.exchanges) == null ? void 0 : _a2.forEach((exchange) => {
             exchangeIds.push(exchange.name);
           });
         }
       });
     }
     const totalExchangeCount = exchangeIds.length;
-    const networkTitle = ((_a2 = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _a2.network) || "Select Network(s)";
-    const exchangeTitle = ((_b2 = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _b2.exchange) || "Select Exchange(s)";
-    (0, import_react56.useEffect)(() => {
+    const networkTitle = ((_a = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _a.network) || "Select Network(s)";
+    const exchangeTitle = ((_b = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _b.exchange) || "Select Exchange(s)";
+    const [isNetworkMapExpanded, setIsNetworkMapExpanded] = (0, import_react57.useState)(true);
+    const [isExchangeMapExpanded, setIsExchangeMapExpanded] = (0, import_react57.useState)(false);
+    (0, import_react57.useEffect)(() => {
       (Object.keys(networkMap).length > 0 || Object.keys(exchangeMap).length > 0) && searchText.length > 0 && dispatch(setViewResult(true));
     }, [networkMap, exchangeMap, searchText]);
-    return /* @__PURE__ */ import_react56.default.createElement(FilterWrapper, {
+    return /* @__PURE__ */ import_react57.default.createElement(FilterWrapper, {
       styleOverrides: customSearchFilter == null ? void 0 : customSearchFilter.wrapper
-    }, /* @__PURE__ */ import_react56.default.createElement(Accordion, {
+    }, /* @__PURE__ */ import_react57.default.createElement(Accordion, {
       allowMultipleExpanded: true,
       allowZeroExpanded: true
-    }, /* @__PURE__ */ import_react56.default.createElement(AccordionItem, null, /* @__PURE__ */ import_react56.default.createElement(AccordionItemHeadingWrapper, null, /* @__PURE__ */ import_react56.default.createElement(AccordionItemButtonWrapper, null, /* @__PURE__ */ import_react56.default.createElement(StyledFilterHeader, {
-      styleOverrides: (_c2 = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _c2.header
-    }, /* @__PURE__ */ import_react56.default.createElement("span", null, networkTitle), /* @__PURE__ */ import_react56.default.createElement(FilterNetworkAll, null)))), /* @__PURE__ */ import_react56.default.createElement(AccordionItemPanel, null, /* @__PURE__ */ import_react56.default.createElement(StyledFilterWrapper, {
-      styleOverrides: (_d2 = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _d2.wrapper
-    }, /* @__PURE__ */ import_react56.default.createElement(StyledFilterContent, {
+    }, /* @__PURE__ */ import_react57.default.createElement(AccordionItem, {
+      dangerouslySetExpanded: isNetworkMapExpanded
+    }, /* @__PURE__ */ import_react57.default.createElement(AccordionItemHeadingWrapper, null, /* @__PURE__ */ import_react57.default.createElement(AccordionItemButtonWrapper, null, /* @__PURE__ */ import_react57.default.createElement(StyledFilterHeader, {
+      styleOverrides: (_c = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _c.header
+    }, /* @__PURE__ */ import_react57.default.createElement("span", null, networkTitle), /* @__PURE__ */ import_react57.default.createElement(StyledFilterHeaderActionWrapper, null, /* @__PURE__ */ import_react57.default.createElement(FilterNetworkAll, null), /* @__PURE__ */ import_react57.default.createElement(AccordionToggleButton, {
+      isOpen: isNetworkMapExpanded,
+      onClick: () => setIsNetworkMapExpanded(!isNetworkMapExpanded)
+    }))))), /* @__PURE__ */ import_react57.default.createElement(AccordionItemPanel, null, /* @__PURE__ */ import_react57.default.createElement(StyledFilterWrapper, {
+      styleOverrides: (_d = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _d.wrapper
+    }, /* @__PURE__ */ import_react57.default.createElement(StyledFilterContent, {
       styleOverrides: (_e2 = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _e2.content
-    }, /* @__PURE__ */ import_react56.default.createElement(FilterNetworkSelectors, null)), /* @__PURE__ */ import_react56.default.createElement(StyledDescription, {
+    }, /* @__PURE__ */ import_react57.default.createElement(FilterNetworkSelectors, null)), /* @__PURE__ */ import_react57.default.createElement(StyledDescription, {
       styleOverrides: (_f = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _f.description
-    }, /* @__PURE__ */ import_react56.default.createElement(SearchDescription, {
+    }, /* @__PURE__ */ import_react57.default.createElement(SearchDescription, {
       networkCount,
       exchangeCount,
       type: "network"
-    }))))), exchangesActive && /* @__PURE__ */ import_react56.default.createElement(AccordionItem, null, /* @__PURE__ */ import_react56.default.createElement(AccordionItemHeadingWrapper, null, /* @__PURE__ */ import_react56.default.createElement(AccordionItemButtonWrapper, null, /* @__PURE__ */ import_react56.default.createElement(StyledFilterHeader, {
+    }))))), exchangesActive && /* @__PURE__ */ import_react57.default.createElement(AccordionItem, {
+      dangerouslySetExpanded: isExchangeMapExpanded
+    }, /* @__PURE__ */ import_react57.default.createElement(AccordionItemHeadingWrapper, null, /* @__PURE__ */ import_react57.default.createElement(AccordionItemButtonWrapper, null, /* @__PURE__ */ import_react57.default.createElement(StyledFilterHeader, {
       styleOverrides: (_g = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _g.header
-    }, /* @__PURE__ */ import_react56.default.createElement("span", null, exchangeTitle), /* @__PURE__ */ import_react56.default.createElement(FilterExchangeAll, null)))), /* @__PURE__ */ import_react56.default.createElement(AccordionItemPanel, null, /* @__PURE__ */ import_react56.default.createElement(StyledFilterWrapper, {
+    }, /* @__PURE__ */ import_react57.default.createElement("span", null, exchangeTitle), /* @__PURE__ */ import_react57.default.createElement(StyledFilterHeaderActionWrapper, null, /* @__PURE__ */ import_react57.default.createElement(FilterExchangeAll, null), /* @__PURE__ */ import_react57.default.createElement(AccordionToggleButton, {
+      isOpen: isExchangeMapExpanded,
+      onClick: () => setIsExchangeMapExpanded(!isExchangeMapExpanded)
+    }))))), /* @__PURE__ */ import_react57.default.createElement(AccordionItemPanel, null, /* @__PURE__ */ import_react57.default.createElement(StyledFilterWrapper, {
       styleOverrides: (_h = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _h.wrapper
-    }, /* @__PURE__ */ import_react56.default.createElement(StyledFilterContent, {
+    }, /* @__PURE__ */ import_react57.default.createElement(StyledFilterContent, {
       styleOverrides: (_i = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _i.content
-    }, /* @__PURE__ */ import_react56.default.createElement(FilterExchangeSelectors, null)), /* @__PURE__ */ import_react56.default.createElement(StyledDescription, {
+    }, /* @__PURE__ */ import_react57.default.createElement(FilterExchangeSelectors, null)), /* @__PURE__ */ import_react57.default.createElement(StyledDescription, {
       styleOverrides: (_j = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _j.description
-    }, /* @__PURE__ */ import_react56.default.createElement(SearchDescription, {
+    }, /* @__PURE__ */ import_react57.default.createElement(SearchDescription, {
       networkCount,
       exchangeCount: exchangeCount || totalExchangeCount,
       type: "exchange"
@@ -60217,15 +60202,14 @@ spurious results.`);
   // src/searchbar/tokenSearch/index.tsx
   var StyledWrapper2 = styled_components_esm_default.div`
   ${({ styleOverrides }) => `
-    min-width: 420px;            
+    width: 100%;
     position: relative;
 
     & .dropDown {
       position: absolute;
       width: -webkit-fill-available;
       left: 0; 
-      bottom: ${(styleOverrides == null ? void 0 : styleOverrides.borderBottomLeftRadius) || "5px"};  
-      transform: translateY(100%);
+      top: 30px;
       z-index: 99;
       background-color: ${(styleOverrides == null ? void 0 : styleOverrides.backgroundColor) || "#474F5C"};          
       border-bottom-left-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderBottomLeftRadius) || "4px"};  
@@ -60261,28 +60245,28 @@ spurious results.`);
     const { customWrapper } = renderProps;
     const dispatch = useDispatch();
     const { isSelecting, isLoading, viewResult } = useSelector((state) => state);
-    const searchRef = (0, import_react57.useRef)();
+    const searchRef = (0, import_react58.useRef)();
     const closeResultPanel = () => {
       dispatch(stopSelecting());
       dispatch(setViewResult(false));
     };
-    (0, import_react57.useEffect)(() => {
+    (0, import_react58.useEffect)(() => {
       window.onmousedown = (e3) => {
-        var _a2;
-        if (!((_a2 = searchRef == null ? void 0 : searchRef.current) == null ? void 0 : _a2.contains(e3.target))) {
+        var _a;
+        if (!((_a = searchRef == null ? void 0 : searchRef.current) == null ? void 0 : _a.contains(e3.target))) {
           closeResultPanel();
         }
       };
       window.addEventListener("searchBarClose", closeResultPanel);
     }, []);
-    return /* @__PURE__ */ import_react57.default.createElement(TokenSearch_default.Provider, {
+    return /* @__PURE__ */ import_react58.default.createElement(TokenSearch_default.Provider, {
       value: renderProps
-    }, /* @__PURE__ */ import_react57.default.createElement(StyledWrapper2, {
+    }, /* @__PURE__ */ import_react58.default.createElement(StyledWrapper2, {
       ref: searchRef,
       styleOverrides: customWrapper
-    }, /* @__PURE__ */ import_react57.default.createElement(SearchInput_default, null), isSelecting && /* @__PURE__ */ import_react57.default.createElement("div", {
+    }, /* @__PURE__ */ import_react58.default.createElement(SearchInput_default, null), isSelecting && /* @__PURE__ */ import_react58.default.createElement("div", {
       className: "dropDown"
-    }, /* @__PURE__ */ import_react57.default.createElement(SearchFilters_default, null), viewResult && /* @__PURE__ */ import_react57.default.createElement(SearchResult_default, {
+    }, /* @__PURE__ */ import_react58.default.createElement(SearchFilters_default, null), viewResult && /* @__PURE__ */ import_react58.default.createElement(SearchResult_default, {
       loading: isLoading
     }))));
   };
@@ -60290,9 +60274,9 @@ spurious results.`);
 
   // src/searchbar/index.tsx
   var SearchBar = (renderProps) => {
-    return /* @__PURE__ */ import_react58.default.createElement(Provider_default, {
+    return /* @__PURE__ */ import_react59.default.createElement(Provider_default, {
       store
-    }, !config_default.IS_ENV_PRODUCTION && /* @__PURE__ */ import_react58.default.createElement(tokenSearch_default, {
+    }, !config_default.IS_ENV_PRODUCTION && /* @__PURE__ */ import_react59.default.createElement(tokenSearch_default, {
       customWrapper: renderProps.customWrapper,
       customSearchInput: renderProps.customSearchInput,
       customSearchFilter: renderProps.customSearchFilter,
@@ -60307,10 +60291,10 @@ spurious results.`);
   };
 
   // src/index.tsx
-  var React50 = __toESM(require_react());
+  var React51 = __toESM(require_react());
   var import_react_dom2 = __toESM(require_react_dom());
   var rootElement = document.getElementById("root");
-  (0, import_react_dom2.render)(/* @__PURE__ */ React50.createElement(SearchBar, {
+  (0, import_react_dom2.render)(/* @__PURE__ */ React51.createElement(SearchBar, {
     networks: []
   }), rootElement);
 })();
