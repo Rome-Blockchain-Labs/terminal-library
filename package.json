@@ -11,11 +11,14 @@
     "type": "git",
     "url": "git+https://github.com/Rome-Blockchain-Labs/terminal-library.git"
   },
-  "workspaces": ["reactComponents","romeBridge"],
+  "workspaces": {
+    "packages": ["reactComponents","romeBridge"]
+  },
   "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Rome-Blockchain-Labs/terminal-library/issues"
   },
-  "homepage": "https://github.com/Rome-Blockchain-Labs/terminal-library#readme"
+  "homepage": "https://github.com/Rome-Blockchain-Labs/terminal-library#readme",
+  "private": "true"
 }
