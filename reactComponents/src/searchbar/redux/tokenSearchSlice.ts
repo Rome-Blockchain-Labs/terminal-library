@@ -136,6 +136,7 @@ export const tokenSearchSlice = createSlice({
       state.searchText = '';
       state.suggestions = [];
       state.isLoading = false;
+      state.isSelecting = false;
       (state.exchangeMap = {}), (state.networkMap = {}), (state.isSelecting = false);
       state.viewResult = false;
     },

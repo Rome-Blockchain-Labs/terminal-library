@@ -46,7 +46,8 @@ const StyledSearchIconWrapper = styled.div`
     position: absolute;
     right: ${styleOverrides?.right || '14px'};      
     top: 50%;
-    transform: translateY(-50%);   
+    transform: translateY(-50%);
+    z-index: 1;   
   `}
 `;
 
@@ -72,6 +73,7 @@ const StyledResetBtn = styled.button`
   right: 40px;
   top: 50%;
   transform: translateY(-50%);
+  z-index: 1;
 `;
 
 const SearchInput = (): JSX.Element => {
@@ -117,7 +119,8 @@ const SearchInput = (): JSX.Element => {
   const height = customSearchInput?.icon?.height ? customSearchInput?.icon?.height : 14;
   const width = customSearchInput?.icon?.width ? customSearchInput?.icon?.width : 14;
 
-  const handleReset = () => {
+  const handleReset = (e) => {
+    e.stopPropagation();
     setText('');
     dispatch(resetSearch());
     if (inputRef && inputRef.current) {

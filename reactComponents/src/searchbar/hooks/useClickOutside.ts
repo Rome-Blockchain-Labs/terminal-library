@@ -1,6 +1,8 @@
-import { useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 
-const useClickOutside = (callback) => {
+type CallbackFunction = (e: React.SyntheticEvent) => void;
+
+const useClickOutside = (callback: CallbackFunction): React.RefObject<HTMLElement> => {
   const ref = useRef<HTMLElement>(null);
 
   useEffect(() => {

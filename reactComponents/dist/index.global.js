@@ -10985,11 +10985,11 @@
       if (process.env.NODE_ENV !== "production") {
         (function() {
           "use strict";
-          var React52 = require_react();
+          var React53 = require_react();
           var _assign = require_object_assign();
           var Scheduler = require_scheduler();
           var tracing = require_tracing();
-          var ReactSharedInternals = React52.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React53.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           function warn(format) {
             {
               for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -11021,7 +11021,7 @@
               Function.prototype.apply.call(console[level], console, argsWithFormat);
             }
           }
-          if (!React52) {
+          if (!React53) {
             {
               throw Error("ReactDOM was loaded before React. Make sure you load the React package before loading ReactDOM.");
             }
@@ -12237,7 +12237,7 @@
           var didWarnInvalidChild = false;
           function flattenChildren(children) {
             var content = "";
-            React52.Children.forEach(children, function(child) {
+            React53.Children.forEach(children, function(child) {
               if (child == null) {
                 return;
               }
@@ -12248,7 +12248,7 @@
           function validateProps(element, props) {
             {
               if (typeof props.children === "object" && props.children !== null) {
-                React52.Children.forEach(props.children, function(child) {
+                React53.Children.forEach(props.children, function(child) {
                   if (child == null) {
                     return;
                   }
@@ -19441,7 +19441,7 @@
           }
           var fakeInternalInstance = {};
           var isArray = Array.isArray;
-          var emptyRefsObject = new React52.Component().refs;
+          var emptyRefsObject = new React53.Component().refs;
           var didWarnAboutStateAssignmentForComponent;
           var didWarnAboutUninitializedState;
           var didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate;
@@ -54830,6 +54830,7 @@ spurious results.`);
         state.searchText = "";
         state.suggestions = [];
         state.isLoading = false;
+        state.isSelecting = false;
         state.exchangeMap = {}, state.networkMap = {}, state.isSelecting = false;
         state.viewResult = false;
       },
@@ -56226,7 +56227,8 @@ spurious results.`);
     position: absolute;
     right: ${(styleOverrides == null ? void 0 : styleOverrides.right) || "14px"};      
     top: 50%;
-    transform: translateY(-50%);   
+    transform: translateY(-50%);
+    z-index: 1;   
   `}
 `;
   var StyledWrapper = styled_components_esm_default.div`
@@ -56236,7 +56238,7 @@ spurious results.`);
     border-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderRadius) || "4px"}; 
     color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "#7A808A"};
     background: ${(styleOverrides == null ? void 0 : styleOverrides.background) || "#00070E"};  
-    font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "8px"};      
+    font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "12px"};      
     font-family: ${(styleOverrides == null ? void 0 : styleOverrides.fontFamily) || "'Fira Code', monospace"};
     box-shadow: 0 0 8px 2px #474f5c;
     .invalid-error {
@@ -56250,6 +56252,7 @@ spurious results.`);
   right: 40px;
   top: 50%;
   transform: translateY(-50%);
+  z-index: 1;
 `;
   var SearchInput = () => {
     var _a, _b, _c, _d;
@@ -56282,7 +56285,8 @@ spurious results.`);
     const placeholder = (customSearchInput == null ? void 0 : customSearchInput.placeholder) ? customSearchInput == null ? void 0 : customSearchInput.placeholder : "Search pair by symbol, name, contract or token";
     const height = ((_a = customSearchInput == null ? void 0 : customSearchInput.icon) == null ? void 0 : _a.height) ? (_b = customSearchInput == null ? void 0 : customSearchInput.icon) == null ? void 0 : _b.height : 14;
     const width = ((_c = customSearchInput == null ? void 0 : customSearchInput.icon) == null ? void 0 : _c.width) ? (_d = customSearchInput == null ? void 0 : customSearchInput.icon) == null ? void 0 : _d.width : 14;
-    const handleReset = () => {
+    const handleReset = (e3) => {
+      e3.stopPropagation();
       setText("");
       dispatch(resetSearch());
       if (inputRef && inputRef.current) {
@@ -58788,6 +58792,10 @@ spurious results.`);
       } 
     }
 
+    &.no-border {
+      border: none;
+    }
+
     &.active {
       background: #474F5C;
       border-radius: ${((_i = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _i.radius) || "4px"};
@@ -58878,8 +58886,8 @@ spurious results.`);
       width: ${((_q = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _q.width) || "auto"};
       &.down {
         position: absolute;
-        top: 0;
-        right: 0;
+        top: 3px;
+        right: 5px;
         background: transparent;
       }
       &:hover {
@@ -58923,7 +58931,6 @@ spurious results.`);
 `;
   var StyledAction = styled_components_esm_default.div`
   cursor: pointer;
-  padding: 10;
 `;
   var Action = (props) => {
     const { component, detail } = props;
@@ -58952,7 +58959,7 @@ spurious results.`);
     return /* @__PURE__ */ import_react49.default.createElement(StyledDetailList, {
       styleOverrides: customTokenDetail == null ? void 0 : customTokenDetail.list,
       onClick: () => currentIndex !== index ? handleDetail(index) : "",
-      className: currentIndex === index ? "active" : ""
+      className: `${currentIndex === index ? "active" : ""} ${currentIndex - 1 === index ? "no-border" : ""}`
     }, /* @__PURE__ */ import_react49.default.createElement("div", {
       className: "pair-token-info"
     }, /* @__PURE__ */ import_react49.default.createElement("div", {
@@ -60197,11 +60204,8 @@ spurious results.`);
     const renderProps = (0, import_react57.useContext)(TokenSearch_default);
     const { customSearchFilter, networks } = renderProps;
     const exchangesActive = Object.values(networkMap).filter((b3) => b3).length !== 0;
-    let networkIds = Object.keys((0, import_lodash5.omitBy)(networkMap, (b3) => !b3));
+    const networkIds = Object.keys((0, import_lodash5.omitBy)(networkMap, (b3) => !b3));
     const exchangeIds = Object.keys((0, import_lodash5.omitBy)(exchangeMap, (b3) => !b3)) || [];
-    if (!networkIds.length) {
-      networkIds = (networks == null ? void 0 : networks.map((network) => network.id)) || [];
-    }
     const networkCount = networkIds.length;
     const exchangeCount = exchangeIds.length;
     if (!exchangeIds.length) {
@@ -60375,10 +60379,10 @@ spurious results.`);
   };
 
   // src/index.tsx
-  var React51 = __toESM(require_react());
+  var React52 = __toESM(require_react());
   var import_react_dom2 = __toESM(require_react_dom());
   var rootElement = document.getElementById("root");
-  (0, import_react_dom2.render)(/* @__PURE__ */ React51.createElement(SearchBar, {
+  (0, import_react_dom2.render)(/* @__PURE__ */ React52.createElement(SearchBar, {
     networks: []
   }), rootElement);
 })();

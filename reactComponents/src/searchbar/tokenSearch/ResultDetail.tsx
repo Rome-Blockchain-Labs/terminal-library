@@ -54,6 +54,10 @@ const StyledDetailList = styled.div`
       } 
     }
 
+    &.no-border {
+      border: none;
+    }
+
     &.active {
       background: #474F5C;
       border-radius: ${styleOverrides?.button?.radius || '4px'};
@@ -144,8 +148,8 @@ const StyledDetailList = styled.div`
       width: ${styleOverrides?.button?.width || 'auto'};
       &.down {
         position: absolute;
-        top: 0;
-        right: 0;
+        top: 3px;
+        right: 5px;
         background: transparent;
       }
       &:hover {
@@ -189,7 +193,6 @@ const StyledDetailList = styled.div`
 
 const StyledAction = styled.div`
   cursor: pointer;
-  padding: 10px;
 `;
 
 const Action = (props: ActionType) => {
@@ -219,7 +222,7 @@ export const ResultDetail: FC<DetailType> = (props: DetailType) => {
     <StyledDetailList
       styleOverrides={customTokenDetail?.list}
       onClick={() => (currentIndex !== index ? handleDetail(index) : '')}
-      className={currentIndex === index ? 'active' : ''}>
+      className={`${currentIndex === index ? 'active' : ''} ${(currentIndex - 1) === index ? 'no-border' : ''}`}>
       <div className="pair-token-info">
         <div className="token icon-label">
           {tokenImage(selectedPair.token0)}

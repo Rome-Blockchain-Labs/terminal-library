@@ -286,6 +286,7 @@ var tokenSearchSlice = (0, import_toolkit.createSlice)({
       state.searchText = "";
       state.suggestions = [];
       state.isLoading = false;
+      state.isSelecting = false;
       state.exchangeMap = {}, state.networkMap = {}, state.isSelecting = false;
       state.viewResult = false;
     },
@@ -475,7 +476,8 @@ var StyledSearchIconWrapper = import_styled_components.default.div`
     position: absolute;
     right: ${(styleOverrides == null ? void 0 : styleOverrides.right) || "14px"};      
     top: 50%;
-    transform: translateY(-50%);   
+    transform: translateY(-50%);
+    z-index: 1;   
   `}
 `;
 var StyledWrapper = import_styled_components.default.div`
@@ -485,7 +487,7 @@ var StyledWrapper = import_styled_components.default.div`
     border-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderRadius) || "4px"}; 
     color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "#7A808A"};
     background: ${(styleOverrides == null ? void 0 : styleOverrides.background) || "#00070E"};  
-    font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "8px"};      
+    font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "12px"};      
     font-family: ${(styleOverrides == null ? void 0 : styleOverrides.fontFamily) || "'Fira Code', monospace"};
     box-shadow: 0 0 8px 2px #474f5c;
     .invalid-error {
@@ -499,6 +501,7 @@ var StyledResetBtn = import_styled_components.default.button`
   right: 40px;
   top: 50%;
   transform: translateY(-50%);
+  z-index: 1;
 `;
 var SearchInput = () => {
   var _a, _b, _c, _d;
@@ -531,7 +534,8 @@ var SearchInput = () => {
   const placeholder = (customSearchInput == null ? void 0 : customSearchInput.placeholder) ? customSearchInput == null ? void 0 : customSearchInput.placeholder : "Search pair by symbol, name, contract or token";
   const height = ((_a = customSearchInput == null ? void 0 : customSearchInput.icon) == null ? void 0 : _a.height) ? (_b = customSearchInput == null ? void 0 : customSearchInput.icon) == null ? void 0 : _b.height : 14;
   const width = ((_c = customSearchInput == null ? void 0 : customSearchInput.icon) == null ? void 0 : _c.width) ? (_d = customSearchInput == null ? void 0 : customSearchInput.icon) == null ? void 0 : _d.width : 14;
-  const handleReset = () => {
+  const handleReset = (e) => {
+    e.stopPropagation();
     setText("");
     dispatch(resetSearch());
     if (inputRef && inputRef.current) {
@@ -2927,6 +2931,10 @@ var StyledDetailList = import_styled_components2.default.div`
       } 
     }
 
+    &.no-border {
+      border: none;
+    }
+
     &.active {
       background: #474F5C;
       border-radius: ${((_i = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _i.radius) || "4px"};
@@ -3017,8 +3025,8 @@ var StyledDetailList = import_styled_components2.default.div`
       width: ${((_q = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _q.width) || "auto"};
       &.down {
         position: absolute;
-        top: 0;
-        right: 0;
+        top: 3px;
+        right: 5px;
         background: transparent;
       }
       &:hover {
@@ -3062,7 +3070,6 @@ var StyledDetailList = import_styled_components2.default.div`
 `;
 var StyledAction = import_styled_components2.default.div`
   cursor: pointer;
-  padding: 10;
 `;
 var Action = (props) => {
   const { component, detail } = props;
@@ -3091,7 +3098,7 @@ var ResultDetail = (props) => {
   return /* @__PURE__ */ import_react39.default.createElement(StyledDetailList, {
     styleOverrides: customTokenDetail == null ? void 0 : customTokenDetail.list,
     onClick: () => currentIndex !== index ? handleDetail(index) : "",
-    className: currentIndex === index ? "active" : ""
+    className: `${currentIndex === index ? "active" : ""} ${currentIndex - 1 === index ? "no-border" : ""}`
   }, /* @__PURE__ */ import_react39.default.createElement("div", {
     className: "pair-token-info"
   }, /* @__PURE__ */ import_react39.default.createElement("div", {
@@ -3638,11 +3645,8 @@ var SearchFilters = () => {
   const renderProps = (0, import_react46.useContext)(TokenSearch_default);
   const { customSearchFilter, networks } = renderProps;
   const exchangesActive = Object.values(networkMap).filter((b) => b).length !== 0;
-  let networkIds = Object.keys((0, import_lodash5.omitBy)(networkMap, (b) => !b));
+  const networkIds = Object.keys((0, import_lodash5.omitBy)(networkMap, (b) => !b));
   const exchangeIds = Object.keys((0, import_lodash5.omitBy)(exchangeMap, (b) => !b)) || [];
-  if (!networkIds.length) {
-    networkIds = (networks == null ? void 0 : networks.map((network) => network.id)) || [];
-  }
   const networkCount = networkIds.length;
   const exchangeCount = exchangeIds.length;
   if (!exchangeIds.length) {
@@ -3819,10 +3823,10 @@ var SearchBar = (renderProps) => {
 var import_react_accessible_accordion2 = require("react-accessible-accordion");
 
 // src/index.tsx
-var React48 = __toESM(require("react"));
+var React49 = __toESM(require("react"));
 var import_react_dom = require("react-dom");
 var rootElement = document.getElementById("root");
-(0, import_react_dom.render)(/* @__PURE__ */ React48.createElement(SearchBar, {
+(0, import_react_dom.render)(/* @__PURE__ */ React49.createElement(SearchBar, {
   networks: []
 }), rootElement);
 // Annotate the CommonJS export names for ESM import in node:

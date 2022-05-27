@@ -19,7 +19,7 @@ var __spreadValues = (a, b) => {
 var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
 
 // src/searchbar/index.tsx
-import React47 from "react";
+import React48 from "react";
 import { Provider } from "react-redux";
 
 // src/searchbar/redux/store.ts
@@ -258,6 +258,7 @@ var tokenSearchSlice = createSlice({
       state.searchText = "";
       state.suggestions = [];
       state.isLoading = false;
+      state.isSelecting = false;
       state.exchangeMap = {}, state.networkMap = {}, state.isSelecting = false;
       state.viewResult = false;
     },
@@ -345,7 +346,7 @@ var store = configureStore({
 });
 
 // src/searchbar/tokenSearch/index.tsx
-import React46, { useEffect as useEffect4 } from "react";
+import React47, { useEffect as useEffect4 } from "react";
 import { useDispatch as useDispatch6, useSelector as useSelector6 } from "react-redux";
 import styled7 from "styled-components";
 
@@ -447,7 +448,8 @@ var StyledSearchIconWrapper = styled.div`
     position: absolute;
     right: ${(styleOverrides == null ? void 0 : styleOverrides.right) || "14px"};      
     top: 50%;
-    transform: translateY(-50%);   
+    transform: translateY(-50%);
+    z-index: 1;   
   `}
 `;
 var StyledWrapper = styled.div`
@@ -457,7 +459,7 @@ var StyledWrapper = styled.div`
     border-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderRadius) || "4px"}; 
     color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "#7A808A"};
     background: ${(styleOverrides == null ? void 0 : styleOverrides.background) || "#00070E"};  
-    font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "8px"};      
+    font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "12px"};      
     font-family: ${(styleOverrides == null ? void 0 : styleOverrides.fontFamily) || "'Fira Code', monospace"};
     box-shadow: 0 0 8px 2px #474f5c;
     .invalid-error {
@@ -471,6 +473,7 @@ var StyledResetBtn = styled.button`
   right: 40px;
   top: 50%;
   transform: translateY(-50%);
+  z-index: 1;
 `;
 var SearchInput = () => {
   var _a, _b, _c, _d;
@@ -503,7 +506,8 @@ var SearchInput = () => {
   const placeholder = (customSearchInput == null ? void 0 : customSearchInput.placeholder) ? customSearchInput == null ? void 0 : customSearchInput.placeholder : "Search pair by symbol, name, contract or token";
   const height = ((_a = customSearchInput == null ? void 0 : customSearchInput.icon) == null ? void 0 : _a.height) ? (_b = customSearchInput == null ? void 0 : customSearchInput.icon) == null ? void 0 : _b.height : 14;
   const width = ((_c = customSearchInput == null ? void 0 : customSearchInput.icon) == null ? void 0 : _c.width) ? (_d = customSearchInput == null ? void 0 : customSearchInput.icon) == null ? void 0 : _d.width : 14;
-  const handleReset = () => {
+  const handleReset = (e) => {
+    e.stopPropagation();
     setText("");
     dispatch(resetSearch());
     if (inputRef && inputRef.current) {
@@ -2899,6 +2903,10 @@ var StyledDetailList = styled2.div`
       } 
     }
 
+    &.no-border {
+      border: none;
+    }
+
     &.active {
       background: #474F5C;
       border-radius: ${((_i = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _i.radius) || "4px"};
@@ -2989,8 +2997,8 @@ var StyledDetailList = styled2.div`
       width: ${((_q = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _q.width) || "auto"};
       &.down {
         position: absolute;
-        top: 0;
-        right: 0;
+        top: 3px;
+        right: 5px;
         background: transparent;
       }
       &:hover {
@@ -3034,7 +3042,6 @@ var StyledDetailList = styled2.div`
 `;
 var StyledAction = styled2.div`
   cursor: pointer;
-  padding: 10;
 `;
 var Action = (props) => {
   const { component, detail } = props;
@@ -3063,7 +3070,7 @@ var ResultDetail = (props) => {
   return /* @__PURE__ */ React38.createElement(StyledDetailList, {
     styleOverrides: customTokenDetail == null ? void 0 : customTokenDetail.list,
     onClick: () => currentIndex !== index ? handleDetail(index) : "",
-    className: currentIndex === index ? "active" : ""
+    className: `${currentIndex === index ? "active" : ""} ${currentIndex - 1 === index ? "no-border" : ""}`
   }, /* @__PURE__ */ React38.createElement("div", {
     className: "pair-token-info"
   }, /* @__PURE__ */ React38.createElement("div", {
@@ -3616,11 +3623,8 @@ var SearchFilters = () => {
   const renderProps = useContext7(TokenSearch_default);
   const { customSearchFilter, networks } = renderProps;
   const exchangesActive = Object.values(networkMap).filter((b) => b).length !== 0;
-  let networkIds = Object.keys(omitBy4(networkMap, (b) => !b));
+  const networkIds = Object.keys(omitBy4(networkMap, (b) => !b));
   const exchangeIds = Object.keys(omitBy4(exchangeMap, (b) => !b)) || [];
-  if (!networkIds.length) {
-    networkIds = (networks == null ? void 0 : networks.map((network) => network.id)) || [];
-  }
   const networkCount = networkIds.length;
   const exchangeCount = exchangeIds.length;
   if (!exchangeIds.length) {
@@ -3762,14 +3766,14 @@ var TokenSearch = (renderProps) => {
   useEffect4(() => {
     window.addEventListener("searchBarClose", closeResultPanel);
   }, []);
-  return /* @__PURE__ */ React46.createElement(TokenSearch_default.Provider, {
+  return /* @__PURE__ */ React47.createElement(TokenSearch_default.Provider, {
     value: renderProps
-  }, isSelecting && /* @__PURE__ */ React46.createElement(Backdrop, null), /* @__PURE__ */ React46.createElement(StyledWrapper2, {
+  }, isSelecting && /* @__PURE__ */ React47.createElement(Backdrop, null), /* @__PURE__ */ React47.createElement(StyledWrapper2, {
     ref: searchRef,
     styleOverrides: customWrapper
-  }, /* @__PURE__ */ React46.createElement(SearchInput_default, null), isSelecting && /* @__PURE__ */ React46.createElement("div", {
+  }, /* @__PURE__ */ React47.createElement(SearchInput_default, null), isSelecting && /* @__PURE__ */ React47.createElement("div", {
     className: "dropDown"
-  }, /* @__PURE__ */ React46.createElement(SearchFilters_default, null), viewResult && /* @__PURE__ */ React46.createElement(SearchResult_default, {
+  }, /* @__PURE__ */ React47.createElement(SearchFilters_default, null), viewResult && /* @__PURE__ */ React47.createElement(SearchResult_default, {
     loading: isLoading
   }))));
 };
@@ -3777,9 +3781,9 @@ var tokenSearch_default = TokenSearch;
 
 // src/searchbar/index.tsx
 var SearchBar = (renderProps) => {
-  return /* @__PURE__ */ React47.createElement(Provider, {
+  return /* @__PURE__ */ React48.createElement(Provider, {
     store
-  }, !config_default.IS_ENV_PRODUCTION && /* @__PURE__ */ React47.createElement(tokenSearch_default, {
+  }, !config_default.IS_ENV_PRODUCTION && /* @__PURE__ */ React48.createElement(tokenSearch_default, {
     customWrapper: renderProps.customWrapper,
     customSearchInput: renderProps.customSearchInput,
     customSearchFilter: renderProps.customSearchFilter,
@@ -3803,10 +3807,10 @@ import {
 } from "react-accessible-accordion";
 
 // src/index.tsx
-import * as React48 from "react";
+import * as React49 from "react";
 import { render } from "react-dom";
 var rootElement = document.getElementById("root");
-render(/* @__PURE__ */ React48.createElement(SearchBar, {
+render(/* @__PURE__ */ React49.createElement(SearchBar, {
   networks: []
 }), rootElement);
 export {

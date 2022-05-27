@@ -184,12 +184,12 @@ export const SearchFilters = (): JSX.Element => {
   const { customSearchFilter, networks } = renderProps;
   const exchangesActive = Object.values(networkMap).filter((b) => b).length !== 0;
   
-  let networkIds: string[] = Object.keys(omitBy(networkMap, (b) => !b));
+  const networkIds: string[] = Object.keys(omitBy(networkMap, (b) => !b));
   const exchangeIds: string[] = Object.keys(omitBy(exchangeMap, (b) => !b)) || [];
 
-  if (!networkIds.length) {
-    networkIds = networks?.map((network) => network.id) || [];
-  }
+  // if (!networkIds.length) {
+  //   networkIds = networks?.map((network) => network.id) || [];
+  // }
   const networkCount = networkIds.length;
 
   const exchangeCount = exchangeIds.length;
