@@ -32,8 +32,8 @@ const StyledChip = styled.div`
       padding: ${styleOverrides?.padding || "2px 5px"};   
       margin: ${styleOverrides?.margin || "5px"};   
       color: ${styleOverrides?.defaultColor || "#B4BBC7"};   
-      width: ${styleOverrides?.width || "108px"};   
-      height: ${styleOverrides?.height || "auto"};   
+      width: ${styleOverrides?.width || "120px"};   
+      height: ${styleOverrides?.height || "35px"};   
       text-align: ${styleOverrides?.textAlign || "left"}; 
       text-transform: ${styleOverrides?.textTransform || "uppercase"}; 
       grid-template-columns: ${styleOverrides?.gridTemplateColumns || "22% 68% 10%"}; 

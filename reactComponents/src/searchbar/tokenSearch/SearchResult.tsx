@@ -44,15 +44,11 @@ const StyledResultTitle = styled.div`
 `;
 
 const StyledResultContent = styled.div`
-  overflow: auto;
-  margin-left: auto;
-  margin-right: auto;
-
   ${({ styleOverrides }) => `
-    padding: ${styleOverrides?.padding || '14px'};    
+    padding: ${styleOverrides?.padding || '14px'};
     background: ${styleOverrides?.background || '#00070E'};
     border-radius: ${styleOverrides?.borderRadius || '4px'};        
-    width: ${styleOverrides?.width || 'auto'};
+    width: ${styleOverrides?.width || '100%'};
     height: ${styleOverrides?.height || '300px'};
     border: ${styleOverrides?.border || '1px solid grey'};   
     color: ${styleOverrides?.color || '#FFF'};
@@ -62,25 +58,36 @@ const StyledResultContent = styled.div`
     border-width: ${styleOverrides?.borderWidth || '1px'};      
     font-size: ${styleOverrides?.fontSize || '15px'};      
     font-family: ${styleOverrides?.fontFamily || "'Fira Code', monospace"};  
+    overflow: auto;
   `}
+
+  & .result-content-responsive {
+    width: fit-content;
+    min-width: 100%;
+  }
 
   & .header {
     display: grid;
-    grid-template-columns: 39% 10% 10% 40%;
+    grid-gap: 10px;
+    grid-template-columns:
+      minmax(550px, 5.5fr)
+      minmax(100px, 1fr)
+      minmax(130px, 1.3fr)
+      minmax(130px, 1.3fr)
+      minmax(60px, 250px);
     border-bottom: 1px solid #474f5c;
     color: #b4bbc7;
     font-size: 11px;
     font-weight: bold;
     padding-bottom: 10px;
 
-    span {
-      display: block;
+    div {
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
     > :last-child {
-      padding-left: 5px;
+      grid-column: 4 / -1;
     }
   }
 `;
@@ -136,26 +143,28 @@ const SearchResult: FC<Loading> = (props: Loading) => {
         </button>
       </StyledResultTitle>
       <StyledResultContent styleOverrides={customResult?.content}>
-        <div className="header">
-          <span>Pair</span>
-          <span>Network</span>
-          <span>Exchange</span>
-          <span>Details</span>
+        <div className="result-content-responsive">
+          <div className="header">
+            <div>Pair</div>
+            <div>Network</div>
+            <div>Exchange</div>
+            <div>Details</div>
+          </div>
+          {suggestionRendered.map((suggestions, index) => (
+            <ResultDetail
+              suggestions={suggestionRendered}
+              index={index}
+              key={`token-detail-${index}`}
+              currentIndex={currentIndex}
+              handleDetail={setCurrentIndex}
+              logoIcons={logoIcons}
+            />
+          ))}
+          {!!searchText && !suggestionRendered.length && (
+            <StyledLoading styleOverrides={customLoading}>{notFoundTitle}</StyledLoading>
+          )}
+          {hasNextPage && <div ref={sentryRef}>loading....</div>}
         </div>
-        {suggestionRendered.map((suggestions, index) => (
-          <ResultDetail
-            suggestions={suggestionRendered}
-            index={index}
-            key={`token-detail-${index}`}
-            currentIndex={currentIndex}
-            handleDetail={setCurrentIndex}
-            logoIcons={logoIcons}
-          />
-        ))}
-        {!!searchText && !suggestionRendered.length && (
-          <StyledLoading styleOverrides={customLoading}>{notFoundTitle}</StyledLoading>
-        )}
-        {hasNextPage && <div ref={sentryRef}>loading....</div>}
       </StyledResultContent>
     </StyledResult>
   );

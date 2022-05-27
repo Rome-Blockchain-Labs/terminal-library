@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useContext, useState } from 'react';
+import React, { useEffect, useCallback, useContext, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import {
@@ -18,15 +18,10 @@ import config from '../config';
 const StyledInputGroup = styled.div`
   ${({ styleOverrides }) => ` 
     position: relative;
-    display: flex;
-    align-items: center;
-    box-sizing: border-box;    
-    background: ${ styleOverrides?.background || "#00070E" };
-    border-radius: ${ styleOverrides?.borderRadius || "4px" };
-    border: ${ styleOverrides?.border || "5px solid #474F5C" };
-    padding: ${ styleOverrides?.padding || "10px 14px" };
-    width: ${ styleOverrides?.width || "100%" };
-    height: ${ styleOverrides?.height || "35px" };
+    width: ${styleOverrides?.width || '-webkit-fill-available'};
+    color: ${styleOverrides?.color || '#B7BEC9'};
+    background: ${styleOverrides?.background || '#00070E'};
+    padding-right: 145px;
   `}
 `;
 const StyledInput = styled.input`
@@ -35,37 +30,49 @@ const StyledInput = styled.input`
     margin-right: auto;
     position: relative;
     outline: 0;
-    flex: auto;
-    background: transparent;
-    border: none;        
-    width: 100%;
-    height: 100%;
-    color: ${ styleOverrides?.color || "#7A808A" };
-    font-size: ${ styleOverrides?.fontSize || "8px" };      
-    font-family: ${ styleOverrides?.fontFamily || "'Fira Code', monospace" };
-  `}  
+    border: none;
+    width: ${styleOverrides?.width || '-webkit-fill-available'};
+    height: ${styleOverrides?.height || 'auto'};    
+    color: ${styleOverrides?.color || '#B7BEC9'};
+    display: ${styleOverrides?.display || 'block'}; 
+    padding: ${styleOverrides?.padding || '10px 14px'};    
+    background: ${styleOverrides?.background || '#00070E'};  
+  `}
 `;
 
-const StyledSearchIconWrapper = styled.div`    
-  cursor: pointer;
-  svg {
-    vertical-align: middle;
-  }
+const StyledSearchIconWrapper = styled.div`
+  ${({ styleOverrides }) => `
+    float: right;
+    position: absolute;
+    right: ${styleOverrides?.right || '14px'};      
+    top: 50%;
+    transform: translateY(-50%);   
+  `}
 `;
 
 const StyledWrapper = styled.div`
-  position: relative;
+  ${({ styleOverrides }) => `    
+    position: relative;
+    border: ${styleOverrides?.border || '4px solid #474F5C'}; 
+    border-radius: ${styleOverrides?.borderRadius || '4px'}; 
+    color: ${styleOverrides?.color || '#7A808A'};
+    background: ${styleOverrides?.background || '#00070E'};  
+    font-size: ${styleOverrides?.fontSize || '12px'};      
+    font-family: ${styleOverrides?.fontFamily || "'Fira Code', monospace"};
+    box-shadow: 0 0 8px 2px #474f5c;
+    .invalid-error {
+      padding: ${styleOverrides?.padding || '0 14px 5px'};   
+      color: ${styleOverrides?.colorError || '#F52E2E'};  
+    }
+  `}
 `;
 
-const StyledActionWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
-`
-
 const StyledResetBtn = styled.button`
-  margin-right: 10px;
-`
+  position: absolute;
+  right: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+`;
 
 const SearchInput = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -74,6 +81,8 @@ const SearchInput = (): JSX.Element => {
   const [text, setText] = useState('');
   const [error, setError] = useState(false);
   const { searchText, networkMap, exchangeMap } = useSelector((state: RootState) => state);
+
+  const inputRef = useRef<HTMLInputElement>(null);
   // Updates the datasets of the results.
   useEffect(() => {
     // Ensure that the search text fulfills the minimum lenght requirement.
@@ -111,32 +120,31 @@ const SearchInput = (): JSX.Element => {
   const handleReset = () => {
     setText('');
     dispatch(resetSearch());
+    if (inputRef && inputRef.current) {
+      inputRef.current.focus();
+    }
   };
 
   // RENDERING.
   return (
-    <StyledWrapper onClick={() => dispatch(startSelecting())}>
+    <StyledWrapper onClick={() => dispatch(startSelecting())} styleOverrides={customSearchInput?.input}>
       <StyledInputGroup styleOverrides={customSearchInput?.input}>
-        <StyledInput 
+        <StyledInput
+          ref={inputRef}
           placeholder={placeholder}
-          autocomplete={'off'}        
+          autocomplete={'off'}
           onChange={onChangeFilter}
           onClick={handleClick}
-          styleOverrides={customSearchInput?.input}    
+          styleOverrides={customSearchInput?.input}
           value={text}
         />
-        <StyledActionWrapper>
-          <StyledResetBtn onClick={handleReset}>
-            <span>Reset Search</span>
-            <ResetIcon />
-          </StyledResetBtn>      
-          <StyledSearchIconWrapper styleOverrides={customSearchInput?.icon}>       
-            <SearchIcon            
-                height={height}
-                width={width}
-            />          
-          </StyledSearchIconWrapper>
-        </StyledActionWrapper>
+        <StyledResetBtn onClick={handleReset}>
+          <span>Reset Search</span>
+          <ResetIcon />
+        </StyledResetBtn>
+        <StyledSearchIconWrapper styleOverrides={customSearchInput?.icon}>
+          <SearchIcon height={height} width={width} />
+        </StyledSearchIconWrapper>
       </StyledInputGroup>
       {error && (
         <div className="invalid-error">

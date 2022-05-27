@@ -49,7 +49,7 @@ __export(src_exports, {
 module.exports = __toCommonJS(src_exports);
 
 // src/searchbar/index.tsx
-var import_react48 = __toESM(require("react"));
+var import_react49 = __toESM(require("react"));
 var import_react_redux7 = require("react-redux");
 
 // src/searchbar/redux/store.ts
@@ -183,7 +183,7 @@ var import_lodash = require("lodash");
 
 // src/searchbar/config.tsx
 var config_default = {
-  SEARCH_INPUT_LENGTH_MINIMUM: 3,
+  SEARCH_INPUT_LENGTH_MINIMUM: 2,
   SEARCH_ASYNC_DELAY: 300,
   SEARCH_ASYNC_DATASET_LENGTH_MAXIMUM: 500,
   IS_ENV_PRODUCTION: false,
@@ -373,7 +373,7 @@ var store = (0, import_toolkit2.configureStore)({
 });
 
 // src/searchbar/tokenSearch/index.tsx
-var import_react47 = __toESM(require("react"));
+var import_react48 = __toESM(require("react"));
 var import_react_redux6 = require("react-redux");
 var import_styled_components7 = __toESM(require("styled-components"));
 
@@ -448,15 +448,10 @@ var TokenSearch_default = TokenSearchContext;
 var StyledInputGroup = import_styled_components.default.div`
   ${({ styleOverrides }) => ` 
     position: relative;
-    display: flex;
-    align-items: center;
-    box-sizing: border-box;    
+    width: ${(styleOverrides == null ? void 0 : styleOverrides.width) || "-webkit-fill-available"};
+    color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "#B7BEC9"};
     background: ${(styleOverrides == null ? void 0 : styleOverrides.background) || "#00070E"};
-    border-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderRadius) || "4px"};
-    border: ${(styleOverrides == null ? void 0 : styleOverrides.border) || "5px solid #474F5C"};
-    padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "10px 14px"};
-    width: ${(styleOverrides == null ? void 0 : styleOverrides.width) || "100%"};
-    height: ${(styleOverrides == null ? void 0 : styleOverrides.height) || "35px"};
+    padding-right: 145px;
   `}
 `;
 var StyledInput = import_styled_components.default.input`
@@ -465,32 +460,45 @@ var StyledInput = import_styled_components.default.input`
     margin-right: auto;
     position: relative;
     outline: 0;
-    flex: auto;
-    background: transparent;
-    border: none;        
-    width: 100%;
-    height: 100%;
-    color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "#7A808A"};
-    font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "8px"};      
-    font-family: ${(styleOverrides == null ? void 0 : styleOverrides.fontFamily) || "'Fira Code', monospace"};
-  `}  
+    border: none;
+    width: ${(styleOverrides == null ? void 0 : styleOverrides.width) || "-webkit-fill-available"};
+    height: ${(styleOverrides == null ? void 0 : styleOverrides.height) || "auto"};    
+    color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "#B7BEC9"};
+    display: ${(styleOverrides == null ? void 0 : styleOverrides.display) || "block"}; 
+    padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "10px 14px"};    
+    background: ${(styleOverrides == null ? void 0 : styleOverrides.background) || "#00070E"};  
+  `}
 `;
-var StyledSearchIconWrapper = import_styled_components.default.div`    
-  cursor: pointer;
-  svg {
-    vertical-align: middle;
-  }
+var StyledSearchIconWrapper = import_styled_components.default.div`
+  ${({ styleOverrides }) => `
+    float: right;
+    position: absolute;
+    right: ${(styleOverrides == null ? void 0 : styleOverrides.right) || "14px"};      
+    top: 50%;
+    transform: translateY(-50%);   
+  `}
 `;
 var StyledWrapper = import_styled_components.default.div`
-  position: relative;
-`;
-var StyledActionWrapper = import_styled_components.default.div`
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
+  ${({ styleOverrides }) => `    
+    position: relative;
+    border: ${(styleOverrides == null ? void 0 : styleOverrides.border) || "4px solid #474F5C"}; 
+    border-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderRadius) || "4px"}; 
+    color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "#7A808A"};
+    background: ${(styleOverrides == null ? void 0 : styleOverrides.background) || "#00070E"};  
+    font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "8px"};      
+    font-family: ${(styleOverrides == null ? void 0 : styleOverrides.fontFamily) || "'Fira Code', monospace"};
+    box-shadow: 0 0 8px 2px #474f5c;
+    .invalid-error {
+      padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "0 14px 5px"};   
+      color: ${(styleOverrides == null ? void 0 : styleOverrides.colorError) || "#F52E2E"};  
+    }
+  `}
 `;
 var StyledResetBtn = import_styled_components.default.button`
-  margin-right: 10px;
+  position: absolute;
+  right: 40px;
+  top: 50%;
+  transform: translateY(-50%);
 `;
 var SearchInput = () => {
   var _a, _b, _c, _d;
@@ -500,6 +508,7 @@ var SearchInput = () => {
   const [text, setText] = (0, import_react5.useState)("");
   const [error, setError] = (0, import_react5.useState)(false);
   const { searchText, networkMap, exchangeMap } = (0, import_react_redux.useSelector)((state) => state);
+  const inputRef = (0, import_react5.useRef)(null);
   (0, import_react5.useEffect)(() => {
     if (searchText.length >= config_default.SEARCH_INPUT_LENGTH_MINIMUM) {
       setError(false);
@@ -525,26 +534,31 @@ var SearchInput = () => {
   const handleReset = () => {
     setText("");
     dispatch(resetSearch());
+    if (inputRef && inputRef.current) {
+      inputRef.current.focus();
+    }
   };
   return /* @__PURE__ */ import_react5.default.createElement(StyledWrapper, {
-    onClick: () => dispatch(startSelecting())
+    onClick: () => dispatch(startSelecting()),
+    styleOverrides: customSearchInput == null ? void 0 : customSearchInput.input
   }, /* @__PURE__ */ import_react5.default.createElement(StyledInputGroup, {
     styleOverrides: customSearchInput == null ? void 0 : customSearchInput.input
   }, /* @__PURE__ */ import_react5.default.createElement(StyledInput, {
+    ref: inputRef,
     placeholder,
     autocomplete: "off",
     onChange: onChangeFilter,
     onClick: handleClick,
     styleOverrides: customSearchInput == null ? void 0 : customSearchInput.input,
     value: text
-  }), /* @__PURE__ */ import_react5.default.createElement(StyledActionWrapper, null, /* @__PURE__ */ import_react5.default.createElement(StyledResetBtn, {
+  }), /* @__PURE__ */ import_react5.default.createElement(StyledResetBtn, {
     onClick: handleReset
   }, /* @__PURE__ */ import_react5.default.createElement("span", null, "Reset Search"), /* @__PURE__ */ import_react5.default.createElement(reset_default, null)), /* @__PURE__ */ import_react5.default.createElement(StyledSearchIconWrapper, {
     styleOverrides: customSearchInput == null ? void 0 : customSearchInput.icon
   }, /* @__PURE__ */ import_react5.default.createElement(search_default, {
     height,
     width
-  })))), error && /* @__PURE__ */ import_react5.default.createElement("div", {
+  }))), error && /* @__PURE__ */ import_react5.default.createElement("div", {
     className: "invalid-error"
   }, "Please input ", config_default.SEARCH_INPUT_LENGTH_MINIMUM, " characters minimum"));
 };
@@ -2870,34 +2884,44 @@ var up_default = UpIcon;
 var imageSize = 26;
 var StyledDetailList = import_styled_components2.default.div`
   ${({ styleOverrides }) => {
-  var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s;
+  var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r;
   return `
     display: ${((_a = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _a.display) || "grid"};
-    grid-gap: 5px;
+    grid-gap: 10px;
     align-items: ${((_b = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _b.alignItems) || "center"};    
     justify-content: space-between;
     padding: ${((_c = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _c.padding) || "5px 0"};    
     background: transparent;
     border-bottom: ${((_d = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _d.borderbottom) || "1px solid #474F5C"};    
-    grid-template-columns: ${((_e = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _e.gridTemplateColumns) || "19% 1% 19% 10% 10% 23% 14%"}; 
-    
-    border-radius: ${((_f = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _f.borderRadius) || "4px"};
+    grid-auto-flow: row;
+    grid-template-columns: 
+      minmax(550px, 5.5fr)
+      minmax(100px, 1fr)
+      minmax(130px, 1.3fr)
+      minmax(130px, 1.3fr)
+      minmax(60px, 250px);
     position: relative;
-    font-size: ${((_g = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _g.fontSize) || "10px"};
-    color: ${((_h = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _h.color) || "#B4BBC7"};
+    font-size: ${((_e = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _e.fontSize) || "13px"};
+    color: ${((_f = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _f.color) || "#B4BBC7"};
+
+    & .pair-token-info {
+      display: grid;
+      grid-template-columns: 150px 30px 150px;
+      grid-gap: 10px;
+    }
 
     .token {      
       grid-template-columns: 16px 100px; 
-      padding: ${((_i = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _i.padding) || "0 5px"};  
+      padding: ${((_g = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _g.padding) || "0 5px"};  
       .address {
         position: relative;
         padding-left: 5px;
         > span {
           display: none;
-          font-size: 8px;
+          font-size: 12px;
           margin-top: 5px;
           span {
-            color: ${((_j = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _j.color) || "#B4BBC7"};
+            color: ${((_h = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _h.color) || "#B4BBC7"};
           }
         }
       } 
@@ -2905,11 +2929,23 @@ var StyledDetailList = import_styled_components2.default.div`
 
     &.active {
       background: #474F5C;
+      border-radius: ${((_i = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _i.radius) || "4px"};
       color: white;
-      padding: 24px 0;
-      grid-template-columns: 19% 1% 19% 10% 10% 38% 0%;
+      padding: 24px 0;      
+      grid-template-columns: 
+        minmax(550px, 5.5fr)
+        minmax(100px, 1fr)
+        minmax(130px, 1.3fr)
+        minmax(130px, 1.3fr)
+        minmax(250px, 2.5fr);
+
+      .pair-token-info {
+        display: flex;
+        align-items: center;
+      }
+
       .token {
-        font-weight: ${((_k = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _k.fontWeight) || "600"};      
+        font-weight: ${((_j = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _j.fontWeight) || "600"};      
         .address {
           font-size: 12px;
           > span {
@@ -2962,7 +2998,7 @@ var StyledDetailList = import_styled_components2.default.div`
       gap: 8px;
     }
     & .detail {
-      padding: ${((_l = styleOverrides == null ? void 0 : styleOverrides.detail) == null ? void 0 : _l.padding) || "3px"};
+      padding: ${((_k = styleOverrides == null ? void 0 : styleOverrides.detail) == null ? void 0 : _k.padding) || "3px"};
     }
     
     > button {      
@@ -2970,15 +3006,15 @@ var StyledDetailList = import_styled_components2.default.div`
       align-items: center;
       justify-content: center;
       justify-self: right;
-      border-color: ${((_m = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _m.borderColor) || "#474F5C"};      
-      background-color: ${((_n = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _n.backgroundColor) || "#474F5C"};      
-      color: ${((_o = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _o.color) || "#7A808A"};      
-      border-radius: ${((_p = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _p.borderRadius) || "4px"};     
+      border-color: ${((_l = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _l.borderColor) || "#474F5C"};      
+      background-color: ${((_m = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _m.backgroundColor) || "#474F5C"};      
+      color: ${((_n = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _n.color) || "#7A808A"};      
+      border-radius: ${((_o = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _o.borderRadius) || "4px"};     
       
       border-width: 0;      
       cursor: pointer;
-      padding: ${((_q = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _q.padding) || "6px 8px !important"};
-      width: ${((_r = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _r.width) || "auto"};
+      padding: ${((_p = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _p.padding) || "6px 8px !important"};
+      width: ${((_q = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _q.width) || "auto"};
       &.down {
         position: absolute;
         top: 0;
@@ -2986,7 +3022,7 @@ var StyledDetailList = import_styled_components2.default.div`
         background: transparent;
       }
       &:hover {
-        background-color: ${((_s = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _s.hoverBackColor) || "#232C38"};      
+        background-color: ${((_r = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _r.hoverBackColor) || "#232C38"};      
       }    
     }
     .actions {
@@ -2996,6 +3032,7 @@ var StyledDetailList = import_styled_components2.default.div`
       justify-content: center;
       align-items: center;
       flex-wrap: wrap;
+      padding: 10px;
     }
     &:not(.active):hover {
       cursor: pointer; 
@@ -3006,6 +3043,22 @@ var StyledDetailList = import_styled_components2.default.div`
     }
   `;
 }}
+
+  @media (max-width: 768px) {
+    &, &.active {
+      grid-template-columns: 
+        minmax(550px, 5.5fr)
+        minmax(100px, 1fr)
+        minmax(130px, 1.3fr)
+        minmax(130px, 1.3fr)
+        minmax(60px, 0.6fr);
+    }
+    
+    .actions {
+      grid-column: 2 / -1;
+      justify-content: flex-end;
+    }
+  }
 `;
 var StyledAction = import_styled_components2.default.div`
   cursor: pointer;
@@ -3040,6 +3093,8 @@ var ResultDetail = (props) => {
     onClick: () => currentIndex !== index ? handleDetail(index) : "",
     className: currentIndex === index ? "active" : ""
   }, /* @__PURE__ */ import_react39.default.createElement("div", {
+    className: "pair-token-info"
+  }, /* @__PURE__ */ import_react39.default.createElement("div", {
     className: "token icon-label"
   }, tokenImage(selectedPair.token0), /* @__PURE__ */ import_react39.default.createElement("div", {
     className: "flex-1 address text-line-1"
@@ -3047,11 +3102,13 @@ var ResultDetail = (props) => {
     className: "text-line-1"
   }, selectedPair.token0.name), /* @__PURE__ */ import_react39.default.createElement("span", {
     className: "text-line-1"
-  }, /* @__PURE__ */ import_react39.default.createElement("span", null, "Address:"), " ", /* @__PURE__ */ import_react39.default.createElement("strong", null, firstAndLast(selectedPair.token0.address))))), "/", /* @__PURE__ */ import_react39.default.createElement("div", {
+  }, /* @__PURE__ */ import_react39.default.createElement("span", null, "Address:"), " ", /* @__PURE__ */ import_react39.default.createElement("strong", null, firstAndLast(selectedPair.token0.address))))), /* @__PURE__ */ import_react39.default.createElement("div", {
+    className: "gap-5"
+  }, "/"), /* @__PURE__ */ import_react39.default.createElement("div", {
     className: "token icon-label"
   }, tokenImage(selectedPair.token1), /* @__PURE__ */ import_react39.default.createElement("div", {
     className: "flex-1 address text-line-1"
-  }, /* @__PURE__ */ import_react39.default.createElement("div", null, selectedPair.token1.name), /* @__PURE__ */ import_react39.default.createElement("span", null, /* @__PURE__ */ import_react39.default.createElement("span", null, "Address:"), " ", /* @__PURE__ */ import_react39.default.createElement("strong", null, firstAndLast(selectedPair.token1.address))))), /* @__PURE__ */ import_react39.default.createElement("div", {
+  }, /* @__PURE__ */ import_react39.default.createElement("div", null, selectedPair.token1.name), /* @__PURE__ */ import_react39.default.createElement("span", null, /* @__PURE__ */ import_react39.default.createElement("span", null, "Address:"), " ", /* @__PURE__ */ import_react39.default.createElement("strong", null, firstAndLast(selectedPair.token1.address)))))), /* @__PURE__ */ import_react39.default.createElement("div", {
     className: "logo icon-label"
   }, (_a = logoIcons[selectedPair.network]) != null ? _a : /* @__PURE__ */ import_react39.default.createElement(Logo, {
     label: selectedPair.network,
@@ -3068,16 +3125,10 @@ var ResultDetail = (props) => {
   }), /* @__PURE__ */ import_react39.default.createElement("span", {
     className: "capitalize"
   }, selectedPair.exchange)), /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "pair flex-center gap-5"
-  }, /* @__PURE__ */ import_react39.default.createElement("div", null, "Volume: ", /* @__PURE__ */ import_react39.default.createElement("strong", {
+    className: "flex-center"
+  }, "Volume: ", /* @__PURE__ */ import_react39.default.createElement("strong", {
     className: "text-white"
-  }, intToWords(selectedPair.volumeUSD))), currentIndex === index && /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "actions"
-  }, customActions && customActions.map((action) => /* @__PURE__ */ import_react39.default.createElement(Action, {
-    key: `action-${action.index}`,
-    component: action.component,
-    detail: selectedPair
-  })))), /* @__PURE__ */ import_react39.default.createElement("button", {
+  }, intToWords(selectedPair.volumeUSD))), /* @__PURE__ */ import_react39.default.createElement("button", {
     onClick: () => handleDetail(currentIndex === index ? null : index),
     className: currentIndex === index ? "down" : "up"
   }, currentIndex !== index ? /* @__PURE__ */ import_react39.default.createElement(import_react39.default.Fragment, null, /* @__PURE__ */ import_react39.default.createElement("span", null, "Details "), /* @__PURE__ */ import_react39.default.createElement(down_default, {
@@ -3086,6 +3137,12 @@ var ResultDetail = (props) => {
   })) : /* @__PURE__ */ import_react39.default.createElement(import_react39.default.Fragment, null, /* @__PURE__ */ import_react39.default.createElement("span", null, "Close "), /* @__PURE__ */ import_react39.default.createElement(up_default, {
     height: 7,
     width: 7
+  }))), currentIndex === index && /* @__PURE__ */ import_react39.default.createElement("div", {
+    className: "actions"
+  }, customActions && customActions.map((action) => /* @__PURE__ */ import_react39.default.createElement(Action, {
+    key: `action-${action.index}`,
+    component: action.component,
+    detail: selectedPair
   }))));
 };
 var ResultDetail_default = ResultDetail;
@@ -3122,15 +3179,11 @@ var StyledResultTitle = import_styled_components3.default.div`
   `}
 `;
 var StyledResultContent = import_styled_components3.default.div`
-  overflow: auto;
-  margin-left: auto;
-  margin-right: auto;
-
   ${({ styleOverrides }) => `
-    padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "14px"};    
+    padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "14px"};
     background: ${(styleOverrides == null ? void 0 : styleOverrides.background) || "#00070E"};
     border-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderRadius) || "4px"};        
-    width: ${(styleOverrides == null ? void 0 : styleOverrides.width) || "auto"};
+    width: ${(styleOverrides == null ? void 0 : styleOverrides.width) || "100%"};
     height: ${(styleOverrides == null ? void 0 : styleOverrides.height) || "300px"};
     border: ${(styleOverrides == null ? void 0 : styleOverrides.border) || "1px solid grey"};   
     color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "#FFF"};
@@ -3140,25 +3193,36 @@ var StyledResultContent = import_styled_components3.default.div`
     border-width: ${(styleOverrides == null ? void 0 : styleOverrides.borderWidth) || "1px"};      
     font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "15px"};      
     font-family: ${(styleOverrides == null ? void 0 : styleOverrides.fontFamily) || "'Fira Code', monospace"};  
+    overflow: auto;
   `}
+
+  & .result-content-responsive {
+    width: fit-content;
+    min-width: 100%;
+  }
 
   & .header {
     display: grid;
-    grid-template-columns: 39% 10% 10% 40%;
+    grid-gap: 10px;
+    grid-template-columns:
+      minmax(550px, 5.5fr)
+      minmax(100px, 1fr)
+      minmax(130px, 1.3fr)
+      minmax(130px, 1.3fr)
+      minmax(60px, 250px);
     border-bottom: 1px solid #474f5c;
     color: #b4bbc7;
     font-size: 11px;
     font-weight: bold;
     padding-bottom: 10px;
 
-    span {
-      display: block;
+    div {
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
     > :last-child {
-      padding-left: 5px;
+      grid-column: 4 / -1;
     }
   }
 `;
@@ -3203,8 +3267,10 @@ var SearchResult = (props) => {
   }))), /* @__PURE__ */ import_react40.default.createElement(StyledResultContent, {
     styleOverrides: customResult == null ? void 0 : customResult.content
   }, /* @__PURE__ */ import_react40.default.createElement("div", {
+    className: "result-content-responsive"
+  }, /* @__PURE__ */ import_react40.default.createElement("div", {
     className: "header"
-  }, /* @__PURE__ */ import_react40.default.createElement("span", null, "Pair"), /* @__PURE__ */ import_react40.default.createElement("span", null, "Network"), /* @__PURE__ */ import_react40.default.createElement("span", null, "Exchange"), /* @__PURE__ */ import_react40.default.createElement("span", null, "Details")), suggestionRendered.map((suggestions2, index) => /* @__PURE__ */ import_react40.default.createElement(ResultDetail_default, {
+  }, /* @__PURE__ */ import_react40.default.createElement("div", null, "Pair"), /* @__PURE__ */ import_react40.default.createElement("div", null, "Network"), /* @__PURE__ */ import_react40.default.createElement("div", null, "Exchange"), /* @__PURE__ */ import_react40.default.createElement("div", null, "Details")), suggestionRendered.map((suggestions2, index) => /* @__PURE__ */ import_react40.default.createElement(ResultDetail_default, {
     suggestions: suggestionRendered,
     index,
     key: `token-detail-${index}`,
@@ -3215,7 +3281,7 @@ var SearchResult = (props) => {
     styleOverrides: customLoading
   }, notFoundTitle), hasNextPage && /* @__PURE__ */ import_react40.default.createElement("div", {
     ref: sentryRef
-  }, "loading....")));
+  }, "loading...."))));
 };
 var SearchResult_default = SearchResult;
 
@@ -3279,8 +3345,8 @@ var StyledChip = import_styled_components4.default.div`
       padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "2px 5px"};   
       margin: ${(styleOverrides == null ? void 0 : styleOverrides.margin) || "5px"};   
       color: ${(styleOverrides == null ? void 0 : styleOverrides.defaultColor) || "#B4BBC7"};   
-      width: ${(styleOverrides == null ? void 0 : styleOverrides.width) || "108px"};   
-      height: ${(styleOverrides == null ? void 0 : styleOverrides.height) || "auto"};   
+      width: ${(styleOverrides == null ? void 0 : styleOverrides.width) || "120px"};   
+      height: ${(styleOverrides == null ? void 0 : styleOverrides.height) || "35px"};   
       text-align: ${(styleOverrides == null ? void 0 : styleOverrides.textAlign) || "left"}; 
       text-transform: ${(styleOverrides == null ? void 0 : styleOverrides.textTransform) || "uppercase"}; 
       grid-template-columns: ${(styleOverrides == null ? void 0 : styleOverrides.gridTemplateColumns) || "22% 68% 10%"}; 
@@ -3640,17 +3706,37 @@ var SearchFilters = () => {
 };
 var SearchFilters_default = SearchFilters;
 
+// src/searchbar/hooks/useClickOutside.ts
+var import_react47 = require("react");
+var useClickOutside = (callback) => {
+  const ref = (0, import_react47.useRef)(null);
+  (0, import_react47.useEffect)(() => {
+    function onClick(event) {
+      var _a;
+      if (ref && ref.current && !((_a = ref.current) == null ? void 0 : _a.contains(event.target))) {
+        callback(event);
+      }
+    }
+    document.addEventListener("mousedown", onClick);
+    return () => {
+      document.removeEventListener("mousedown", onClick);
+    };
+  }, []);
+  return ref;
+};
+var useClickOutside_default = useClickOutside;
+
 // src/searchbar/tokenSearch/index.tsx
 var StyledWrapper2 = import_styled_components7.default.div`
   ${({ styleOverrides }) => `
-    width: 100%;
+    min-width: 420px;            
     position: relative;
-
     & .dropDown {
       position: absolute;
       width: -webkit-fill-available;
       left: 0; 
-      top: 30px;
+      bottom: ${(styleOverrides == null ? void 0 : styleOverrides.borderBottomLeftRadius) || "5px"};  
+      transform: translateY(100%);
       z-index: 99;
       background-color: ${(styleOverrides == null ? void 0 : styleOverrides.backgroundColor) || "#474F5C"};          
       border-bottom-left-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderBottomLeftRadius) || "4px"};  
@@ -3660,7 +3746,6 @@ var StyledWrapper2 = import_styled_components7.default.div`
       border-width:${(styleOverrides == null ? void 0 : styleOverrides.borderStyle) || "4px"};                 
       border-top: none;
     }
-
     & button {
       display: flex;
       align-items: center;
@@ -3675,39 +3760,38 @@ var StyledWrapper2 = import_styled_components7.default.div`
       &:hover {
         background-color: ${(styleOverrides == null ? void 0 : styleOverrides.button.hoverBackColor) || "black"};      
       }
-
       & span {
         padding-right: 3px;
       }
     }
   `}
 `;
+var Backdrop = import_styled_components7.default.div`
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+`;
 var TokenSearch = (renderProps) => {
   const { customWrapper } = renderProps;
   const dispatch = (0, import_react_redux6.useDispatch)();
   const { isSelecting, isLoading, viewResult } = (0, import_react_redux6.useSelector)((state) => state);
-  const searchRef = (0, import_react47.useRef)();
   const closeResultPanel = () => {
     dispatch(stopSelecting());
     dispatch(setViewResult(false));
   };
-  (0, import_react47.useEffect)(() => {
-    window.onmousedown = (e) => {
-      var _a;
-      if (!((_a = searchRef == null ? void 0 : searchRef.current) == null ? void 0 : _a.contains(e.target))) {
-        closeResultPanel();
-      }
-    };
+  const searchRef = useClickOutside_default(closeResultPanel);
+  (0, import_react48.useEffect)(() => {
     window.addEventListener("searchBarClose", closeResultPanel);
   }, []);
-  return /* @__PURE__ */ import_react47.default.createElement(TokenSearch_default.Provider, {
+  return /* @__PURE__ */ import_react48.default.createElement(TokenSearch_default.Provider, {
     value: renderProps
-  }, /* @__PURE__ */ import_react47.default.createElement(StyledWrapper2, {
+  }, isSelecting && /* @__PURE__ */ import_react48.default.createElement(Backdrop, null), /* @__PURE__ */ import_react48.default.createElement(StyledWrapper2, {
     ref: searchRef,
     styleOverrides: customWrapper
-  }, /* @__PURE__ */ import_react47.default.createElement(SearchInput_default, null), isSelecting && /* @__PURE__ */ import_react47.default.createElement("div", {
+  }, /* @__PURE__ */ import_react48.default.createElement(SearchInput_default, null), isSelecting && /* @__PURE__ */ import_react48.default.createElement("div", {
     className: "dropDown"
-  }, /* @__PURE__ */ import_react47.default.createElement(SearchFilters_default, null), viewResult && /* @__PURE__ */ import_react47.default.createElement(SearchResult_default, {
+  }, /* @__PURE__ */ import_react48.default.createElement(SearchFilters_default, null), viewResult && /* @__PURE__ */ import_react48.default.createElement(SearchResult_default, {
     loading: isLoading
   }))));
 };
@@ -3715,9 +3799,9 @@ var tokenSearch_default = TokenSearch;
 
 // src/searchbar/index.tsx
 var SearchBar = (renderProps) => {
-  return /* @__PURE__ */ import_react48.default.createElement(import_react_redux7.Provider, {
+  return /* @__PURE__ */ import_react49.default.createElement(import_react_redux7.Provider, {
     store
-  }, !config_default.IS_ENV_PRODUCTION && /* @__PURE__ */ import_react48.default.createElement(tokenSearch_default, {
+  }, !config_default.IS_ENV_PRODUCTION && /* @__PURE__ */ import_react49.default.createElement(tokenSearch_default, {
     customWrapper: renderProps.customWrapper,
     customSearchInput: renderProps.customSearchInput,
     customSearchFilter: renderProps.customSearchFilter,

@@ -14,18 +14,28 @@ const imageSize = 26;
 const StyledDetailList = styled.div`
   ${({ styleOverrides }) => `
     display: ${styleOverrides?.container?.display || 'grid'};
-    grid-gap: 5px;
+    grid-gap: 10px;
     align-items: ${styleOverrides?.container?.alignItems || 'center'};    
     justify-content: space-between;
     padding: ${styleOverrides?.container?.padding || '5px 0'};    
     background: transparent;
     border-bottom: ${styleOverrides?.container?.borderbottom || '1px solid #474F5C'};    
-    grid-template-columns: ${styleOverrides?.container?.gridTemplateColumns || '19% 1% 19% 10% 10% 23% 14%'}; 
-    
-    border-radius: ${styleOverrides?.button?.borderRadius || '4px'};
+    grid-auto-flow: row;
+    grid-template-columns: 
+      minmax(550px, 5.5fr)
+      minmax(100px, 1fr)
+      minmax(130px, 1.3fr)
+      minmax(130px, 1.3fr)
+      minmax(60px, 250px);
     position: relative;
-    font-size: ${styleOverrides?.token?.fontSize || '10px'};
+    font-size: ${styleOverrides?.token?.fontSize || '13px'};
     color: ${styleOverrides?.token?.color || '#B4BBC7'};
+
+    & .pair-token-info {
+      display: grid;
+      grid-template-columns: 150px 30px 150px;
+      grid-gap: 10px;
+    }
 
     .token {      
       grid-template-columns: 16px 100px; 
@@ -35,7 +45,7 @@ const StyledDetailList = styled.div`
         padding-left: 5px;
         > span {
           display: none;
-          font-size: 8px;
+          font-size: 12px;
           margin-top: 5px;
           span {
             color: ${styleOverrides?.token?.color || '#B4BBC7'};
@@ -46,9 +56,21 @@ const StyledDetailList = styled.div`
 
     &.active {
       background: #474F5C;
+      border-radius: ${styleOverrides?.button?.radius || '4px'};
       color: white;
-      padding: 24px 0;
-      grid-template-columns: 19% 1% 19% 10% 10% 38% 0%;
+      padding: 24px 0;      
+      grid-template-columns: 
+        minmax(550px, 5.5fr)
+        minmax(100px, 1fr)
+        minmax(130px, 1.3fr)
+        minmax(130px, 1.3fr)
+        minmax(250px, 2.5fr);
+
+      .pair-token-info {
+        display: flex;
+        align-items: center;
+      }
+
       .token {
         font-weight: ${styleOverrides?.token?.fontWeight || '600'};      
         .address {
@@ -137,6 +159,7 @@ const StyledDetailList = styled.div`
       justify-content: center;
       align-items: center;
       flex-wrap: wrap;
+      padding: 10px;
     }
     &:not(.active):hover {
       cursor: pointer; 
@@ -146,11 +169,27 @@ const StyledDetailList = styled.div`
       }      
     }
   `}
+
+  @media (max-width: 768px) {
+    &, &.active {
+      grid-template-columns: 
+        minmax(550px, 5.5fr)
+        minmax(100px, 1fr)
+        minmax(130px, 1.3fr)
+        minmax(130px, 1.3fr)
+        minmax(60px, 0.6fr);
+    }
+    
+    .actions {
+      grid-column: 2 / -1;
+      justify-content: flex-end;
+    }
+  }
 `;
 
 const StyledAction = styled.div`
   cursor: pointer;
-  padding: 10;
+  padding: 10px;
 `;
 
 const Action = (props: ActionType) => {
@@ -181,25 +220,27 @@ export const ResultDetail: FC<DetailType> = (props: DetailType) => {
       styleOverrides={customTokenDetail?.list}
       onClick={() => (currentIndex !== index ? handleDetail(index) : '')}
       className={currentIndex === index ? 'active' : ''}>
-      <div className="token icon-label">
-        {tokenImage(selectedPair.token0)}
-        <div className="flex-1 address text-line-1">
-          <div className="text-line-1">{selectedPair.token0.name}</div>
-          <span className="text-line-1">
-            <span>Address:</span> <strong>{firstAndLast(selectedPair.token0.address)}</strong>
-          </span>
+      <div className="pair-token-info">
+        <div className="token icon-label">
+          {tokenImage(selectedPair.token0)}
+          <div className="flex-1 address text-line-1">
+            <div className="text-line-1">{selectedPair.token0.name}</div>
+            <span className="text-line-1">
+              <span>Address:</span> <strong>{firstAndLast(selectedPair.token0.address)}</strong>
+            </span>
+          </div>
         </div>
-      </div>
-      /
-      <div className="token icon-label">
-        {tokenImage(selectedPair.token1)}
-        <div className="flex-1 address text-line-1">
-          <div>{selectedPair.token1.name}</div>
-          <span>
-            <span>Address:</span> <strong>{firstAndLast(selectedPair.token1.address)}</strong>
-          </span>
+        <div className="gap-5">/</div>
+        <div className="token icon-label">
+          {tokenImage(selectedPair.token1)}
+          <div className="flex-1 address text-line-1">
+            <div>{selectedPair.token1.name}</div>
+            <span>
+              <span>Address:</span> <strong>{firstAndLast(selectedPair.token1.address)}</strong>
+            </span>
+          </div>
         </div>
-      </div>
+      </div>      
       <div className="logo icon-label">
         {logoIcons[selectedPair.network] ?? <Logo label={selectedPair.network} width={12} height={12} />}
         <span className="capitalize">{selectedPair.network}</span>
@@ -208,22 +249,8 @@ export const ResultDetail: FC<DetailType> = (props: DetailType) => {
         {logoIcons[selectedPair.exchange] ?? <Logo label={selectedPair.exchange} width={12} height={12} />}
         <span className="capitalize">{selectedPair.exchange}</span>
       </div>
-      <div className="pair flex-center gap-5">
-        <div>
-          Volume: <strong className="text-white">{intToWords(selectedPair.volumeUSD)}</strong>
-        </div>
-
-        {currentIndex === index && (
-          <div className="actions">
-            {customActions &&
-              customActions.map((action) => (
-                <Action
-                  key={`action-${action.index}`}
-                  component={action.component}
-                  detail={selectedPair}></Action>
-              ))}
-          </div>
-        )}
+      <div className="flex-center">
+        Volume: <strong className="text-white">{intToWords(selectedPair.volumeUSD)}</strong>
       </div>
       <button
         onClick={() => handleDetail(currentIndex === index ? null : index)}
@@ -240,6 +267,17 @@ export const ResultDetail: FC<DetailType> = (props: DetailType) => {
           </>
         )}
       </button>
+      {currentIndex === index && (
+        <div className="actions">
+          {customActions &&
+            customActions.map((action) => (
+              <Action
+                key={`action-${action.index}`}
+                component={action.component}
+                detail={selectedPair}></Action>
+            ))}
+        </div>
+      )}      
     </StyledDetailList>
   );
 };
