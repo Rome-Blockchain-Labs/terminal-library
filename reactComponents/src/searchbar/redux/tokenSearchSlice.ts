@@ -55,20 +55,18 @@ export const searchTokenPairs = createAsyncThunk('token/search', async (dataProp
   try {
     const { networkMap, exchangeMap } = thunkAPI.getState();
     const { searchString, networks } = dataProp;
-    let processedNetworks;
-    let processedExchanges;
     const pairSearchTimestamp = new Date().getTime();
 
     // Dispatches "setPairSearchTimestamp".
     thunkAPI.dispatch(setPairSearchTimestamp(pairSearchTimestamp));
 
     // Runs the function handling the cleaning of the properties from their values indicating if they are enabled or not.
-    [processedNetworks, processedExchanges] = valueCleaner(networkMap, exchangeMap);
+    const [networkIds, exchangeIds] = valueCleaner(networkMap, exchangeMap);
 
     // Runs the function handling the management of the "All" value selected by the user.
-    [processedNetworks, processedExchanges] = allValueHandler(
-      processedNetworks,
-      processedExchanges,
+    const [processedNetworks, processedExchanges] = allValueHandler(
+      networkIds,
+      exchangeIds,
       networks
     );
 

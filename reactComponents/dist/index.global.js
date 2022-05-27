@@ -54730,7 +54730,6 @@ spurious results.`);
     SEARCH_INPUT_LENGTH_MINIMUM: 2,
     SEARCH_ASYNC_DELAY: 300,
     SEARCH_ASYNC_DATASET_LENGTH_MAXIMUM: 500,
-    IS_ENV_PRODUCTION: false,
     LOAD_LIMIT: 10
   };
 
@@ -54764,12 +54763,10 @@ spurious results.`);
     try {
       const { networkMap, exchangeMap } = thunkAPI.getState();
       const { searchString, networks } = dataProp;
-      let processedNetworks;
-      let processedExchanges;
       const pairSearchTimestamp = new Date().getTime();
       thunkAPI.dispatch(setPairSearchTimestamp(pairSearchTimestamp));
-      [processedNetworks, processedExchanges] = valueCleaner(networkMap, exchangeMap);
-      [processedNetworks, processedExchanges] = allValueHandler(processedNetworks, processedExchanges, networks);
+      const [networkIds, exchangeIds] = valueCleaner(networkMap, exchangeMap);
+      const [processedNetworks, processedExchanges] = allValueHandler(networkIds, exchangeIds, networks);
       const data = await (0, import_async_retry.default)(() => searchTokensAsync(searchString, processedNetworks, processedExchanges), {
         retries: 1
       });
@@ -54913,7 +54910,7 @@ spurious results.`);
   // src/searchbar/redux/store.ts
   var rootReducer = tokenSearchSlice.reducer;
   var store = configureStore({
-    devTools: process.env.NODE_ENV !== "production",
+    devTools: false,
     reducer: rootReducer
   });
 
@@ -60364,7 +60361,7 @@ spurious results.`);
   var SearchBar = (renderProps) => {
     return /* @__PURE__ */ import_react60.default.createElement(Provider_default, {
       store
-    }, !config_default.IS_ENV_PRODUCTION && /* @__PURE__ */ import_react60.default.createElement(tokenSearch_default, {
+    }, /* @__PURE__ */ import_react60.default.createElement(tokenSearch_default, {
       customWrapper: renderProps.customWrapper,
       customSearchInput: renderProps.customSearchInput,
       customSearchFilter: renderProps.customSearchFilter,

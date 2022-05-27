@@ -158,7 +158,6 @@ var config_default = {
   SEARCH_INPUT_LENGTH_MINIMUM: 2,
   SEARCH_ASYNC_DELAY: 300,
   SEARCH_ASYNC_DATASET_LENGTH_MAXIMUM: 500,
-  IS_ENV_PRODUCTION: false,
   LOAD_LIMIT: 10
 };
 
@@ -192,12 +191,10 @@ var searchTokenPairs = createAsyncThunk("token/search", async (dataProp, thunkAP
   try {
     const { networkMap, exchangeMap } = thunkAPI.getState();
     const { searchString, networks } = dataProp;
-    let processedNetworks;
-    let processedExchanges;
     const pairSearchTimestamp = new Date().getTime();
     thunkAPI.dispatch(setPairSearchTimestamp(pairSearchTimestamp));
-    [processedNetworks, processedExchanges] = valueCleaner(networkMap, exchangeMap);
-    [processedNetworks, processedExchanges] = allValueHandler(processedNetworks, processedExchanges, networks);
+    const [networkIds, exchangeIds] = valueCleaner(networkMap, exchangeMap);
+    const [processedNetworks, processedExchanges] = allValueHandler(networkIds, exchangeIds, networks);
     const data = await retry(() => searchTokensAsync(searchString, processedNetworks, processedExchanges), {
       retries: 1
     });
@@ -341,7 +338,7 @@ var tokenSearchSlice_default = tokenSearchSlice.reducer;
 // src/searchbar/redux/store.ts
 var rootReducer = tokenSearchSlice.reducer;
 var store = configureStore({
-  devTools: process.env.NODE_ENV !== "production",
+  devTools: false,
   reducer: rootReducer
 });
 
@@ -3783,7 +3780,7 @@ var tokenSearch_default = TokenSearch;
 var SearchBar = (renderProps) => {
   return /* @__PURE__ */ React48.createElement(Provider, {
     store
-  }, !config_default.IS_ENV_PRODUCTION && /* @__PURE__ */ React48.createElement(tokenSearch_default, {
+  }, /* @__PURE__ */ React48.createElement(tokenSearch_default, {
     customWrapper: renderProps.customWrapper,
     customSearchInput: renderProps.customSearchInput,
     customSearchFilter: renderProps.customSearchFilter,
