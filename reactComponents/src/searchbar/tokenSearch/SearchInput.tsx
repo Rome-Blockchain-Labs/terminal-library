@@ -19,9 +19,7 @@ const StyledInputGroup = styled.div`
   ${({ styleOverrides }) => ` 
     position: relative;
     width: ${styleOverrides?.width || '-webkit-fill-available'};
-    color: ${styleOverrides?.color || '#B7BEC9'};
-    background: ${styleOverrides?.background || '#00070E'};
-    padding-right: 145px;
+    padding: 0 120px 0 15px;
   `}
 `;
 const StyledInput = styled.input`
@@ -36,7 +34,11 @@ const StyledInput = styled.input`
     color: ${styleOverrides?.color || '#B7BEC9'};
     display: ${styleOverrides?.display || 'block'}; 
     padding: ${styleOverrides?.padding || '10px 14px'};    
-    background: ${styleOverrides?.background || '#00070E'};  
+    background: transparent;  
+
+    &::placeholder {
+      color: #7A808A;
+    }
   `}
 `;
 
@@ -44,7 +46,7 @@ const StyledSearchIconWrapper = styled.div`
   ${({ styleOverrides }) => `
     float: right;
     position: absolute;
-    right: ${styleOverrides?.right || '14px'};      
+    left: ${styleOverrides?.right || '10px'};
     top: 50%;
     transform: translateY(-50%);
     z-index: 1;   
@@ -57,10 +59,11 @@ const StyledWrapper = styled.div`
     border: ${styleOverrides?.border || '4px solid #474F5C'}; 
     border-radius: ${styleOverrides?.borderRadius || '4px'}; 
     color: ${styleOverrides?.color || '#7A808A'};
-    background: ${styleOverrides?.background || '#00070E'};  
-    font-size: ${styleOverrides?.fontSize || '12px'};      
+    background: ${styleOverrides?.background || '#474F5C'};  
+    font-size: ${styleOverrides?.fontSize || '0.75rem'};      
     font-family: ${styleOverrides?.fontFamily || "'Fira Code', monospace"};
-    box-shadow: 0 0 8px 2px #474f5c;
+    z-index: 100;
+
     .invalid-error {
       padding: ${styleOverrides?.padding || '0 14px 5px'};   
       color: ${styleOverrides?.colorError || '#F52E2E'};  
@@ -70,7 +73,7 @@ const StyledWrapper = styled.div`
 
 const StyledResetBtn = styled.button`
   position: absolute;
-  right: 40px;
+  right: 10px;
   top: 50%;
   transform: translateY(-50%);
   z-index: 1;
@@ -94,6 +97,10 @@ const SearchInput = (): JSX.Element => {
       dispatch(setSearchText(searchText));
     } else if (searchText.length > 0) {
       setError(true);
+    }
+
+    if (Object.keys(networkMap).length > 0 && Object.keys(exchangeMap).length > 0 && inputRef.current) {
+      inputRef.current.focus();
     }
   }, [dispatch, networkMap, exchangeMap, searchText]);
 

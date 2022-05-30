@@ -1,4 +1,4 @@
-import React, { useContext, FC } from 'react';
+import React, { FC, useContext, useState } from 'react';
 import styled from 'styled-components';
 import DefaultIcon from '../icons/default';
 import { Logo } from './Logo';
@@ -6,35 +6,65 @@ import { firstAndLast } from './helpers/firstAndLast';
 import { intToWords } from './helpers/intToWords';
 import TokenSearchContext from '../Context/TokenSearch';
 
+import Button from './Button';
 import DownIcon from '../icons/down';
 import UpIcon from '../icons/up';
+import CopyIcon from '../icons/copy';
 import { ActionType, DetailType } from './types';
 const imageSize = 26;
 
-const StyledDetailList = styled.div`
+const StyledGridRow = styled.div`
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns:
+    minmax(420px, 7fr)
+    minmax(120px, 2fr)
+    minmax(120px, 2fr)
+    minmax(180px, 3fr)
+    minmax(60px, 240px);
+  grid-auto-flow: row;
+  grid-auto-rows: auto;
+
+  &.active {
+    grid-template-columns:
+      minmax(420px, 7fr)
+      minmax(120px, 2fr)
+      minmax(120px, 2fr)
+      minmax(180px, 3fr)
+      minmax(240px, 240px);
+  }
+
+  &.b-none {
+    border: none !important;
+  }
+
+  @media (max-width: 768px) {
+    &.active {
+      grid-template-columns:
+        minmax(420px, 7fr)
+        minmax(120px, 2fr)
+        minmax(120px, 2fr)
+        minmax(180px, 3fr)
+        minmax(60px, 1fr);
+    }   
+  }
+`;
+
+const StyledDetailList = styled(StyledGridRow)`
   ${({ styleOverrides }) => `
-    display: ${styleOverrides?.container?.display || 'grid'};
-    grid-gap: 10px;
-    align-items: ${styleOverrides?.container?.alignItems || 'center'};    
-    justify-content: space-between;
-    padding: ${styleOverrides?.container?.padding || '5px 0'};    
+    padding: ${styleOverrides?.container?.padding || '10px 0'};
     background: transparent;
     border-bottom: ${styleOverrides?.container?.borderbottom || '1px solid #474F5C'};    
     grid-auto-flow: row;
-    grid-template-columns: 
-      minmax(550px, 5.5fr)
-      minmax(100px, 1fr)
-      minmax(130px, 1.3fr)
-      minmax(130px, 1.3fr)
-      minmax(60px, 250px);
     position: relative;
-    font-size: ${styleOverrides?.token?.fontSize || '13px'};
+    font-size: ${styleOverrides?.token?.fontSize || '0.75rem'};
     color: ${styleOverrides?.token?.color || '#B4BBC7'};
 
     & .pair-token-info {
       display: grid;
-      grid-template-columns: 150px 30px 150px;
+      grid-template-columns: 190px 20px 190px;
       grid-gap: 10px;
+      align-items: center;
     }
 
     .token {      
@@ -45,45 +75,30 @@ const StyledDetailList = styled.div`
         padding-left: 5px;
         > span {
           display: none;
-          font-size: 12px;
+          font-size: 0.75rem;
           margin-top: 5px;
           span {
             color: ${styleOverrides?.token?.color || '#B4BBC7'};
           }
         }
       } 
-    }
-
-    &.no-border {
-      border: none;
-    }
+    }   
 
     &.active {
       background: #474F5C;
       border-radius: ${styleOverrides?.button?.radius || '4px'};
       color: white;
-      padding: 24px 0;      
-      grid-template-columns: 
-        minmax(550px, 5.5fr)
-        minmax(100px, 1fr)
-        minmax(130px, 1.3fr)
-        minmax(130px, 1.3fr)
-        minmax(250px, 2.5fr);
-
-      .pair-token-info {
-        display: flex;
-        align-items: center;
-      }
+      padding: 24px 0;
 
       .token {
         font-weight: ${styleOverrides?.token?.fontWeight || '600'};      
         .address {
-          font-size: 12px;
+          font-size: 0.75rem;
           > span {
             display: block;
           }
         }
-        svg {
+        > svg {
           width: 26px;
           height: 26px;
           margin-top: -10px;
@@ -160,10 +175,10 @@ const StyledDetailList = styled.div`
       display: flex;
       flex: 1;
       gap: 12px;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
       flex-wrap: wrap;
-      padding: 10px;
+      margin-right: 10px;
     }
     &:not(.active):hover {
       cursor: pointer; 
@@ -175,19 +190,16 @@ const StyledDetailList = styled.div`
   `}
 
   @media (max-width: 768px) {
-    &, &.active {
-      grid-template-columns: 
-        minmax(550px, 5.5fr)
-        minmax(100px, 1fr)
-        minmax(130px, 1.3fr)
-        minmax(130px, 1.3fr)
-        minmax(60px, 0.6fr);
-    }
-    
-    .actions {
-      grid-column: 2 / -1;
-      justify-content: flex-end;
-    }
+    &.active {
+      .pair-token-info {
+        grid-row: 1 / 3;
+      }
+
+      .actions {
+        grid-column: 2 / -1;
+        justify-content: flex-end;
+      }
+    } 
   }
 `;
 
@@ -205,72 +217,127 @@ const Action = (props: ActionType) => {
   );
 };
 
+const StyledCopyButton = styled(Button)`
+  ${({ styleOverrides }) => `
+    .copy-text {
+      margin-left: 4px;
+      color: ${styleOverrides?.color || '#F52E2E'};
+    }
+  `}
+`
+
+type AddressCopyButtonProps = {
+  onClick: () => void;
+  isCopied?: boolean;
+}
+
+const AddressCopyButton: FC<AddressCopyButtonProps> = ({ onClick, isCopied }) => {
+  return (
+    <StyledCopyButton onClick={onClick}>
+      <CopyIcon width={14} height={14} />
+      {isCopied && (
+        <span className="copy-text">Copied!</span>  
+      )}
+    </StyledCopyButton>
+  );
+}
+
 export const ResultDetail: FC<DetailType> = (props: DetailType) => {
   const { index, suggestions, handleDetail, currentIndex, logoIcons } = props;
   const renderProps = useContext(TokenSearchContext);
-  const { customActions, customTokenDetail } = renderProps;
+  const { customActions, customTokenDetail } = renderProps;  
 
   const selectedPair = suggestions[index];
 
+  const [isCopiedToken0Address, setIsCopiedToken0Address] = useState(false);
+  const [isCopiedToken1Address, setIsCopiedToken1Address] = useState(false);
+
+  const isActive = index === currentIndex;
   const tokenImage = (token) => {
     if (token?.image)
       return <img alt={token?.symbol} src={token?.image} style={{ borderRadius: '50%' }} width={imageSize} />;
     else return <DefaultIcon />;
   };
 
+  const copyAddress = (address, setIsCopiedAdress) => {
+    navigator.clipboard.writeText(address);
+    
+    setIsCopiedAdress(true);
+    setTimeout(() => {
+      setIsCopiedAdress(false);
+  }, 1000)
+  }
+
   return (
     <StyledDetailList
       styleOverrides={customTokenDetail?.list}
-      onClick={() => (currentIndex !== index ? handleDetail(index) : '')}
-      className={`${currentIndex === index ? 'active' : ''} ${(currentIndex - 1) === index ? 'no-border' : ''}`}>
+      onClick={() => (!isActive && handleDetail(index))}
+      className={`${isActive ? 'active' : ''} ${(currentIndex - 1) === index ? 'b-none' : ''}`}>
       <div className="pair-token-info">
         <div className="token icon-label">
           {tokenImage(selectedPair.token0)}
           <div className="flex-1 address text-line-1">
             <div className="text-line-1">{selectedPair.token0.name}</div>
-            <span className="text-line-1">
-              <span>Address:</span> <strong>{firstAndLast(selectedPair.token0.address)}</strong>
-            </span>
+            <div className="flex-center">
+              <div className="text-line-1">
+                <span>Address:</span> <strong>{firstAndLast(selectedPair.token0.address)}</strong>                         
+              </div>
+              {isActive && (
+                <AddressCopyButton
+                  onClick={() => copyAddress(selectedPair.token0.address, setIsCopiedToken0Address)}
+                  isCopied={isCopiedToken0Address}
+                />
+              )}   
+            </div>
+            
           </div>
         </div>
         <div className="gap-5">/</div>
         <div className="token icon-label">
           {tokenImage(selectedPair.token1)}
           <div className="flex-1 address text-line-1">
-            <div>{selectedPair.token1.name}</div>
-            <span>
-              <span>Address:</span> <strong>{firstAndLast(selectedPair.token1.address)}</strong>
-            </span>
+            <div className="text-line-1">{selectedPair.token1.name}</div>
+            <div className="flex-center">
+              <div className="text-line-1">
+                <span>Address:</span> <strong>{firstAndLast(selectedPair.token1.address)}</strong>
+              </div>
+              {isActive && (
+                <AddressCopyButton
+                  onClick={() => copyAddress(selectedPair.token1.address, setIsCopiedToken1Address)}
+                  isCopied={isCopiedToken1Address}
+                />
+              )}
+            </div>
           </div>
         </div>
       </div>      
       <div className="logo icon-label">
-        {logoIcons[selectedPair.network] ?? <Logo label={selectedPair.network} width={12} height={12} />}
+        {logoIcons[selectedPair.network] ?? <Logo label={selectedPair.network} width={16} height={16} />}
         <span className="capitalize">{selectedPair.network}</span>
       </div>
       <div className="logo icon-label">
-        {logoIcons[selectedPair.exchange] ?? <Logo label={selectedPair.exchange} width={12} height={12} />}
+        {logoIcons[selectedPair.exchange] ?? <Logo label={selectedPair.exchange} width={16} height={16} />}
         <span className="capitalize">{selectedPair.exchange}</span>
       </div>
       <div className="flex-center">
         Volume: <strong className="text-white">{intToWords(selectedPair.volumeUSD)}</strong>
       </div>
       <button
-        onClick={() => handleDetail(currentIndex === index ? null : index)}
-        className={currentIndex === index ? 'down' : 'up'}>
-        {currentIndex !== index ? (
+        onClick={() => handleDetail(isActive ? -1 : index)}
+        className={isActive ? 'down' : 'up'}>
+        {isActive ? (
           <>
-            <span>Details </span>
-            <DownIcon width={7} height={7} />
+            <span>Close </span>
+            <UpIcon height={10} width={10} />            
           </>
         ) : (
           <>
-            <span>Close </span>
-            <UpIcon height={7} width={7} />
+            <span>Details </span>
+            <DownIcon width={10} height={10} />
           </>
         )}
       </button>
-      {currentIndex === index && (
+      {isActive && (
         <div className="actions">
           {customActions &&
             customActions.map((action) => (
@@ -284,4 +351,6 @@ export const ResultDetail: FC<DetailType> = (props: DetailType) => {
     </StyledDetailList>
   );
 };
+
+export { StyledGridRow };
 export default ResultDetail;

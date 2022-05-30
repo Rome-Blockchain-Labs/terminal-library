@@ -49,7 +49,7 @@ __export(src_exports, {
 module.exports = __toCommonJS(src_exports);
 
 // src/searchbar/index.tsx
-var import_react49 = __toESM(require("react"));
+var import_react50 = __toESM(require("react"));
 var import_react_redux7 = require("react-redux");
 
 // src/searchbar/redux/store.ts
@@ -283,8 +283,7 @@ var tokenSearchSlice = (0, import_toolkit.createSlice)({
       state.searchText = "";
       state.suggestions = [];
       state.isLoading = false;
-      state.isSelecting = false;
-      state.exchangeMap = {}, state.networkMap = {}, state.isSelecting = false;
+      state.exchangeMap = {}, state.networkMap = {}, state.isSelecting = true;
       state.viewResult = false;
     },
     setViewResult: (state, action) => {
@@ -371,7 +370,7 @@ var store = (0, import_toolkit2.configureStore)({
 });
 
 // src/searchbar/tokenSearch/index.tsx
-var import_react48 = __toESM(require("react"));
+var import_react49 = __toESM(require("react"));
 var import_react_redux6 = require("react-redux");
 var import_styled_components7 = __toESM(require("styled-components"));
 
@@ -406,15 +405,15 @@ var SearchIcon = ({ height, width }) => /* @__PURE__ */ import_react2.default.cr
   cx: "7.4",
   cy: "7.4",
   r: "6.4",
-  stroke: "#7A808A"
+  stroke: "#B7BEC9"
 }), /* @__PURE__ */ import_react2.default.createElement("path", {
   d: "M7.39995 4.20001C6.97972 4.20001 6.56361 4.28278 6.17536 4.4436C5.78712 4.60441 5.43436 4.84012 5.13721 5.13727C4.84006 5.43442 4.60435 5.78718 4.44354 6.17543C4.28272 6.56367 4.19995 6.97978 4.19995 7.40001",
   "data-name": "Search icon",
   id: "Search_icon",
-  stroke: "#7A808A"
+  stroke: "#B7BEC9"
 }), /* @__PURE__ */ import_react2.default.createElement("path", {
   d: "M17 17L13.8 13.8",
-  stroke: "#7A808A"
+  stroke: "#B7BEC9"
 })));
 var search_default = SearchIcon;
 
@@ -447,9 +446,7 @@ var StyledInputGroup = import_styled_components.default.div`
   ${({ styleOverrides }) => ` 
     position: relative;
     width: ${(styleOverrides == null ? void 0 : styleOverrides.width) || "-webkit-fill-available"};
-    color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "#B7BEC9"};
-    background: ${(styleOverrides == null ? void 0 : styleOverrides.background) || "#00070E"};
-    padding-right: 145px;
+    padding: 0 120px 0 15px;
   `}
 `;
 var StyledInput = import_styled_components.default.input`
@@ -464,14 +461,18 @@ var StyledInput = import_styled_components.default.input`
     color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "#B7BEC9"};
     display: ${(styleOverrides == null ? void 0 : styleOverrides.display) || "block"}; 
     padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "10px 14px"};    
-    background: ${(styleOverrides == null ? void 0 : styleOverrides.background) || "#00070E"};  
+    background: transparent;  
+
+    &::placeholder {
+      color: #7A808A;
+    }
   `}
 `;
 var StyledSearchIconWrapper = import_styled_components.default.div`
   ${({ styleOverrides }) => `
     float: right;
     position: absolute;
-    right: ${(styleOverrides == null ? void 0 : styleOverrides.right) || "14px"};      
+    left: ${(styleOverrides == null ? void 0 : styleOverrides.right) || "10px"};
     top: 50%;
     transform: translateY(-50%);
     z-index: 1;   
@@ -483,10 +484,11 @@ var StyledWrapper = import_styled_components.default.div`
     border: ${(styleOverrides == null ? void 0 : styleOverrides.border) || "4px solid #474F5C"}; 
     border-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderRadius) || "4px"}; 
     color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "#7A808A"};
-    background: ${(styleOverrides == null ? void 0 : styleOverrides.background) || "#00070E"};  
-    font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "12px"};      
+    background: ${(styleOverrides == null ? void 0 : styleOverrides.background) || "#474F5C"};  
+    font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "0.75rem"};      
     font-family: ${(styleOverrides == null ? void 0 : styleOverrides.fontFamily) || "'Fira Code', monospace"};
-    box-shadow: 0 0 8px 2px #474f5c;
+    z-index: 100;
+
     .invalid-error {
       padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "0 14px 5px"};   
       color: ${(styleOverrides == null ? void 0 : styleOverrides.colorError) || "#F52E2E"};  
@@ -495,7 +497,7 @@ var StyledWrapper = import_styled_components.default.div`
 `;
 var StyledResetBtn = import_styled_components.default.button`
   position: absolute;
-  right: 40px;
+  right: 10px;
   top: 50%;
   transform: translateY(-50%);
   z-index: 1;
@@ -516,6 +518,9 @@ var SearchInput = () => {
       dispatch(setSearchText(searchText));
     } else if (searchText.length > 0) {
       setError(true);
+    }
+    if (Object.keys(networkMap).length > 0 && Object.keys(exchangeMap).length > 0 && inputRef.current) {
+      inputRef.current.focus();
     }
   }, [dispatch, networkMap, exchangeMap, searchText]);
   const debounceChangeHandler = (0, import_react5.useCallback)((0, import_lodash2.default)((value) => dispatch(setSearchText(value)), 350), []);
@@ -566,9 +571,9 @@ var SearchInput = () => {
 var SearchInput_default = SearchInput;
 
 // src/searchbar/tokenSearch/SearchResult.tsx
-var import_react40 = __toESM(require("react"));
+var import_react42 = __toESM(require("react"));
 var import_react_infinite_scroll_hook = __toESM(require("react-infinite-scroll-hook"));
-var import_styled_components3 = __toESM(require("styled-components"));
+var import_styled_components4 = __toESM(require("styled-components"));
 var import_react_redux2 = require("react-redux");
 
 // src/searchbar/icons/unchecked.tsx
@@ -601,8 +606,8 @@ var UnCheckedIcon = ({ height, width }) => /* @__PURE__ */ import_react6.default
 var unchecked_default = UnCheckedIcon;
 
 // src/searchbar/tokenSearch/ResultDetail.tsx
-var import_react39 = __toESM(require("react"));
-var import_styled_components2 = __toESM(require("styled-components"));
+var import_react41 = __toESM(require("react"));
+var import_styled_components3 = __toESM(require("styled-components"));
 
 // src/searchbar/icons/default.tsx
 var import_react7 = __toESM(require("react"));
@@ -2849,15 +2854,39 @@ function intToWords(int) {
   return "$" + Math.round(int / 1e8) / 10 + " Billion";
 }
 
-// src/searchbar/icons/down.tsx
+// src/searchbar/tokenSearch/Button.tsx
 var import_react37 = __toESM(require("react"));
-var DownIcon = ({ height, width }) => /* @__PURE__ */ import_react37.default.createElement(abstract_default, {
+var import_styled_components2 = __toESM(require("styled-components"));
+var StyledButton = import_styled_components2.default.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  box-sizing: border-box;
+  outline: none;
+  padding: 3px 6px;
+  margin: 3px;
+  color: #B4BBC7;
+  background-color: #474F5C;
+`;
+var Button = ({ className, styleOverrides, onClick, children }) => {
+  return /* @__PURE__ */ import_react37.default.createElement(StyledButton, {
+    className,
+    onClick,
+    style: styleOverrides
+  }, children);
+};
+var Button_default = Button;
+
+// src/searchbar/icons/down.tsx
+var import_react38 = __toESM(require("react"));
+var DownIcon = ({ height, width }) => /* @__PURE__ */ import_react38.default.createElement(abstract_default, {
   height: height != null ? height : 7,
   width: width != null ? width : 5,
   viewBox: "0 0 7 5"
-}, /* @__PURE__ */ import_react37.default.createElement("g", {
+}, /* @__PURE__ */ import_react38.default.createElement("g", {
   transform: "translate(0)"
-}, /* @__PURE__ */ import_react37.default.createElement("path", {
+}, /* @__PURE__ */ import_react38.default.createElement("path", {
   d: "M1 1L3.49449 3.5L6 1",
   stroke: "#7A808A",
   strokeLinecap: "round",
@@ -2866,14 +2895,14 @@ var DownIcon = ({ height, width }) => /* @__PURE__ */ import_react37.default.cre
 var down_default = DownIcon;
 
 // src/searchbar/icons/up.tsx
-var import_react38 = __toESM(require("react"));
-var UpIcon = ({ height, width }) => /* @__PURE__ */ import_react38.default.createElement(abstract_default, {
+var import_react39 = __toESM(require("react"));
+var UpIcon = ({ height, width }) => /* @__PURE__ */ import_react39.default.createElement(abstract_default, {
   height: height != null ? height : 7,
   width: width != null ? width : 4,
   viewBox: "0 0 7 4"
-}, /* @__PURE__ */ import_react38.default.createElement("g", {
+}, /* @__PURE__ */ import_react39.default.createElement("g", {
   transform: "translate(0)"
-}, /* @__PURE__ */ import_react38.default.createElement("path", {
+}, /* @__PURE__ */ import_react39.default.createElement("path", {
   d: "M6 3.5L3.50551 1L1 3.5",
   stroke: "#7A808A",
   strokeLinecap: "round",
@@ -2881,83 +2910,112 @@ var UpIcon = ({ height, width }) => /* @__PURE__ */ import_react38.default.creat
 })));
 var up_default = UpIcon;
 
+// src/searchbar/icons/copy.tsx
+var import_react40 = __toESM(require("react"));
+var CopyIcon = ({ height, width }) => /* @__PURE__ */ import_react40.default.createElement(abstract_default, {
+  height: height != null ? height : 24,
+  width: width != null ? width : 24,
+  viewBox: `0 0 24 24`
+}, /* @__PURE__ */ import_react40.default.createElement("g", {
+  transform: "translate(0)",
+  fill: "#B7BEC9"
+}, /* @__PURE__ */ import_react40.default.createElement("path", {
+  d: "M0 0h24v24H0z",
+  fill: "none"
+}), /* @__PURE__ */ import_react40.default.createElement("path", {
+  d: "M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"
+})));
+var copy_default = CopyIcon;
+
 // src/searchbar/tokenSearch/ResultDetail.tsx
 var imageSize = 26;
-var StyledDetailList = import_styled_components2.default.div`
+var StyledGridRow = import_styled_components3.default.div`
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns:
+    minmax(420px, 7fr)
+    minmax(120px, 2fr)
+    minmax(120px, 2fr)
+    minmax(180px, 3fr)
+    minmax(60px, 240px);
+  grid-auto-flow: row;
+  grid-auto-rows: auto;
+
+  &.active {
+    grid-template-columns:
+      minmax(420px, 7fr)
+      minmax(120px, 2fr)
+      minmax(120px, 2fr)
+      minmax(180px, 3fr)
+      minmax(240px, 240px);
+  }
+
+  &.b-none {
+    border: none !important;
+  }
+
+  @media (max-width: 768px) {
+    &.active {
+      grid-template-columns:
+        minmax(420px, 7fr)
+        minmax(120px, 2fr)
+        minmax(120px, 2fr)
+        minmax(180px, 3fr)
+        minmax(60px, 1fr);
+    }   
+  }
+`;
+var StyledDetailList = (0, import_styled_components3.default)(StyledGridRow)`
   ${({ styleOverrides }) => {
-  var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r;
+  var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p;
   return `
-    display: ${((_a = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _a.display) || "grid"};
-    grid-gap: 10px;
-    align-items: ${((_b = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _b.alignItems) || "center"};    
-    justify-content: space-between;
-    padding: ${((_c = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _c.padding) || "5px 0"};    
+    padding: ${((_a = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _a.padding) || "10px 0"};
     background: transparent;
-    border-bottom: ${((_d = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _d.borderbottom) || "1px solid #474F5C"};    
+    border-bottom: ${((_b = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _b.borderbottom) || "1px solid #474F5C"};    
     grid-auto-flow: row;
-    grid-template-columns: 
-      minmax(550px, 5.5fr)
-      minmax(100px, 1fr)
-      minmax(130px, 1.3fr)
-      minmax(130px, 1.3fr)
-      minmax(60px, 250px);
     position: relative;
-    font-size: ${((_e = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _e.fontSize) || "13px"};
-    color: ${((_f = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _f.color) || "#B4BBC7"};
+    font-size: ${((_c = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _c.fontSize) || "0.75rem"};
+    color: ${((_d = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _d.color) || "#B4BBC7"};
 
     & .pair-token-info {
       display: grid;
-      grid-template-columns: 150px 30px 150px;
+      grid-template-columns: 190px 20px 190px;
       grid-gap: 10px;
+      align-items: center;
     }
 
     .token {      
       grid-template-columns: 16px 100px; 
-      padding: ${((_g = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _g.padding) || "0 5px"};  
+      padding: ${((_e = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _e.padding) || "0 5px"};  
       .address {
         position: relative;
         padding-left: 5px;
         > span {
           display: none;
-          font-size: 12px;
+          font-size: 0.75rem;
           margin-top: 5px;
           span {
-            color: ${((_h = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _h.color) || "#B4BBC7"};
+            color: ${((_f = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _f.color) || "#B4BBC7"};
           }
         }
       } 
-    }
-
-    &.no-border {
-      border: none;
-    }
+    }   
 
     &.active {
       background: #474F5C;
-      border-radius: ${((_i = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _i.radius) || "4px"};
+      border-radius: ${((_g = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _g.radius) || "4px"};
       color: white;
-      padding: 24px 0;      
-      grid-template-columns: 
-        minmax(550px, 5.5fr)
-        minmax(100px, 1fr)
-        minmax(130px, 1.3fr)
-        minmax(130px, 1.3fr)
-        minmax(250px, 2.5fr);
-
-      .pair-token-info {
-        display: flex;
-        align-items: center;
-      }
+      padding: 24px 0;
 
       .token {
-        font-weight: ${((_j = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _j.fontWeight) || "600"};      
+        font-weight: ${((_h = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _h.fontWeight) || "600"};      
         .address {
-          font-size: 12px;
+          font-size: 0.75rem;
           > span {
             display: block;
           }
         }
-        svg {
+        > svg {
           width: 26px;
           height: 26px;
           margin-top: -10px;
@@ -3003,7 +3061,7 @@ var StyledDetailList = import_styled_components2.default.div`
       gap: 8px;
     }
     & .detail {
-      padding: ${((_k = styleOverrides == null ? void 0 : styleOverrides.detail) == null ? void 0 : _k.padding) || "3px"};
+      padding: ${((_i = styleOverrides == null ? void 0 : styleOverrides.detail) == null ? void 0 : _i.padding) || "3px"};
     }
     
     > button {      
@@ -3011,15 +3069,15 @@ var StyledDetailList = import_styled_components2.default.div`
       align-items: center;
       justify-content: center;
       justify-self: right;
-      border-color: ${((_l = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _l.borderColor) || "#474F5C"};      
-      background-color: ${((_m = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _m.backgroundColor) || "#474F5C"};      
-      color: ${((_n = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _n.color) || "#7A808A"};      
-      border-radius: ${((_o = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _o.borderRadius) || "4px"};     
+      border-color: ${((_j = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _j.borderColor) || "#474F5C"};      
+      background-color: ${((_k = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _k.backgroundColor) || "#474F5C"};      
+      color: ${((_l = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _l.color) || "#7A808A"};      
+      border-radius: ${((_m = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _m.borderRadius) || "4px"};     
       
       border-width: 0;      
       cursor: pointer;
-      padding: ${((_p = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _p.padding) || "6px 8px !important"};
-      width: ${((_q = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _q.width) || "auto"};
+      padding: ${((_n = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _n.padding) || "6px 8px !important"};
+      width: ${((_o = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _o.width) || "auto"};
       &.down {
         position: absolute;
         top: 3px;
@@ -3027,17 +3085,17 @@ var StyledDetailList = import_styled_components2.default.div`
         background: transparent;
       }
       &:hover {
-        background-color: ${((_r = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _r.hoverBackColor) || "#232C38"};      
+        background-color: ${((_p = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _p.hoverBackColor) || "#232C38"};      
       }    
     }
     .actions {
       display: flex;
       flex: 1;
       gap: 12px;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
       flex-wrap: wrap;
-      padding: 10px;
+      margin-right: 10px;
     }
     &:not(.active):hover {
       cursor: pointer; 
@@ -3050,100 +3108,139 @@ var StyledDetailList = import_styled_components2.default.div`
 }}
 
   @media (max-width: 768px) {
-    &, &.active {
-      grid-template-columns: 
-        minmax(550px, 5.5fr)
-        minmax(100px, 1fr)
-        minmax(130px, 1.3fr)
-        minmax(130px, 1.3fr)
-        minmax(60px, 0.6fr);
-    }
-    
-    .actions {
-      grid-column: 2 / -1;
-      justify-content: flex-end;
-    }
+    &.active {
+      .pair-token-info {
+        grid-row: 1 / 3;
+      }
+
+      .actions {
+        grid-column: 2 / -1;
+        justify-content: flex-end;
+      }
+    } 
   }
 `;
-var StyledAction = import_styled_components2.default.div`
+var StyledAction = import_styled_components3.default.div`
   cursor: pointer;
 `;
 var Action = (props) => {
   const { component, detail } = props;
   const Component = component;
-  return /* @__PURE__ */ import_react39.default.createElement(StyledAction, null, /* @__PURE__ */ import_react39.default.createElement(Component, {
+  return /* @__PURE__ */ import_react41.default.createElement(StyledAction, null, /* @__PURE__ */ import_react41.default.createElement(Component, {
     detail
   }));
+};
+var StyledCopyButton = (0, import_styled_components3.default)(Button_default)`
+  ${({ styleOverrides }) => `
+    .copy-text {
+      margin-left: 4px;
+      color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "#F52E2E"};
+    }
+  `}
+`;
+var AddressCopyButton = ({ onClick, isCopied }) => {
+  return /* @__PURE__ */ import_react41.default.createElement(StyledCopyButton, {
+    onClick
+  }, /* @__PURE__ */ import_react41.default.createElement(copy_default, {
+    width: 14,
+    height: 14
+  }), isCopied && /* @__PURE__ */ import_react41.default.createElement("span", {
+    className: "copy-text"
+  }, "Copied!"));
 };
 var ResultDetail = (props) => {
   var _a, _b;
   const { index, suggestions, handleDetail, currentIndex, logoIcons } = props;
-  const renderProps = (0, import_react39.useContext)(TokenSearch_default);
+  const renderProps = (0, import_react41.useContext)(TokenSearch_default);
   const { customActions, customTokenDetail } = renderProps;
   const selectedPair = suggestions[index];
+  const [isCopiedToken0Address, setIsCopiedToken0Address] = (0, import_react41.useState)(false);
+  const [isCopiedToken1Address, setIsCopiedToken1Address] = (0, import_react41.useState)(false);
+  const isActive = index === currentIndex;
   const tokenImage = (token) => {
     if (token == null ? void 0 : token.image)
-      return /* @__PURE__ */ import_react39.default.createElement("img", {
+      return /* @__PURE__ */ import_react41.default.createElement("img", {
         alt: token == null ? void 0 : token.symbol,
         src: token == null ? void 0 : token.image,
         style: { borderRadius: "50%" },
         width: imageSize
       });
     else
-      return /* @__PURE__ */ import_react39.default.createElement(default_default, null);
+      return /* @__PURE__ */ import_react41.default.createElement(default_default, null);
   };
-  return /* @__PURE__ */ import_react39.default.createElement(StyledDetailList, {
+  const copyAddress = (address, setIsCopiedAdress) => {
+    navigator.clipboard.writeText(address);
+    setIsCopiedAdress(true);
+    setTimeout(() => {
+      setIsCopiedAdress(false);
+    }, 1e3);
+  };
+  return /* @__PURE__ */ import_react41.default.createElement(StyledDetailList, {
     styleOverrides: customTokenDetail == null ? void 0 : customTokenDetail.list,
-    onClick: () => currentIndex !== index ? handleDetail(index) : "",
-    className: `${currentIndex === index ? "active" : ""} ${currentIndex - 1 === index ? "no-border" : ""}`
-  }, /* @__PURE__ */ import_react39.default.createElement("div", {
+    onClick: () => !isActive && handleDetail(index),
+    className: `${isActive ? "active" : ""} ${currentIndex - 1 === index ? "b-none" : ""}`
+  }, /* @__PURE__ */ import_react41.default.createElement("div", {
     className: "pair-token-info"
-  }, /* @__PURE__ */ import_react39.default.createElement("div", {
+  }, /* @__PURE__ */ import_react41.default.createElement("div", {
     className: "token icon-label"
-  }, tokenImage(selectedPair.token0), /* @__PURE__ */ import_react39.default.createElement("div", {
+  }, tokenImage(selectedPair.token0), /* @__PURE__ */ import_react41.default.createElement("div", {
     className: "flex-1 address text-line-1"
-  }, /* @__PURE__ */ import_react39.default.createElement("div", {
+  }, /* @__PURE__ */ import_react41.default.createElement("div", {
     className: "text-line-1"
-  }, selectedPair.token0.name), /* @__PURE__ */ import_react39.default.createElement("span", {
-    className: "text-line-1"
-  }, /* @__PURE__ */ import_react39.default.createElement("span", null, "Address:"), " ", /* @__PURE__ */ import_react39.default.createElement("strong", null, firstAndLast(selectedPair.token0.address))))), /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "gap-5"
-  }, "/"), /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "token icon-label"
-  }, tokenImage(selectedPair.token1), /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "flex-1 address text-line-1"
-  }, /* @__PURE__ */ import_react39.default.createElement("div", null, selectedPair.token1.name), /* @__PURE__ */ import_react39.default.createElement("span", null, /* @__PURE__ */ import_react39.default.createElement("span", null, "Address:"), " ", /* @__PURE__ */ import_react39.default.createElement("strong", null, firstAndLast(selectedPair.token1.address)))))), /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "logo icon-label"
-  }, (_a = logoIcons[selectedPair.network]) != null ? _a : /* @__PURE__ */ import_react39.default.createElement(Logo, {
-    label: selectedPair.network,
-    width: 12,
-    height: 12
-  }), /* @__PURE__ */ import_react39.default.createElement("span", {
-    className: "capitalize"
-  }, selectedPair.network)), /* @__PURE__ */ import_react39.default.createElement("div", {
-    className: "logo icon-label"
-  }, (_b = logoIcons[selectedPair.exchange]) != null ? _b : /* @__PURE__ */ import_react39.default.createElement(Logo, {
-    label: selectedPair.exchange,
-    width: 12,
-    height: 12
-  }), /* @__PURE__ */ import_react39.default.createElement("span", {
-    className: "capitalize"
-  }, selectedPair.exchange)), /* @__PURE__ */ import_react39.default.createElement("div", {
+  }, selectedPair.token0.name), /* @__PURE__ */ import_react41.default.createElement("div", {
     className: "flex-center"
-  }, "Volume: ", /* @__PURE__ */ import_react39.default.createElement("strong", {
+  }, /* @__PURE__ */ import_react41.default.createElement("div", {
+    className: "text-line-1"
+  }, /* @__PURE__ */ import_react41.default.createElement("span", null, "Address:"), " ", /* @__PURE__ */ import_react41.default.createElement("strong", null, firstAndLast(selectedPair.token0.address))), isActive && /* @__PURE__ */ import_react41.default.createElement(AddressCopyButton, {
+    onClick: () => copyAddress(selectedPair.token0.address, setIsCopiedToken0Address),
+    isCopied: isCopiedToken0Address
+  })))), /* @__PURE__ */ import_react41.default.createElement("div", {
+    className: "gap-5"
+  }, "/"), /* @__PURE__ */ import_react41.default.createElement("div", {
+    className: "token icon-label"
+  }, tokenImage(selectedPair.token1), /* @__PURE__ */ import_react41.default.createElement("div", {
+    className: "flex-1 address text-line-1"
+  }, /* @__PURE__ */ import_react41.default.createElement("div", {
+    className: "text-line-1"
+  }, selectedPair.token1.name), /* @__PURE__ */ import_react41.default.createElement("div", {
+    className: "flex-center"
+  }, /* @__PURE__ */ import_react41.default.createElement("div", {
+    className: "text-line-1"
+  }, /* @__PURE__ */ import_react41.default.createElement("span", null, "Address:"), " ", /* @__PURE__ */ import_react41.default.createElement("strong", null, firstAndLast(selectedPair.token1.address))), isActive && /* @__PURE__ */ import_react41.default.createElement(AddressCopyButton, {
+    onClick: () => copyAddress(selectedPair.token1.address, setIsCopiedToken1Address),
+    isCopied: isCopiedToken1Address
+  }))))), /* @__PURE__ */ import_react41.default.createElement("div", {
+    className: "logo icon-label"
+  }, (_a = logoIcons[selectedPair.network]) != null ? _a : /* @__PURE__ */ import_react41.default.createElement(Logo, {
+    label: selectedPair.network,
+    width: 16,
+    height: 16
+  }), /* @__PURE__ */ import_react41.default.createElement("span", {
+    className: "capitalize"
+  }, selectedPair.network)), /* @__PURE__ */ import_react41.default.createElement("div", {
+    className: "logo icon-label"
+  }, (_b = logoIcons[selectedPair.exchange]) != null ? _b : /* @__PURE__ */ import_react41.default.createElement(Logo, {
+    label: selectedPair.exchange,
+    width: 16,
+    height: 16
+  }), /* @__PURE__ */ import_react41.default.createElement("span", {
+    className: "capitalize"
+  }, selectedPair.exchange)), /* @__PURE__ */ import_react41.default.createElement("div", {
+    className: "flex-center"
+  }, "Volume: ", /* @__PURE__ */ import_react41.default.createElement("strong", {
     className: "text-white"
-  }, intToWords(selectedPair.volumeUSD))), /* @__PURE__ */ import_react39.default.createElement("button", {
-    onClick: () => handleDetail(currentIndex === index ? null : index),
-    className: currentIndex === index ? "down" : "up"
-  }, currentIndex !== index ? /* @__PURE__ */ import_react39.default.createElement(import_react39.default.Fragment, null, /* @__PURE__ */ import_react39.default.createElement("span", null, "Details "), /* @__PURE__ */ import_react39.default.createElement(down_default, {
-    width: 7,
-    height: 7
-  })) : /* @__PURE__ */ import_react39.default.createElement(import_react39.default.Fragment, null, /* @__PURE__ */ import_react39.default.createElement("span", null, "Close "), /* @__PURE__ */ import_react39.default.createElement(up_default, {
-    height: 7,
-    width: 7
-  }))), currentIndex === index && /* @__PURE__ */ import_react39.default.createElement("div", {
+  }, intToWords(selectedPair.volumeUSD))), /* @__PURE__ */ import_react41.default.createElement("button", {
+    onClick: () => handleDetail(isActive ? -1 : index),
+    className: isActive ? "down" : "up"
+  }, isActive ? /* @__PURE__ */ import_react41.default.createElement(import_react41.default.Fragment, null, /* @__PURE__ */ import_react41.default.createElement("span", null, "Close "), /* @__PURE__ */ import_react41.default.createElement(up_default, {
+    height: 10,
+    width: 10
+  })) : /* @__PURE__ */ import_react41.default.createElement(import_react41.default.Fragment, null, /* @__PURE__ */ import_react41.default.createElement("span", null, "Details "), /* @__PURE__ */ import_react41.default.createElement(down_default, {
+    width: 10,
+    height: 10
+  }))), isActive && /* @__PURE__ */ import_react41.default.createElement("div", {
     className: "actions"
-  }, customActions && customActions.map((action) => /* @__PURE__ */ import_react39.default.createElement(Action, {
+  }, customActions && customActions.map((action) => /* @__PURE__ */ import_react41.default.createElement(Action, {
     key: `action-${action.index}`,
     component: action.component,
     detail: selectedPair
@@ -3152,37 +3249,37 @@ var ResultDetail = (props) => {
 var ResultDetail_default = ResultDetail;
 
 // src/searchbar/tokenSearch/SearchResult.tsx
-var StyledResult = import_styled_components3.default.div`
+var StyledResult = import_styled_components4.default.div`
   background-color: inherit;
   margin-left: auto;
   margin-right: auto;
   position: relative;
 `;
-var StyledLoading = import_styled_components3.default.div`
+var StyledLoading = import_styled_components4.default.div`
   ${({ styleOverrides }) => `
     position: relative;
     display: flex;
     justify-content: center;  
     margin: 10px;
     color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "white"};
-    font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "12px"};      
+    font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "0.75rem"};      
   `}
 `;
-var StyledResultTitle = import_styled_components3.default.div`
+var StyledResultTitle = import_styled_components4.default.div`
   ${({ styleOverrides }) => `    
     display: flex;
     align-items: center;
     justify-content: space-between;
     color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "#fff"};
-    font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "12px"};      
+    font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "0.75rem"};      
     padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "7px 14px 2px;"};      
     margin: ${(styleOverrides == null ? void 0 : styleOverrides.margin) || "0"};      
     > span {
-      font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize2) || "7px"};      
+      font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize2) || "0.75rem"};      
     }
   `}
 `;
-var StyledResultContent = import_styled_components3.default.div`
+var StyledResultContent = import_styled_components4.default.div`
   ${({ styleOverrides }) => `
     padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "14px"};
     background: ${(styleOverrides == null ? void 0 : styleOverrides.background) || "#00070E"};
@@ -3195,28 +3292,21 @@ var StyledResultContent = import_styled_components3.default.div`
     border-color: ${(styleOverrides == null ? void 0 : styleOverrides.borderColor) || "#474F5C"};  
     border-style: ${(styleOverrides == null ? void 0 : styleOverrides.borderStyle) || "solid"};  
     border-width: ${(styleOverrides == null ? void 0 : styleOverrides.borderWidth) || "1px"};      
-    font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "15px"};      
+    font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "0.875rem"};      
     font-family: ${(styleOverrides == null ? void 0 : styleOverrides.fontFamily) || "'Fira Code', monospace"};  
     overflow: auto;
+    box-sizing: border-box;
   `}
 
-  & .result-content-responsive {
+  .result-content-responsive {
     width: fit-content;
     min-width: 100%;
   }
 
-  & .header {
-    display: grid;
-    grid-gap: 10px;
-    grid-template-columns:
-      minmax(550px, 5.5fr)
-      minmax(100px, 1fr)
-      minmax(130px, 1.3fr)
-      minmax(130px, 1.3fr)
-      minmax(60px, 250px);
+  .header {    
     border-bottom: 1px solid #474f5c;
     color: #b4bbc7;
-    font-size: 11px;
+    font-size: 0.75rem;
     font-weight: bold;
     padding-bottom: 10px;
 
@@ -3233,11 +3323,11 @@ var StyledResultContent = import_styled_components3.default.div`
 var SearchResult = (props) => {
   var _a;
   const dispatch = (0, import_react_redux2.useDispatch)();
-  const renderProps = (0, import_react40.useContext)(TokenSearch_default);
+  const renderProps = (0, import_react42.useContext)(TokenSearch_default);
   const { customResult, customLoading } = renderProps;
   const { suggestions, searchText, isLoading, suggestionRendered } = (0, import_react_redux2.useSelector)((state) => state);
-  const [currentIndex, setCurrentIndex] = (0, import_react40.useState)(-1);
-  const hasNextPage = (0, import_react40.useMemo)(() => suggestionRendered.length < suggestions.length, [suggestions, suggestionRendered]);
+  const [currentIndex, setCurrentIndex] = (0, import_react42.useState)(-1);
+  const hasNextPage = (0, import_react42.useMemo)(() => suggestionRendered.length < suggestions.length, [suggestions, suggestionRendered]);
   const [sentryRef] = (0, import_react_infinite_scroll_hook.default)({
     loading: isLoading,
     hasNextPage,
@@ -3245,7 +3335,7 @@ var SearchResult = (props) => {
   });
   if (props.loading) {
     const loadingTitle = (customLoading == null ? void 0 : customLoading.loadingTitle) ? customLoading.loadingTitle : "Searching...";
-    return /* @__PURE__ */ import_react40.default.createElement(StyledLoading, {
+    return /* @__PURE__ */ import_react42.default.createElement(StyledLoading, {
       styleOverrides: customLoading
     }, loadingTitle);
   }
@@ -3261,59 +3351,59 @@ var SearchResult = (props) => {
       logoIcons[exchange.name] = exchange.icon;
     });
   });
-  return /* @__PURE__ */ import_react40.default.createElement(StyledResult, null, /* @__PURE__ */ import_react40.default.createElement(StyledResultTitle, {
+  return /* @__PURE__ */ import_react42.default.createElement(StyledResult, null, /* @__PURE__ */ import_react42.default.createElement(StyledResultTitle, {
     styleOverrides: customResult == null ? void 0 : customResult.title
-  }, /* @__PURE__ */ import_react40.default.createElement("div", null, "Search Results ", /* @__PURE__ */ import_react40.default.createElement("span", null, "(", suggestions.length, " Results Found)")), /* @__PURE__ */ import_react40.default.createElement("button", {
+  }, /* @__PURE__ */ import_react42.default.createElement("div", null, "Search Results ", /* @__PURE__ */ import_react42.default.createElement("span", null, "(", suggestions.length, " Results Found)")), /* @__PURE__ */ import_react42.default.createElement("button", {
     onClick: handleClose
-  }, "Close\xA0", /* @__PURE__ */ import_react40.default.createElement(unchecked_default, {
+  }, "Close\xA0", /* @__PURE__ */ import_react42.default.createElement(unchecked_default, {
     width: 7,
     height: 7
-  }))), /* @__PURE__ */ import_react40.default.createElement(StyledResultContent, {
+  }))), /* @__PURE__ */ import_react42.default.createElement(StyledResultContent, {
     styleOverrides: customResult == null ? void 0 : customResult.content
-  }, /* @__PURE__ */ import_react40.default.createElement("div", {
+  }, /* @__PURE__ */ import_react42.default.createElement("div", {
     className: "result-content-responsive"
-  }, /* @__PURE__ */ import_react40.default.createElement("div", {
-    className: "header"
-  }, /* @__PURE__ */ import_react40.default.createElement("div", null, "Pair"), /* @__PURE__ */ import_react40.default.createElement("div", null, "Network"), /* @__PURE__ */ import_react40.default.createElement("div", null, "Exchange"), /* @__PURE__ */ import_react40.default.createElement("div", null, "Details")), suggestionRendered.map((suggestions2, index) => /* @__PURE__ */ import_react40.default.createElement(ResultDetail_default, {
+  }, /* @__PURE__ */ import_react42.default.createElement(StyledGridRow, {
+    className: `header ${currentIndex === 0 && "b-none"}`
+  }, /* @__PURE__ */ import_react42.default.createElement("div", null, "Pair"), /* @__PURE__ */ import_react42.default.createElement("div", null, "Network"), /* @__PURE__ */ import_react42.default.createElement("div", null, "Exchange"), /* @__PURE__ */ import_react42.default.createElement("div", null, "Details")), suggestionRendered.map((suggestions2, index) => /* @__PURE__ */ import_react42.default.createElement(ResultDetail_default, {
     suggestions: suggestionRendered,
     index,
     key: `token-detail-${index}`,
     currentIndex,
     handleDetail: setCurrentIndex,
     logoIcons
-  })), !!searchText && !suggestionRendered.length && /* @__PURE__ */ import_react40.default.createElement(StyledLoading, {
+  })), !!searchText && !suggestionRendered.length && /* @__PURE__ */ import_react42.default.createElement(StyledLoading, {
     styleOverrides: customLoading
-  }, notFoundTitle), hasNextPage && /* @__PURE__ */ import_react40.default.createElement("div", {
+  }, notFoundTitle), hasNextPage && /* @__PURE__ */ import_react42.default.createElement("div", {
     ref: sentryRef
   }, "loading...."))));
 };
 var SearchResult_default = SearchResult;
 
 // src/searchbar/tokenSearch/SearchFilters.tsx
-var import_react46 = __toESM(require("react"));
+var import_react47 = __toESM(require("react"));
 var import_react_redux5 = require("react-redux");
 var import_lodash5 = require("lodash");
 var import_styled_components6 = __toESM(require("styled-components"));
 var import_react_accessible_accordion = require("react-accessible-accordion");
 
 // src/searchbar/tokenSearch/SearchFiltersNetworkSelectors.tsx
-var import_react44 = __toESM(require("react"));
+var import_react45 = __toESM(require("react"));
 var import_react_redux3 = require("react-redux");
 var import_lodash3 = require("lodash");
 
 // src/searchbar/tokenSearch/Chip.tsx
-var import_react42 = __toESM(require("react"));
-var import_styled_components4 = __toESM(require("styled-components"));
+var import_react44 = __toESM(require("react"));
+var import_styled_components5 = __toESM(require("styled-components"));
 
 // src/searchbar/icons/checked.tsx
-var import_react41 = __toESM(require("react"));
-var CheckedIcon = ({ height, width }) => /* @__PURE__ */ import_react41.default.createElement(abstract_default, {
+var import_react43 = __toESM(require("react"));
+var CheckedIcon = ({ height, width }) => /* @__PURE__ */ import_react43.default.createElement(abstract_default, {
   height: height != null ? height : 11,
   width: width != null ? width : 8,
   viewBox: "0 0 11 8"
-}, /* @__PURE__ */ import_react41.default.createElement("g", {
+}, /* @__PURE__ */ import_react43.default.createElement("g", {
   transform: "translate(0)"
-}, /* @__PURE__ */ import_react41.default.createElement("path", {
+}, /* @__PURE__ */ import_react43.default.createElement("path", {
   d: "M1 2.91L4.29 6.16L9.48 1",
   stroke: "#00C30E",
   strokeWidth: "1.5",
@@ -3322,7 +3412,7 @@ var CheckedIcon = ({ height, width }) => /* @__PURE__ */ import_react41.default.
 var checked_default = CheckedIcon;
 
 // src/searchbar/tokenSearch/Chip.tsx
-var StyledChip = import_styled_components4.default.div`
+var StyledChip = import_styled_components5.default.div`
   ${({ styleOverrides }) => `
     > input {
       display: none;
@@ -3341,7 +3431,7 @@ var StyledChip = import_styled_components4.default.div`
       ::-webkit-user-select: none;
       ::-ms-user-select: none;          
 
-      font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "8px"};  
+      font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "0.75rem"};  
       font-weight: ${(styleOverrides == null ? void 0 : styleOverrides.fontWeight) || "500"};  
       border-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderRadius) || "4px"};  
       background-color: ${(styleOverrides == null ? void 0 : styleOverrides.backgroundColor) || "#232B35"};  
@@ -3349,11 +3439,11 @@ var StyledChip = import_styled_components4.default.div`
       padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "2px 5px"};   
       margin: ${(styleOverrides == null ? void 0 : styleOverrides.margin) || "5px"};   
       color: ${(styleOverrides == null ? void 0 : styleOverrides.defaultColor) || "#B4BBC7"};   
-      width: ${(styleOverrides == null ? void 0 : styleOverrides.width) || "120px"};   
+      min-width: ${(styleOverrides == null ? void 0 : styleOverrides.width) || "120px"};   
       height: ${(styleOverrides == null ? void 0 : styleOverrides.height) || "35px"};   
       text-align: ${(styleOverrides == null ? void 0 : styleOverrides.textAlign) || "left"}; 
       text-transform: ${(styleOverrides == null ? void 0 : styleOverrides.textTransform) || "uppercase"}; 
-      grid-template-columns: ${(styleOverrides == null ? void 0 : styleOverrides.gridTemplateColumns) || "22% 68% 10%"}; 
+      grid-template-columns: ${(styleOverrides == null ? void 0 : styleOverrides.gridTemplateColumns) || "minmax(20px, auto) auto minmax(20px, auto)"};
       >:last-child {      
         justify-self: ${(styleOverrides == null ? void 0 : styleOverrides.justifySelf) || "end"}; 
       }
@@ -3377,60 +3467,36 @@ var StyledChip = import_styled_components4.default.div`
   }
 `;
 var Chip = (props) => {
-  const renderProps = (0, import_react42.useContext)(TokenSearch_default);
+  const renderProps = (0, import_react44.useContext)(TokenSearch_default);
   const { label, checked, onChange, name, value, styleOverrides, grayscaleFilter, icon } = props;
   const { customChip } = renderProps;
   const customStyles = styleOverrides === void 0 ? customChip : styleOverrides;
-  const checkedStatus = checked ? /* @__PURE__ */ import_react42.default.createElement(checked_default, null) : /* @__PURE__ */ import_react42.default.createElement(unchecked_default, null);
-  return /* @__PURE__ */ import_react42.default.createElement(StyledChip, {
+  const checkedStatus = checked ? /* @__PURE__ */ import_react44.default.createElement(checked_default, null) : /* @__PURE__ */ import_react44.default.createElement(unchecked_default, null);
+  return /* @__PURE__ */ import_react44.default.createElement(StyledChip, {
     styleOverrides: customStyles
-  }, /* @__PURE__ */ import_react42.default.createElement("input", {
+  }, /* @__PURE__ */ import_react44.default.createElement("input", {
     type: "checkbox",
     id: `${label}-${name}`,
     onChange,
     checked,
     name,
     value
-  }), /* @__PURE__ */ import_react42.default.createElement("label", {
+  }), /* @__PURE__ */ import_react44.default.createElement("label", {
     htmlFor: `${label}-${name}`
-  }, /* @__PURE__ */ import_react42.default.createElement("div", {
+  }, /* @__PURE__ */ import_react44.default.createElement("div", {
     className: checked ? "chip-icon active" : "chip-icon"
-  }, icon != null ? icon : /* @__PURE__ */ import_react42.default.createElement(Logo, {
+  }, icon != null ? icon : /* @__PURE__ */ import_react44.default.createElement(Logo, {
     label,
     grayscaleFilter,
     width: 16,
     height: 16
-  })), /* @__PURE__ */ import_react42.default.createElement("span", null, label), !["Select All", "Deselect All"].includes(label) && checkedStatus));
+  })), /* @__PURE__ */ import_react44.default.createElement("span", null, label), !["Select All", "Deselect All"].includes(label) && checkedStatus));
 };
-
-// src/searchbar/tokenSearch/Button.tsx
-var import_react43 = __toESM(require("react"));
-var import_styled_components5 = __toESM(require("styled-components"));
-var StyledButton = import_styled_components5.default.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 4px;
-  box-sizing: border-box;
-  outline: none;
-  padding: 3px 6px;
-  margin: 3px;
-  color: #B4BBC7;
-  background-color: #474F5C;
-`;
-var Button = ({ className, styleOverrides, onClick, children }) => {
-  return /* @__PURE__ */ import_react43.default.createElement(StyledButton, {
-    className,
-    onClick,
-    style: styleOverrides
-  }, children);
-};
-var Button_default = Button;
 
 // src/searchbar/tokenSearch/SearchFiltersNetworkSelectors.tsx
 var FilterNetworkAll = () => {
   const dispatch = (0, import_react_redux3.useDispatch)();
-  const renderProps = (0, import_react44.useContext)(TokenSearch_default);
+  const renderProps = (0, import_react45.useContext)(TokenSearch_default);
   const { exchangeMap, networkMap } = (0, import_react_redux3.useSelector)((state) => state);
   const networkAll = Object.values((0, import_lodash3.omitBy)(networkMap, (b) => !b)).length === 0;
   const exchangeNamesActive = Object.keys((0, import_lodash3.omitBy)(exchangeMap, (b) => !b));
@@ -3440,20 +3506,20 @@ var FilterNetworkAll = () => {
     dispatch(setNetworkMapAll({ networkNames, networkAll }));
     dispatch(setExchangeMapAll({ exchangeNames: exchangeNamesActive, exchangeAll: false }));
   };
-  return /* @__PURE__ */ import_react44.default.createElement(Button_default, {
+  return /* @__PURE__ */ import_react45.default.createElement(Button_default, {
     onClick: handleChange
   }, networkAll ? "Select All" : "Unselect All");
 };
 var FilterNetworkSelectors = () => {
-  const renderProps = (0, import_react44.useContext)(TokenSearch_default);
+  const renderProps = (0, import_react45.useContext)(TokenSearch_default);
   const networks = [...renderProps.networks];
-  const networkItems = (0, import_react44.useMemo)(() => networks.map((network) => {
+  const networkItems = (0, import_react45.useMemo)(() => networks.map((network) => {
     return { id: network.id, exchanges: network.exchanges.map((exhange) => exhange.name) };
   }), [networks]);
   const dispatch = (0, import_react_redux3.useDispatch)();
   const { networkMap } = (0, import_react_redux3.useSelector)((state) => state);
   const networkElement = (network) => {
-    return /* @__PURE__ */ import_react44.default.createElement(Chip, {
+    return /* @__PURE__ */ import_react45.default.createElement(Chip, {
       key: network.id,
       name: network.id,
       label: network.name || network.id,
@@ -3470,7 +3536,7 @@ var FilterNetworkSelectors = () => {
 };
 
 // src/searchbar/tokenSearch/SearchFiltersExchangeSelectors.tsx
-var import_react45 = __toESM(require("react"));
+var import_react46 = __toESM(require("react"));
 var import_lodash4 = require("lodash");
 var import_react_redux4 = require("react-redux");
 var FilterExchangeAll = () => {
@@ -3478,7 +3544,7 @@ var FilterExchangeAll = () => {
   const { exchangeMap, networkMap } = (0, import_react_redux4.useSelector)((state) => state);
   const exchangeAll = Object.values((0, import_lodash4.omitBy)(exchangeMap, (b) => !b)).length === 0;
   const selectedNetworks = Object.keys((0, import_lodash4.omitBy)(networkMap, (b) => !b));
-  const renderProps = (0, import_react45.useContext)(TokenSearch_default);
+  const renderProps = (0, import_react46.useContext)(TokenSearch_default);
   const { networks } = renderProps;
   const exchangeNames = [];
   networks == null ? void 0 : networks.forEach((network) => {
@@ -3489,7 +3555,7 @@ var FilterExchangeAll = () => {
       });
     }
   });
-  return /* @__PURE__ */ import_react45.default.createElement(Button_default, {
+  return /* @__PURE__ */ import_react46.default.createElement(Button_default, {
     onClick: () => dispatch(setExchangeMapAll({ exchangeNames, exchangeAll }))
   }, exchangeAll ? "Select All" : "Unselect All");
 };
@@ -3497,7 +3563,7 @@ var FilterExchangeSelectors = () => {
   var _a;
   const dispatch = (0, import_react_redux4.useDispatch)();
   const { networkMap, exchangeMap } = (0, import_react_redux4.useSelector)((state) => state);
-  const renderProps = (0, import_react45.useContext)(TokenSearch_default);
+  const renderProps = (0, import_react46.useContext)(TokenSearch_default);
   const selectedNetworks = Object.keys((0, import_lodash4.omitBy)(networkMap, (b) => !b));
   const exchanges = [];
   (_a = renderProps.networks) == null ? void 0 : _a.forEach((network) => {
@@ -3508,7 +3574,7 @@ var FilterExchangeSelectors = () => {
     }
   });
   const exchangeElement = (exchange) => {
-    return /* @__PURE__ */ import_react45.default.createElement(Chip, {
+    return /* @__PURE__ */ import_react46.default.createElement(Chip, {
       key: exchange.name,
       name: exchange.name,
       label: exchange.name,
@@ -3554,7 +3620,7 @@ var StyledFilterHeader = import_styled_components6.default.div`
     text-align: ${(styleOverrides == null ? void 0 : styleOverrides.textAlign) || "left"};     
     margin: ${(styleOverrides == null ? void 0 : styleOverrides.margin) || "5px 0 0"};     
     border-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderRadius) || "4px"};     
-    font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "13px"};     
+    font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "0.75rem"};     
     font-weight: ${(styleOverrides == null ? void 0 : styleOverrides.fontWeight) || "500"};     
     &:hover {
       background-color: ${(styleOverrides == null ? void 0 : styleOverrides.hoverColor) || "#232C38"};
@@ -3586,7 +3652,7 @@ var StyledFilterContent = import_styled_components6.default.div`
 var StyledDescription = import_styled_components6.default.div`
   ${({ styleOverrides }) => `
     text-align: ${(styleOverrides == null ? void 0 : styleOverrides.textAlign) || "right"};
-    font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "12px"};
+    font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "0.75rem"};
     padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "10px 10px 5px"};       
     background-color: ${(styleOverrides == null ? void 0 : styleOverrides.backgroundColor) || "#00070E"};
     color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "#c4c5c7"};       
@@ -3613,24 +3679,24 @@ var SearchDescription = (props) => {
     desc = "Searching all networks and exchanges";
   } else {
     if (type === "network")
-      desc = /* @__PURE__ */ import_react46.default.createElement("div", {
+      desc = /* @__PURE__ */ import_react47.default.createElement("div", {
         style: { display: "flex", justifyContent: "right" }
-      }, "Searching\xA0", /* @__PURE__ */ import_react46.default.createElement(StyledCount, null, networkCount, " network", networkCount > 1 ? "s" : ""), exchangeCount > 0 && /* @__PURE__ */ import_react46.default.createElement(import_react46.default.Fragment, null, "\xA0within\xA0", /* @__PURE__ */ import_react46.default.createElement(StyledCount, null, exchangeCount, " exchange", exchangeCount > 1 ? "s" : "")));
+      }, "Searching\xA0", /* @__PURE__ */ import_react47.default.createElement(StyledCount, null, networkCount, " network", networkCount > 1 ? "s" : ""), exchangeCount > 0 && /* @__PURE__ */ import_react47.default.createElement(import_react47.default.Fragment, null, "\xA0within\xA0", /* @__PURE__ */ import_react47.default.createElement(StyledCount, null, exchangeCount, " exchange", exchangeCount > 1 ? "s" : "")));
     else
-      desc = /* @__PURE__ */ import_react46.default.createElement("div", {
+      desc = /* @__PURE__ */ import_react47.default.createElement("div", {
         style: { display: "flex", justifyContent: "right" }
-      }, "Searching\xA0", /* @__PURE__ */ import_react46.default.createElement(StyledCount, null, exchangeCount, " exchange", exchangeCount > 1 ? "s" : ""), "\xA0within\xA0", /* @__PURE__ */ import_react46.default.createElement(StyledCount, null, networkCount, " network", networkCount > 1 ? "s" : ""));
+      }, "Searching\xA0", /* @__PURE__ */ import_react47.default.createElement(StyledCount, null, exchangeCount, " exchange", exchangeCount > 1 ? "s" : ""), "\xA0within\xA0", /* @__PURE__ */ import_react47.default.createElement(StyledCount, null, networkCount, " network", networkCount > 1 ? "s" : ""));
   }
-  return /* @__PURE__ */ import_react46.default.createElement(import_react46.default.Fragment, null, desc);
+  return /* @__PURE__ */ import_react47.default.createElement(import_react47.default.Fragment, null, desc);
 };
 var AccordionToggleButton = ({ isOpen, onClick }) => {
-  return /* @__PURE__ */ import_react46.default.createElement(Button_default, {
+  return /* @__PURE__ */ import_react47.default.createElement(Button_default, {
     className: "accordion-toggle",
     onClick
-  }, isOpen ? /* @__PURE__ */ import_react46.default.createElement(import_react46.default.Fragment, null, /* @__PURE__ */ import_react46.default.createElement("span", null, "Close"), /* @__PURE__ */ import_react46.default.createElement(down_default, {
+  }, isOpen ? /* @__PURE__ */ import_react47.default.createElement(import_react47.default.Fragment, null, /* @__PURE__ */ import_react47.default.createElement("span", null, "Close"), /* @__PURE__ */ import_react47.default.createElement(up_default, {
     width: 8,
     height: 8
-  })) : /* @__PURE__ */ import_react46.default.createElement(import_react46.default.Fragment, null, /* @__PURE__ */ import_react46.default.createElement("span", null, "Open"), /* @__PURE__ */ import_react46.default.createElement(up_default, {
+  })) : /* @__PURE__ */ import_react47.default.createElement(import_react47.default.Fragment, null, /* @__PURE__ */ import_react47.default.createElement("span", null, "Open"), /* @__PURE__ */ import_react47.default.createElement(down_default, {
     width: 8,
     height: 8
   })));
@@ -3639,67 +3705,62 @@ var SearchFilters = () => {
   var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j;
   const dispatch = (0, import_react_redux5.useDispatch)();
   const { networkMap, exchangeMap, searchText } = (0, import_react_redux5.useSelector)((state) => state);
-  const renderProps = (0, import_react46.useContext)(TokenSearch_default);
-  const { customSearchFilter, networks } = renderProps;
+  const renderProps = (0, import_react47.useContext)(TokenSearch_default);
+  const { customSearchFilter } = renderProps;
   const exchangesActive = Object.values(networkMap).filter((b) => b).length !== 0;
   const networkIds = Object.keys((0, import_lodash5.omitBy)(networkMap, (b) => !b));
   const exchangeIds = Object.keys((0, import_lodash5.omitBy)(exchangeMap, (b) => !b)) || [];
   const networkCount = networkIds.length;
   const exchangeCount = exchangeIds.length;
-  if (!exchangeIds.length) {
-    networks == null ? void 0 : networks.forEach((network) => {
-      var _a2;
-      if (networkIds.includes(network.id)) {
-        (_a2 = network.exchanges) == null ? void 0 : _a2.forEach((exchange) => {
-          exchangeIds.push(exchange.name);
-        });
-      }
-    });
-  }
   const totalExchangeCount = exchangeIds.length;
   const networkTitle = ((_a = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _a.network) || "Select Network(s)";
   const exchangeTitle = ((_b = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _b.exchange) || "Select Exchange(s)";
-  const [isNetworkMapExpanded, setIsNetworkMapExpanded] = (0, import_react46.useState)(true);
-  const [isExchangeMapExpanded, setIsExchangeMapExpanded] = (0, import_react46.useState)(false);
-  (0, import_react46.useEffect)(() => {
-    (Object.keys(networkMap).length > 0 || Object.keys(exchangeMap).length > 0) && searchText.length > 0 && dispatch(setViewResult(true));
+  const [isNetworkMapExpanded, setIsNetworkMapExpanded] = (0, import_react47.useState)(true);
+  const [isExchangeMapExpanded, setIsExchangeMapExpanded] = (0, import_react47.useState)(false);
+  (0, import_react47.useEffect)(() => {
+    if (Object.keys(networkMap).length > 0 && Object.keys(exchangeMap).length > 0 && searchText.length > 0) {
+      dispatch(setViewResult(true));
+    }
+    if (Object.keys(networkMap).length > 0) {
+      setIsExchangeMapExpanded(true);
+    }
   }, [networkMap, exchangeMap, searchText]);
-  return /* @__PURE__ */ import_react46.default.createElement(FilterWrapper, {
+  return /* @__PURE__ */ import_react47.default.createElement(FilterWrapper, {
     styleOverrides: customSearchFilter == null ? void 0 : customSearchFilter.wrapper
-  }, /* @__PURE__ */ import_react46.default.createElement(import_react_accessible_accordion.Accordion, {
+  }, /* @__PURE__ */ import_react47.default.createElement(import_react_accessible_accordion.Accordion, {
     allowMultipleExpanded: true,
     allowZeroExpanded: true
-  }, /* @__PURE__ */ import_react46.default.createElement(import_react_accessible_accordion.AccordionItem, {
+  }, /* @__PURE__ */ import_react47.default.createElement(import_react_accessible_accordion.AccordionItem, {
     dangerouslySetExpanded: isNetworkMapExpanded
-  }, /* @__PURE__ */ import_react46.default.createElement(import_react_accessible_accordion.AccordionItemHeading, null, /* @__PURE__ */ import_react46.default.createElement(import_react_accessible_accordion.AccordionItemButton, null, /* @__PURE__ */ import_react46.default.createElement(StyledFilterHeader, {
+  }, /* @__PURE__ */ import_react47.default.createElement(import_react_accessible_accordion.AccordionItemHeading, null, /* @__PURE__ */ import_react47.default.createElement(import_react_accessible_accordion.AccordionItemButton, null, /* @__PURE__ */ import_react47.default.createElement(StyledFilterHeader, {
     styleOverrides: (_c = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _c.header
-  }, /* @__PURE__ */ import_react46.default.createElement("span", null, networkTitle), /* @__PURE__ */ import_react46.default.createElement(StyledFilterHeaderActionWrapper, null, /* @__PURE__ */ import_react46.default.createElement(FilterNetworkAll, null), /* @__PURE__ */ import_react46.default.createElement(AccordionToggleButton, {
+  }, /* @__PURE__ */ import_react47.default.createElement("span", null, networkTitle), /* @__PURE__ */ import_react47.default.createElement(StyledFilterHeaderActionWrapper, null, /* @__PURE__ */ import_react47.default.createElement(FilterNetworkAll, null), /* @__PURE__ */ import_react47.default.createElement(AccordionToggleButton, {
     isOpen: isNetworkMapExpanded,
     onClick: () => setIsNetworkMapExpanded(!isNetworkMapExpanded)
-  }))))), /* @__PURE__ */ import_react46.default.createElement(import_react_accessible_accordion.AccordionItemPanel, null, /* @__PURE__ */ import_react46.default.createElement(StyledFilterWrapper, {
+  }))))), /* @__PURE__ */ import_react47.default.createElement(import_react_accessible_accordion.AccordionItemPanel, null, /* @__PURE__ */ import_react47.default.createElement(StyledFilterWrapper, {
     styleOverrides: (_d = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _d.wrapper
-  }, /* @__PURE__ */ import_react46.default.createElement(StyledFilterContent, {
+  }, /* @__PURE__ */ import_react47.default.createElement(StyledFilterContent, {
     styleOverrides: (_e = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _e.content
-  }, /* @__PURE__ */ import_react46.default.createElement(FilterNetworkSelectors, null)), /* @__PURE__ */ import_react46.default.createElement(StyledDescription, {
+  }, /* @__PURE__ */ import_react47.default.createElement(FilterNetworkSelectors, null)), /* @__PURE__ */ import_react47.default.createElement(StyledDescription, {
     styleOverrides: (_f = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _f.description
-  }, /* @__PURE__ */ import_react46.default.createElement(SearchDescription, {
+  }, /* @__PURE__ */ import_react47.default.createElement(SearchDescription, {
     networkCount,
     exchangeCount,
     type: "network"
-  }))))), exchangesActive && /* @__PURE__ */ import_react46.default.createElement(import_react_accessible_accordion.AccordionItem, {
+  }))))), exchangesActive && /* @__PURE__ */ import_react47.default.createElement(import_react_accessible_accordion.AccordionItem, {
     dangerouslySetExpanded: isExchangeMapExpanded
-  }, /* @__PURE__ */ import_react46.default.createElement(import_react_accessible_accordion.AccordionItemHeading, null, /* @__PURE__ */ import_react46.default.createElement(import_react_accessible_accordion.AccordionItemButton, null, /* @__PURE__ */ import_react46.default.createElement(StyledFilterHeader, {
+  }, /* @__PURE__ */ import_react47.default.createElement(import_react_accessible_accordion.AccordionItemHeading, null, /* @__PURE__ */ import_react47.default.createElement(import_react_accessible_accordion.AccordionItemButton, null, /* @__PURE__ */ import_react47.default.createElement(StyledFilterHeader, {
     styleOverrides: (_g = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _g.header
-  }, /* @__PURE__ */ import_react46.default.createElement("span", null, exchangeTitle), /* @__PURE__ */ import_react46.default.createElement(StyledFilterHeaderActionWrapper, null, /* @__PURE__ */ import_react46.default.createElement(FilterExchangeAll, null), /* @__PURE__ */ import_react46.default.createElement(AccordionToggleButton, {
+  }, /* @__PURE__ */ import_react47.default.createElement("span", null, exchangeTitle), /* @__PURE__ */ import_react47.default.createElement(StyledFilterHeaderActionWrapper, null, /* @__PURE__ */ import_react47.default.createElement(FilterExchangeAll, null), /* @__PURE__ */ import_react47.default.createElement(AccordionToggleButton, {
     isOpen: isExchangeMapExpanded,
     onClick: () => setIsExchangeMapExpanded(!isExchangeMapExpanded)
-  }))))), /* @__PURE__ */ import_react46.default.createElement(import_react_accessible_accordion.AccordionItemPanel, null, /* @__PURE__ */ import_react46.default.createElement(StyledFilterWrapper, {
+  }))))), /* @__PURE__ */ import_react47.default.createElement(import_react_accessible_accordion.AccordionItemPanel, null, /* @__PURE__ */ import_react47.default.createElement(StyledFilterWrapper, {
     styleOverrides: (_h = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _h.wrapper
-  }, /* @__PURE__ */ import_react46.default.createElement(StyledFilterContent, {
+  }, /* @__PURE__ */ import_react47.default.createElement(StyledFilterContent, {
     styleOverrides: (_i = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _i.content
-  }, /* @__PURE__ */ import_react46.default.createElement(FilterExchangeSelectors, null)), /* @__PURE__ */ import_react46.default.createElement(StyledDescription, {
+  }, /* @__PURE__ */ import_react47.default.createElement(FilterExchangeSelectors, null)), /* @__PURE__ */ import_react47.default.createElement(StyledDescription, {
     styleOverrides: (_j = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _j.description
-  }, /* @__PURE__ */ import_react46.default.createElement(SearchDescription, {
+  }, /* @__PURE__ */ import_react47.default.createElement(SearchDescription, {
     networkCount,
     exchangeCount: exchangeCount || totalExchangeCount,
     type: "exchange"
@@ -3708,10 +3769,10 @@ var SearchFilters = () => {
 var SearchFilters_default = SearchFilters;
 
 // src/searchbar/hooks/useClickOutside.ts
-var import_react47 = require("react");
+var import_react48 = require("react");
 var useClickOutside = (callback) => {
-  const ref = (0, import_react47.useRef)(null);
-  (0, import_react47.useEffect)(() => {
+  const ref = (0, import_react48.useRef)(null);
+  (0, import_react48.useEffect)(() => {
     function onClick(event) {
       var _a;
       if (ref && ref.current && !((_a = ref.current) == null ? void 0 : _a.contains(event.target))) {
@@ -3730,8 +3791,9 @@ var useClickOutside_default = useClickOutside;
 // src/searchbar/tokenSearch/index.tsx
 var StyledWrapper2 = import_styled_components7.default.div`
   ${({ styleOverrides }) => `
-    min-width: 420px;            
+    width: 100%;
     position: relative;
+
     & .dropDown {
       position: absolute;
       width: -webkit-fill-available;
@@ -3754,7 +3816,7 @@ var StyledWrapper2 = import_styled_components7.default.div`
       background-color: ${(styleOverrides == null ? void 0 : styleOverrides.button.backColor) || "#232C38"};      
       color: ${(styleOverrides == null ? void 0 : styleOverrides.button.color) || "#B1B8C3"};      
       border-radius: ${(styleOverrides == null ? void 0 : styleOverrides.button.borderRadius) || "4px"};      
-      font-size: ${(styleOverrides == null ? void 0 : styleOverrides.button.fontSize) || "10px"};      
+      font-size: ${(styleOverrides == null ? void 0 : styleOverrides.button.fontSize) || "0.75rem"};      
       padding: ${(styleOverrides == null ? void 0 : styleOverrides.button.padding) || "4px 6px"};      
       border-width: 0;      
       cursor: pointer;
@@ -3782,17 +3844,17 @@ var TokenSearch = (renderProps) => {
     dispatch(setViewResult(false));
   };
   const searchRef = useClickOutside_default(closeResultPanel);
-  (0, import_react48.useEffect)(() => {
+  (0, import_react49.useEffect)(() => {
     window.addEventListener("searchBarClose", closeResultPanel);
   }, []);
-  return /* @__PURE__ */ import_react48.default.createElement(TokenSearch_default.Provider, {
+  return /* @__PURE__ */ import_react49.default.createElement(TokenSearch_default.Provider, {
     value: renderProps
-  }, isSelecting && /* @__PURE__ */ import_react48.default.createElement(Backdrop, null), /* @__PURE__ */ import_react48.default.createElement(StyledWrapper2, {
+  }, isSelecting && /* @__PURE__ */ import_react49.default.createElement(Backdrop, null), /* @__PURE__ */ import_react49.default.createElement(StyledWrapper2, {
     ref: searchRef,
     styleOverrides: customWrapper
-  }, /* @__PURE__ */ import_react48.default.createElement(SearchInput_default, null), isSelecting && /* @__PURE__ */ import_react48.default.createElement("div", {
+  }, /* @__PURE__ */ import_react49.default.createElement(SearchInput_default, null), isSelecting && /* @__PURE__ */ import_react49.default.createElement("div", {
     className: "dropDown"
-  }, /* @__PURE__ */ import_react48.default.createElement(SearchFilters_default, null), viewResult && /* @__PURE__ */ import_react48.default.createElement(SearchResult_default, {
+  }, /* @__PURE__ */ import_react49.default.createElement(SearchFilters_default, null), viewResult && /* @__PURE__ */ import_react49.default.createElement(SearchResult_default, {
     loading: isLoading
   }))));
 };
@@ -3800,9 +3862,9 @@ var tokenSearch_default = TokenSearch;
 
 // src/searchbar/index.tsx
 var SearchBar = (renderProps) => {
-  return /* @__PURE__ */ import_react49.default.createElement(import_react_redux7.Provider, {
+  return /* @__PURE__ */ import_react50.default.createElement(import_react_redux7.Provider, {
     store
-  }, /* @__PURE__ */ import_react49.default.createElement(tokenSearch_default, {
+  }, /* @__PURE__ */ import_react50.default.createElement(tokenSearch_default, {
     customWrapper: renderProps.customWrapper,
     customSearchInput: renderProps.customSearchInput,
     customSearchFilter: renderProps.customSearchFilter,
@@ -3820,11 +3882,30 @@ var SearchBar = (renderProps) => {
 var import_react_accessible_accordion2 = require("react-accessible-accordion");
 
 // src/index.tsx
-var React49 = __toESM(require("react"));
+var React50 = __toESM(require("react"));
 var import_react_dom = require("react-dom");
+var SEED_NETWORKS = [
+  {
+    id: "avalanche",
+    name: "Avalanche",
+    exchanges: [{
+      name: "pangolin"
+    }]
+  },
+  {
+    id: "bsc",
+    name: "BNB Chain",
+    icon: null,
+    exchanges: [
+      { name: "biswap" },
+      { name: "pancakeswap" },
+      { name: "mdex" }
+    ]
+  }
+];
 var rootElement = document.getElementById("root");
-(0, import_react_dom.render)(/* @__PURE__ */ React49.createElement(SearchBar, {
-  networks: []
+(0, import_react_dom.render)(/* @__PURE__ */ React50.createElement(SearchBar, {
+  networks: SEED_NETWORKS
 }), rootElement);
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {

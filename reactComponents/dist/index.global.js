@@ -1370,7 +1370,7 @@
             }
             return dispatcher.useContext(Context2, unstable_observedBits);
           }
-          function useState6(initialState2) {
+          function useState7(initialState2) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState2);
           }
@@ -1958,7 +1958,7 @@
           exports.useMemo = useMemo6;
           exports.useReducer = useReducer3;
           exports.useRef = useRef6;
-          exports.useState = useState6;
+          exports.useState = useState7;
           exports.version = ReactVersion;
         })();
       }
@@ -10985,11 +10985,11 @@
       if (process.env.NODE_ENV !== "production") {
         (function() {
           "use strict";
-          var React53 = require_react();
+          var React54 = require_react();
           var _assign = require_object_assign();
           var Scheduler = require_scheduler();
           var tracing = require_tracing();
-          var ReactSharedInternals = React53.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React54.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           function warn(format) {
             {
               for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -11021,7 +11021,7 @@
               Function.prototype.apply.call(console[level], console, argsWithFormat);
             }
           }
-          if (!React53) {
+          if (!React54) {
             {
               throw Error("ReactDOM was loaded before React. Make sure you load the React package before loading ReactDOM.");
             }
@@ -12237,7 +12237,7 @@
           var didWarnInvalidChild = false;
           function flattenChildren(children) {
             var content = "";
-            React53.Children.forEach(children, function(child) {
+            React54.Children.forEach(children, function(child) {
               if (child == null) {
                 return;
               }
@@ -12248,7 +12248,7 @@
           function validateProps(element, props) {
             {
               if (typeof props.children === "object" && props.children !== null) {
-                React53.Children.forEach(props.children, function(child) {
+                React54.Children.forEach(props.children, function(child) {
                   if (child == null) {
                     return;
                   }
@@ -19441,7 +19441,7 @@
           }
           var fakeInternalInstance = {};
           var isArray = Array.isArray;
-          var emptyRefsObject = new React53.Component().refs;
+          var emptyRefsObject = new React54.Component().refs;
           var didWarnAboutStateAssignmentForComponent;
           var didWarnAboutUninitializedState;
           var didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate;
@@ -50927,7 +50927,7 @@ spurious results.`);
   });
 
   // src/searchbar/index.tsx
-  var import_react60 = __toESM(require_react());
+  var import_react61 = __toESM(require_react());
 
   // node_modules/react-redux/es/components/Provider.js
   var import_react3 = __toESM(require_react());
@@ -54827,8 +54827,7 @@ spurious results.`);
         state.searchText = "";
         state.suggestions = [];
         state.isLoading = false;
-        state.isSelecting = false;
-        state.exchangeMap = {}, state.networkMap = {}, state.isSelecting = false;
+        state.exchangeMap = {}, state.networkMap = {}, state.isSelecting = true;
         state.viewResult = false;
       },
       setViewResult: (state, action) => {
@@ -54915,7 +54914,7 @@ spurious results.`);
   });
 
   // src/searchbar/tokenSearch/index.tsx
-  var import_react59 = __toESM(require_react());
+  var import_react60 = __toESM(require_react());
 
   // node_modules/styled-components/dist/styled-components.esm.js
   var import_react_is2 = __toESM(require_react_is4());
@@ -56157,15 +56156,15 @@ spurious results.`);
     cx: "7.4",
     cy: "7.4",
     r: "6.4",
-    stroke: "#7A808A"
+    stroke: "#B7BEC9"
   }), /* @__PURE__ */ import_react10.default.createElement("path", {
     d: "M7.39995 4.20001C6.97972 4.20001 6.56361 4.28278 6.17536 4.4436C5.78712 4.60441 5.43436 4.84012 5.13721 5.13727C4.84006 5.43442 4.60435 5.78718 4.44354 6.17543C4.28272 6.56367 4.19995 6.97978 4.19995 7.40001",
     "data-name": "Search icon",
     id: "Search_icon",
-    stroke: "#7A808A"
+    stroke: "#B7BEC9"
   }), /* @__PURE__ */ import_react10.default.createElement("path", {
     d: "M17 17L13.8 13.8",
-    stroke: "#7A808A"
+    stroke: "#B7BEC9"
   })));
   var search_default = SearchIcon;
 
@@ -56198,9 +56197,7 @@ spurious results.`);
   ${({ styleOverrides }) => ` 
     position: relative;
     width: ${(styleOverrides == null ? void 0 : styleOverrides.width) || "-webkit-fill-available"};
-    color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "#B7BEC9"};
-    background: ${(styleOverrides == null ? void 0 : styleOverrides.background) || "#00070E"};
-    padding-right: 145px;
+    padding: 0 120px 0 15px;
   `}
 `;
   var StyledInput = styled_components_esm_default.input`
@@ -56215,14 +56212,18 @@ spurious results.`);
     color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "#B7BEC9"};
     display: ${(styleOverrides == null ? void 0 : styleOverrides.display) || "block"}; 
     padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "10px 14px"};    
-    background: ${(styleOverrides == null ? void 0 : styleOverrides.background) || "#00070E"};  
+    background: transparent;  
+
+    &::placeholder {
+      color: #7A808A;
+    }
   `}
 `;
   var StyledSearchIconWrapper = styled_components_esm_default.div`
   ${({ styleOverrides }) => `
     float: right;
     position: absolute;
-    right: ${(styleOverrides == null ? void 0 : styleOverrides.right) || "14px"};      
+    left: ${(styleOverrides == null ? void 0 : styleOverrides.right) || "10px"};
     top: 50%;
     transform: translateY(-50%);
     z-index: 1;   
@@ -56234,10 +56235,11 @@ spurious results.`);
     border: ${(styleOverrides == null ? void 0 : styleOverrides.border) || "4px solid #474F5C"}; 
     border-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderRadius) || "4px"}; 
     color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "#7A808A"};
-    background: ${(styleOverrides == null ? void 0 : styleOverrides.background) || "#00070E"};  
-    font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "12px"};      
+    background: ${(styleOverrides == null ? void 0 : styleOverrides.background) || "#474F5C"};  
+    font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "0.75rem"};      
     font-family: ${(styleOverrides == null ? void 0 : styleOverrides.fontFamily) || "'Fira Code', monospace"};
-    box-shadow: 0 0 8px 2px #474f5c;
+    z-index: 100;
+
     .invalid-error {
       padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "0 14px 5px"};   
       color: ${(styleOverrides == null ? void 0 : styleOverrides.colorError) || "#F52E2E"};  
@@ -56246,7 +56248,7 @@ spurious results.`);
 `;
   var StyledResetBtn = styled_components_esm_default.button`
   position: absolute;
-  right: 40px;
+  right: 10px;
   top: 50%;
   transform: translateY(-50%);
   z-index: 1;
@@ -56267,6 +56269,9 @@ spurious results.`);
         dispatch(setSearchText(searchText));
       } else if (searchText.length > 0) {
         setError(true);
+      }
+      if (Object.keys(networkMap).length > 0 && Object.keys(exchangeMap).length > 0 && inputRef.current) {
+        inputRef.current.focus();
       }
     }, [dispatch, networkMap, exchangeMap, searchText]);
     const debounceChangeHandler = (0, import_react13.useCallback)((0, import_lodash2.default)((value) => dispatch(setSearchText(value)), 350), []);
@@ -56317,7 +56322,7 @@ spurious results.`);
   var SearchInput_default = SearchInput;
 
   // src/searchbar/tokenSearch/SearchResult.tsx
-  var import_react50 = __toESM(require_react());
+  var import_react52 = __toESM(require_react());
 
   // node_modules/react-infinite-scroll-hook/dist/react-infinite-scroll-hook.esm.js
   var import_react15 = __toESM(require_react());
@@ -56463,7 +56468,7 @@ spurious results.`);
   var unchecked_default = UnCheckedIcon;
 
   // src/searchbar/tokenSearch/ResultDetail.tsx
-  var import_react49 = __toESM(require_react());
+  var import_react51 = __toESM(require_react());
 
   // src/searchbar/icons/default.tsx
   var import_react17 = __toESM(require_react());
@@ -58710,15 +58715,38 @@ spurious results.`);
     return "$" + Math.round(int / 1e8) / 10 + " Billion";
   }
 
-  // src/searchbar/icons/down.tsx
+  // src/searchbar/tokenSearch/Button.tsx
   var import_react47 = __toESM(require_react());
-  var DownIcon = ({ height, width }) => /* @__PURE__ */ import_react47.default.createElement(abstract_default, {
+  var StyledButton = styled_components_esm_default.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  box-sizing: border-box;
+  outline: none;
+  padding: 3px 6px;
+  margin: 3px;
+  color: #B4BBC7;
+  background-color: #474F5C;
+`;
+  var Button = ({ className, styleOverrides, onClick, children }) => {
+    return /* @__PURE__ */ import_react47.default.createElement(StyledButton, {
+      className,
+      onClick,
+      style: styleOverrides
+    }, children);
+  };
+  var Button_default = Button;
+
+  // src/searchbar/icons/down.tsx
+  var import_react48 = __toESM(require_react());
+  var DownIcon = ({ height, width }) => /* @__PURE__ */ import_react48.default.createElement(abstract_default, {
     height: height != null ? height : 7,
     width: width != null ? width : 5,
     viewBox: "0 0 7 5"
-  }, /* @__PURE__ */ import_react47.default.createElement("g", {
+  }, /* @__PURE__ */ import_react48.default.createElement("g", {
     transform: "translate(0)"
-  }, /* @__PURE__ */ import_react47.default.createElement("path", {
+  }, /* @__PURE__ */ import_react48.default.createElement("path", {
     d: "M1 1L3.49449 3.5L6 1",
     stroke: "#7A808A",
     strokeLinecap: "round",
@@ -58727,14 +58755,14 @@ spurious results.`);
   var down_default = DownIcon;
 
   // src/searchbar/icons/up.tsx
-  var import_react48 = __toESM(require_react());
-  var UpIcon = ({ height, width }) => /* @__PURE__ */ import_react48.default.createElement(abstract_default, {
+  var import_react49 = __toESM(require_react());
+  var UpIcon = ({ height, width }) => /* @__PURE__ */ import_react49.default.createElement(abstract_default, {
     height: height != null ? height : 7,
     width: width != null ? width : 4,
     viewBox: "0 0 7 4"
-  }, /* @__PURE__ */ import_react48.default.createElement("g", {
+  }, /* @__PURE__ */ import_react49.default.createElement("g", {
     transform: "translate(0)"
-  }, /* @__PURE__ */ import_react48.default.createElement("path", {
+  }, /* @__PURE__ */ import_react49.default.createElement("path", {
     d: "M6 3.5L3.50551 1L1 3.5",
     stroke: "#7A808A",
     strokeLinecap: "round",
@@ -58742,83 +58770,112 @@ spurious results.`);
   })));
   var up_default = UpIcon;
 
+  // src/searchbar/icons/copy.tsx
+  var import_react50 = __toESM(require_react());
+  var CopyIcon = ({ height, width }) => /* @__PURE__ */ import_react50.default.createElement(abstract_default, {
+    height: height != null ? height : 24,
+    width: width != null ? width : 24,
+    viewBox: `0 0 24 24`
+  }, /* @__PURE__ */ import_react50.default.createElement("g", {
+    transform: "translate(0)",
+    fill: "#B7BEC9"
+  }, /* @__PURE__ */ import_react50.default.createElement("path", {
+    d: "M0 0h24v24H0z",
+    fill: "none"
+  }), /* @__PURE__ */ import_react50.default.createElement("path", {
+    d: "M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"
+  })));
+  var copy_default = CopyIcon;
+
   // src/searchbar/tokenSearch/ResultDetail.tsx
   var imageSize = 26;
-  var StyledDetailList = styled_components_esm_default.div`
+  var StyledGridRow = styled_components_esm_default.div`
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns:
+    minmax(420px, 7fr)
+    minmax(120px, 2fr)
+    minmax(120px, 2fr)
+    minmax(180px, 3fr)
+    minmax(60px, 240px);
+  grid-auto-flow: row;
+  grid-auto-rows: auto;
+
+  &.active {
+    grid-template-columns:
+      minmax(420px, 7fr)
+      minmax(120px, 2fr)
+      minmax(120px, 2fr)
+      minmax(180px, 3fr)
+      minmax(240px, 240px);
+  }
+
+  &.b-none {
+    border: none !important;
+  }
+
+  @media (max-width: 768px) {
+    &.active {
+      grid-template-columns:
+        minmax(420px, 7fr)
+        minmax(120px, 2fr)
+        minmax(120px, 2fr)
+        minmax(180px, 3fr)
+        minmax(60px, 1fr);
+    }   
+  }
+`;
+  var StyledDetailList = styled_components_esm_default(StyledGridRow)`
   ${({ styleOverrides }) => {
-    var _a, _b, _c, _d, _e2, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r;
+    var _a, _b, _c, _d, _e2, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p;
     return `
-    display: ${((_a = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _a.display) || "grid"};
-    grid-gap: 10px;
-    align-items: ${((_b = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _b.alignItems) || "center"};    
-    justify-content: space-between;
-    padding: ${((_c = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _c.padding) || "5px 0"};    
+    padding: ${((_a = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _a.padding) || "10px 0"};
     background: transparent;
-    border-bottom: ${((_d = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _d.borderbottom) || "1px solid #474F5C"};    
+    border-bottom: ${((_b = styleOverrides == null ? void 0 : styleOverrides.container) == null ? void 0 : _b.borderbottom) || "1px solid #474F5C"};    
     grid-auto-flow: row;
-    grid-template-columns: 
-      minmax(550px, 5.5fr)
-      minmax(100px, 1fr)
-      minmax(130px, 1.3fr)
-      minmax(130px, 1.3fr)
-      minmax(60px, 250px);
     position: relative;
-    font-size: ${((_e2 = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _e2.fontSize) || "13px"};
-    color: ${((_f = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _f.color) || "#B4BBC7"};
+    font-size: ${((_c = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _c.fontSize) || "0.75rem"};
+    color: ${((_d = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _d.color) || "#B4BBC7"};
 
     & .pair-token-info {
       display: grid;
-      grid-template-columns: 150px 30px 150px;
+      grid-template-columns: 190px 20px 190px;
       grid-gap: 10px;
+      align-items: center;
     }
 
     .token {      
       grid-template-columns: 16px 100px; 
-      padding: ${((_g = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _g.padding) || "0 5px"};  
+      padding: ${((_e2 = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _e2.padding) || "0 5px"};  
       .address {
         position: relative;
         padding-left: 5px;
         > span {
           display: none;
-          font-size: 12px;
+          font-size: 0.75rem;
           margin-top: 5px;
           span {
-            color: ${((_h = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _h.color) || "#B4BBC7"};
+            color: ${((_f = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _f.color) || "#B4BBC7"};
           }
         }
       } 
-    }
-
-    &.no-border {
-      border: none;
-    }
+    }   
 
     &.active {
       background: #474F5C;
-      border-radius: ${((_i = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _i.radius) || "4px"};
+      border-radius: ${((_g = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _g.radius) || "4px"};
       color: white;
-      padding: 24px 0;      
-      grid-template-columns: 
-        minmax(550px, 5.5fr)
-        minmax(100px, 1fr)
-        minmax(130px, 1.3fr)
-        minmax(130px, 1.3fr)
-        minmax(250px, 2.5fr);
-
-      .pair-token-info {
-        display: flex;
-        align-items: center;
-      }
+      padding: 24px 0;
 
       .token {
-        font-weight: ${((_j = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _j.fontWeight) || "600"};      
+        font-weight: ${((_h = styleOverrides == null ? void 0 : styleOverrides.token) == null ? void 0 : _h.fontWeight) || "600"};      
         .address {
-          font-size: 12px;
+          font-size: 0.75rem;
           > span {
             display: block;
           }
         }
-        svg {
+        > svg {
           width: 26px;
           height: 26px;
           margin-top: -10px;
@@ -58864,7 +58921,7 @@ spurious results.`);
       gap: 8px;
     }
     & .detail {
-      padding: ${((_k = styleOverrides == null ? void 0 : styleOverrides.detail) == null ? void 0 : _k.padding) || "3px"};
+      padding: ${((_i = styleOverrides == null ? void 0 : styleOverrides.detail) == null ? void 0 : _i.padding) || "3px"};
     }
     
     > button {      
@@ -58872,15 +58929,15 @@ spurious results.`);
       align-items: center;
       justify-content: center;
       justify-self: right;
-      border-color: ${((_l = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _l.borderColor) || "#474F5C"};      
-      background-color: ${((_m = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _m.backgroundColor) || "#474F5C"};      
-      color: ${((_n = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _n.color) || "#7A808A"};      
-      border-radius: ${((_o = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _o.borderRadius) || "4px"};     
+      border-color: ${((_j = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _j.borderColor) || "#474F5C"};      
+      background-color: ${((_k = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _k.backgroundColor) || "#474F5C"};      
+      color: ${((_l = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _l.color) || "#7A808A"};      
+      border-radius: ${((_m = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _m.borderRadius) || "4px"};     
       
       border-width: 0;      
       cursor: pointer;
-      padding: ${((_p = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _p.padding) || "6px 8px !important"};
-      width: ${((_q = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _q.width) || "auto"};
+      padding: ${((_n = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _n.padding) || "6px 8px !important"};
+      width: ${((_o = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _o.width) || "auto"};
       &.down {
         position: absolute;
         top: 3px;
@@ -58888,17 +58945,17 @@ spurious results.`);
         background: transparent;
       }
       &:hover {
-        background-color: ${((_r = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _r.hoverBackColor) || "#232C38"};      
+        background-color: ${((_p = styleOverrides == null ? void 0 : styleOverrides.button) == null ? void 0 : _p.hoverBackColor) || "#232C38"};      
       }    
     }
     .actions {
       display: flex;
       flex: 1;
       gap: 12px;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
       flex-wrap: wrap;
-      padding: 10px;
+      margin-right: 10px;
     }
     &:not(.active):hover {
       cursor: pointer; 
@@ -58911,19 +58968,16 @@ spurious results.`);
   }}
 
   @media (max-width: 768px) {
-    &, &.active {
-      grid-template-columns: 
-        minmax(550px, 5.5fr)
-        minmax(100px, 1fr)
-        minmax(130px, 1.3fr)
-        minmax(130px, 1.3fr)
-        minmax(60px, 0.6fr);
-    }
-    
-    .actions {
-      grid-column: 2 / -1;
-      justify-content: flex-end;
-    }
+    &.active {
+      .pair-token-info {
+        grid-row: 1 / 3;
+      }
+
+      .actions {
+        grid-column: 2 / -1;
+        justify-content: flex-end;
+      }
+    } 
   }
 `;
   var StyledAction = styled_components_esm_default.div`
@@ -58932,79 +58986,121 @@ spurious results.`);
   var Action = (props) => {
     const { component, detail } = props;
     const Component = component;
-    return /* @__PURE__ */ import_react49.default.createElement(StyledAction, null, /* @__PURE__ */ import_react49.default.createElement(Component, {
+    return /* @__PURE__ */ import_react51.default.createElement(StyledAction, null, /* @__PURE__ */ import_react51.default.createElement(Component, {
       detail
     }));
+  };
+  var StyledCopyButton = styled_components_esm_default(Button_default)`
+  ${({ styleOverrides }) => `
+    .copy-text {
+      margin-left: 4px;
+      color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "#F52E2E"};
+    }
+  `}
+`;
+  var AddressCopyButton = ({ onClick, isCopied }) => {
+    return /* @__PURE__ */ import_react51.default.createElement(StyledCopyButton, {
+      onClick
+    }, /* @__PURE__ */ import_react51.default.createElement(copy_default, {
+      width: 14,
+      height: 14
+    }), isCopied && /* @__PURE__ */ import_react51.default.createElement("span", {
+      className: "copy-text"
+    }, "Copied!"));
   };
   var ResultDetail = (props) => {
     var _a, _b;
     const { index, suggestions, handleDetail, currentIndex, logoIcons } = props;
-    const renderProps = (0, import_react49.useContext)(TokenSearch_default);
+    const renderProps = (0, import_react51.useContext)(TokenSearch_default);
     const { customActions, customTokenDetail } = renderProps;
     const selectedPair = suggestions[index];
+    const [isCopiedToken0Address, setIsCopiedToken0Address] = (0, import_react51.useState)(false);
+    const [isCopiedToken1Address, setIsCopiedToken1Address] = (0, import_react51.useState)(false);
+    const isActive = index === currentIndex;
     const tokenImage = (token) => {
       if (token == null ? void 0 : token.image)
-        return /* @__PURE__ */ import_react49.default.createElement("img", {
+        return /* @__PURE__ */ import_react51.default.createElement("img", {
           alt: token == null ? void 0 : token.symbol,
           src: token == null ? void 0 : token.image,
           style: { borderRadius: "50%" },
           width: imageSize
         });
       else
-        return /* @__PURE__ */ import_react49.default.createElement(default_default, null);
+        return /* @__PURE__ */ import_react51.default.createElement(default_default, null);
     };
-    return /* @__PURE__ */ import_react49.default.createElement(StyledDetailList, {
+    const copyAddress = (address, setIsCopiedAdress) => {
+      navigator.clipboard.writeText(address);
+      setIsCopiedAdress(true);
+      setTimeout(() => {
+        setIsCopiedAdress(false);
+      }, 1e3);
+    };
+    return /* @__PURE__ */ import_react51.default.createElement(StyledDetailList, {
       styleOverrides: customTokenDetail == null ? void 0 : customTokenDetail.list,
-      onClick: () => currentIndex !== index ? handleDetail(index) : "",
-      className: `${currentIndex === index ? "active" : ""} ${currentIndex - 1 === index ? "no-border" : ""}`
-    }, /* @__PURE__ */ import_react49.default.createElement("div", {
+      onClick: () => !isActive && handleDetail(index),
+      className: `${isActive ? "active" : ""} ${currentIndex - 1 === index ? "b-none" : ""}`
+    }, /* @__PURE__ */ import_react51.default.createElement("div", {
       className: "pair-token-info"
-    }, /* @__PURE__ */ import_react49.default.createElement("div", {
+    }, /* @__PURE__ */ import_react51.default.createElement("div", {
       className: "token icon-label"
-    }, tokenImage(selectedPair.token0), /* @__PURE__ */ import_react49.default.createElement("div", {
+    }, tokenImage(selectedPair.token0), /* @__PURE__ */ import_react51.default.createElement("div", {
       className: "flex-1 address text-line-1"
-    }, /* @__PURE__ */ import_react49.default.createElement("div", {
+    }, /* @__PURE__ */ import_react51.default.createElement("div", {
       className: "text-line-1"
-    }, selectedPair.token0.name), /* @__PURE__ */ import_react49.default.createElement("span", {
-      className: "text-line-1"
-    }, /* @__PURE__ */ import_react49.default.createElement("span", null, "Address:"), " ", /* @__PURE__ */ import_react49.default.createElement("strong", null, firstAndLast(selectedPair.token0.address))))), /* @__PURE__ */ import_react49.default.createElement("div", {
-      className: "gap-5"
-    }, "/"), /* @__PURE__ */ import_react49.default.createElement("div", {
-      className: "token icon-label"
-    }, tokenImage(selectedPair.token1), /* @__PURE__ */ import_react49.default.createElement("div", {
-      className: "flex-1 address text-line-1"
-    }, /* @__PURE__ */ import_react49.default.createElement("div", null, selectedPair.token1.name), /* @__PURE__ */ import_react49.default.createElement("span", null, /* @__PURE__ */ import_react49.default.createElement("span", null, "Address:"), " ", /* @__PURE__ */ import_react49.default.createElement("strong", null, firstAndLast(selectedPair.token1.address)))))), /* @__PURE__ */ import_react49.default.createElement("div", {
-      className: "logo icon-label"
-    }, (_a = logoIcons[selectedPair.network]) != null ? _a : /* @__PURE__ */ import_react49.default.createElement(Logo, {
-      label: selectedPair.network,
-      width: 12,
-      height: 12
-    }), /* @__PURE__ */ import_react49.default.createElement("span", {
-      className: "capitalize"
-    }, selectedPair.network)), /* @__PURE__ */ import_react49.default.createElement("div", {
-      className: "logo icon-label"
-    }, (_b = logoIcons[selectedPair.exchange]) != null ? _b : /* @__PURE__ */ import_react49.default.createElement(Logo, {
-      label: selectedPair.exchange,
-      width: 12,
-      height: 12
-    }), /* @__PURE__ */ import_react49.default.createElement("span", {
-      className: "capitalize"
-    }, selectedPair.exchange)), /* @__PURE__ */ import_react49.default.createElement("div", {
+    }, selectedPair.token0.name), /* @__PURE__ */ import_react51.default.createElement("div", {
       className: "flex-center"
-    }, "Volume: ", /* @__PURE__ */ import_react49.default.createElement("strong", {
+    }, /* @__PURE__ */ import_react51.default.createElement("div", {
+      className: "text-line-1"
+    }, /* @__PURE__ */ import_react51.default.createElement("span", null, "Address:"), " ", /* @__PURE__ */ import_react51.default.createElement("strong", null, firstAndLast(selectedPair.token0.address))), isActive && /* @__PURE__ */ import_react51.default.createElement(AddressCopyButton, {
+      onClick: () => copyAddress(selectedPair.token0.address, setIsCopiedToken0Address),
+      isCopied: isCopiedToken0Address
+    })))), /* @__PURE__ */ import_react51.default.createElement("div", {
+      className: "gap-5"
+    }, "/"), /* @__PURE__ */ import_react51.default.createElement("div", {
+      className: "token icon-label"
+    }, tokenImage(selectedPair.token1), /* @__PURE__ */ import_react51.default.createElement("div", {
+      className: "flex-1 address text-line-1"
+    }, /* @__PURE__ */ import_react51.default.createElement("div", {
+      className: "text-line-1"
+    }, selectedPair.token1.name), /* @__PURE__ */ import_react51.default.createElement("div", {
+      className: "flex-center"
+    }, /* @__PURE__ */ import_react51.default.createElement("div", {
+      className: "text-line-1"
+    }, /* @__PURE__ */ import_react51.default.createElement("span", null, "Address:"), " ", /* @__PURE__ */ import_react51.default.createElement("strong", null, firstAndLast(selectedPair.token1.address))), isActive && /* @__PURE__ */ import_react51.default.createElement(AddressCopyButton, {
+      onClick: () => copyAddress(selectedPair.token1.address, setIsCopiedToken1Address),
+      isCopied: isCopiedToken1Address
+    }))))), /* @__PURE__ */ import_react51.default.createElement("div", {
+      className: "logo icon-label"
+    }, (_a = logoIcons[selectedPair.network]) != null ? _a : /* @__PURE__ */ import_react51.default.createElement(Logo, {
+      label: selectedPair.network,
+      width: 16,
+      height: 16
+    }), /* @__PURE__ */ import_react51.default.createElement("span", {
+      className: "capitalize"
+    }, selectedPair.network)), /* @__PURE__ */ import_react51.default.createElement("div", {
+      className: "logo icon-label"
+    }, (_b = logoIcons[selectedPair.exchange]) != null ? _b : /* @__PURE__ */ import_react51.default.createElement(Logo, {
+      label: selectedPair.exchange,
+      width: 16,
+      height: 16
+    }), /* @__PURE__ */ import_react51.default.createElement("span", {
+      className: "capitalize"
+    }, selectedPair.exchange)), /* @__PURE__ */ import_react51.default.createElement("div", {
+      className: "flex-center"
+    }, "Volume: ", /* @__PURE__ */ import_react51.default.createElement("strong", {
       className: "text-white"
-    }, intToWords(selectedPair.volumeUSD))), /* @__PURE__ */ import_react49.default.createElement("button", {
-      onClick: () => handleDetail(currentIndex === index ? null : index),
-      className: currentIndex === index ? "down" : "up"
-    }, currentIndex !== index ? /* @__PURE__ */ import_react49.default.createElement(import_react49.default.Fragment, null, /* @__PURE__ */ import_react49.default.createElement("span", null, "Details "), /* @__PURE__ */ import_react49.default.createElement(down_default, {
-      width: 7,
-      height: 7
-    })) : /* @__PURE__ */ import_react49.default.createElement(import_react49.default.Fragment, null, /* @__PURE__ */ import_react49.default.createElement("span", null, "Close "), /* @__PURE__ */ import_react49.default.createElement(up_default, {
-      height: 7,
-      width: 7
-    }))), currentIndex === index && /* @__PURE__ */ import_react49.default.createElement("div", {
+    }, intToWords(selectedPair.volumeUSD))), /* @__PURE__ */ import_react51.default.createElement("button", {
+      onClick: () => handleDetail(isActive ? -1 : index),
+      className: isActive ? "down" : "up"
+    }, isActive ? /* @__PURE__ */ import_react51.default.createElement(import_react51.default.Fragment, null, /* @__PURE__ */ import_react51.default.createElement("span", null, "Close "), /* @__PURE__ */ import_react51.default.createElement(up_default, {
+      height: 10,
+      width: 10
+    })) : /* @__PURE__ */ import_react51.default.createElement(import_react51.default.Fragment, null, /* @__PURE__ */ import_react51.default.createElement("span", null, "Details "), /* @__PURE__ */ import_react51.default.createElement(down_default, {
+      width: 10,
+      height: 10
+    }))), isActive && /* @__PURE__ */ import_react51.default.createElement("div", {
       className: "actions"
-    }, customActions && customActions.map((action) => /* @__PURE__ */ import_react49.default.createElement(Action, {
+    }, customActions && customActions.map((action) => /* @__PURE__ */ import_react51.default.createElement(Action, {
       key: `action-${action.index}`,
       component: action.component,
       detail: selectedPair
@@ -59026,7 +59122,7 @@ spurious results.`);
     justify-content: center;  
     margin: 10px;
     color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "white"};
-    font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "12px"};      
+    font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "0.75rem"};      
   `}
 `;
   var StyledResultTitle = styled_components_esm_default.div`
@@ -59035,11 +59131,11 @@ spurious results.`);
     align-items: center;
     justify-content: space-between;
     color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "#fff"};
-    font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "12px"};      
+    font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "0.75rem"};      
     padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "7px 14px 2px;"};      
     margin: ${(styleOverrides == null ? void 0 : styleOverrides.margin) || "0"};      
     > span {
-      font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize2) || "7px"};      
+      font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize2) || "0.75rem"};      
     }
   `}
 `;
@@ -59056,28 +59152,21 @@ spurious results.`);
     border-color: ${(styleOverrides == null ? void 0 : styleOverrides.borderColor) || "#474F5C"};  
     border-style: ${(styleOverrides == null ? void 0 : styleOverrides.borderStyle) || "solid"};  
     border-width: ${(styleOverrides == null ? void 0 : styleOverrides.borderWidth) || "1px"};      
-    font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "15px"};      
+    font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "0.875rem"};      
     font-family: ${(styleOverrides == null ? void 0 : styleOverrides.fontFamily) || "'Fira Code', monospace"};  
     overflow: auto;
+    box-sizing: border-box;
   `}
 
-  & .result-content-responsive {
+  .result-content-responsive {
     width: fit-content;
     min-width: 100%;
   }
 
-  & .header {
-    display: grid;
-    grid-gap: 10px;
-    grid-template-columns:
-      minmax(550px, 5.5fr)
-      minmax(100px, 1fr)
-      minmax(130px, 1.3fr)
-      minmax(130px, 1.3fr)
-      minmax(60px, 250px);
+  .header {    
     border-bottom: 1px solid #474f5c;
     color: #b4bbc7;
-    font-size: 11px;
+    font-size: 0.75rem;
     font-weight: bold;
     padding-bottom: 10px;
 
@@ -59094,11 +59183,11 @@ spurious results.`);
   var SearchResult = (props) => {
     var _a;
     const dispatch = useDispatch();
-    const renderProps = (0, import_react50.useContext)(TokenSearch_default);
+    const renderProps = (0, import_react52.useContext)(TokenSearch_default);
     const { customResult, customLoading } = renderProps;
     const { suggestions, searchText, isLoading, suggestionRendered } = useSelector((state) => state);
-    const [currentIndex, setCurrentIndex] = (0, import_react50.useState)(-1);
-    const hasNextPage = (0, import_react50.useMemo)(() => suggestionRendered.length < suggestions.length, [suggestions, suggestionRendered]);
+    const [currentIndex, setCurrentIndex] = (0, import_react52.useState)(-1);
+    const hasNextPage = (0, import_react52.useMemo)(() => suggestionRendered.length < suggestions.length, [suggestions, suggestionRendered]);
     const [sentryRef] = react_infinite_scroll_hook_esm_default({
       loading: isLoading,
       hasNextPage,
@@ -59106,7 +59195,7 @@ spurious results.`);
     });
     if (props.loading) {
       const loadingTitle = (customLoading == null ? void 0 : customLoading.loadingTitle) ? customLoading.loadingTitle : "Searching...";
-      return /* @__PURE__ */ import_react50.default.createElement(StyledLoading, {
+      return /* @__PURE__ */ import_react52.default.createElement(StyledLoading, {
         styleOverrides: customLoading
       }, loadingTitle);
     }
@@ -59122,40 +59211,40 @@ spurious results.`);
         logoIcons[exchange.name] = exchange.icon;
       });
     });
-    return /* @__PURE__ */ import_react50.default.createElement(StyledResult, null, /* @__PURE__ */ import_react50.default.createElement(StyledResultTitle, {
+    return /* @__PURE__ */ import_react52.default.createElement(StyledResult, null, /* @__PURE__ */ import_react52.default.createElement(StyledResultTitle, {
       styleOverrides: customResult == null ? void 0 : customResult.title
-    }, /* @__PURE__ */ import_react50.default.createElement("div", null, "Search Results ", /* @__PURE__ */ import_react50.default.createElement("span", null, "(", suggestions.length, " Results Found)")), /* @__PURE__ */ import_react50.default.createElement("button", {
+    }, /* @__PURE__ */ import_react52.default.createElement("div", null, "Search Results ", /* @__PURE__ */ import_react52.default.createElement("span", null, "(", suggestions.length, " Results Found)")), /* @__PURE__ */ import_react52.default.createElement("button", {
       onClick: handleClose
-    }, "Close\xA0", /* @__PURE__ */ import_react50.default.createElement(unchecked_default, {
+    }, "Close\xA0", /* @__PURE__ */ import_react52.default.createElement(unchecked_default, {
       width: 7,
       height: 7
-    }))), /* @__PURE__ */ import_react50.default.createElement(StyledResultContent, {
+    }))), /* @__PURE__ */ import_react52.default.createElement(StyledResultContent, {
       styleOverrides: customResult == null ? void 0 : customResult.content
-    }, /* @__PURE__ */ import_react50.default.createElement("div", {
+    }, /* @__PURE__ */ import_react52.default.createElement("div", {
       className: "result-content-responsive"
-    }, /* @__PURE__ */ import_react50.default.createElement("div", {
-      className: "header"
-    }, /* @__PURE__ */ import_react50.default.createElement("div", null, "Pair"), /* @__PURE__ */ import_react50.default.createElement("div", null, "Network"), /* @__PURE__ */ import_react50.default.createElement("div", null, "Exchange"), /* @__PURE__ */ import_react50.default.createElement("div", null, "Details")), suggestionRendered.map((suggestions2, index) => /* @__PURE__ */ import_react50.default.createElement(ResultDetail_default, {
+    }, /* @__PURE__ */ import_react52.default.createElement(StyledGridRow, {
+      className: `header ${currentIndex === 0 && "b-none"}`
+    }, /* @__PURE__ */ import_react52.default.createElement("div", null, "Pair"), /* @__PURE__ */ import_react52.default.createElement("div", null, "Network"), /* @__PURE__ */ import_react52.default.createElement("div", null, "Exchange"), /* @__PURE__ */ import_react52.default.createElement("div", null, "Details")), suggestionRendered.map((suggestions2, index) => /* @__PURE__ */ import_react52.default.createElement(ResultDetail_default, {
       suggestions: suggestionRendered,
       index,
       key: `token-detail-${index}`,
       currentIndex,
       handleDetail: setCurrentIndex,
       logoIcons
-    })), !!searchText && !suggestionRendered.length && /* @__PURE__ */ import_react50.default.createElement(StyledLoading, {
+    })), !!searchText && !suggestionRendered.length && /* @__PURE__ */ import_react52.default.createElement(StyledLoading, {
       styleOverrides: customLoading
-    }, notFoundTitle), hasNextPage && /* @__PURE__ */ import_react50.default.createElement("div", {
+    }, notFoundTitle), hasNextPage && /* @__PURE__ */ import_react52.default.createElement("div", {
       ref: sentryRef
     }, "loading...."))));
   };
   var SearchResult_default = SearchResult;
 
   // src/searchbar/tokenSearch/SearchFilters.tsx
-  var import_react57 = __toESM(require_react());
+  var import_react58 = __toESM(require_react());
   var import_lodash5 = __toESM(require_lodash());
 
   // node_modules/react-accessible-accordion/dist/es/index.js
-  var import_react51 = __toESM(require_react());
+  var import_react53 = __toESM(require_react());
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
       throw new TypeError("Cannot call a class as a function");
@@ -59480,7 +59569,7 @@ spurious results.`);
     this.allowMultipleExpanded = allowMultipleExpanded;
     this.allowZeroExpanded = allowZeroExpanded;
   };
-  var Context = /* @__PURE__ */ (0, import_react51.createContext)(null);
+  var Context = /* @__PURE__ */ (0, import_react53.createContext)(null);
   var Provider2 = /* @__PURE__ */ function(_React$PureComponent) {
     _inherits(Provider4, _React$PureComponent);
     var _super = _createSuper(Provider4);
@@ -59526,7 +59615,7 @@ spurious results.`);
       key: "render",
       value: function render2() {
         var _this$state = this.state, allowZeroExpanded = _this$state.allowZeroExpanded, allowMultipleExpanded = _this$state.allowMultipleExpanded;
-        return /* @__PURE__ */ (0, import_react51.createElement)(Context.Provider, {
+        return /* @__PURE__ */ (0, import_react53.createElement)(Context.Provider, {
           value: {
             allowMultipleExpanded,
             allowZeroExpanded,
@@ -59541,7 +59630,7 @@ spurious results.`);
       }
     }]);
     return Provider4;
-  }(import_react51.PureComponent);
+  }(import_react53.PureComponent);
   _defineProperty2(Provider2, "defaultProps", {
     allowMultipleExpanded: false,
     allowZeroExpanded: false
@@ -59564,19 +59653,19 @@ spurious results.`);
     _createClass(Consumer3, [{
       key: "render",
       value: function render2() {
-        return /* @__PURE__ */ (0, import_react51.createElement)(Context.Consumer, null, this.renderChildren);
+        return /* @__PURE__ */ (0, import_react53.createElement)(Context.Consumer, null, this.renderChildren);
       }
     }]);
     return Consumer3;
-  }(import_react51.PureComponent);
+  }(import_react53.PureComponent);
   var Accordion = function Accordion2(_ref) {
     var _ref$className = _ref.className, className = _ref$className === void 0 ? "accordion" : _ref$className, allowMultipleExpanded = _ref.allowMultipleExpanded, allowZeroExpanded = _ref.allowZeroExpanded, onChange = _ref.onChange, preExpanded = _ref.preExpanded, rest = _objectWithoutProperties(_ref, ["className", "allowMultipleExpanded", "allowZeroExpanded", "onChange", "preExpanded"]);
-    return /* @__PURE__ */ (0, import_react51.createElement)(Provider2, {
+    return /* @__PURE__ */ (0, import_react53.createElement)(Provider2, {
       preExpanded,
       allowMultipleExpanded,
       allowZeroExpanded,
       onChange
-    }, /* @__PURE__ */ (0, import_react51.createElement)("div", _extends3({
+    }, /* @__PURE__ */ (0, import_react53.createElement)("div", _extends3({
       "data-accordion-component": "Accordion",
       className
     }, rest)));
@@ -59605,7 +59694,7 @@ spurious results.`);
     }
     return true;
   }
-  var Context$1 = /* @__PURE__ */ (0, import_react51.createContext)(null);
+  var Context$1 = /* @__PURE__ */ (0, import_react53.createContext)(null);
   var Provider$1 = function Provider3(_ref) {
     var children = _ref.children, uuid = _ref.uuid, accordionContext = _ref.accordionContext, dangerouslySetExpanded = _ref.dangerouslySetExpanded;
     var toggleExpanded = function toggleExpanded2() {
@@ -59617,7 +59706,7 @@ spurious results.`);
       var panelAttributes = accordionContext2.getPanelAttributes(uuid, dangerouslySetExpanded);
       var headingAttributes = accordionContext2.getHeadingAttributes(uuid);
       var buttonAttributes = accordionContext2.getButtonAttributes(uuid, dangerouslySetExpanded);
-      return /* @__PURE__ */ (0, import_react51.createElement)(Context$1.Provider, {
+      return /* @__PURE__ */ (0, import_react53.createElement)(Context$1.Provider, {
         value: {
           uuid,
           expanded,
@@ -59629,11 +59718,11 @@ spurious results.`);
         }
       }, children);
     };
-    return /* @__PURE__ */ (0, import_react51.createElement)(Consumer, null, renderChildren);
+    return /* @__PURE__ */ (0, import_react53.createElement)(Consumer, null, renderChildren);
   };
   var ProviderWrapper = function ProviderWrapper2(props) {
-    return /* @__PURE__ */ (0, import_react51.createElement)(Consumer, null, function(accordionContext) {
-      return /* @__PURE__ */ (0, import_react51.createElement)(Provider$1, _extends3({}, props, {
+    return /* @__PURE__ */ (0, import_react53.createElement)(Consumer, null, function(accordionContext) {
+      return /* @__PURE__ */ (0, import_react53.createElement)(Provider$1, _extends3({}, props, {
         accordionContext
       }));
     });
@@ -59643,16 +59732,16 @@ spurious results.`);
     var renderChildren = function renderChildren2(container) {
       return container ? children(container) : null;
     };
-    return /* @__PURE__ */ (0, import_react51.createElement)(Context$1.Consumer, null, renderChildren);
+    return /* @__PURE__ */ (0, import_react53.createElement)(Context$1.Consumer, null, renderChildren);
   };
   var AccordionItem = function AccordionItem2(_ref) {
     var customUuid = _ref.uuid, dangerouslySetExpanded = _ref.dangerouslySetExpanded, _ref$className = _ref.className, className = _ref$className === void 0 ? "accordion__item" : _ref$className, activeClassName = _ref.activeClassName, rest = _objectWithoutProperties(_ref, ["uuid", "dangerouslySetExpanded", "className", "activeClassName"]);
-    var _useState = (0, import_react51.useState)(nextUuid()), _useState2 = _slicedToArray(_useState, 1), instanceUuid = _useState2[0];
+    var _useState = (0, import_react53.useState)(nextUuid()), _useState2 = _slicedToArray(_useState, 1), instanceUuid = _useState2[0];
     var uuid = customUuid !== null && customUuid !== void 0 ? customUuid : instanceUuid;
     var renderChildren = function renderChildren2(itemContext) {
       var expanded = itemContext.expanded;
       var cx = expanded && activeClassName ? activeClassName : className;
-      return /* @__PURE__ */ (0, import_react51.createElement)("div", _extends3({
+      return /* @__PURE__ */ (0, import_react53.createElement)("div", _extends3({
         "data-accordion-component": "AccordionItem",
         className: cx
       }, rest));
@@ -59661,10 +59750,10 @@ spurious results.`);
     if (rest.id) {
       assertValidHtmlId(rest.id);
     }
-    return /* @__PURE__ */ (0, import_react51.createElement)(ProviderWrapper, {
+    return /* @__PURE__ */ (0, import_react53.createElement)(ProviderWrapper, {
       uuid,
       dangerouslySetExpanded
-    }, /* @__PURE__ */ (0, import_react51.createElement)(Consumer$1, null, renderChildren));
+    }, /* @__PURE__ */ (0, import_react53.createElement)(Consumer$1, null, renderChildren));
   };
   AccordionItem.displayName = DisplayName$1.AccordionItem;
   function getClosestAccordion(el) {
@@ -59757,7 +59846,7 @@ spurious results.`);
     if (rest.id) {
       assertValidHtmlId(rest.id);
     }
-    return /* @__PURE__ */ (0, import_react51.createElement)("div", _extends3({
+    return /* @__PURE__ */ (0, import_react53.createElement)("div", _extends3({
       className
     }, rest, {
       role: "button",
@@ -59768,9 +59857,9 @@ spurious results.`);
     }));
   };
   var AccordionItemButtonWrapper = function AccordionItemButtonWrapper2(props) {
-    return /* @__PURE__ */ (0, import_react51.createElement)(Consumer$1, null, function(itemContext) {
+    return /* @__PURE__ */ (0, import_react53.createElement)(Consumer$1, null, function(itemContext) {
       var toggleExpanded = itemContext.toggleExpanded, buttonAttributes = itemContext.buttonAttributes;
-      return /* @__PURE__ */ (0, import_react51.createElement)(AccordionItemButton, _extends3({
+      return /* @__PURE__ */ (0, import_react53.createElement)(AccordionItemButton, _extends3({
         toggleExpanded
       }, props, buttonAttributes));
     });
@@ -59809,7 +59898,7 @@ spurious results.`);
     }, {
       key: "render",
       value: function render2() {
-        return /* @__PURE__ */ (0, import_react51.createElement)("div", _extends3({
+        return /* @__PURE__ */ (0, import_react53.createElement)("div", _extends3({
           "data-accordion-component": "AccordionItemHeading"
         }, this.props, {
           ref: this.setRef
@@ -59827,15 +59916,15 @@ spurious results.`);
       }
     }]);
     return AccordionItemHeading2;
-  }(import_react51.PureComponent);
+  }(import_react53.PureComponent);
   _defineProperty2(AccordionItemHeading, "defaultProps", defaultProps);
   var AccordionItemHeadingWrapper = function AccordionItemHeadingWrapper2(props) {
-    return /* @__PURE__ */ (0, import_react51.createElement)(Consumer$1, null, function(itemContext) {
+    return /* @__PURE__ */ (0, import_react53.createElement)(Consumer$1, null, function(itemContext) {
       var headingAttributes = itemContext.headingAttributes;
       if (props.id) {
         assertValidHtmlId(props.id);
       }
-      return /* @__PURE__ */ (0, import_react51.createElement)(AccordionItemHeading, _extends3({}, props, headingAttributes));
+      return /* @__PURE__ */ (0, import_react53.createElement)(AccordionItemHeading, _extends3({}, props, headingAttributes));
     });
   };
   AccordionItemHeadingWrapper.displayName = DisplayName$1.AccordionItemHeading;
@@ -59849,32 +59938,32 @@ spurious results.`);
       var attrs = _objectSpread22(_objectSpread22({}, panelAttributes), {}, {
         "aria-labelledby": region ? panelAttributes["aria-labelledby"] : void 0
       });
-      return /* @__PURE__ */ (0, import_react51.createElement)("div", _extends3({
+      return /* @__PURE__ */ (0, import_react53.createElement)("div", _extends3({
         "data-accordion-component": "AccordionItemPanel",
         className
       }, rest, attrs, {
         role: region ? "region" : void 0
       }));
     };
-    return /* @__PURE__ */ (0, import_react51.createElement)(Consumer$1, null, renderChildren);
+    return /* @__PURE__ */ (0, import_react53.createElement)(Consumer$1, null, renderChildren);
   };
 
   // src/searchbar/tokenSearch/SearchFiltersNetworkSelectors.tsx
-  var import_react55 = __toESM(require_react());
+  var import_react56 = __toESM(require_react());
   var import_lodash3 = __toESM(require_lodash());
 
   // src/searchbar/tokenSearch/Chip.tsx
-  var import_react53 = __toESM(require_react());
+  var import_react55 = __toESM(require_react());
 
   // src/searchbar/icons/checked.tsx
-  var import_react52 = __toESM(require_react());
-  var CheckedIcon = ({ height, width }) => /* @__PURE__ */ import_react52.default.createElement(abstract_default, {
+  var import_react54 = __toESM(require_react());
+  var CheckedIcon = ({ height, width }) => /* @__PURE__ */ import_react54.default.createElement(abstract_default, {
     height: height != null ? height : 11,
     width: width != null ? width : 8,
     viewBox: "0 0 11 8"
-  }, /* @__PURE__ */ import_react52.default.createElement("g", {
+  }, /* @__PURE__ */ import_react54.default.createElement("g", {
     transform: "translate(0)"
-  }, /* @__PURE__ */ import_react52.default.createElement("path", {
+  }, /* @__PURE__ */ import_react54.default.createElement("path", {
     d: "M1 2.91L4.29 6.16L9.48 1",
     stroke: "#00C30E",
     strokeWidth: "1.5",
@@ -59902,7 +59991,7 @@ spurious results.`);
       ::-webkit-user-select: none;
       ::-ms-user-select: none;          
 
-      font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "8px"};  
+      font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "0.75rem"};  
       font-weight: ${(styleOverrides == null ? void 0 : styleOverrides.fontWeight) || "500"};  
       border-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderRadius) || "4px"};  
       background-color: ${(styleOverrides == null ? void 0 : styleOverrides.backgroundColor) || "#232B35"};  
@@ -59910,11 +59999,11 @@ spurious results.`);
       padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "2px 5px"};   
       margin: ${(styleOverrides == null ? void 0 : styleOverrides.margin) || "5px"};   
       color: ${(styleOverrides == null ? void 0 : styleOverrides.defaultColor) || "#B4BBC7"};   
-      width: ${(styleOverrides == null ? void 0 : styleOverrides.width) || "120px"};   
+      min-width: ${(styleOverrides == null ? void 0 : styleOverrides.width) || "120px"};   
       height: ${(styleOverrides == null ? void 0 : styleOverrides.height) || "35px"};   
       text-align: ${(styleOverrides == null ? void 0 : styleOverrides.textAlign) || "left"}; 
       text-transform: ${(styleOverrides == null ? void 0 : styleOverrides.textTransform) || "uppercase"}; 
-      grid-template-columns: ${(styleOverrides == null ? void 0 : styleOverrides.gridTemplateColumns) || "22% 68% 10%"}; 
+      grid-template-columns: ${(styleOverrides == null ? void 0 : styleOverrides.gridTemplateColumns) || "minmax(20px, auto) auto minmax(20px, auto)"};
       >:last-child {      
         justify-self: ${(styleOverrides == null ? void 0 : styleOverrides.justifySelf) || "end"}; 
       }
@@ -59938,59 +60027,36 @@ spurious results.`);
   }
 `;
   var Chip = (props) => {
-    const renderProps = (0, import_react53.useContext)(TokenSearch_default);
+    const renderProps = (0, import_react55.useContext)(TokenSearch_default);
     const { label, checked, onChange, name, value, styleOverrides, grayscaleFilter, icon } = props;
     const { customChip } = renderProps;
     const customStyles = styleOverrides === void 0 ? customChip : styleOverrides;
-    const checkedStatus = checked ? /* @__PURE__ */ import_react53.default.createElement(checked_default, null) : /* @__PURE__ */ import_react53.default.createElement(unchecked_default, null);
-    return /* @__PURE__ */ import_react53.default.createElement(StyledChip, {
+    const checkedStatus = checked ? /* @__PURE__ */ import_react55.default.createElement(checked_default, null) : /* @__PURE__ */ import_react55.default.createElement(unchecked_default, null);
+    return /* @__PURE__ */ import_react55.default.createElement(StyledChip, {
       styleOverrides: customStyles
-    }, /* @__PURE__ */ import_react53.default.createElement("input", {
+    }, /* @__PURE__ */ import_react55.default.createElement("input", {
       type: "checkbox",
       id: `${label}-${name}`,
       onChange,
       checked,
       name,
       value
-    }), /* @__PURE__ */ import_react53.default.createElement("label", {
+    }), /* @__PURE__ */ import_react55.default.createElement("label", {
       htmlFor: `${label}-${name}`
-    }, /* @__PURE__ */ import_react53.default.createElement("div", {
+    }, /* @__PURE__ */ import_react55.default.createElement("div", {
       className: checked ? "chip-icon active" : "chip-icon"
-    }, icon != null ? icon : /* @__PURE__ */ import_react53.default.createElement(Logo, {
+    }, icon != null ? icon : /* @__PURE__ */ import_react55.default.createElement(Logo, {
       label,
       grayscaleFilter,
       width: 16,
       height: 16
-    })), /* @__PURE__ */ import_react53.default.createElement("span", null, label), !["Select All", "Deselect All"].includes(label) && checkedStatus));
+    })), /* @__PURE__ */ import_react55.default.createElement("span", null, label), !["Select All", "Deselect All"].includes(label) && checkedStatus));
   };
-
-  // src/searchbar/tokenSearch/Button.tsx
-  var import_react54 = __toESM(require_react());
-  var StyledButton = styled_components_esm_default.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 4px;
-  box-sizing: border-box;
-  outline: none;
-  padding: 3px 6px;
-  margin: 3px;
-  color: #B4BBC7;
-  background-color: #474F5C;
-`;
-  var Button = ({ className, styleOverrides, onClick, children }) => {
-    return /* @__PURE__ */ import_react54.default.createElement(StyledButton, {
-      className,
-      onClick,
-      style: styleOverrides
-    }, children);
-  };
-  var Button_default = Button;
 
   // src/searchbar/tokenSearch/SearchFiltersNetworkSelectors.tsx
   var FilterNetworkAll = () => {
     const dispatch = useDispatch();
-    const renderProps = (0, import_react55.useContext)(TokenSearch_default);
+    const renderProps = (0, import_react56.useContext)(TokenSearch_default);
     const { exchangeMap, networkMap } = useSelector((state) => state);
     const networkAll = Object.values((0, import_lodash3.omitBy)(networkMap, (b3) => !b3)).length === 0;
     const exchangeNamesActive = Object.keys((0, import_lodash3.omitBy)(exchangeMap, (b3) => !b3));
@@ -60000,20 +60066,20 @@ spurious results.`);
       dispatch(setNetworkMapAll({ networkNames, networkAll }));
       dispatch(setExchangeMapAll({ exchangeNames: exchangeNamesActive, exchangeAll: false }));
     };
-    return /* @__PURE__ */ import_react55.default.createElement(Button_default, {
+    return /* @__PURE__ */ import_react56.default.createElement(Button_default, {
       onClick: handleChange
     }, networkAll ? "Select All" : "Unselect All");
   };
   var FilterNetworkSelectors = () => {
-    const renderProps = (0, import_react55.useContext)(TokenSearch_default);
+    const renderProps = (0, import_react56.useContext)(TokenSearch_default);
     const networks = [...renderProps.networks];
-    const networkItems = (0, import_react55.useMemo)(() => networks.map((network) => {
+    const networkItems = (0, import_react56.useMemo)(() => networks.map((network) => {
       return { id: network.id, exchanges: network.exchanges.map((exhange) => exhange.name) };
     }), [networks]);
     const dispatch = useDispatch();
     const { networkMap } = useSelector((state) => state);
     const networkElement = (network) => {
-      return /* @__PURE__ */ import_react55.default.createElement(Chip, {
+      return /* @__PURE__ */ import_react56.default.createElement(Chip, {
         key: network.id,
         name: network.id,
         label: network.name || network.id,
@@ -60030,14 +60096,14 @@ spurious results.`);
   };
 
   // src/searchbar/tokenSearch/SearchFiltersExchangeSelectors.tsx
-  var import_react56 = __toESM(require_react());
+  var import_react57 = __toESM(require_react());
   var import_lodash4 = __toESM(require_lodash());
   var FilterExchangeAll = () => {
     const dispatch = useDispatch();
     const { exchangeMap, networkMap } = useSelector((state) => state);
     const exchangeAll = Object.values((0, import_lodash4.omitBy)(exchangeMap, (b3) => !b3)).length === 0;
     const selectedNetworks = Object.keys((0, import_lodash4.omitBy)(networkMap, (b3) => !b3));
-    const renderProps = (0, import_react56.useContext)(TokenSearch_default);
+    const renderProps = (0, import_react57.useContext)(TokenSearch_default);
     const { networks } = renderProps;
     const exchangeNames = [];
     networks == null ? void 0 : networks.forEach((network) => {
@@ -60048,7 +60114,7 @@ spurious results.`);
         });
       }
     });
-    return /* @__PURE__ */ import_react56.default.createElement(Button_default, {
+    return /* @__PURE__ */ import_react57.default.createElement(Button_default, {
       onClick: () => dispatch(setExchangeMapAll({ exchangeNames, exchangeAll }))
     }, exchangeAll ? "Select All" : "Unselect All");
   };
@@ -60056,7 +60122,7 @@ spurious results.`);
     var _a;
     const dispatch = useDispatch();
     const { networkMap, exchangeMap } = useSelector((state) => state);
-    const renderProps = (0, import_react56.useContext)(TokenSearch_default);
+    const renderProps = (0, import_react57.useContext)(TokenSearch_default);
     const selectedNetworks = Object.keys((0, import_lodash4.omitBy)(networkMap, (b3) => !b3));
     const exchanges = [];
     (_a = renderProps.networks) == null ? void 0 : _a.forEach((network) => {
@@ -60067,7 +60133,7 @@ spurious results.`);
       }
     });
     const exchangeElement = (exchange) => {
-      return /* @__PURE__ */ import_react56.default.createElement(Chip, {
+      return /* @__PURE__ */ import_react57.default.createElement(Chip, {
         key: exchange.name,
         name: exchange.name,
         label: exchange.name,
@@ -60113,7 +60179,7 @@ spurious results.`);
     text-align: ${(styleOverrides == null ? void 0 : styleOverrides.textAlign) || "left"};     
     margin: ${(styleOverrides == null ? void 0 : styleOverrides.margin) || "5px 0 0"};     
     border-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderRadius) || "4px"};     
-    font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "13px"};     
+    font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "0.75rem"};     
     font-weight: ${(styleOverrides == null ? void 0 : styleOverrides.fontWeight) || "500"};     
     &:hover {
       background-color: ${(styleOverrides == null ? void 0 : styleOverrides.hoverColor) || "#232C38"};
@@ -60145,7 +60211,7 @@ spurious results.`);
   var StyledDescription = styled_components_esm_default.div`
   ${({ styleOverrides }) => `
     text-align: ${(styleOverrides == null ? void 0 : styleOverrides.textAlign) || "right"};
-    font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "12px"};
+    font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "0.75rem"};
     padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "10px 10px 5px"};       
     background-color: ${(styleOverrides == null ? void 0 : styleOverrides.backgroundColor) || "#00070E"};
     color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "#c4c5c7"};       
@@ -60172,24 +60238,24 @@ spurious results.`);
       desc = "Searching all networks and exchanges";
     } else {
       if (type === "network")
-        desc = /* @__PURE__ */ import_react57.default.createElement("div", {
+        desc = /* @__PURE__ */ import_react58.default.createElement("div", {
           style: { display: "flex", justifyContent: "right" }
-        }, "Searching\xA0", /* @__PURE__ */ import_react57.default.createElement(StyledCount, null, networkCount, " network", networkCount > 1 ? "s" : ""), exchangeCount > 0 && /* @__PURE__ */ import_react57.default.createElement(import_react57.default.Fragment, null, "\xA0within\xA0", /* @__PURE__ */ import_react57.default.createElement(StyledCount, null, exchangeCount, " exchange", exchangeCount > 1 ? "s" : "")));
+        }, "Searching\xA0", /* @__PURE__ */ import_react58.default.createElement(StyledCount, null, networkCount, " network", networkCount > 1 ? "s" : ""), exchangeCount > 0 && /* @__PURE__ */ import_react58.default.createElement(import_react58.default.Fragment, null, "\xA0within\xA0", /* @__PURE__ */ import_react58.default.createElement(StyledCount, null, exchangeCount, " exchange", exchangeCount > 1 ? "s" : "")));
       else
-        desc = /* @__PURE__ */ import_react57.default.createElement("div", {
+        desc = /* @__PURE__ */ import_react58.default.createElement("div", {
           style: { display: "flex", justifyContent: "right" }
-        }, "Searching\xA0", /* @__PURE__ */ import_react57.default.createElement(StyledCount, null, exchangeCount, " exchange", exchangeCount > 1 ? "s" : ""), "\xA0within\xA0", /* @__PURE__ */ import_react57.default.createElement(StyledCount, null, networkCount, " network", networkCount > 1 ? "s" : ""));
+        }, "Searching\xA0", /* @__PURE__ */ import_react58.default.createElement(StyledCount, null, exchangeCount, " exchange", exchangeCount > 1 ? "s" : ""), "\xA0within\xA0", /* @__PURE__ */ import_react58.default.createElement(StyledCount, null, networkCount, " network", networkCount > 1 ? "s" : ""));
     }
-    return /* @__PURE__ */ import_react57.default.createElement(import_react57.default.Fragment, null, desc);
+    return /* @__PURE__ */ import_react58.default.createElement(import_react58.default.Fragment, null, desc);
   };
   var AccordionToggleButton = ({ isOpen, onClick }) => {
-    return /* @__PURE__ */ import_react57.default.createElement(Button_default, {
+    return /* @__PURE__ */ import_react58.default.createElement(Button_default, {
       className: "accordion-toggle",
       onClick
-    }, isOpen ? /* @__PURE__ */ import_react57.default.createElement(import_react57.default.Fragment, null, /* @__PURE__ */ import_react57.default.createElement("span", null, "Close"), /* @__PURE__ */ import_react57.default.createElement(down_default, {
+    }, isOpen ? /* @__PURE__ */ import_react58.default.createElement(import_react58.default.Fragment, null, /* @__PURE__ */ import_react58.default.createElement("span", null, "Close"), /* @__PURE__ */ import_react58.default.createElement(up_default, {
       width: 8,
       height: 8
-    })) : /* @__PURE__ */ import_react57.default.createElement(import_react57.default.Fragment, null, /* @__PURE__ */ import_react57.default.createElement("span", null, "Open"), /* @__PURE__ */ import_react57.default.createElement(up_default, {
+    })) : /* @__PURE__ */ import_react58.default.createElement(import_react58.default.Fragment, null, /* @__PURE__ */ import_react58.default.createElement("span", null, "Open"), /* @__PURE__ */ import_react58.default.createElement(down_default, {
       width: 8,
       height: 8
     })));
@@ -60198,67 +60264,62 @@ spurious results.`);
     var _a, _b, _c, _d, _e2, _f, _g, _h, _i, _j;
     const dispatch = useDispatch();
     const { networkMap, exchangeMap, searchText } = useSelector((state) => state);
-    const renderProps = (0, import_react57.useContext)(TokenSearch_default);
-    const { customSearchFilter, networks } = renderProps;
+    const renderProps = (0, import_react58.useContext)(TokenSearch_default);
+    const { customSearchFilter } = renderProps;
     const exchangesActive = Object.values(networkMap).filter((b3) => b3).length !== 0;
     const networkIds = Object.keys((0, import_lodash5.omitBy)(networkMap, (b3) => !b3));
     const exchangeIds = Object.keys((0, import_lodash5.omitBy)(exchangeMap, (b3) => !b3)) || [];
     const networkCount = networkIds.length;
     const exchangeCount = exchangeIds.length;
-    if (!exchangeIds.length) {
-      networks == null ? void 0 : networks.forEach((network) => {
-        var _a2;
-        if (networkIds.includes(network.id)) {
-          (_a2 = network.exchanges) == null ? void 0 : _a2.forEach((exchange) => {
-            exchangeIds.push(exchange.name);
-          });
-        }
-      });
-    }
     const totalExchangeCount = exchangeIds.length;
     const networkTitle = ((_a = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _a.network) || "Select Network(s)";
     const exchangeTitle = ((_b = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _b.exchange) || "Select Exchange(s)";
-    const [isNetworkMapExpanded, setIsNetworkMapExpanded] = (0, import_react57.useState)(true);
-    const [isExchangeMapExpanded, setIsExchangeMapExpanded] = (0, import_react57.useState)(false);
-    (0, import_react57.useEffect)(() => {
-      (Object.keys(networkMap).length > 0 || Object.keys(exchangeMap).length > 0) && searchText.length > 0 && dispatch(setViewResult(true));
+    const [isNetworkMapExpanded, setIsNetworkMapExpanded] = (0, import_react58.useState)(true);
+    const [isExchangeMapExpanded, setIsExchangeMapExpanded] = (0, import_react58.useState)(false);
+    (0, import_react58.useEffect)(() => {
+      if (Object.keys(networkMap).length > 0 && Object.keys(exchangeMap).length > 0 && searchText.length > 0) {
+        dispatch(setViewResult(true));
+      }
+      if (Object.keys(networkMap).length > 0) {
+        setIsExchangeMapExpanded(true);
+      }
     }, [networkMap, exchangeMap, searchText]);
-    return /* @__PURE__ */ import_react57.default.createElement(FilterWrapper, {
+    return /* @__PURE__ */ import_react58.default.createElement(FilterWrapper, {
       styleOverrides: customSearchFilter == null ? void 0 : customSearchFilter.wrapper
-    }, /* @__PURE__ */ import_react57.default.createElement(Accordion, {
+    }, /* @__PURE__ */ import_react58.default.createElement(Accordion, {
       allowMultipleExpanded: true,
       allowZeroExpanded: true
-    }, /* @__PURE__ */ import_react57.default.createElement(AccordionItem, {
+    }, /* @__PURE__ */ import_react58.default.createElement(AccordionItem, {
       dangerouslySetExpanded: isNetworkMapExpanded
-    }, /* @__PURE__ */ import_react57.default.createElement(AccordionItemHeadingWrapper, null, /* @__PURE__ */ import_react57.default.createElement(AccordionItemButtonWrapper, null, /* @__PURE__ */ import_react57.default.createElement(StyledFilterHeader, {
+    }, /* @__PURE__ */ import_react58.default.createElement(AccordionItemHeadingWrapper, null, /* @__PURE__ */ import_react58.default.createElement(AccordionItemButtonWrapper, null, /* @__PURE__ */ import_react58.default.createElement(StyledFilterHeader, {
       styleOverrides: (_c = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _c.header
-    }, /* @__PURE__ */ import_react57.default.createElement("span", null, networkTitle), /* @__PURE__ */ import_react57.default.createElement(StyledFilterHeaderActionWrapper, null, /* @__PURE__ */ import_react57.default.createElement(FilterNetworkAll, null), /* @__PURE__ */ import_react57.default.createElement(AccordionToggleButton, {
+    }, /* @__PURE__ */ import_react58.default.createElement("span", null, networkTitle), /* @__PURE__ */ import_react58.default.createElement(StyledFilterHeaderActionWrapper, null, /* @__PURE__ */ import_react58.default.createElement(FilterNetworkAll, null), /* @__PURE__ */ import_react58.default.createElement(AccordionToggleButton, {
       isOpen: isNetworkMapExpanded,
       onClick: () => setIsNetworkMapExpanded(!isNetworkMapExpanded)
-    }))))), /* @__PURE__ */ import_react57.default.createElement(AccordionItemPanel, null, /* @__PURE__ */ import_react57.default.createElement(StyledFilterWrapper, {
+    }))))), /* @__PURE__ */ import_react58.default.createElement(AccordionItemPanel, null, /* @__PURE__ */ import_react58.default.createElement(StyledFilterWrapper, {
       styleOverrides: (_d = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _d.wrapper
-    }, /* @__PURE__ */ import_react57.default.createElement(StyledFilterContent, {
+    }, /* @__PURE__ */ import_react58.default.createElement(StyledFilterContent, {
       styleOverrides: (_e2 = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _e2.content
-    }, /* @__PURE__ */ import_react57.default.createElement(FilterNetworkSelectors, null)), /* @__PURE__ */ import_react57.default.createElement(StyledDescription, {
+    }, /* @__PURE__ */ import_react58.default.createElement(FilterNetworkSelectors, null)), /* @__PURE__ */ import_react58.default.createElement(StyledDescription, {
       styleOverrides: (_f = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _f.description
-    }, /* @__PURE__ */ import_react57.default.createElement(SearchDescription, {
+    }, /* @__PURE__ */ import_react58.default.createElement(SearchDescription, {
       networkCount,
       exchangeCount,
       type: "network"
-    }))))), exchangesActive && /* @__PURE__ */ import_react57.default.createElement(AccordionItem, {
+    }))))), exchangesActive && /* @__PURE__ */ import_react58.default.createElement(AccordionItem, {
       dangerouslySetExpanded: isExchangeMapExpanded
-    }, /* @__PURE__ */ import_react57.default.createElement(AccordionItemHeadingWrapper, null, /* @__PURE__ */ import_react57.default.createElement(AccordionItemButtonWrapper, null, /* @__PURE__ */ import_react57.default.createElement(StyledFilterHeader, {
+    }, /* @__PURE__ */ import_react58.default.createElement(AccordionItemHeadingWrapper, null, /* @__PURE__ */ import_react58.default.createElement(AccordionItemButtonWrapper, null, /* @__PURE__ */ import_react58.default.createElement(StyledFilterHeader, {
       styleOverrides: (_g = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _g.header
-    }, /* @__PURE__ */ import_react57.default.createElement("span", null, exchangeTitle), /* @__PURE__ */ import_react57.default.createElement(StyledFilterHeaderActionWrapper, null, /* @__PURE__ */ import_react57.default.createElement(FilterExchangeAll, null), /* @__PURE__ */ import_react57.default.createElement(AccordionToggleButton, {
+    }, /* @__PURE__ */ import_react58.default.createElement("span", null, exchangeTitle), /* @__PURE__ */ import_react58.default.createElement(StyledFilterHeaderActionWrapper, null, /* @__PURE__ */ import_react58.default.createElement(FilterExchangeAll, null), /* @__PURE__ */ import_react58.default.createElement(AccordionToggleButton, {
       isOpen: isExchangeMapExpanded,
       onClick: () => setIsExchangeMapExpanded(!isExchangeMapExpanded)
-    }))))), /* @__PURE__ */ import_react57.default.createElement(AccordionItemPanel, null, /* @__PURE__ */ import_react57.default.createElement(StyledFilterWrapper, {
+    }))))), /* @__PURE__ */ import_react58.default.createElement(AccordionItemPanel, null, /* @__PURE__ */ import_react58.default.createElement(StyledFilterWrapper, {
       styleOverrides: (_h = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _h.wrapper
-    }, /* @__PURE__ */ import_react57.default.createElement(StyledFilterContent, {
+    }, /* @__PURE__ */ import_react58.default.createElement(StyledFilterContent, {
       styleOverrides: (_i = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _i.content
-    }, /* @__PURE__ */ import_react57.default.createElement(FilterExchangeSelectors, null)), /* @__PURE__ */ import_react57.default.createElement(StyledDescription, {
+    }, /* @__PURE__ */ import_react58.default.createElement(FilterExchangeSelectors, null)), /* @__PURE__ */ import_react58.default.createElement(StyledDescription, {
       styleOverrides: (_j = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _j.description
-    }, /* @__PURE__ */ import_react57.default.createElement(SearchDescription, {
+    }, /* @__PURE__ */ import_react58.default.createElement(SearchDescription, {
       networkCount,
       exchangeCount: exchangeCount || totalExchangeCount,
       type: "exchange"
@@ -60267,10 +60328,10 @@ spurious results.`);
   var SearchFilters_default = SearchFilters;
 
   // src/searchbar/hooks/useClickOutside.ts
-  var import_react58 = __toESM(require_react());
+  var import_react59 = __toESM(require_react());
   var useClickOutside = (callback) => {
-    const ref = (0, import_react58.useRef)(null);
-    (0, import_react58.useEffect)(() => {
+    const ref = (0, import_react59.useRef)(null);
+    (0, import_react59.useEffect)(() => {
       function onClick(event) {
         var _a;
         if (ref && ref.current && !((_a = ref.current) == null ? void 0 : _a.contains(event.target))) {
@@ -60289,8 +60350,9 @@ spurious results.`);
   // src/searchbar/tokenSearch/index.tsx
   var StyledWrapper2 = styled_components_esm_default.div`
   ${({ styleOverrides }) => `
-    min-width: 420px;            
+    width: 100%;
     position: relative;
+
     & .dropDown {
       position: absolute;
       width: -webkit-fill-available;
@@ -60313,7 +60375,7 @@ spurious results.`);
       background-color: ${(styleOverrides == null ? void 0 : styleOverrides.button.backColor) || "#232C38"};      
       color: ${(styleOverrides == null ? void 0 : styleOverrides.button.color) || "#B1B8C3"};      
       border-radius: ${(styleOverrides == null ? void 0 : styleOverrides.button.borderRadius) || "4px"};      
-      font-size: ${(styleOverrides == null ? void 0 : styleOverrides.button.fontSize) || "10px"};      
+      font-size: ${(styleOverrides == null ? void 0 : styleOverrides.button.fontSize) || "0.75rem"};      
       padding: ${(styleOverrides == null ? void 0 : styleOverrides.button.padding) || "4px 6px"};      
       border-width: 0;      
       cursor: pointer;
@@ -60341,17 +60403,17 @@ spurious results.`);
       dispatch(setViewResult(false));
     };
     const searchRef = useClickOutside_default(closeResultPanel);
-    (0, import_react59.useEffect)(() => {
+    (0, import_react60.useEffect)(() => {
       window.addEventListener("searchBarClose", closeResultPanel);
     }, []);
-    return /* @__PURE__ */ import_react59.default.createElement(TokenSearch_default.Provider, {
+    return /* @__PURE__ */ import_react60.default.createElement(TokenSearch_default.Provider, {
       value: renderProps
-    }, isSelecting && /* @__PURE__ */ import_react59.default.createElement(Backdrop, null), /* @__PURE__ */ import_react59.default.createElement(StyledWrapper2, {
+    }, isSelecting && /* @__PURE__ */ import_react60.default.createElement(Backdrop, null), /* @__PURE__ */ import_react60.default.createElement(StyledWrapper2, {
       ref: searchRef,
       styleOverrides: customWrapper
-    }, /* @__PURE__ */ import_react59.default.createElement(SearchInput_default, null), isSelecting && /* @__PURE__ */ import_react59.default.createElement("div", {
+    }, /* @__PURE__ */ import_react60.default.createElement(SearchInput_default, null), isSelecting && /* @__PURE__ */ import_react60.default.createElement("div", {
       className: "dropDown"
-    }, /* @__PURE__ */ import_react59.default.createElement(SearchFilters_default, null), viewResult && /* @__PURE__ */ import_react59.default.createElement(SearchResult_default, {
+    }, /* @__PURE__ */ import_react60.default.createElement(SearchFilters_default, null), viewResult && /* @__PURE__ */ import_react60.default.createElement(SearchResult_default, {
       loading: isLoading
     }))));
   };
@@ -60359,9 +60421,9 @@ spurious results.`);
 
   // src/searchbar/index.tsx
   var SearchBar = (renderProps) => {
-    return /* @__PURE__ */ import_react60.default.createElement(Provider_default, {
+    return /* @__PURE__ */ import_react61.default.createElement(Provider_default, {
       store
-    }, /* @__PURE__ */ import_react60.default.createElement(tokenSearch_default, {
+    }, /* @__PURE__ */ import_react61.default.createElement(tokenSearch_default, {
       customWrapper: renderProps.customWrapper,
       customSearchInput: renderProps.customSearchInput,
       customSearchFilter: renderProps.customSearchFilter,
@@ -60376,11 +60438,30 @@ spurious results.`);
   };
 
   // src/index.tsx
-  var React52 = __toESM(require_react());
+  var React53 = __toESM(require_react());
   var import_react_dom2 = __toESM(require_react_dom());
+  var SEED_NETWORKS = [
+    {
+      id: "avalanche",
+      name: "Avalanche",
+      exchanges: [{
+        name: "pangolin"
+      }]
+    },
+    {
+      id: "bsc",
+      name: "BNB Chain",
+      icon: null,
+      exchanges: [
+        { name: "biswap" },
+        { name: "pancakeswap" },
+        { name: "mdex" }
+      ]
+    }
+  ];
   var rootElement = document.getElementById("root");
-  (0, import_react_dom2.render)(/* @__PURE__ */ React52.createElement(SearchBar, {
-    networks: []
+  (0, import_react_dom2.render)(/* @__PURE__ */ React53.createElement(SearchBar, {
+    networks: SEED_NETWORKS
   }), rootElement);
 })();
 /*

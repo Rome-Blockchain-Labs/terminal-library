@@ -24,7 +24,7 @@ const StyledChip = styled.div`
       ::-webkit-user-select: none;
       ::-ms-user-select: none;          
 
-      font-size: ${styleOverrides?.fontSize || "8px"};  
+      font-size: ${styleOverrides?.fontSize || "0.75rem"};  
       font-weight: ${styleOverrides?.fontWeight || "500"};  
       border-radius: ${styleOverrides?.borderRadius || "4px"};  
       background-color: ${styleOverrides?.backgroundColor || "#232B35"};  
@@ -32,11 +32,11 @@ const StyledChip = styled.div`
       padding: ${styleOverrides?.padding || "2px 5px"};   
       margin: ${styleOverrides?.margin || "5px"};   
       color: ${styleOverrides?.defaultColor || "#B4BBC7"};   
-      width: ${styleOverrides?.width || "120px"};   
+      min-width: ${styleOverrides?.width || "120px"};   
       height: ${styleOverrides?.height || "35px"};   
       text-align: ${styleOverrides?.textAlign || "left"}; 
       text-transform: ${styleOverrides?.textTransform || "uppercase"}; 
-      grid-template-columns: ${styleOverrides?.gridTemplateColumns || "22% 68% 10%"}; 
+      grid-template-columns: ${styleOverrides?.gridTemplateColumns || "minmax(20px, auto) auto minmax(20px, auto)"};
       >:last-child {      
         justify-self: ${styleOverrides?.justifySelf || "end"}; 
       }

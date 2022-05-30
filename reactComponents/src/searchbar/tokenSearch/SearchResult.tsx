@@ -7,7 +7,7 @@ import TokenSearchContext from '../Context/TokenSearch';
 import { RootState } from '../redux/store';
 import UnCheckedIcon from '../icons/unchecked';
 import { setViewResult, loadMore } from '../redux/tokenSearchSlice';
-import ResultDetail from './ResultDetail';
+import ResultDetail, { StyledGridRow } from './ResultDetail';
 import { IconsType } from './types';
 
 const StyledResult = styled.div`
@@ -24,7 +24,7 @@ const StyledLoading = styled.div`
     justify-content: center;  
     margin: 10px;
     color: ${styleOverrides?.color || 'white'};
-    font-size: ${styleOverrides?.fontSize || '12px'};      
+    font-size: ${styleOverrides?.fontSize || '0.75rem'};      
   `}
 `;
 
@@ -34,11 +34,11 @@ const StyledResultTitle = styled.div`
     align-items: center;
     justify-content: space-between;
     color: ${styleOverrides?.color || '#fff'};
-    font-size: ${styleOverrides?.fontSize || '12px'};      
+    font-size: ${styleOverrides?.fontSize || '0.75rem'};      
     padding: ${styleOverrides?.padding || '7px 14px 2px;'};      
     margin: ${styleOverrides?.margin || '0'};      
     > span {
-      font-size: ${styleOverrides?.fontSize2 || '7px'};      
+      font-size: ${styleOverrides?.fontSize2 || '0.75rem'};      
     }
   `}
 `;
@@ -56,28 +56,21 @@ const StyledResultContent = styled.div`
     border-color: ${styleOverrides?.borderColor || '#474F5C'};  
     border-style: ${styleOverrides?.borderStyle || 'solid'};  
     border-width: ${styleOverrides?.borderWidth || '1px'};      
-    font-size: ${styleOverrides?.fontSize || '15px'};      
+    font-size: ${styleOverrides?.fontSize || '0.875rem'};      
     font-family: ${styleOverrides?.fontFamily || "'Fira Code', monospace"};  
     overflow: auto;
+    box-sizing: border-box;
   `}
 
-  & .result-content-responsive {
+  .result-content-responsive {
     width: fit-content;
     min-width: 100%;
   }
 
-  & .header {
-    display: grid;
-    grid-gap: 10px;
-    grid-template-columns:
-      minmax(550px, 5.5fr)
-      minmax(100px, 1fr)
-      minmax(130px, 1.3fr)
-      minmax(130px, 1.3fr)
-      minmax(60px, 250px);
+  .header {    
     border-bottom: 1px solid #474f5c;
     color: #b4bbc7;
-    font-size: 11px;
+    font-size: 0.75rem;
     font-weight: bold;
     padding-bottom: 10px;
 
@@ -91,6 +84,7 @@ const StyledResultContent = styled.div`
     }
   }
 `;
+
 type Loading = {
   loading: boolean;
 };
@@ -144,12 +138,12 @@ const SearchResult: FC<Loading> = (props: Loading) => {
       </StyledResultTitle>
       <StyledResultContent styleOverrides={customResult?.content}>
         <div className="result-content-responsive">
-          <div className="header">
+          <StyledGridRow className={`header ${currentIndex === 0 && 'b-none'}`}>
             <div>Pair</div>
             <div>Network</div>
             <div>Exchange</div>
             <div>Details</div>
-          </div>
+          </StyledGridRow>
           {suggestionRendered.map((suggestions, index) => (
             <ResultDetail
               suggestions={suggestionRendered}
@@ -169,4 +163,7 @@ const SearchResult: FC<Loading> = (props: Loading) => {
     </StyledResult>
   );
 };
+
+export { StyledGridRow };
+
 export default SearchResult;

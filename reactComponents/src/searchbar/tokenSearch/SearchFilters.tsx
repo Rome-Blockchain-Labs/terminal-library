@@ -49,7 +49,7 @@ const StyledFilterHeader = styled.div`
     text-align: ${styleOverrides?.textAlign || 'left'};     
     margin: ${styleOverrides?.margin || '5px 0 0'};     
     border-radius: ${styleOverrides?.borderRadius || '4px'};     
-    font-size: ${styleOverrides?.fontSize || '13px'};     
+    font-size: ${styleOverrides?.fontSize || '0.75rem'};     
     font-weight: ${styleOverrides?.fontWeight || '500'};     
     &:hover {
       background-color: ${styleOverrides?.hoverColor || '#232C38'};
@@ -84,7 +84,7 @@ const StyledFilterContent = styled.div`
 const StyledDescription = styled.div`
   ${({ styleOverrides }) => `
     text-align: ${styleOverrides?.textAlign || 'right'};
-    font-size: ${styleOverrides?.fontSize || '12px'};
+    font-size: ${styleOverrides?.fontSize || '0.75rem'};
     padding: ${styleOverrides?.padding || '10px 10px 5px'};       
     background-color: ${styleOverrides?.backgroundColor || '#00070E'};
     color: ${styleOverrides?.color || '#c4c5c7'};       
@@ -164,12 +164,12 @@ const AccordionToggleButton: FC<AccordionToggleButtonProps> = ({ isOpen, onClick
       {isOpen ? (
         <>
           <span>Close</span>
-          <DownIcon width={8} height={8} />
+          <UpIcon width={8} height={8} />
         </>
       ) : (
         <>
           <span>Open</span>
-          <UpIcon width={8} height={8} />
+          <DownIcon width={8} height={8} />          
         </>
       )}
       
@@ -181,28 +181,15 @@ export const SearchFilters = (): JSX.Element => {
   const dispatch = useDispatch();
   const { networkMap, exchangeMap, searchText  } = useSelector((state:RootState) => state);
   const renderProps = useContext(TokenSearchContext);  
-  const { customSearchFilter, networks } = renderProps;
+  const { customSearchFilter } = renderProps;
   const exchangesActive = Object.values(networkMap).filter((b) => b).length !== 0;
   
   const networkIds: string[] = Object.keys(omitBy(networkMap, (b) => !b));
   const exchangeIds: string[] = Object.keys(omitBy(exchangeMap, (b) => !b)) || [];
 
-  // if (!networkIds.length) {
-  //   networkIds = networks?.map((network) => network.id) || [];
-  // }
   const networkCount = networkIds.length;
-
   const exchangeCount = exchangeIds.length;
 
-  if (!exchangeIds.length) {
-    networks?.forEach((network) => {
-      if (networkIds.includes(network.id)) {
-        network.exchanges?.forEach((exchange) => {
-          exchangeIds.push(exchange.name);
-        });
-      }
-    });
-  }
   const totalExchangeCount = exchangeIds.length;
 
   const networkTitle = customSearchFilter?.content?.network || 'Select Network(s)';
@@ -212,9 +199,13 @@ export const SearchFilters = (): JSX.Element => {
   const [isExchangeMapExpanded, setIsExchangeMapExpanded] = useState(false);
 
   useEffect(() => {    
-    (Object.keys(networkMap).length > 0 ||
-    Object.keys(exchangeMap).length > 0) && searchText.length > 0 &&
-    dispatch(setViewResult(true));
+    if (Object.keys(networkMap).length > 0 && Object.keys(exchangeMap).length > 0 && searchText.length > 0) {
+      dispatch(setViewResult(true));
+    }
+
+    if (Object.keys(networkMap).length > 0) {
+      setIsExchangeMapExpanded(true);
+    }
   }, [networkMap, exchangeMap, searchText])
 
   // RENDERING.

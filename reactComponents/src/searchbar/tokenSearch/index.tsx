@@ -11,8 +11,9 @@ import useClickOutside from '../hooks/useClickOutside';
 
 const StyledWrapper = styled.div`
   ${({ styleOverrides }) => `
-    min-width: 420px;            
+    width: 100%;
     position: relative;
+
     & .dropDown {
       position: absolute;
       width: -webkit-fill-available;
@@ -35,7 +36,7 @@ const StyledWrapper = styled.div`
       background-color: ${styleOverrides?.button.backColor || '#232C38'};      
       color: ${styleOverrides?.button.color || '#B1B8C3'};      
       border-radius: ${styleOverrides?.button.borderRadius || '4px'};      
-      font-size: ${styleOverrides?.button.fontSize || '10px'};      
+      font-size: ${styleOverrides?.button.fontSize || '0.75rem'};      
       padding: ${styleOverrides?.button.padding || '4px 6px'};      
       border-width: 0;      
       cursor: pointer;
