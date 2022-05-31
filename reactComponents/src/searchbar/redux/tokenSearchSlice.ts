@@ -16,14 +16,14 @@ const allValueHandler = (networkMap, exchangeMap, networks) => {
 
   // Validates that the networkMap contains the "All" value.
   // If "All" is active, it overrides all other networks; thus we enable all the networks.
-  if (networkMap.includes('All')) {
+  if (networkMap.length === 0 || networkMap.includes('All')) {
     // Loads all the networks from "networkExchangePairs".
     returnedNetworkMap = uniq(networks.map((network) => network.id));
   }
 
   // Validates that the networkMap contains the "All" value.
   // If "All" is active, it overrides all other networks; thus we enable all the networks.
-  if (exchangeMap.includes('All')) {
+  if (exchangeMap.length === 0 || exchangeMap.includes('All')) {
     // Loads all the networks from "networkExchangePairs".
     const exchanges: string[] = [];
     networks.forEach((network) => {
