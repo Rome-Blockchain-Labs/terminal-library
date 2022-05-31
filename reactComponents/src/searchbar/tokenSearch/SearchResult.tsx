@@ -57,7 +57,7 @@ const StyledResultContent = styled.div`
     border-style: ${styleOverrides?.borderStyle || 'solid'};  
     border-width: ${styleOverrides?.borderWidth || '1px'};      
     font-size: ${styleOverrides?.fontSize || '0.875rem'};      
-    font-family: ${styleOverrides?.fontFamily || "'Fira Code', monospace"};  
+    font-family: ${styleOverrides?.fontFamily || "'Montserrat'"};  
     overflow: auto;
     box-sizing: border-box;
   `}

@@ -54738,20 +54738,20 @@ spurious results.`);
   var allValueHandler = (networkMap, exchangeMap, networks) => {
     let returnedNetworkMap = networkMap;
     let returnedExchangeMap = exchangeMap;
-    if (networkMap.length === 0 || networkMap.includes("All")) {
+    if (networkMap.includes("All")) {
       returnedNetworkMap = (0, import_lodash.uniq)(networks.map((network) => network.id));
     }
-    if (exchangeMap.length === 0 || exchangeMap.includes("All")) {
+    if (exchangeMap.includes("All")) {
+      const exchanges = [];
+      networks.forEach((network) => {
+        if (returnedNetworkMap.includes(network.id)) {
+          network.exchanges.forEach((exchange) => {
+            exchanges.push(exchange.name);
+          });
+        }
+      });
+      returnedExchangeMap = exchanges;
     }
-    const exchanges = [];
-    networks.forEach((network) => {
-      if (returnedNetworkMap.includes(network.id)) {
-        network.exchanges.forEach((exchange) => {
-          exchanges.push(exchange.name);
-        });
-      }
-    });
-    returnedExchangeMap = exchanges;
     return [returnedNetworkMap, returnedExchangeMap];
   };
   var valueCleaner = (networkMap, exchangeMap) => {
@@ -56213,20 +56213,23 @@ spurious results.`);
     display: ${(styleOverrides == null ? void 0 : styleOverrides.display) || "block"}; 
     padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "10px 14px"};    
     background: transparent;  
+    font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "0.875rem"};
 
     &::placeholder {
+      font-family: 'Montserrat';
       color: #7A808A;
+
     }
   `}
 `;
   var StyledSearchIconWrapper = styled_components_esm_default.div`
   ${({ styleOverrides }) => `
-    float: right;
     position: absolute;
     left: ${(styleOverrides == null ? void 0 : styleOverrides.right) || "10px"};
     top: 50%;
     transform: translateY(-50%);
-    z-index: 1;   
+    display: flex;
+    align-items: center;
   `}
 `;
   var StyledWrapper = styled_components_esm_default.div`
@@ -56236,9 +56239,8 @@ spurious results.`);
     border-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderRadius) || "4px"}; 
     color: ${(styleOverrides == null ? void 0 : styleOverrides.color) || "#7A808A"};
     background: ${(styleOverrides == null ? void 0 : styleOverrides.background) || "#474F5C"};  
-    font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "0.75rem"};      
     font-family: ${(styleOverrides == null ? void 0 : styleOverrides.fontFamily) || "'Fira Code', monospace"};
-    z-index: 100;
+    z-index: 2;
 
     .invalid-error {
       padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "0 14px 5px"};   
@@ -56251,7 +56253,6 @@ spurious results.`);
   right: 10px;
   top: 50%;
   transform: translateY(-50%);
-  z-index: 1;
 `;
   var SearchInput = () => {
     var _a, _b, _c, _d;
@@ -59153,7 +59154,7 @@ spurious results.`);
     border-style: ${(styleOverrides == null ? void 0 : styleOverrides.borderStyle) || "solid"};  
     border-width: ${(styleOverrides == null ? void 0 : styleOverrides.borderWidth) || "1px"};      
     font-size: ${(styleOverrides == null ? void 0 : styleOverrides.fontSize) || "0.875rem"};      
-    font-family: ${(styleOverrides == null ? void 0 : styleOverrides.fontFamily) || "'Fira Code', monospace"};  
+    font-family: ${(styleOverrides == null ? void 0 : styleOverrides.fontFamily) || "'Montserrat'"};  
     overflow: auto;
     box-sizing: border-box;
   `}
@@ -60349,17 +60350,17 @@ spurious results.`);
 
   // src/searchbar/tokenSearch/index.tsx
   var StyledWrapper2 = styled_components_esm_default.div`
-  ${({ styleOverrides }) => `
-    width: 100%;
-    position: relative;
+  width: 100%;
+  position: relative;
 
+  ${({ styleOverrides }) => `
     & .dropDown {
       position: absolute;
       width: -webkit-fill-available;
       left: 0; 
       bottom: ${(styleOverrides == null ? void 0 : styleOverrides.borderBottomLeftRadius) || "5px"};  
       transform: translateY(100%);
-      z-index: 99;
+      z-index: 2;
       background-color: ${(styleOverrides == null ? void 0 : styleOverrides.backgroundColor) || "#474F5C"};          
       border-bottom-left-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderBottomLeftRadius) || "4px"};  
       border-bottom-right-radius: ${(styleOverrides == null ? void 0 : styleOverrides.borderBottomRightRadius) || "4px"};  

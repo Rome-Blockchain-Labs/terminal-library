@@ -10,17 +10,17 @@ import { RenderProps } from '../../types';
 import useClickOutside from '../hooks/useClickOutside';
 
 const StyledWrapper = styled.div`
-  ${({ styleOverrides }) => `
-    width: 100%;
-    position: relative;
+  width: 100%;
+  position: relative;
 
+  ${({ styleOverrides }) => `
     & .dropDown {
       position: absolute;
       width: -webkit-fill-available;
       left: 0; 
       bottom: ${styleOverrides?.borderBottomLeftRadius || '5px'};  
       transform: translateY(100%);
-      z-index: 99;
+      z-index: 2;
       background-color: ${styleOverrides?.backgroundColor || '#474F5C'};          
       border-bottom-left-radius: ${styleOverrides?.borderBottomLeftRadius || '4px'};  
       border-bottom-right-radius: ${styleOverrides?.borderBottomRightRadius || '4px'};  

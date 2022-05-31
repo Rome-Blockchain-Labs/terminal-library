@@ -35,21 +35,24 @@ const StyledInput = styled.input`
     display: ${styleOverrides?.display || 'block'}; 
     padding: ${styleOverrides?.padding || '10px 14px'};    
     background: transparent;  
+    font-size: ${styleOverrides?.fontSize || '0.875rem'};
 
     &::placeholder {
+      font-family: 'Montserrat';
       color: #7A808A;
+
     }
   `}
 `;
 
 const StyledSearchIconWrapper = styled.div`
   ${({ styleOverrides }) => `
-    float: right;
     position: absolute;
     left: ${styleOverrides?.right || '10px'};
     top: 50%;
     transform: translateY(-50%);
-    z-index: 1;   
+    display: flex;
+    align-items: center;
   `}
 `;
 
@@ -60,9 +63,8 @@ const StyledWrapper = styled.div`
     border-radius: ${styleOverrides?.borderRadius || '4px'}; 
     color: ${styleOverrides?.color || '#7A808A'};
     background: ${styleOverrides?.background || '#474F5C'};  
-    font-size: ${styleOverrides?.fontSize || '0.75rem'};      
     font-family: ${styleOverrides?.fontFamily || "'Fira Code', monospace"};
-    z-index: 100;
+    z-index: 2;
 
     .invalid-error {
       padding: ${styleOverrides?.padding || '0 14px 5px'};   
@@ -76,7 +78,6 @@ const StyledResetBtn = styled.button`
   right: 10px;
   top: 50%;
   transform: translateY(-50%);
-  z-index: 1;
 `;
 
 const SearchInput = (): JSX.Element => {
