@@ -5,7 +5,7 @@ import { Logo } from './Logo';
 import { firstAndLast } from './helpers/firstAndLast';
 import { intToWords } from './helpers/intToWords';
 import TokenSearchContext from '../Context/TokenSearch';
-
+import { TokensList } from '../constants/tokens';
 import Button from './Button';
 import DownIcon from '../icons/down';
 import UpIcon from '../icons/up';
@@ -254,9 +254,12 @@ export const ResultDetail: FC<DetailType> = (props: DetailType) => {
 
   const isActive = index === currentIndex;
   const tokenImage = (token) => {
-    if (token?.image)
-      return <img alt={token?.symbol} src={token?.image} style={{ borderRadius: '50%' }} width={imageSize} />;
-    else return <DefaultIcon />;
+    console.log(TokensList[token?.address?.toLowerCase()])
+    const tokenImageUrl = token?.image || TokensList[token?.address?.toLowerCase()];
+
+    return tokenImageUrl
+      ? <img alt={token?.symbol} src={tokenImageUrl} style={{ borderRadius: '50%' }} width={imageSize} height={imageSize} />
+      : <DefaultIcon width={imageSize} height={imageSize} />;
   };
 
   const copyAddress = (address, setIsCopiedAdress) => {
