@@ -5,16 +5,19 @@ import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import TokenSearchContext from '../Context/TokenSearch';
 import { RootState } from '../redux/store';
+import Button from './Button';
 import UnCheckedIcon from '../icons/unchecked';
 import { setViewResult, loadMore } from '../redux/tokenSearchSlice';
 import ResultDetail, { StyledGridRow } from './ResultDetail';
+import DropdownSection from './DropdownSection';
 import { IconsType } from './types';
 
-const StyledResult = styled.div`
-  background-color: inherit;
-  margin-left: auto;
-  margin-right: auto;
-  position: relative;
+const StyledResult = styled(DropdownSection)`
+  ${({ styleOverrides }) => `
+    position: relative;
+    background: ${styleOverrides?.background || '#00070E'};
+    border-radius: ${styleOverrides?.borderRadius || '4px'};
+  `}
 `;
 
 const StyledLoading = styled.div`
@@ -22,7 +25,7 @@ const StyledLoading = styled.div`
     position: relative;
     display: flex;
     justify-content: center;  
-    margin: 10px;
+    padding: 10px;
     color: ${styleOverrides?.color || 'white'};
     font-size: ${styleOverrides?.fontSize || '0.75rem'};      
   `}
@@ -35,7 +38,7 @@ const StyledResultTitle = styled.div`
     justify-content: space-between;
     color: ${styleOverrides?.color || '#fff'};
     font-size: ${styleOverrides?.fontSize || '0.75rem'};      
-    padding: ${styleOverrides?.padding || '7px 14px 2px;'};      
+    padding: ${styleOverrides?.padding || '10px;'};      
     margin: ${styleOverrides?.margin || '0'};      
     > span {
       font-size: ${styleOverrides?.fontSize2 || '0.75rem'};      
@@ -45,17 +48,10 @@ const StyledResultTitle = styled.div`
 
 const StyledResultContent = styled.div`
   ${({ styleOverrides }) => `
-    padding: ${styleOverrides?.padding || '14px'};
-    background: ${styleOverrides?.background || '#00070E'};
-    border-radius: ${styleOverrides?.borderRadius || '4px'};        
     width: ${styleOverrides?.width || '100%'};
     height: ${styleOverrides?.height || '300px'};
-    border: ${styleOverrides?.border || '1px solid grey'};   
     color: ${styleOverrides?.color || '#FFF'};
-    display: ${styleOverrides?.display || 'block'};   
-    border-color: ${styleOverrides?.borderColor || '#474F5C'};  
-    border-style: ${styleOverrides?.borderStyle || 'solid'};  
-    border-width: ${styleOverrides?.borderWidth || '1px'};      
+    display: ${styleOverrides?.display || 'block'};
     font-size: ${styleOverrides?.fontSize || '0.875rem'};      
     font-family: ${styleOverrides?.fontFamily || "'Montserrat'"};  
     overflow: auto;
@@ -68,20 +64,21 @@ const StyledResultContent = styled.div`
   }
 
   .header {    
-    border-bottom: 1px solid #474f5c;
-    color: #b4bbc7;
+    background-color: #B4BBC7;
+    color: #FFFFFF;
     font-size: 0.75rem;
     font-weight: bold;
-    padding-bottom: 10px;
+    padding: 10px;
 
-    div {
+    > div {
+      text-align: center;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
     > :last-child {
       grid-column: 4 / -1;
-    }
+    }    
   }
 `;
 
@@ -131,10 +128,10 @@ const SearchResult: FC<Loading> = (props: Loading) => {
         <div>
           Search Results <span>({suggestions.length} Results Found)</span>
         </div>
-        <button onClick={handleClose}>
+        <Button onClick={handleClose}>
           Close&nbsp;
           <UnCheckedIcon width={7} height={7} />
-        </button>
+        </Button>
       </StyledResultTitle>
       <StyledResultContent styleOverrides={customResult?.content}>
         <div className="result-content-responsive">
@@ -142,7 +139,7 @@ const SearchResult: FC<Loading> = (props: Loading) => {
             <div>Pair</div>
             <div>Network</div>
             <div>Exchange</div>
-            <div>Details</div>
+            <div></div>
           </StyledGridRow>
           {suggestionRendered.map((suggestions, index) => (
             <ResultDetail

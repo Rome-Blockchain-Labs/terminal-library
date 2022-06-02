@@ -32,7 +32,7 @@ const StyledChip = styled.div`
       padding: ${styleOverrides?.padding || "2px 5px"};   
       margin: ${styleOverrides?.margin || "5px"};   
       color: ${styleOverrides?.defaultColor || "#B4BBC7"};   
-      min-width: ${styleOverrides?.width || "120px"};   
+      min-width: ${styleOverrides?.width || "115px"};   
       height: ${styleOverrides?.height || "35px"};   
       text-align: ${styleOverrides?.textAlign || "left"}; 
       text-transform: ${styleOverrides?.textTransform || "uppercase"}; 

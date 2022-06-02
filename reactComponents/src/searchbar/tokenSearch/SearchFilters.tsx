@@ -14,20 +14,21 @@ import { FilterExchangeAll, FilterExchangeSelectors } from "./SearchFiltersExcha
 import Button from "./Button";
 import DownIcon from "../icons/down";
 import UpIcon from "../icons/up";
+import DropdownSection from "./DropdownSection";
 import { RootState } from "../redux/store";
 import TokenSearchContext from '../Context/TokenSearch';
 import { setViewResult } from '../redux/tokenSearchSlice';
 
-
-const FilterWrapper = styled.div`  
+const FilterWrapper = styled(DropdownSection)`  
   ${({ styleOverrides }) => `    
-    .accordion__button {
-      position: relative;
-    }
     background-color: ${styleOverrides?.backgroundColor || '#00070E'};
     border-radius: ${styleOverrides?.borderRadius || '4px'};
 
-    .accordion__panel {    
+    .accordion__button {
+      position: relative;
+    }
+
+    .accordion__panel {
       border: ${styleOverrides?.contentBorder || '0'};       
       border-radius: ${styleOverrides?.contentBorderRadius || '0'}; 
       margin:  ${styleOverrides?.margin || '0'};
@@ -45,10 +46,8 @@ const StyledFilterHeader = styled.div`
     background-color: ${styleOverrides?.backgroundColor || '#00070E'}; 
     color: ${styleOverrides?.color || '#fff'};    
     cursor: pointer;
-    padding: ${styleOverrides?.padding || '6px 14px'};   
+    padding: ${styleOverrides?.padding || '10px'};   
     text-align: ${styleOverrides?.textAlign || 'left'};     
-    margin: ${styleOverrides?.margin || '5px 0 0'};     
-    border-radius: ${styleOverrides?.borderRadius || '4px'};     
     font-size: ${styleOverrides?.fontSize || '0.75rem'};     
     font-weight: ${styleOverrides?.fontWeight || '500'};     
     &:hover {
@@ -61,6 +60,10 @@ const StyledFilterHeaderActionWrapper = styled.div`
     margin-left: 10px;
     display: flex;
     align-items: center;
+
+    button {
+      margin-left: 8px;
+    }
 `;
 
 const StyledFilterContent = styled.div`

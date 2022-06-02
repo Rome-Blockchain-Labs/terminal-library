@@ -12,44 +12,26 @@ import useClickOutside from '../hooks/useClickOutside';
 const StyledWrapper = styled.div`
   width: 100%;
   position: relative;
-
+  box-sizing: border-box;
+  
   ${({ styleOverrides }) => `
-    & .dropDown {
+    border-radius: 4px;    
+
+    & .tl-dropdown {
       position: absolute;
-      width: -webkit-fill-available;
       left: 0; 
-      bottom: ${styleOverrides?.borderBottomLeftRadius || '5px'};  
+      bottom: ${styleOverrides?.borderRadius || '4px'};
       transform: translateY(100%);
       z-index: 2;
-      background-color: ${styleOverrides?.backgroundColor || '#474F5C'};          
-      border-bottom-left-radius: ${styleOverrides?.borderBottomLeftRadius || '4px'};  
-      border-bottom-right-radius: ${styleOverrides?.borderBottomRightRadius || '4px'};  
-      border-color: ${styleOverrides?.borderColor || '#474F5C'};          
-      border-style: ${styleOverrides?.borderStyle || 'solid'};                
-      border-width:${styleOverrides?.borderStyle || '4px'};                 
+      width: -webkit-fill-available;
+      padding: 10px;
+      background-color: ${styleOverrides?.backgroundColor || '#474F5C'};
+      border-bottom-left-radius: ${styleOverrides?.borderRadius || '4px'};
+      border-bottom-right-radius: ${styleOverrides?.borderRadius || '4px'};
       border-top: none;
-    }
-    & button {
-      display: flex;
-      align-items: center;
-      border-color: ${styleOverrides?.button.borderColor || '#232C38'};      
-      background-color: ${styleOverrides?.button.backColor || '#232C38'};      
-      color: ${styleOverrides?.button.color || '#B1B8C3'};      
-      border-radius: ${styleOverrides?.button.borderRadius || '4px'};      
-      font-size: ${styleOverrides?.button.fontSize || '0.75rem'};      
-      padding: ${styleOverrides?.button.padding || '4px 6px'};      
-      border-width: 0;      
-      cursor: pointer;
-      &:hover {
-        background-color: ${styleOverrides?.button.hoverBackColor || 'black'};      
-      }
-      & span {
-        padding-right: 3px;
-      }
     }
   `}
 `;
-
 
 const Backdrop = styled.div`
   position: fixed;
@@ -80,7 +62,7 @@ export const TokenSearch: FC<RenderProps> = (renderProps: RenderProps) => {
       <StyledWrapper ref={searchRef} styleOverrides={customWrapper}>
         <SearchInput />
         {isSelecting && (
-          <div className="dropDown">
+          <div className="tl-dropdown">
             <SearchFilters />
             {viewResult && <SearchResult loading={isLoading} />}
           </div>

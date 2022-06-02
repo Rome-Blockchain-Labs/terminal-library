@@ -9,16 +9,25 @@ type ButtonProps = {
 }
 
 const StyledButton = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 4px;
-  box-sizing: border-box;
-  outline: none;
-  padding: 3px 6px;
-  margin: 3px;
-  color: #B4BBC7;
-  background-color: #474F5C;
+  ${({ styleOverrides }) => `
+    display: flex;
+    align-items: center;
+    border-color: ${styleOverrides?.button.borderColor || '#232C38'};      
+    background-color: ${styleOverrides?.button.backColor || '#232C38'};
+    color: ${styleOverrides?.button.color || '#B1B8C3'};      
+    border-radius: ${styleOverrides?.button.borderRadius || '4px'};      
+    font-size: ${styleOverrides?.button.fontSize || '0.75rem'};      
+    padding: ${styleOverrides?.button.padding || '4px 6px'};      
+    border-width: 0;      
+    box-sizing: border-box;
+
+    &:hover {
+      background-color: ${styleOverrides?.button.hoverBackColor || 'black'};      
+    }
+    & span {
+      padding-right: 3px;
+    }
+  `}  
 `;
 
 const Button: FC<ButtonProps> = ({ className, styleOverrides, onClick, children }) => {

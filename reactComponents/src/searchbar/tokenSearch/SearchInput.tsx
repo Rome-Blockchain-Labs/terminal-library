@@ -8,6 +8,8 @@ import {
   setViewResult,
   resetSearch,
 } from '../redux/tokenSearchSlice';
+import { useIsMobile } from '../hooks/useReponsive';
+import Button from './Button';
 import SearchIcon from '../icons/search';
 import ResetIcon from '../icons/reset';
 import debounce from 'lodash.debounce';
@@ -15,52 +17,10 @@ import TokenSearchContext from '../Context/TokenSearch';
 import { RootState } from '../redux/store';
 import config from '../config';
 
-const StyledInputGroup = styled.div`
-  ${({ styleOverrides }) => ` 
-    position: relative;
-    width: ${styleOverrides?.width || '-webkit-fill-available'};
-    padding: 0 120px 0 15px;
-  `}
-`;
-const StyledInput = styled.input`
-  ${({ styleOverrides }) => `    
-    margin-left: auto;
-    margin-right: auto;
-    position: relative;
-    outline: 0;
-    border: none;
-    width: ${styleOverrides?.width || '-webkit-fill-available'};
-    height: ${styleOverrides?.height || 'auto'};    
-    color: ${styleOverrides?.color || '#B7BEC9'};
-    display: ${styleOverrides?.display || 'block'}; 
-    padding: ${styleOverrides?.padding || '10px 14px'};    
-    background: transparent;  
-    font-size: ${styleOverrides?.fontSize || '0.875rem'};
-
-    &::placeholder {
-      font-family: 'Montserrat';
-      color: #7A808A;
-
-    }
-  `}
-`;
-
-const StyledSearchIconWrapper = styled.div`
-  ${({ styleOverrides }) => `
-    position: absolute;
-    left: ${styleOverrides?.right || '10px'};
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    align-items: center;
-  `}
-`;
-
 const StyledWrapper = styled.div`
   ${({ styleOverrides }) => `    
     position: relative;
-    border: ${styleOverrides?.border || '4px solid #474F5C'}; 
-    border-radius: ${styleOverrides?.borderRadius || '4px'}; 
+    border-radius: ${styleOverrides?.borderRadius || '4px'};
     color: ${styleOverrides?.color || '#7A808A'};
     background: ${styleOverrides?.background || '#474F5C'};  
     font-family: ${styleOverrides?.fontFamily || "'Fira Code', monospace"};
@@ -73,11 +33,58 @@ const StyledWrapper = styled.div`
   `}
 `;
 
-const StyledResetBtn = styled.button`
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
+const StyledInputGroup = styled.div`
+  ${({ styleOverrides }) => ` 
+    position: relative;
+    width: ${styleOverrides?.width || '-webkit-fill-available'};
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  `}
+`;
+const StyledInput = styled.input`
+  ${({ styleOverrides }) => `
+    flex: auto;
+    position: relative;
+    outline: 0;
+    border: none;
+    width: ${styleOverrides?.width || '100%'};
+    height: ${styleOverrides?.height || '40px'};    
+    color: ${styleOverrides?.color || '#B7BEC9'};
+    display: ${styleOverrides?.display || 'block'}; 
+    padding: ${styleOverrides?.padding || '0 10px'};    
+    background: transparent;  
+    font-size: ${styleOverrides?.fontSize || '0.875rem'};
+
+    &::placeholder {
+      font-family: 'Montserrat';
+      color: #7A808A;
+
+    }
+  `}
+`;
+
+const StyledInputPrefixWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+`
+
+const StyledInputSuffixWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-shrink: 0;
+`
+
+const StyledResetBtn = styled(Button)`
+  margin-right: 5px;
+`;
+
+const StyledMobileSearchBtn = styled(Button)`
+  background-color: #C1FF00 !important;
+  color: #2F3542 !important;
 `;
 
 const SearchInput = (): JSX.Element => {
@@ -87,6 +94,7 @@ const SearchInput = (): JSX.Element => {
   const [text, setText] = useState('');
   const [error, setError] = useState(false);
   const { searchText, networkMap, exchangeMap } = useSelector((state: RootState) => state);
+  const isMobile = useIsMobile();
 
   const inputRef = useRef<HTMLInputElement>(null);
   // Updates the datasets of the results.
@@ -113,9 +121,16 @@ const SearchInput = (): JSX.Element => {
   const onChangeFilter = (event) => {
     const value = event.target.value;
     setText(value);
-    debounceChangeHandler(value);
-    dispatch(setViewResult(true));
+    if (!isMobile) {
+      debounceChangeHandler(value);
+      dispatch(setViewResult(true));
+    }
   };
+
+  const onMobileSearchClick = () => {
+    dispatch(setSearchText(text));
+    dispatch(setViewResult(true));
+  }
 
   const handleClick = () => {
     text.length > 0 && dispatch(setViewResult(true));
@@ -140,6 +155,9 @@ const SearchInput = (): JSX.Element => {
   return (
     <StyledWrapper onClick={() => dispatch(startSelecting())} styleOverrides={customSearchInput?.input}>
       <StyledInputGroup styleOverrides={customSearchInput?.input}>
+        <StyledInputPrefixWrapper styleOverrides={customSearchInput?.icon}>
+          <SearchIcon height={height} width={width} />
+        </StyledInputPrefixWrapper>
         <StyledInput
           ref={inputRef}
           placeholder={placeholder}
@@ -149,13 +167,17 @@ const SearchInput = (): JSX.Element => {
           styleOverrides={customSearchInput?.input}
           value={text}
         />
-        <StyledResetBtn onClick={handleReset}>
-          <span>Reset Search</span>
-          <ResetIcon />
-        </StyledResetBtn>
-        <StyledSearchIconWrapper styleOverrides={customSearchInput?.icon}>
-          <SearchIcon height={height} width={width} />
-        </StyledSearchIconWrapper>
+        <StyledInputSuffixWrapper>
+          <StyledResetBtn onClick={handleReset}>
+            <span>Reset Search</span>
+            <ResetIcon width={12} height={12} />
+          </StyledResetBtn>
+          {isMobile && (
+            <StyledMobileSearchBtn onClick={onMobileSearchClick}>
+              <span>Search</span>
+            </StyledMobileSearchBtn>
+          )}
+        </StyledInputSuffixWrapper>
       </StyledInputGroup>
       {error && (
         <div className="invalid-error">
