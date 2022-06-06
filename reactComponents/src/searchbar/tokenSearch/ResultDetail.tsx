@@ -269,7 +269,7 @@ export const ResultDetail: FC<DetailType> = (props: DetailType) => {
       </div>
       <div className="logo icon-label">
         <NetworkExchangeIcon
-          component={logoIcons[selectedPair.network]}
+          icon={logoIcons[selectedPair.network]}
           size={20}
           label={selectedPair.network}
         />
@@ -277,7 +277,7 @@ export const ResultDetail: FC<DetailType> = (props: DetailType) => {
       </div>
       <div className="logo icon-label">
         <NetworkExchangeIcon
-          component={logoIcons[selectedPair.exchange]}
+          icon={logoIcons[selectedPair.exchange]}
           size={20}
           label={selectedPair.exchange}
         />

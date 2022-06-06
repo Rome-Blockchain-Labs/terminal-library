@@ -2,7 +2,6 @@ import React, { useContext, FC } from 'react';
 import styled from 'styled-components';
 import TokenSearchContext from '../Context/TokenSearch';
 import NetworkExchangeIcon from './NetworkExchangeIcon';
-import { Logo } from './Logo';
 import CheckedIcon from '../icons/checked';
 import UnCheckedIcon from '../icons/unchecked';
 

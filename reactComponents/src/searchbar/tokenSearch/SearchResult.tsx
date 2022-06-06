@@ -1,22 +1,22 @@
-import React, { useContext, useState, FC, useMemo } from 'react';
-import useInfiniteScroll from 'react-infinite-scroll-hook';
-import styled from 'styled-components';
+import React, { useContext, useState, FC, useMemo } from "react";
+import useInfiniteScroll from "react-infinite-scroll-hook";
+import styled from "styled-components";
 
-import { useSelector, useDispatch } from 'react-redux';
-import TokenSearchContext from '../Context/TokenSearch';
-import { RootState } from '../redux/store';
-import Button from './Button';
-import UnCheckedIcon from '../icons/unchecked';
-import { setViewResult, loadMore } from '../redux/tokenSearchSlice';
-import ResultDetail, { StyledGridRow } from './ResultDetail';
-import DropdownSection from './DropdownSection';
-import { IconsType } from './types';
+import { useSelector, useDispatch } from "react-redux";
+import TokenSearchContext from "../Context/TokenSearch";
+import { RootState } from "../redux/store";
+import Button from "./Button";
+import UnCheckedIcon from "../icons/unchecked";
+import { setViewResult, loadMore } from "../redux/tokenSearchSlice";
+import ResultDetail, { StyledGridRow } from "./ResultDetail";
+import DropdownSection from "./DropdownSection";
+import { IconsType } from "./types";
 
 const StyledResult = styled(DropdownSection)`
   ${({ styleOverrides }) => `
     position: relative;
-    background: ${styleOverrides?.background || '#00070E'};
-    border-radius: ${styleOverrides?.borderRadius || '4px'};
+    background: ${styleOverrides?.background || "#00070E"};
+    border-radius: ${styleOverrides?.borderRadius || "4px"};
   `}
 `;
 
@@ -26,8 +26,8 @@ const StyledLoading = styled.div`
     display: flex;
     justify-content: center;  
     padding: 10px;
-    color: ${styleOverrides?.color || 'white'};
-    font-size: ${styleOverrides?.fontSize || '0.75rem'};      
+    color: ${styleOverrides?.color || "white"};
+    font-size: ${styleOverrides?.fontSize || "0.75rem"};      
   `}
 `;
 
@@ -36,23 +36,23 @@ const StyledResultTitle = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    color: ${styleOverrides?.color || '#fff'};
-    font-size: ${styleOverrides?.fontSize || '0.75rem'};      
-    padding: ${styleOverrides?.padding || '10px;'};      
-    margin: ${styleOverrides?.margin || '0'};      
+    color: ${styleOverrides?.color || "#fff"};
+    font-size: ${styleOverrides?.fontSize || "0.75rem"};      
+    padding: ${styleOverrides?.padding || "10px;"};      
+    margin: ${styleOverrides?.margin || "0"};      
     > span {
-      font-size: ${styleOverrides?.fontSize2 || '0.75rem'};      
+      font-size: ${styleOverrides?.fontSize2 || "0.75rem"};      
     }
   `}
 `;
 
 const StyledResultContent = styled.div`
   ${({ styleOverrides }) => `
-    width: ${styleOverrides?.width || '100%'};
-    height: ${styleOverrides?.height || '300px'};
-    color: ${styleOverrides?.color || '#FFF'};
-    display: ${styleOverrides?.display || 'block'};
-    font-size: ${styleOverrides?.fontSize || '0.875rem'};      
+    width: ${styleOverrides?.width || "100%"};
+    height: ${styleOverrides?.height || "300px"};
+    color: ${styleOverrides?.color || "#FFF"};
+    display: ${styleOverrides?.display || "block"};
+    font-size: ${styleOverrides?.fontSize || "0.875rem"};      
     font-family: ${styleOverrides?.fontFamily || "'Montserrat', monospace"};  
     overflow: auto;
     box-sizing: border-box;
@@ -63,9 +63,9 @@ const StyledResultContent = styled.div`
     min-width: 100%;
   }
 
-  .header {    
-    background-color: #7A808A;
-    color: #FFFFFF;
+  .header {
+    background-color: #7a808a;
+    color: #ffffff;
     font-size: 0.75rem;
     font-weight: bold;
     padding: 10px;
@@ -78,7 +78,7 @@ const StyledResultContent = styled.div`
 
     > :last-child {
       grid-column: 4 / -1;
-    }    
+    }
   }
 `;
 
@@ -90,7 +90,8 @@ const SearchResult: FC<Loading> = (props: Loading) => {
   const dispatch = useDispatch();
   const renderProps = useContext(TokenSearchContext);
   const { customResult, customLoading } = renderProps;
-  const { suggestions, searchText, isLoading, suggestionRendered } = useSelector((state: RootState) => state);
+  const { suggestions, searchText, isLoading, suggestionRendered } =
+    useSelector((state: RootState) => state);
   const [currentIndex, setCurrentIndex] = useState(-1);
 
   const hasNextPage = useMemo(
@@ -104,8 +105,12 @@ const SearchResult: FC<Loading> = (props: Loading) => {
     onLoadMore: () => dispatch(loadMore()),
   });
 
-  const notFoundTitle = customLoading?.notFoundTitle ? customLoading.notFoundTitle : 'No results found';
-  const loadingTitle = customLoading?.loadingTitle ? customLoading.loadingTitle : 'Searching...';
+  const notFoundTitle = customLoading?.notFoundTitle
+    ? customLoading.notFoundTitle
+    : "No results found";
+  const loadingTitle = customLoading?.loadingTitle
+    ? customLoading.loadingTitle
+    : "Searching...";
 
   const handleClose = () => {
     dispatch(setViewResult(false));
@@ -121,13 +126,15 @@ const SearchResult: FC<Loading> = (props: Loading) => {
   if (props.loading) {
     return (
       <StyledResult>
-        <StyledLoading styleOverrides={customLoading}>{loadingTitle}</StyledLoading>
+        <StyledLoading styleOverrides={customLoading}>
+          {loadingTitle}
+        </StyledLoading>
       </StyledResult>
-    )
+    );
   }
 
   return (
-    <StyledResult>
+    <StyledResult className="search-result-wrapper">
       <StyledResultTitle styleOverrides={customResult?.title}>
         <div>
           Search Results <span>({suggestions.length} Results Found)</span>
@@ -137,9 +144,12 @@ const SearchResult: FC<Loading> = (props: Loading) => {
           <UnCheckedIcon width={7} height={7} />
         </Button>
       </StyledResultTitle>
-      <StyledResultContent styleOverrides={customResult?.content}>
+      <StyledResultContent
+        styleOverrides={customResult?.content}
+        className="search-result-content"
+      >
         <div className="result-content-responsive">
-          <StyledGridRow className={`header ${currentIndex === 0 && 'b-none'}`}>
+          <StyledGridRow className={`header ${currentIndex === 0 && "b-none"}`}>
             <div>Pair</div>
             <div>Network</div>
             <div>Exchange</div>
@@ -156,7 +166,9 @@ const SearchResult: FC<Loading> = (props: Loading) => {
             />
           ))}
           {!!searchText && !suggestionRendered.length && (
-            <StyledLoading styleOverrides={customLoading}>{notFoundTitle}</StyledLoading>
+            <StyledLoading styleOverrides={customLoading}>
+              {notFoundTitle}
+            </StyledLoading>
           )}
           {hasNextPage && <div ref={sentryRef}>loading....</div>}
         </div>

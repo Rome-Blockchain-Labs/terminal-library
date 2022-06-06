@@ -3855,7 +3855,6 @@ var StyledDetailList = styled3(StyledGridRow)`
       justify-content: flex-start;
       align-items: center;
       flex-wrap: wrap;
-      margin-right: 10px;
     }
     &:not(.active):hover {
       cursor: pointer; 
@@ -3962,7 +3961,7 @@ var ResultDetail = (props) => {
   }, selectedPair.token1.symbol))), /* @__PURE__ */ React41.createElement("div", {
     className: "logo icon-label"
   }, /* @__PURE__ */ React41.createElement(NetworkExchangeIcon_default, {
-    component: logoIcons[selectedPair.network],
+    icon: logoIcons[selectedPair.network],
     size: 20,
     label: selectedPair.network
   }), /* @__PURE__ */ React41.createElement("span", {
@@ -3970,7 +3969,7 @@ var ResultDetail = (props) => {
   }, selectedPair.network)), /* @__PURE__ */ React41.createElement("div", {
     className: "logo icon-label"
   }, /* @__PURE__ */ React41.createElement(NetworkExchangeIcon_default, {
-    component: logoIcons[selectedPair.exchange],
+    icon: logoIcons[selectedPair.exchange],
     size: 20,
     label: selectedPair.exchange
   }), /* @__PURE__ */ React41.createElement("span", {
@@ -4086,9 +4085,9 @@ var StyledResultContent = styled5.div`
     min-width: 100%;
   }
 
-  .header {    
-    background-color: #7A808A;
-    color: #FFFFFF;
+  .header {
+    background-color: #7a808a;
+    color: #ffffff;
     font-size: 0.75rem;
     font-weight: bold;
     padding: 10px;
@@ -4101,7 +4100,7 @@ var StyledResultContent = styled5.div`
 
     > :last-child {
       grid-column: 4 / -1;
-    }    
+    }
   }
 `;
 var SearchResult = (props) => {
@@ -4135,7 +4134,9 @@ var SearchResult = (props) => {
       styleOverrides: customLoading
     }, loadingTitle));
   }
-  return /* @__PURE__ */ React42.createElement(StyledResult, null, /* @__PURE__ */ React42.createElement(StyledResultTitle, {
+  return /* @__PURE__ */ React42.createElement(StyledResult, {
+    className: "search-result-wrapper"
+  }, /* @__PURE__ */ React42.createElement(StyledResultTitle, {
     styleOverrides: customResult == null ? void 0 : customResult.title
   }, /* @__PURE__ */ React42.createElement("div", null, "Search Results ", /* @__PURE__ */ React42.createElement("span", null, "(", suggestions.length, " Results Found)")), /* @__PURE__ */ React42.createElement(Button_default, {
     onClick: handleClose
@@ -4143,7 +4144,8 @@ var SearchResult = (props) => {
     width: 7,
     height: 7
   }))), /* @__PURE__ */ React42.createElement(StyledResultContent, {
-    styleOverrides: customResult == null ? void 0 : customResult.content
+    styleOverrides: customResult == null ? void 0 : customResult.content,
+    className: "search-result-content"
   }, /* @__PURE__ */ React42.createElement("div", {
     className: "result-content-responsive"
   }, /* @__PURE__ */ React42.createElement(StyledGridRow, {
@@ -4819,13 +4821,26 @@ var MobileSearchPopupInner = styled10.div`
   position: relative;
   padding: 15px;
   box-sizing: border-box;
+  height: 100%;
 `;
 var MobileSearchPopupHeader = styled10.div`
   display: flex;
   justify-content: flex-end;
 `;
 var MobileSearchPopupBody = styled10.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 
+  .search-result-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .search-result-content {
+      flex: auto;
+    }
+  }  
 `;
 var MobileSearchPopupClose = styled10.div`
   cursor: pointer;

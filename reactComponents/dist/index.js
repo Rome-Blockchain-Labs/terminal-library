@@ -3883,7 +3883,6 @@ var StyledDetailList = (0, import_styled_components3.default)(StyledGridRow)`
       justify-content: flex-start;
       align-items: center;
       flex-wrap: wrap;
-      margin-right: 10px;
     }
     &:not(.active):hover {
       cursor: pointer; 
@@ -3990,7 +3989,7 @@ var ResultDetail = (props) => {
   }, selectedPair.token1.symbol))), /* @__PURE__ */ import_react42.default.createElement("div", {
     className: "logo icon-label"
   }, /* @__PURE__ */ import_react42.default.createElement(NetworkExchangeIcon_default, {
-    component: logoIcons[selectedPair.network],
+    icon: logoIcons[selectedPair.network],
     size: 20,
     label: selectedPair.network
   }), /* @__PURE__ */ import_react42.default.createElement("span", {
@@ -3998,7 +3997,7 @@ var ResultDetail = (props) => {
   }, selectedPair.network)), /* @__PURE__ */ import_react42.default.createElement("div", {
     className: "logo icon-label"
   }, /* @__PURE__ */ import_react42.default.createElement(NetworkExchangeIcon_default, {
-    component: logoIcons[selectedPair.exchange],
+    icon: logoIcons[selectedPair.exchange],
     size: 20,
     label: selectedPair.exchange
   }), /* @__PURE__ */ import_react42.default.createElement("span", {
@@ -4114,9 +4113,9 @@ var StyledResultContent = import_styled_components5.default.div`
     min-width: 100%;
   }
 
-  .header {    
-    background-color: #7A808A;
-    color: #FFFFFF;
+  .header {
+    background-color: #7a808a;
+    color: #ffffff;
     font-size: 0.75rem;
     font-weight: bold;
     padding: 10px;
@@ -4129,7 +4128,7 @@ var StyledResultContent = import_styled_components5.default.div`
 
     > :last-child {
       grid-column: 4 / -1;
-    }    
+    }
   }
 `;
 var SearchResult = (props) => {
@@ -4163,7 +4162,9 @@ var SearchResult = (props) => {
       styleOverrides: customLoading
     }, loadingTitle));
   }
-  return /* @__PURE__ */ import_react43.default.createElement(StyledResult, null, /* @__PURE__ */ import_react43.default.createElement(StyledResultTitle, {
+  return /* @__PURE__ */ import_react43.default.createElement(StyledResult, {
+    className: "search-result-wrapper"
+  }, /* @__PURE__ */ import_react43.default.createElement(StyledResultTitle, {
     styleOverrides: customResult == null ? void 0 : customResult.title
   }, /* @__PURE__ */ import_react43.default.createElement("div", null, "Search Results ", /* @__PURE__ */ import_react43.default.createElement("span", null, "(", suggestions.length, " Results Found)")), /* @__PURE__ */ import_react43.default.createElement(Button_default, {
     onClick: handleClose
@@ -4171,7 +4172,8 @@ var SearchResult = (props) => {
     width: 7,
     height: 7
   }))), /* @__PURE__ */ import_react43.default.createElement(StyledResultContent, {
-    styleOverrides: customResult == null ? void 0 : customResult.content
+    styleOverrides: customResult == null ? void 0 : customResult.content,
+    className: "search-result-content"
   }, /* @__PURE__ */ import_react43.default.createElement("div", {
     className: "result-content-responsive"
   }, /* @__PURE__ */ import_react43.default.createElement(StyledGridRow, {
@@ -4841,13 +4843,26 @@ var MobileSearchPopupInner = import_styled_components10.default.div`
   position: relative;
   padding: 15px;
   box-sizing: border-box;
+  height: 100%;
 `;
 var MobileSearchPopupHeader = import_styled_components10.default.div`
   display: flex;
   justify-content: flex-end;
 `;
 var MobileSearchPopupBody = import_styled_components10.default.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 
+  .search-result-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .search-result-content {
+      flex: auto;
+    }
+  }  
 `;
 var MobileSearchPopupClose = import_styled_components10.default.div`
   cursor: pointer;

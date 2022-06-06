@@ -31,6 +31,7 @@ const MobileSearchPopupInner = styled.div`
   position: relative;
   padding: 15px;
   box-sizing: border-box;
+  height: 100%;
 `;
 
 const MobileSearchPopupHeader = styled.div`
@@ -39,7 +40,19 @@ const MobileSearchPopupHeader = styled.div`
 `
 
 const MobileSearchPopupBody = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 
+  .search-result-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .search-result-content {
+      flex: auto;
+    }
+  }  
 `
 
 const MobileSearchPopupClose = styled.div`
