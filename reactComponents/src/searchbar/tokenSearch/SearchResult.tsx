@@ -53,7 +53,7 @@ const StyledResultContent = styled.div`
     color: ${styleOverrides?.color || '#FFF'};
     display: ${styleOverrides?.display || 'block'};
     font-size: ${styleOverrides?.fontSize || '0.875rem'};      
-    font-family: ${styleOverrides?.fontFamily || "'Montserrat'"};  
+    font-family: ${styleOverrides?.fontFamily || "'Montserrat', monospace"};  
     overflow: auto;
     box-sizing: border-box;
   `}
@@ -64,7 +64,7 @@ const StyledResultContent = styled.div`
   }
 
   .header {    
-    background-color: #B4BBC7;
+    background-color: #7A808A;
     color: #FFFFFF;
     font-size: 0.75rem;
     font-weight: bold;
@@ -104,12 +104,8 @@ const SearchResult: FC<Loading> = (props: Loading) => {
     onLoadMore: () => dispatch(loadMore()),
   });
 
-  if (props.loading) {
-    const loadingTitle = customLoading?.loadingTitle ? customLoading.loadingTitle : 'Searching...';
-    return <StyledLoading styleOverrides={customLoading}>{loadingTitle}</StyledLoading>;
-  }
-
   const notFoundTitle = customLoading?.notFoundTitle ? customLoading.notFoundTitle : 'No results found';
+  const loadingTitle = customLoading?.loadingTitle ? customLoading.loadingTitle : 'Searching...';
 
   const handleClose = () => {
     dispatch(setViewResult(false));
@@ -121,6 +117,14 @@ const SearchResult: FC<Loading> = (props: Loading) => {
       logoIcons[exchange.name] = exchange.icon;
     });
   });
+
+  if (props.loading) {
+    return (
+      <StyledResult>
+        <StyledLoading styleOverrides={customLoading}>{loadingTitle}</StyledLoading>
+      </StyledResult>
+    )
+  }
 
   return (
     <StyledResult>

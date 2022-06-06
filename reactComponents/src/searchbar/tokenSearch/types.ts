@@ -14,3 +14,15 @@ export type DetailType = {
     currentIndex : number;
     logoIcons: IconsType
 }
+
+export type PairTokenIconType = {
+    token: any;
+    size?: number;
+};
+
+export type NetworkExchangeIconType = {
+    icon?: any,
+    size?: number;
+    label?: string;
+    grayscaleFilter?: any;
+};

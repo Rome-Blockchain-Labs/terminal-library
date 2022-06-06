@@ -1,6 +1,7 @@
 import React, { useContext, FC } from 'react';
 import styled from 'styled-components';
 import TokenSearchContext from '../Context/TokenSearch';
+import NetworkExchangeIcon from './NetworkExchangeIcon';
 import { Logo } from './Logo';
 import CheckedIcon from '../icons/checked';
 import UnCheckedIcon from '../icons/unchecked';
@@ -82,7 +83,7 @@ export const Chip: FC<any> = (props) => {
       />
       <label htmlFor={`${label}-${name}`}>
         <div className={checked ? 'chip-icon active' : 'chip-icon'}>
-          {icon ?? <Logo label={label} grayscaleFilter={grayscaleFilter} width={16} height={16} />}
+          <NetworkExchangeIcon icon={icon} label={label} size={16} grayscaleFilter={grayscaleFilter} />
         </div>
         <span>{label}</span>
         {!['Select All', 'Deselect All'].includes(label) && checkedStatus}
