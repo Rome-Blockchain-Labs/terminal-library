@@ -1,11 +1,12 @@
-export * from "./searchbar"
-export * from "./types"
+export * from './searchbar';
+export * from './types';
 
 // ================ DEMO TEST ===============
-import * as React from "react";
-import { render } from "react-dom";
+import * as React from 'react';
+import { render } from 'react-dom';
 
-import {SearchBar} from "./searchbar";
+import { SearchBar } from './searchbar';
+import { NetworkId, ExchangeName } from './types';
 /*
 const customWrapper = {
   backgroundColor: '#474F5C',      
@@ -238,5 +239,23 @@ const customTokenDetail = {
 }
 */
 
-const rootElement = document.getElementById("root");
-render(<SearchBar />, rootElement);
+const SEED_NETWORKS = [
+    {
+      id: "avalanche" as NetworkId,
+      name: "Avalanche",
+      exchanges: [{
+        name: "pangolin" as ExchangeName
+      }]
+    },
+    {
+      id: "bsc" as NetworkId,
+      name: "BNB Chain",
+      icon: null,
+      exchanges: [
+        { name: "biswap" as ExchangeName }, { name: "pancakeswap" as ExchangeName }, { name: "mdex" as ExchangeName }
+      ]
+    }
+  ]
+
+const rootElement = document.getElementById('root');
+render(<SearchBar networks={SEED_NETWORKS} />, rootElement);

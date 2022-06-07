@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { IIconProps } from '.';
 
-const SVGIcon: FC<IIconProps> = ({children, width, height, viewBox}) => {
+const SVGIcon: FC<IIconProps> = ({ children, width, height, viewBox }) => {
   return (
     <svg
       height={height ?? 16}

@@ -1,149 +1,182 @@
-import React, { useContext, useState, FC, useMemo } from 'react';
-import useInfiniteScroll from 'react-infinite-scroll-hook';
-import styled from 'styled-components'
+import React, { useContext, useState, FC, useMemo } from "react";
+import useInfiniteScroll from "react-infinite-scroll-hook";
+import styled from "styled-components";
 
-import { useSelector, useDispatch } from 'react-redux';
-import TokenSearchContext from '../Context/TokenSearch';
+import { useSelector, useDispatch } from "react-redux";
+import TokenSearchContext from "../Context/TokenSearch";
 import { RootState } from "../redux/store";
-import UnCheckedIcon from '../icons/unchecked';
-import { setViewResult, loadMore } from '../redux/tokenSearchSlice';
-import ResultDetail from './ResultDetail'
+import Button from "./Button";
+import UnCheckedIcon from "../icons/unchecked";
+import { setViewResult, loadMore } from "../redux/tokenSearchSlice";
+import ResultDetail, { StyledGridRow } from "./ResultDetail";
+import DropdownSection from "./DropdownSection";
+import { IconsType } from "./types";
 
-const StyledResult = styled.div`
-  background-color: inherit;
-  margin-left: auto;
-  margin-right: auto;
-  position: relative;  
+const StyledResult = styled(DropdownSection)`
+  ${({ styleOverrides }) => `
+    position: relative;
+    background: ${styleOverrides?.background || "#00070E"};
+    border-radius: ${styleOverrides?.borderRadius || "4px"};
+  `}
 `;
 
-const StyledLoading = styled.div`  
+const StyledLoading = styled.div`
   ${({ styleOverrides }) => `
     position: relative;
     display: flex;
     justify-content: center;  
-    margin: 10px;
+    padding: 10px;
     color: ${styleOverrides?.color || "white"};
-    font-size: ${styleOverrides?.fontSize || "12px"};      
-  `}    
-`
+    font-size: ${styleOverrides?.fontSize || "0.75rem"};      
+  `}
+`;
 
 const StyledResultTitle = styled.div`
   ${({ styleOverrides }) => `    
     display: flex;
     align-items: center;
     justify-content: space-between;
-    color: ${styleOverrides?.color || "#B4BBC7"};
-    font-size: ${styleOverrides?.fontSize || "9px"};      
-    padding: ${styleOverrides?.padding || "4px 16px"};      
+    color: ${styleOverrides?.color || "#fff"};
+    font-size: ${styleOverrides?.fontSize || "0.75rem"};      
+    padding: ${styleOverrides?.padding || "10px;"};      
     margin: ${styleOverrides?.margin || "0"};      
     > span {
-      font-size: ${styleOverrides?.fontSize2 || "7px"};      
+      font-size: ${styleOverrides?.fontSize2 || "0.75rem"};      
     }
-  `}    
-`
+  `}
+`;
 
 const StyledResultContent = styled.div`
-  overflow: auto;
-  margin-left: auto;
-  margin-right: auto;
-
   ${({ styleOverrides }) => `
-    padding: ${styleOverrides?.padding || "14px"};    
-    background: ${styleOverrides?.background || "#00070E"};
-    border-radius: ${styleOverrides?.borderRadius || "4px"};        
-    width: ${styleOverrides?.width || "auto"};
+    width: ${styleOverrides?.width || "100%"};
     height: ${styleOverrides?.height || "300px"};
-    border: ${styleOverrides?.border || "1px solid grey"};   
     color: ${styleOverrides?.color || "#FFF"};
-    display: ${styleOverrides?.display || "block"};   
-    border-color: ${styleOverrides?.borderColor || "#474F5C"};  
-    border-style: ${styleOverrides?.borderStyle || "solid"};  
-    border-width: ${styleOverrides?.borderWidth || "1px"};      
-    font-size: ${styleOverrides?.fontSize || "15px"};      
-    font-family: ${styleOverrides?.fontFamily || "'Fira Code', monospace"};  
-  `}  
+    display: ${styleOverrides?.display || "block"};
+    font-size: ${styleOverrides?.fontSize || "0.875rem"};      
+    font-family: ${styleOverrides?.fontFamily || "'Montserrat', monospace"};  
+    overflow: auto;
+    box-sizing: border-box;
+  `}
 
-  & .header {
-    display: grid;
-    grid-template-columns: 41% 5% 6% 49%; 
-    border-bottom: 1px solid #474F5C; 
-    color: #B4BBC7;
-    font-size: 7px;
+  .result-content-responsive {
+    width: fit-content;
+    min-width: 100%;
+  }
+
+  .header {
+    background-color: #7a808a;
+    color: #ffffff;
+    font-size: 0.75rem;
     font-weight: bold;
-    padding-bottom: 10px; 
+    padding: 10px;
 
-    >:last-child {
-      padding-left: 5px;
+    > div {
+      text-align: center;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    > :last-child {
+      grid-column: 4 / -1;
     }
   }
-`
+`;
+
 type Loading = {
   loading: boolean;
-}
+};
 
 const SearchResult: FC<Loading> = (props: Loading) => {
   const dispatch = useDispatch();
   const renderProps = useContext(TokenSearchContext);
   const { customResult, customLoading } = renderProps;
-  const { suggestions, searchText, isLoading, suggestionRendered } = useSelector(
-    (state: RootState) => state
-  );
-  const [currentIndex, setCurrentIndex] = useState(-1)
+  const { suggestions, searchText, isLoading, suggestionRendered } =
+    useSelector((state: RootState) => state);
+  const [currentIndex, setCurrentIndex] = useState(-1);
 
-  const hasNextPage = useMemo(() => suggestionRendered.length < suggestions.length, [suggestions, suggestionRendered])
+  const hasNextPage = useMemo(
+    () => suggestionRendered.length < suggestions.length,
+    [suggestions, suggestionRendered]
+  );
 
   const [sentryRef] = useInfiniteScroll({
     loading: isLoading,
     hasNextPage,
-    onLoadMore: () => dispatch(loadMore())
+    onLoadMore: () => dispatch(loadMore()),
   });
 
-  if (props.loading) {
-    const loadingTitle = customLoading?.loadingTitle ? customLoading.loadingTitle : 'Searching...'
-    return <StyledLoading styleOverrides={customLoading}>{loadingTitle}</StyledLoading>;
-  }
-
-  const notFoundTitle = customLoading?.notFoundTitle ? customLoading.notFoundTitle : 'No results found'
+  const notFoundTitle = customLoading?.notFoundTitle
+    ? customLoading.notFoundTitle
+    : "No results found";
+  const loadingTitle = customLoading?.loadingTitle
+    ? customLoading.loadingTitle
+    : "Searching...";
 
   const handleClose = () => {
     dispatch(setViewResult(false));
+  };
+  const logoIcons: IconsType = {};
+  renderProps.networks?.forEach((network) => {
+    logoIcons[network.id] = network.icon;
+    network.exchanges?.forEach((exchange) => {
+      logoIcons[exchange.name] = exchange.icon;
+    });
+  });
+
+  if (props.loading) {
+    return (
+      <StyledResult>
+        <StyledLoading styleOverrides={customLoading}>
+          {loadingTitle}
+        </StyledLoading>
+      </StyledResult>
+    );
   }
 
   return (
-    <StyledResult>
+    <StyledResult className="search-result-wrapper">
       <StyledResultTitle styleOverrides={customResult?.title}>
         <div>
           Search Results <span>({suggestions.length} Results Found)</span>
         </div>
-        <button onClick={handleClose}>Close&nbsp;<UnCheckedIcon width={7} height={7} /></button>
+        <Button onClick={handleClose}>
+          Close&nbsp;
+          <UnCheckedIcon width={7} height={7} />
+        </Button>
       </StyledResultTitle>
-      <StyledResultContent styleOverrides={customResult?.content}>
-        <div className='header'>
-          <span>Pair</span>
-          <span>Net.</span>
-          <span>Exch.</span>
-          <span>Details.</span>
-        </div>
-        {
-          suggestionRendered.map((suggestions, index) =>
+      <StyledResultContent
+        styleOverrides={customResult?.content}
+        className="search-result-content"
+      >
+        <div className="result-content-responsive">
+          <StyledGridRow className={`header ${currentIndex === 0 && "b-none"}`}>
+            <div>Pair</div>
+            <div>Network</div>
+            <div>Exchange</div>
+            <div></div>
+          </StyledGridRow>
+          {suggestionRendered.map((suggestions, index) => (
             <ResultDetail
               suggestions={suggestionRendered}
               index={index}
               key={`token-detail-${index}`}
               currentIndex={currentIndex}
               handleDetail={setCurrentIndex}
+              logoIcons={logoIcons}
             />
-          )
-        }
-        {
-          !!searchText && !suggestionRendered.length &&
-          <StyledLoading styleOverrides={customLoading}>{notFoundTitle}</StyledLoading>
-        }
-        {(hasNextPage) && (
-          <div ref={sentryRef}>loading....</div>
-        )}
+          ))}
+          {!!searchText && !suggestionRendered.length && (
+            <StyledLoading styleOverrides={customLoading}>
+              {notFoundTitle}
+            </StyledLoading>
+          )}
+          {hasNextPage && <div ref={sentryRef}>loading....</div>}
+        </div>
       </StyledResultContent>
     </StyledResult>
   );
 };
+
+export { StyledGridRow };
+
 export default SearchResult;
