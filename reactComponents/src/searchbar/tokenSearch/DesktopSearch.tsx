@@ -9,6 +9,8 @@ import useClickOutside from '../hooks/useClickOutside';
 import { RenderProps } from '../../types';
 
 const DesktopSearchWrapper = styled.div`
+  width: 100%;
+  margin: auto;
 `;
 
 const DesktopSearchInner = styled.div`

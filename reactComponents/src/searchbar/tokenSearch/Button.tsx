@@ -12,7 +12,7 @@ const StyledButton = styled.button`
   ${({ styleOverrides }) => `
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     border-color: ${styleOverrides?.borderColor || '#474F5C'};      
     background-color: ${styleOverrides?.backColor || '#474F5C'};
     color: ${styleOverrides?.color || '#B4BBC7'};      
@@ -24,10 +24,10 @@ const StyledButton = styled.button`
     min-width: 60px;
 
     &:hover {
-      background-color: ${styleOverrides?.hoverBackColor || '#00070E'};
+      background-color: ${styleOverrides?.hoverBackColor || '#232C38'};
     }
     & span {
-      padding-right: 3px;
+      padding-right: 5px;
     }
   `}  
 `;

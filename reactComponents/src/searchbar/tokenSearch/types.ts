@@ -15,7 +15,7 @@ export type DetailType = {
     logoIcons: IconsType
 }
 
-export type PairTokenIconType = {
+export type TokenIconType = {
     token: any;
     size?: number;
 };
