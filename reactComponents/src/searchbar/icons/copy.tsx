@@ -5,12 +5,12 @@ import { IIconProps } from '.';
 
 const CopyIcon: FC<IIconProps> = ({ height, width }) => (
   <SVGIcon 
-    height={height ?? 24}
-    width={width ?? 24}
-    viewBox={`0 0 24 24`}>
+    height={height ?? 11}
+    width={width ?? 16}
+    viewBox={`0 0 11 16`}>
     <g transform='translate(0)' fill="#B7BEC9">
-      <path d="M0 0h24v24H0z" fill="none"/>
-      <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" />
+      <rect width="8.25" height="12.375" rx="2" transform="matrix(-1 0 0 1 11 2.75)" fill="#B4BBC7"/>
+      <path fillRule="evenodd" clipRule="evenodd" d="M6.25 0C7.35457 0 8.25 0.895429 8.25 2V2.0625H4.0625C2.95793 2.0625 2.06251 2.95793 2.06251 4.0625V12.375H2.00001C0.895437 12.375 6.67572e-06 11.4796 6.67572e-06 10.375V2C6.67572e-06 0.895431 0.895436 0 2.00001 0H6.25Z" fill="#B4BBC7"/>
     </g>
   </SVGIcon>    
 )

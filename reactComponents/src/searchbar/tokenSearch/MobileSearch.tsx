@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useRef } from 'react';
 import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
 import styled from 'styled-components';
 import { stopSelecting, setViewResult } from '../redux/tokenSearchSlice';
@@ -40,17 +40,12 @@ const MobileSearchPopupHeader = styled.div`
 `
 
 const MobileSearchPopupBody = styled.div`
-  display: flex;
-  flex-direction: column;
   height: 100%;
+  overflow: auto;
 
   .search-result-wrapper {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-
     .search-result-content {
-      flex: auto;
+      height: auto;
     }
   }  
 `
@@ -78,6 +73,7 @@ const MobileSearchbar: FC<RenderProps> = (renderProps: RenderProps) => {
   const dispatch = useDispatch();
   const { customWrapper } = renderProps;
   const { isSelecting, isLoading, viewResult } = useSelector((state: RootStateOrAny) => state);
+  const searchResultRef = useRef<HTMLDivElement>();
 
   const searchTitle = "Find what you want";
 
@@ -85,6 +81,12 @@ const MobileSearchbar: FC<RenderProps> = (renderProps: RenderProps) => {
     dispatch(stopSelecting());
     dispatch(setViewResult(false));
   };
+
+  const handleSearchClick = () => {
+    if (searchResultRef.current) {
+      window.scrollTo(0, searchResultRef.current.offsetTop);
+    }
+  }
 
   return (
     <MobileSearchWrapper>
@@ -100,9 +102,9 @@ const MobileSearchbar: FC<RenderProps> = (renderProps: RenderProps) => {
 
             <MobileSearchPopupBody>
               <MobileSearchTitle>{searchTitle}</MobileSearchTitle>
-              <MobileSearchInput searchable={true} resetable={true} />
+              <MobileSearchInput searchable={true} resetable={true} onSearch={handleSearchClick} />
               <SearchFilters />
-              {viewResult && <SearchResult loading={isLoading} />}
+              {viewResult && <SearchResult ref={searchResultRef} loading={isLoading} />}
             </MobileSearchPopupBody>
           </MobileSearchPopupInner>          
         </MobileSearchPopup>

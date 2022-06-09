@@ -1,9 +1,9 @@
-import React, { useContext, FC } from 'react';
-import styled from 'styled-components';
-import TokenSearchContext from '../Context/TokenSearch';
-import NetworkExchangeIcon from './NetworkExchangeIcon';
-import CheckedIcon from '../icons/checked';
-import UnCheckedIcon from '../icons/unchecked';
+import React, { useContext, FC } from "react";
+import styled from "styled-components";
+import TokenSearchContext from "../Context/TokenSearch";
+import NetworkExchangeIcon from "./NetworkExchangeIcon";
+import CheckedIcon from "../icons/checked";
+import UnCheckedIcon from "../icons/unchecked";
 
 const StyledChip = styled.div`
   ${({ styleOverrides }) => `
@@ -11,8 +11,7 @@ const StyledChip = styled.div`
       display: none;
     }
 
-    > input + label {
-      
+    > input + label {      
       transition: all 500ms ease;    
       cursor: pointer;    
       display: grid;
@@ -36,9 +35,19 @@ const StyledChip = styled.div`
       height: ${styleOverrides?.height || "35px"};   
       text-align: ${styleOverrides?.textAlign || "left"}; 
       text-transform: ${styleOverrides?.textTransform || "uppercase"}; 
-      grid-template-columns: ${styleOverrides?.gridTemplateColumns || "minmax(20px, auto) auto minmax(20px, auto)"};
+      grid-template-columns: ${
+        styleOverrides?.gridTemplateColumns ||
+        "minmax(20px, auto) auto minmax(20px, auto)"
+      };
       >:last-child {      
         justify-self: ${styleOverrides?.justifySelf || "end"}; 
+      }
+
+      &:hover {
+        background-color: ${
+          styleOverrides?.checkedBackgroundColor || "#474F5C"
+        };
+        border: ${styleOverrides?.border || "solid 2px #474F5C"};        
       }
     }
     
@@ -47,10 +56,12 @@ const StyledChip = styled.div`
       transition: all 500ms ease;   
       border-color: ${styleOverrides?.checkedBorderColor || "#474F5C"};    
       color: ${styleOverrides?.checkedColor || "white"};   
-      background-color: ${styleOverrides?.checkedBackgroundColor || "#474F5C"};   
+      background-color: ${
+        styleOverrides?.checkedBackgroundColor || "#474F5C"
+      };   
     }    
   `}
-  
+
   @media (max-width: 375px) {
     width: 50%;
 
@@ -63,12 +74,26 @@ const StyledChip = styled.div`
 export const Chip: FC<any> = (props) => {
   const renderProps = useContext(TokenSearchContext);
 
-  const { label, checked, onChange, name, value, styleOverrides, grayscaleFilter, icon } = props;
+  const {
+    label,
+    checked,
+    onChange,
+    name,
+    value,
+    styleOverrides,
+    grayscaleFilter,
+    icon,
+  } = props;
 
   const { customChip } = renderProps;
-  const customStyles = styleOverrides === undefined ? customChip : styleOverrides;
+  const customStyles =
+    styleOverrides === undefined ? customChip : styleOverrides;
 
-  const checkedStatus = checked ? <CheckedIcon /> : <UnCheckedIcon />;
+  const checkedStatus = checked ? (
+    <CheckedIcon width={12} height={12} />
+  ) : (
+    <UnCheckedIcon width={10} height={10} />
+  );
 
   return (
     <StyledChip styleOverrides={customStyles}>
@@ -81,11 +106,16 @@ export const Chip: FC<any> = (props) => {
         value={value}
       />
       <label htmlFor={`${label}-${name}`}>
-        <div className={checked ? 'chip-icon active' : 'chip-icon'}>
-          <NetworkExchangeIcon icon={icon} label={label} size={16} grayscaleFilter={grayscaleFilter} />
+        <div className={checked ? "chip-icon active" : "chip-icon"}>
+          <NetworkExchangeIcon
+            icon={icon}
+            label={label}
+            size={16}
+            grayscaleFilter={grayscaleFilter}
+          />
         </div>
         <span>{label}</span>
-        {!['Select All', 'Deselect All'].includes(label) && checkedStatus}
+        {!["Select All", "Deselect All"].includes(label) && checkedStatus}
       </label>
     </StyledChip>
   );

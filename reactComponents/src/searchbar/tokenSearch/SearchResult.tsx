@@ -1,4 +1,4 @@
-import React, { useContext, useState, FC, useMemo } from "react";
+import React, { forwardRef, useContext, useState, useMemo } from "react";
 import useInfiniteScroll from "react-infinite-scroll-hook";
 import styled from "styled-components";
 
@@ -49,7 +49,7 @@ const StyledResultTitle = styled.div`
 const StyledResultContent = styled.div`
   ${({ styleOverrides }) => `
     width: ${styleOverrides?.width || "100%"};
-    height: ${styleOverrides?.height || "300px"};
+    height: ${styleOverrides?.height || "500px"};
     color: ${styleOverrides?.color || "#FFF"};
     display: ${styleOverrides?.display || "block"};
     font-size: ${styleOverrides?.fontSize || "0.875rem"};      
@@ -86,7 +86,7 @@ type Loading = {
   loading: boolean;
 };
 
-const SearchResult: FC<Loading> = (props: Loading) => {
+const SearchResult = (props: Loading, ref) => {
   const dispatch = useDispatch();
   const renderProps = useContext(TokenSearchContext);
   const { customResult, customLoading } = renderProps;
@@ -134,7 +134,7 @@ const SearchResult: FC<Loading> = (props: Loading) => {
   }
 
   return (
-    <StyledResult className="search-result-wrapper">
+    <StyledResult className="search-result-wrapper" ref={ref}>
       <StyledResultTitle styleOverrides={customResult?.title}>
         <div>
           Search Results <span>({suggestions.length} Results Found)</span>
@@ -179,4 +179,4 @@ const SearchResult: FC<Loading> = (props: Loading) => {
 
 export { StyledGridRow };
 
-export default SearchResult;
+export default forwardRef(SearchResult);
