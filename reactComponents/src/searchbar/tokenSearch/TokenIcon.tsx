@@ -8,8 +8,10 @@ const getTokenLogoURL = (address: string, network: string) => {
       return `https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/${address}/logo.png`;
     case 'moonriver':
       return `https://raw.githubusercontent.com/solarbeamio/solarbeam-tokenlist/main/assets/moonriver/${address}/logo.png`;
-    case 'bnb':
+    case 'bsc':
       return `https://pancakeswap.finance/images/tokens/${address}.png`
+    case 'metis':
+      return `https://raw.githubusercontent.com/Netswap/tokens/master/assets/${address}/logo.png`
     default:
       return `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${address}/logo.png`
   }
