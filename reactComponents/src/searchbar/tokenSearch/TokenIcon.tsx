@@ -9,7 +9,7 @@ const getTokenLogoURL = (address: string, network: string) => {
     case 'moonriver':
       return `https://raw.githubusercontent.com/solarbeamio/solarbeam-tokenlist/main/assets/moonriver/${address}/logo.png`;
     default:
-      return null;
+      return `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${address}/logo.png`
   }
 };
 
