@@ -350,7 +350,7 @@ var TokenSearchContext = createContext({ networks: [] });
 var TokenSearch_default = TokenSearchContext;
 
 // src/searchbar/tokenSearch/DesktopSearch.tsx
-import React51, { useEffect as useEffect5 } from "react";
+import React51, { useEffect as useEffect6 } from "react";
 import { useDispatch as useDispatch6, useSelector as useSelector6 } from "react-redux";
 import styled9 from "styled-components";
 
@@ -462,6 +462,7 @@ var StyledWrapper = styled2.div`
     .invalid-error {
       padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "0 14px 5px"};   
       color: ${(styleOverrides == null ? void 0 : styleOverrides.colorError) || "#F52E2E"};  
+      font-size: 0.825rem;
     }
   `}
 `;
@@ -583,7 +584,7 @@ var SearchInput = () => {
 var SearchInput_default = SearchInput;
 
 // src/searchbar/tokenSearch/SearchResult.tsx
-import React44, { forwardRef, useContext as useContext3, useState as useState3, useMemo } from "react";
+import React44, { forwardRef, useContext as useContext3, useState as useState4, useMemo } from "react";
 import useInfiniteScroll from "react-infinite-scroll-hook";
 import styled6 from "styled-components";
 import { useSelector as useSelector2, useDispatch as useDispatch2 } from "react-redux";
@@ -2947,7 +2948,7 @@ var StyledCopyButton = styled3(Button_default)`
 `;
 var TransactionStatusText = styled3.span`
   margin-left: 0.25rem;
-  font-size: 0.825rem;
+  font-size: 0.75rem;
   align-items: center;
 `;
 function CopyButton(props) {
@@ -2963,13 +2964,41 @@ function CopyButton(props) {
 }
 
 // src/searchbar/tokenSearch/TokenIcon.tsx
-import React40 from "react";
-var getTokenLogoURL = (address) => {
-  return `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${address}/logo.png`;
+import React40, { useEffect as useEffect3, useState as useState3 } from "react";
+var getTokenLogoURL = (address, network) => {
+  switch (network) {
+    case "avalanche":
+      return `https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/${address}/logo.png`;
+    case "moonriver":
+      return `https://raw.githubusercontent.com/solarbeamio/solarbeam-tokenlist/main/assets/moonriver/${address}/logo.png`;
+    default:
+      return null;
+  }
 };
-var TokenIcon = ({ token, size = 28 }) => {
-  const tokenImageUrl = token.image || getTokenLogoURL(token.address.toUpperCase());
-  return tokenImageUrl ? /* @__PURE__ */ React40.createElement("img", {
+var TokenIcon = ({ network, token, size = 28 }) => {
+  const { image, address } = token;
+  const [error, setError] = useState3(true);
+  const tokenImageUrl = image || getTokenLogoURL(address, network);
+  useEffect3(() => {
+    checkIfImageExists(tokenImageUrl);
+  }, [tokenImageUrl]);
+  const checkIfImageExists = (url) => {
+    if (!url)
+      return;
+    const img = new Image();
+    img.src = url;
+    if (img.complete) {
+      setError(false);
+    } else {
+      img.onload = () => {
+        setError(false);
+      };
+      img.onerror = () => {
+        setError(true);
+      };
+    }
+  };
+  return !error ? /* @__PURE__ */ React40.createElement("img", {
     alt: token == null ? void 0 : token.symbol,
     src: tokenImageUrl,
     style: { borderRadius: "50%" },
@@ -3154,9 +3183,10 @@ var StyledDetailList = styled4(StyledGridRow)`
       }    
     }
     .actions {
-      display: flex;
       flex-shrink: 0;
-      gap: 12px;
+      flex: auto;
+      display: flex;      
+      gap: 10px;
       justify-content: flex-start;
       align-items: center;
       flex-wrap: wrap;
@@ -3183,24 +3213,12 @@ var StyledDetailList = styled4(StyledGridRow)`
   `;
 }}
 `;
-var StyledAction = styled4.div`
-  cursor: pointer;
-
-  button {
-    display: flex;
-    justify-content: center;
-
-    span {
-      margin-left: 10px;
-    }
-  }
-`;
 var Action = (props) => {
   const { component, detail } = props;
   const Component = component;
-  return /* @__PURE__ */ React43.createElement(StyledAction, null, /* @__PURE__ */ React43.createElement(Component, {
+  return /* @__PURE__ */ React43.createElement(Component, {
     detail
-  }));
+  });
 };
 var ResultDetail = (props) => {
   const { index, suggestions, handleDetail, currentIndex, logoIcons } = props;
@@ -3217,6 +3235,7 @@ var ResultDetail = (props) => {
   }, /* @__PURE__ */ React43.createElement("div", {
     className: "token"
   }, /* @__PURE__ */ React43.createElement(TokenIcon_default, {
+    network: selectedPair.network,
     token: selectedPair.token0,
     size: imageSize
   }), /* @__PURE__ */ React43.createElement("div", {
@@ -3224,6 +3243,7 @@ var ResultDetail = (props) => {
   }, selectedPair.token0.symbol)), /* @__PURE__ */ React43.createElement("div", {
     className: "token"
   }, /* @__PURE__ */ React43.createElement(TokenIcon_default, {
+    network: selectedPair.network,
     token: selectedPair.token1,
     size: imageSize
   }), /* @__PURE__ */ React43.createElement("div", {
@@ -3356,7 +3376,7 @@ var StyledResultContent = styled6.div`
     color: #ffffff;
     font-size: 0.75rem;
     font-weight: bold;
-    padding: 10px;
+    padding: 10px 0;
 
     > div {
       text-align: center;
@@ -3375,7 +3395,7 @@ var SearchResult = (props, ref) => {
   const renderProps = useContext3(TokenSearch_default);
   const { customResult, customLoading } = renderProps;
   const { suggestions, searchText, isLoading, suggestionRendered } = useSelector2((state) => state);
-  const [currentIndex, setCurrentIndex] = useState3(-1);
+  const [currentIndex, setCurrentIndex] = useState4(-1);
   const hasNextPage = useMemo(() => suggestionRendered.length < suggestions.length, [suggestions, suggestionRendered]);
   const [sentryRef] = useInfiniteScroll({
     loading: isLoading,
@@ -3433,7 +3453,7 @@ var SearchResult = (props, ref) => {
 var SearchResult_default = forwardRef(SearchResult);
 
 // src/searchbar/tokenSearch/SearchFilters.tsx
-import React49, { useContext as useContext7, useEffect as useEffect3, useState as useState4 } from "react";
+import React49, { useContext as useContext7, useEffect as useEffect4, useState as useState5 } from "react";
 import { useDispatch as useDispatch5, useSelector as useSelector5 } from "react-redux";
 import { omitBy as omitBy4 } from "lodash";
 import styled8 from "styled-components";
@@ -3600,7 +3620,7 @@ var FilterNetworkSelectors = () => {
     return /* @__PURE__ */ React47.createElement(Chip, {
       key: network.id,
       name: network.id,
-      label: network.name || network.id,
+      label: network.name,
       icon: network.icon,
       checked: networkMap[network.id] || false,
       onChange: (e) => dispatch(setNetworkMap({
@@ -3657,7 +3677,6 @@ var FilterExchangeSelectors = () => {
       name: exchange.name,
       label: exchange.name,
       icon: exchange.icon,
-      grayscaleFilter: 1,
       checked: exchangeMap[exchange.name] || false,
       onChange: (e) => dispatch(setExchangeMap({
         exchangeName: exchange.name,
@@ -3718,13 +3737,7 @@ var StyledFilterContent = styled8.div`
     margin-left: 10px;
     justify-content: ${(styleOverrides == null ? void 0 : styleOverrides.justifyContent) || "start"};
     align-items: ${(styleOverrides == null ? void 0 : styleOverrides.alignItems) || "center"};  
-    padding:  ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "0 0 5px"};    
-    .chip-icon {
-      filter: grayscale(1);
-      &.active{
-        filter: unset;
-      }     
-    }
+    padding:  ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "0 0 5px"};
   `}
 `;
 var StyledDescription = styled8.div`
@@ -3791,13 +3804,14 @@ var SearchFilters = () => {
   const totalExchangeCount = exchangeIds.length;
   const networkTitle = ((_a = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _a.network) || "Select Network(s)";
   const exchangeTitle = ((_b = customSearchFilter == null ? void 0 : customSearchFilter.content) == null ? void 0 : _b.exchange) || "Select Exchange(s)";
-  const [isNetworkMapExpanded, setIsNetworkMapExpanded] = useState4(false);
-  const [isExchangeMapExpanded, setIsExchangeMapExpanded] = useState4(false);
-  useEffect3(() => {
+  const [isNetworkMapExpanded, setIsNetworkMapExpanded] = useState5(false);
+  const [isExchangeMapExpanded, setIsExchangeMapExpanded] = useState5(false);
+  useEffect4(() => {
     if (Object.keys(networkMap).length > 0 && Object.keys(exchangeMap).length > 0 && searchText.length > 0) {
       dispatch(setViewResult(true));
     }
     if (Object.keys(networkMap).length > 0) {
+      setIsNetworkMapExpanded(true);
       setIsExchangeMapExpanded(true);
     }
   }, [networkMap, exchangeMap, searchText]);
@@ -3839,10 +3853,10 @@ var SearchFilters = () => {
 var SearchFilters_default = SearchFilters;
 
 // src/searchbar/hooks/useClickOutside.ts
-import { useRef as useRef2, useEffect as useEffect4 } from "react";
+import { useRef as useRef2, useEffect as useEffect5 } from "react";
 var useClickOutside = (callback) => {
   const ref = useRef2(null);
-  useEffect4(() => {
+  useEffect5(() => {
     function onClick(event) {
       var _a;
       if (ref && ref.current && !((_a = ref.current) == null ? void 0 : _a.contains(event.target))) {
@@ -3899,7 +3913,7 @@ var DesktopSearch = (renderProps) => {
     dispatch(setViewResult(false));
   };
   const searchRef = useClickOutside_default(closeResultPanel);
-  useEffect5(() => {
+  useEffect6(() => {
     window.addEventListener("searchBarClose", closeResultPanel);
   }, []);
   return /* @__PURE__ */ React51.createElement(DesktopSearchWrapper, null, isSelecting && /* @__PURE__ */ React51.createElement(Backdrop, null), /* @__PURE__ */ React51.createElement(DesktopSearchInner, {
@@ -3919,7 +3933,7 @@ import { useDispatch as useDispatch8, useSelector as useSelector8 } from "react-
 import styled11 from "styled-components";
 
 // src/searchbar/tokenSearch/MobileSearchInput.tsx
-import React52, { useContext as useContext8, useRef as useRef3, useState as useState5 } from "react";
+import React52, { useContext as useContext8, useRef as useRef3, useState as useState6 } from "react";
 import { useDispatch as useDispatch7, useSelector as useSelector7 } from "react-redux";
 import styled10 from "styled-components";
 var StyledWrapper2 = styled10.div`
@@ -3939,7 +3953,8 @@ var InputWrapper = styled10.div`
 
     .invalid-error {
       padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "0 14px 5px"};   
-      color: ${(styleOverrides == null ? void 0 : styleOverrides.colorError) || "#F52E2E"};  
+      color: ${(styleOverrides == null ? void 0 : styleOverrides.colorError) || "#F52E2E"};
+      font-size: 0.825rem;
     }
   `}
 `;
@@ -4010,8 +4025,8 @@ var MobileSearchInput = ({
   const dispatch = useDispatch7();
   const renderProps = useContext8(TokenSearch_default);
   const { customSearchInput } = renderProps;
-  const [text, setText] = useState5("");
-  const [error, setError] = useState5(false);
+  const [text, setText] = useState6("");
+  const [error, setError] = useState6(false);
   const { searchText } = useSelector7((state) => state);
   const inputRef = useRef3(null);
   const onChangeFilter = (event) => {

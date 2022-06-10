@@ -135,9 +135,10 @@ const StyledDetailList = styled(StyledGridRow)`
       }    
     }
     .actions {
-      display: flex;
       flex-shrink: 0;
-      gap: 12px;
+      flex: auto;
+      display: flex;      
+      gap: 10px;
       justify-content: flex-start;
       align-items: center;
       flex-wrap: wrap;
@@ -164,26 +165,11 @@ const StyledDetailList = styled(StyledGridRow)`
   `}
 `;
 
-const StyledAction = styled.div`
-  cursor: pointer;
-
-  button {
-    display: flex;
-    justify-content: center;
-
-    span {
-      margin-left: 10px;
-    }
-  }
-`;
-
 const Action = (props: ActionType) => {
   const { component, detail } = props;
   const Component: any = component;
   return (
-    <StyledAction>
-      <Component detail={detail} />
-    </StyledAction>
+    <Component detail={detail} />
   );
 };
 
@@ -205,13 +191,13 @@ export const ResultDetail: FC<DetailType> = (props: DetailType) => {
     >
       <div className="pair-tokens">
         <div className="token">
-          <TokenIcon token={selectedPair.token0} size={imageSize} />
+          <TokenIcon network={selectedPair.network} token={selectedPair.token0} size={imageSize} />
           <div className="text-line-1 uppercase">
             {selectedPair.token0.symbol}
           </div>
         </div>
         <div className="token">
-          <TokenIcon token={selectedPair.token1} size={imageSize} />
+          <TokenIcon network={selectedPair.network} token={selectedPair.token1} size={imageSize} />
           <div className="text-line-1 uppercase">
             {selectedPair.token1.symbol}
           </div>

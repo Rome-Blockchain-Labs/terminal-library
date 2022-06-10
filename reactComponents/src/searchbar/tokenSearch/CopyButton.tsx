@@ -11,7 +11,7 @@ const StyledCopyButton = styled(Button)`
 `;
 const TransactionStatusText = styled.span`
   margin-left: 0.25rem;
-  font-size: 0.825rem;
+  font-size: 0.75rem;
   align-items: center;
 `;
 

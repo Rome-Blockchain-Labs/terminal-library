@@ -57,7 +57,6 @@ export const FilterExchangeSelectors = (): JSX.Element => {
         name={exchange.name}
         label={exchange.name}
         icon={exchange.icon}
-        grayscaleFilter={1}
         checked={exchangeMap[exchange.name] || false}
         onChange={(e) =>
           dispatch(

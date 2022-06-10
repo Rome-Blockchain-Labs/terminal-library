@@ -33,7 +33,8 @@ const InputWrapper = styled.div`
 
     .invalid-error {
       padding: ${styleOverrides?.padding || "0 14px 5px"};   
-      color: ${styleOverrides?.colorError || "#F52E2E"};  
+      color: ${styleOverrides?.colorError || "#F52E2E"};
+      font-size: 0.825rem;
     }
   `}
 `;

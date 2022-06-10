@@ -1370,7 +1370,7 @@
             }
             return dispatcher.useContext(Context2, unstable_observedBits);
           }
-          function useState8(initialState2) {
+          function useState9(initialState2) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState2);
           }
@@ -1382,7 +1382,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
-          function useEffect9(create, deps) {
+          function useEffect10(create, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useEffect(create, deps);
           }
@@ -1952,13 +1952,13 @@
           exports.useCallback = useCallback4;
           exports.useContext = useContext13;
           exports.useDebugValue = useDebugValue2;
-          exports.useEffect = useEffect9;
+          exports.useEffect = useEffect10;
           exports.useImperativeHandle = useImperativeHandle;
           exports.useLayoutEffect = useLayoutEffect2;
           exports.useMemo = useMemo6;
           exports.useReducer = useReducer3;
           exports.useRef = useRef8;
-          exports.useState = useState8;
+          exports.useState = useState9;
           exports.version = ReactVersion;
         })();
       }
@@ -57659,6 +57659,7 @@ spurious results.`);
     .invalid-error {
       padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "0 14px 5px"};   
       color: ${(styleOverrides == null ? void 0 : styleOverrides.colorError) || "#F52E2E"};  
+      font-size: 0.825rem;
     }
   `}
 `;
@@ -60253,7 +60254,7 @@ spurious results.`);
 `;
   var TransactionStatusText = styled_components_esm_default.span`
   margin-left: 0.25rem;
-  font-size: 0.825rem;
+  font-size: 0.75rem;
   align-items: center;
 `;
   function CopyButton(props) {
@@ -60270,12 +60271,40 @@ spurious results.`);
 
   // src/searchbar/tokenSearch/TokenIcon.tsx
   var import_react52 = __toESM(require_react());
-  var getTokenLogoURL = (address) => {
-    return `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${address}/logo.png`;
+  var getTokenLogoURL = (address, network) => {
+    switch (network) {
+      case "avalanche":
+        return `https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/${address}/logo.png`;
+      case "moonriver":
+        return `https://raw.githubusercontent.com/solarbeamio/solarbeam-tokenlist/main/assets/moonriver/${address}/logo.png`;
+      default:
+        return null;
+    }
   };
-  var TokenIcon = ({ token, size = 28 }) => {
-    const tokenImageUrl = token.image || getTokenLogoURL(token.address.toUpperCase());
-    return tokenImageUrl ? /* @__PURE__ */ import_react52.default.createElement("img", {
+  var TokenIcon = ({ network, token, size = 28 }) => {
+    const { image, address } = token;
+    const [error, setError] = (0, import_react52.useState)(true);
+    const tokenImageUrl = image || getTokenLogoURL(address, network);
+    (0, import_react52.useEffect)(() => {
+      checkIfImageExists(tokenImageUrl);
+    }, [tokenImageUrl]);
+    const checkIfImageExists = (url) => {
+      if (!url)
+        return;
+      const img = new Image();
+      img.src = url;
+      if (img.complete) {
+        setError(false);
+      } else {
+        img.onload = () => {
+          setError(false);
+        };
+        img.onerror = () => {
+          setError(true);
+        };
+      }
+    };
+    return !error ? /* @__PURE__ */ import_react52.default.createElement("img", {
       alt: token == null ? void 0 : token.symbol,
       src: tokenImageUrl,
       style: { borderRadius: "50%" },
@@ -60460,9 +60489,10 @@ spurious results.`);
       }    
     }
     .actions {
-      display: flex;
       flex-shrink: 0;
-      gap: 12px;
+      flex: auto;
+      display: flex;      
+      gap: 10px;
       justify-content: flex-start;
       align-items: center;
       flex-wrap: wrap;
@@ -60489,24 +60519,12 @@ spurious results.`);
   `;
   }}
 `;
-  var StyledAction = styled_components_esm_default.div`
-  cursor: pointer;
-
-  button {
-    display: flex;
-    justify-content: center;
-
-    span {
-      margin-left: 10px;
-    }
-  }
-`;
   var Action = (props) => {
     const { component, detail } = props;
     const Component = component;
-    return /* @__PURE__ */ import_react55.default.createElement(StyledAction, null, /* @__PURE__ */ import_react55.default.createElement(Component, {
+    return /* @__PURE__ */ import_react55.default.createElement(Component, {
       detail
-    }));
+    });
   };
   var ResultDetail = (props) => {
     const { index, suggestions, handleDetail, currentIndex, logoIcons } = props;
@@ -60523,6 +60541,7 @@ spurious results.`);
     }, /* @__PURE__ */ import_react55.default.createElement("div", {
       className: "token"
     }, /* @__PURE__ */ import_react55.default.createElement(TokenIcon_default, {
+      network: selectedPair.network,
       token: selectedPair.token0,
       size: imageSize
     }), /* @__PURE__ */ import_react55.default.createElement("div", {
@@ -60530,6 +60549,7 @@ spurious results.`);
     }, selectedPair.token0.symbol)), /* @__PURE__ */ import_react55.default.createElement("div", {
       className: "token"
     }, /* @__PURE__ */ import_react55.default.createElement(TokenIcon_default, {
+      network: selectedPair.network,
       token: selectedPair.token1,
       size: imageSize
     }), /* @__PURE__ */ import_react55.default.createElement("div", {
@@ -60661,7 +60681,7 @@ spurious results.`);
     color: #ffffff;
     font-size: 0.75rem;
     font-weight: bold;
-    padding: 10px;
+    padding: 10px 0;
 
     > div {
       text-align: center;
@@ -61599,7 +61619,7 @@ spurious results.`);
       return /* @__PURE__ */ import_react60.default.createElement(Chip, {
         key: network.id,
         name: network.id,
-        label: network.name || network.id,
+        label: network.name,
         icon: network.icon,
         checked: networkMap[network.id] || false,
         onChange: (e3) => dispatch(setNetworkMap({
@@ -61655,7 +61675,6 @@ spurious results.`);
         name: exchange.name,
         label: exchange.name,
         icon: exchange.icon,
-        grayscaleFilter: 1,
         checked: exchangeMap[exchange.name] || false,
         onChange: (e3) => dispatch(setExchangeMap({
           exchangeName: exchange.name,
@@ -61716,13 +61735,7 @@ spurious results.`);
     margin-left: 10px;
     justify-content: ${(styleOverrides == null ? void 0 : styleOverrides.justifyContent) || "start"};
     align-items: ${(styleOverrides == null ? void 0 : styleOverrides.alignItems) || "center"};  
-    padding:  ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "0 0 5px"};    
-    .chip-icon {
-      filter: grayscale(1);
-      &.active{
-        filter: unset;
-      }     
-    }
+    padding:  ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "0 0 5px"};
   `}
 `;
   var StyledDescription = styled_components_esm_default.div`
@@ -61796,6 +61809,7 @@ spurious results.`);
         dispatch(setViewResult(true));
       }
       if (Object.keys(networkMap).length > 0) {
+        setIsNetworkMapExpanded(true);
         setIsExchangeMapExpanded(true);
       }
     }, [networkMap, exchangeMap, searchText]);
@@ -61933,7 +61947,8 @@ spurious results.`);
 
     .invalid-error {
       padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "0 14px 5px"};   
-      color: ${(styleOverrides == null ? void 0 : styleOverrides.colorError) || "#F52E2E"};  
+      color: ${(styleOverrides == null ? void 0 : styleOverrides.colorError) || "#F52E2E"};
+      font-size: 0.825rem;
     }
   `}
 `;
