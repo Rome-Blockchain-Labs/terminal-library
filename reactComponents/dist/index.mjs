@@ -2972,7 +2972,7 @@ var getTokenLogoURL = (address, network) => {
     case "moonriver":
       return `https://raw.githubusercontent.com/solarbeamio/solarbeam-tokenlist/main/assets/moonriver/${address}/logo.png`;
     default:
-      return null;
+      return `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${address}/logo.png`;
   }
 };
 var TokenIcon = ({ network, token, size = 28 }) => {
@@ -3282,7 +3282,7 @@ var ResultDetail = (props) => {
   }, /* @__PURE__ */ React43.createElement("div", {
     className: "details-token-and-address"
   }, /* @__PURE__ */ React43.createElement("div", {
-    className: "capitalize details-token-name"
+    className: "capitalize text-line-1 details-token-name"
   }, selectedPair.token0.name, " Adress:"), /* @__PURE__ */ React43.createElement("div", {
     className: "text-line-1"
   }, /* @__PURE__ */ React43.createElement("strong", null, selectedPair.token0.address))), /* @__PURE__ */ React43.createElement(CopyButton, {
@@ -3292,7 +3292,7 @@ var ResultDetail = (props) => {
   }, /* @__PURE__ */ React43.createElement("div", {
     className: "details-token-and-address"
   }, /* @__PURE__ */ React43.createElement("div", {
-    className: "capitalize details-token-name"
+    className: "capitalize text-line-1 details-token-name"
   }, selectedPair.token1.name, " Adress:"), /* @__PURE__ */ React43.createElement("div", {
     className: "text-line-1"
   }, /* @__PURE__ */ React43.createElement("strong", null, selectedPair.token1.address))), /* @__PURE__ */ React43.createElement(CopyButton, {
