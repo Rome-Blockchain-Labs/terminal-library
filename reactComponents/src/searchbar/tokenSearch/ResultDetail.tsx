@@ -244,7 +244,7 @@ export const ResultDetail: FC<DetailType> = (props: DetailType) => {
           <div className="details-pair-tokens">
             <div className="flex-center single-token">
               <div className="details-token-and-address">
-                <div className="capitalize details-token-name">
+                <div className="capitalize text-line-1 details-token-name">
                   {selectedPair.token0.name} Adress:
                 </div>
                 <div className="text-line-1">
@@ -256,7 +256,7 @@ export const ResultDetail: FC<DetailType> = (props: DetailType) => {
 
             <div className="flex-center single-token">
               <div className="details-token-and-address">
-                <div className="capitalize details-token-name">
+                <div className="capitalize text-line-1 details-token-name">
                   {selectedPair.token1.name} Adress:
                 </div>
                 <div className="text-line-1">
