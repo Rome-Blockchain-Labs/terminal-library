@@ -490,6 +490,7 @@ var StyledWrapper = import_styled_components2.default.div`
     .invalid-error {
       padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "0 14px 5px"};   
       color: ${(styleOverrides == null ? void 0 : styleOverrides.colorError) || "#F52E2E"};  
+      font-size: 0.825rem;
     }
   `}
 `;
@@ -2975,7 +2976,7 @@ var StyledCopyButton = (0, import_styled_components3.default)(Button_default)`
 `;
 var TransactionStatusText = import_styled_components3.default.span`
   margin-left: 0.25rem;
-  font-size: 0.825rem;
+  font-size: 0.75rem;
   align-items: center;
 `;
 function CopyButton(props) {
@@ -2992,12 +2993,40 @@ function CopyButton(props) {
 
 // src/searchbar/tokenSearch/TokenIcon.tsx
 var import_react42 = __toESM(require("react"));
-var getTokenLogoURL = (address) => {
-  return `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${address}/logo.png`;
+var getTokenLogoURL = (address, network) => {
+  switch (network) {
+    case "avalanche":
+      return `https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/${address}/logo.png`;
+    case "moonriver":
+      return `https://raw.githubusercontent.com/solarbeamio/solarbeam-tokenlist/main/assets/moonriver/${address}/logo.png`;
+    default:
+      return null;
+  }
 };
-var TokenIcon = ({ token, size = 28 }) => {
-  const tokenImageUrl = token.image || getTokenLogoURL(token.address.toUpperCase());
-  return tokenImageUrl ? /* @__PURE__ */ import_react42.default.createElement("img", {
+var TokenIcon = ({ network, token, size = 28 }) => {
+  const { image, address } = token;
+  const [error, setError] = (0, import_react42.useState)(true);
+  const tokenImageUrl = image || getTokenLogoURL(address, network);
+  (0, import_react42.useEffect)(() => {
+    checkIfImageExists(tokenImageUrl);
+  }, [tokenImageUrl]);
+  const checkIfImageExists = (url) => {
+    if (!url)
+      return;
+    const img = new Image();
+    img.src = url;
+    if (img.complete) {
+      setError(false);
+    } else {
+      img.onload = () => {
+        setError(false);
+      };
+      img.onerror = () => {
+        setError(true);
+      };
+    }
+  };
+  return !error ? /* @__PURE__ */ import_react42.default.createElement("img", {
     alt: token == null ? void 0 : token.symbol,
     src: tokenImageUrl,
     style: { borderRadius: "50%" },
@@ -3182,9 +3211,10 @@ var StyledDetailList = (0, import_styled_components4.default)(StyledGridRow)`
       }    
     }
     .actions {
-      display: flex;
       flex-shrink: 0;
-      gap: 12px;
+      flex: auto;
+      display: flex;      
+      gap: 10px;
       justify-content: flex-start;
       align-items: center;
       flex-wrap: wrap;
@@ -3211,24 +3241,12 @@ var StyledDetailList = (0, import_styled_components4.default)(StyledGridRow)`
   `;
 }}
 `;
-var StyledAction = import_styled_components4.default.div`
-  cursor: pointer;
-
-  button {
-    display: flex;
-    justify-content: center;
-
-    span {
-      margin-left: 10px;
-    }
-  }
-`;
 var Action = (props) => {
   const { component, detail } = props;
   const Component = component;
-  return /* @__PURE__ */ import_react45.default.createElement(StyledAction, null, /* @__PURE__ */ import_react45.default.createElement(Component, {
+  return /* @__PURE__ */ import_react45.default.createElement(Component, {
     detail
-  }));
+  });
 };
 var ResultDetail = (props) => {
   const { index, suggestions, handleDetail, currentIndex, logoIcons } = props;
@@ -3245,6 +3263,7 @@ var ResultDetail = (props) => {
   }, /* @__PURE__ */ import_react45.default.createElement("div", {
     className: "token"
   }, /* @__PURE__ */ import_react45.default.createElement(TokenIcon_default, {
+    network: selectedPair.network,
     token: selectedPair.token0,
     size: imageSize
   }), /* @__PURE__ */ import_react45.default.createElement("div", {
@@ -3252,6 +3271,7 @@ var ResultDetail = (props) => {
   }, selectedPair.token0.symbol)), /* @__PURE__ */ import_react45.default.createElement("div", {
     className: "token"
   }, /* @__PURE__ */ import_react45.default.createElement(TokenIcon_default, {
+    network: selectedPair.network,
     token: selectedPair.token1,
     size: imageSize
   }), /* @__PURE__ */ import_react45.default.createElement("div", {
@@ -3384,7 +3404,7 @@ var StyledResultContent = import_styled_components6.default.div`
     color: #ffffff;
     font-size: 0.75rem;
     font-weight: bold;
-    padding: 10px;
+    padding: 10px 0;
 
     > div {
       text-align: center;
@@ -3622,7 +3642,7 @@ var FilterNetworkSelectors = () => {
     return /* @__PURE__ */ import_react49.default.createElement(Chip, {
       key: network.id,
       name: network.id,
-      label: network.name || network.id,
+      label: network.name,
       icon: network.icon,
       checked: networkMap[network.id] || false,
       onChange: (e) => dispatch(setNetworkMap({
@@ -3679,7 +3699,6 @@ var FilterExchangeSelectors = () => {
       name: exchange.name,
       label: exchange.name,
       icon: exchange.icon,
-      grayscaleFilter: 1,
       checked: exchangeMap[exchange.name] || false,
       onChange: (e) => dispatch(setExchangeMap({
         exchangeName: exchange.name,
@@ -3740,13 +3759,7 @@ var StyledFilterContent = import_styled_components8.default.div`
     margin-left: 10px;
     justify-content: ${(styleOverrides == null ? void 0 : styleOverrides.justifyContent) || "start"};
     align-items: ${(styleOverrides == null ? void 0 : styleOverrides.alignItems) || "center"};  
-    padding:  ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "0 0 5px"};    
-    .chip-icon {
-      filter: grayscale(1);
-      &.active{
-        filter: unset;
-      }     
-    }
+    padding:  ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "0 0 5px"};
   `}
 `;
 var StyledDescription = import_styled_components8.default.div`
@@ -3820,6 +3833,7 @@ var SearchFilters = () => {
       dispatch(setViewResult(true));
     }
     if (Object.keys(networkMap).length > 0) {
+      setIsNetworkMapExpanded(true);
       setIsExchangeMapExpanded(true);
     }
   }, [networkMap, exchangeMap, searchText]);
@@ -3961,7 +3975,8 @@ var InputWrapper = import_styled_components10.default.div`
 
     .invalid-error {
       padding: ${(styleOverrides == null ? void 0 : styleOverrides.padding) || "0 14px 5px"};   
-      color: ${(styleOverrides == null ? void 0 : styleOverrides.colorError) || "#F52E2E"};  
+      color: ${(styleOverrides == null ? void 0 : styleOverrides.colorError) || "#F52E2E"};
+      font-size: 0.825rem;
     }
   `}
 `;

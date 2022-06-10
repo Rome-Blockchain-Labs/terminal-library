@@ -48,7 +48,7 @@ export const FilterNetworkSelectors = (): JSX.Element => {
       <Chip
         key={network.id}
         name={network.id}
-        label={network.name || network.id}
+        label={network.name}
         icon={network.icon}
         checked={networkMap[network.id] || false}
         onChange={(e) =>

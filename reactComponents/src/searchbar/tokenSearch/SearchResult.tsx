@@ -68,7 +68,7 @@ const StyledResultContent = styled.div`
     color: #ffffff;
     font-size: 0.75rem;
     font-weight: bold;
-    padding: 10px;
+    padding: 10px 0;
 
     > div {
       text-align: center;

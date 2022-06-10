@@ -16,6 +16,7 @@ export type DetailType = {
 }
 
 export type TokenIconType = {
+    network: string;
     token: any;
     size?: number;
 };

@@ -77,13 +77,7 @@ const StyledFilterContent = styled.div`
     margin-left: 10px;
     justify-content: ${styleOverrides?.justifyContent || "start"};
     align-items: ${styleOverrides?.alignItems || "center"};  
-    padding:  ${styleOverrides?.padding || "0 0 5px"};    
-    .chip-icon {
-      filter: grayscale(1);
-      &.active{
-        filter: unset;
-      }     
-    }
+    padding:  ${styleOverrides?.padding || "0 0 5px"};
   `}
 `;
 
@@ -206,6 +200,7 @@ export const SearchFilters = (): JSX.Element => {
     }
 
     if (Object.keys(networkMap).length > 0) {
+      setIsNetworkMapExpanded(true);
       setIsExchangeMapExpanded(true);
     }
   }, [networkMap, exchangeMap, searchText]);
