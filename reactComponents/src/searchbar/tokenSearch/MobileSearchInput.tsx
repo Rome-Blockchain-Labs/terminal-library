@@ -118,7 +118,6 @@ const MobileSearchInput: FC<MobileSearchInputProps> = ({
   const { customSearchInput } = renderProps;
   const [text, setText] = useState("");
   const [error, setError] = useState(false);
-  const { searchText } = useSelector((state: RootState) => state);
 
   const inputRef = useRef<HTMLInputElement>(null);
   
@@ -138,7 +137,7 @@ const MobileSearchInput: FC<MobileSearchInputProps> = ({
     dispatch(setViewResult(true));
     dispatch(
       searchTokenPairs({
-        searchString: searchText,
+        searchString: text,
         networks: renderProps.networks,
       })
     );
