@@ -1,4 +1,5 @@
-import { NetworkId, ExchangeName } from '../../types';
+import { NetworkId, ExchangeName } from '../../../types';
+
 interface Token {
   decimals: number;
   id: string;

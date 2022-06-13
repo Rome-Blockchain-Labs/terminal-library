@@ -4,7 +4,7 @@ import './App.css';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
 import TokenSearch from './tokenSearch';
-import { RenderProps } from '../types';
+import { RenderProps } from '../../types';
 
 export const SearchBar: FC<RenderProps> = (renderProps: RenderProps) => {
   return (

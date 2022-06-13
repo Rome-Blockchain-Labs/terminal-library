@@ -6,7 +6,7 @@ import SearchInput from './SearchInput';
 import SearchResult from './SearchResult';
 import SearchFilters from './SearchFilters';
 import useClickOutside from '../hooks/useClickOutside';
-import { RenderProps } from '../../types';
+import { RenderProps } from '../../../types';
 
 const DesktopSearchWrapper = styled.div`
   width: 100%;

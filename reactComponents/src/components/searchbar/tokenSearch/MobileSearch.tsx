@@ -6,7 +6,7 @@ import MobileSearchInput from './MobileSearchInput';
 import SearchResult from './SearchResult';
 import SearchFilters from './SearchFilters';
 import UnCheckedIcon from '../icons/unchecked';
-import { RenderProps } from '../../types';
+import { RenderProps } from '../../../types';
 
 const MobileSearchWrapper = styled.div`
   width: 100%;
