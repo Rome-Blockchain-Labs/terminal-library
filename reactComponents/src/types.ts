@@ -303,5 +303,8 @@ export type RenderProps = {
   customLoading?: CustomLoadingType;
   customActions?: Array<ActionComponentType>;
   customAllChip?: CustomAllChipType;
+  /**
+   * List of networks that we'll allow the user to search on
+   */
   networks: Array<NetworkType>;
 };

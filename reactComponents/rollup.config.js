@@ -5,6 +5,7 @@ import dts from 'rollup-plugin-dts';
 import json from '@rollup/plugin-json';
 import postcss from 'rollup-plugin-postcss';
 import { terser } from "rollup-plugin-terser";
+import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 
 const packageJson = require('./package.json');
 
@@ -24,9 +25,18 @@ export default [
       },
     ],
     plugins: [
+      peerDepsExternal(),
       resolve(),
       commonjs(),
-      typescript({ tsconfig: "./tsconfig.json" }),
+      typescript({
+        exclude: [
+          // Storybook stories
+          /\.stories.((js|jsx|ts|tsx|mdx))$/,
+          // Mock files
+          /\.mock.((js|ts))$/
+        ],
+        tsconfig: "./tsconfig.json"
+      }),
       postcss(),
       json(),
       terser()
