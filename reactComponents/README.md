@@ -1,20 +1,97 @@
 # Search Bar Token Pair Centric Widget
-## npm install
+
+> A react component which fetches token pairs and shows information from various network and its exchanges
+
+## Prerequisites
+
+This project requires NodeJS (version 16.13 or later) and NPM.
+[Node](http://nodejs.org/) and [NPM](https://npmjs.org/) are really easy to install.
+To make sure you have them available on your machine,
+try running the following command.
+
+```sh
+$ npm -v && node -v
+16.13.1
+v8.1.2
 ```
- npm i @romeblockchain/react-components
+## Table of contents
+
+- [Project Name](#project-name)
+  - [Prerequisites](#prerequisites)
+  - [Table of contents](#table-of-contents)
+  - [Getting Started](#getting-started)
+  - [Installation](#installation)
+  - [Usage](#usage)
+    - [Launching the app on development mode](#launching-the-app-on-development-mode)
+    - [Building a distribution version](#building-a-distribution-version)
+    - [Publishing package into npm repositories](#publishing-package-into-npm-repositories)
+    - [How to use the search bar component](#how-to-use-the-search-bar-component)
+  - [Props](#props)
+  - [Authors](#authors)
+  - [License](#license)
+
+## Getting Started
+ 
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See notes on how to publish and deploy the project on a live system.
+ 
+ 
+## Installation
+```sh
+$ npm i @romeblockchain/react-components
 ```
-## How to use the search bar component
+Or if you prefer using Yarn:
+
+```shell script
+$ yarn add @romeblockchain/react-components
+```
+
+## Usage
+### Launching the app on development mode
+```shell script
+$ git clone https://github.com/Rome-Blockchain-Labs/terminal-library.git
+$ cd terminal-library
+$ npm run dev
+```
+
+### Building a distribution version
+```sh
+$ npm run build
+```
+This task will create a distribution version of the project
+inside your local `dist/` folder
+
+### Publishing package into npm repositories
+Before npm publish, it requires that you already logged into npm repository.
+```shell script
+$ npm login
+$ Username: 
+$ Password:
+$ Email: (this IS public)
+``` 
+After logging into npm repository, make sure that you update the version in `package.json`. You can publish different version into npm so that update higher version than current.
+```shell script
+$ npm run publish
+```
+
+### How to use the search bar component
 ```
 import { SearchBar } from '@romeblockchain/react-components';
 
 <div>
-    <SearchBar />    
+    <SearchBar {...props} />    
 </div>
 ```
 
-### Props attribute descrption
+## Props
 
-```
+`customActions`
+
+| Type | Default value |
+| --- | --- |
+| array, null | null |
+
+Example:
+```tsx
 // customActions is the array list which has the index and component
 const customActions = [
     {
@@ -44,24 +121,8 @@ const actionComponent1 = (props) => {
 }
 ```
 
-### Set configuration params in .ENV (Optional)
-```
-REACT_APP_SEARCH_INPUT_LENGTH_MINIMUM=3
-REACT_APP_SEARCH_ASYNC_DELAY=300
-REACT_APP_SEARCH_ASYNC_DATASET_LENGTH_MAXIMUM=500
-```
-## After that you can pass the props as follows;
-```
-    // All the props are optional, you may pass or not
-    <SearchBar customActions={customActions}                
-    />
-```
 
-## Development IDE Envirement;
-vscode-exteinsion: ``` ESLint```
-``` 
-"editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
-} 
-```
+## Authors
 
+## License
+[MIT License](https://andreasonny.mit-license.org/2019) © Rome Blockchain Labs
