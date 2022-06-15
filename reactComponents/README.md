@@ -26,7 +26,7 @@ v8.1.2
     - [Building a distribution version](#building-a-distribution-version)
     - [Publishing package into npm repositories](#publishing-package-into-npm-repositories)
     - [How to use the search bar component](#how-to-use-the-search-bar-component)
-  - [Props](#props)
+  - [API](#api)
   - [Authors](#authors)
   - [License](#license)
 
@@ -82,36 +82,387 @@ import { SearchBar } from '@romeblockchain/react-components';
 </div>
 ```
 
-## Props
+## API
 
-`customActions`
+### Types
+- `NetworkId`
+```tsx
+NetworkId = 'ethereum' | 'avalanche' | 'bsc' | 'moonriver' | 'moonbeam'
+```
+
+- `ExchangeName`
+```tsx
+ExchangeName =
+  | 'uniswapv2'
+  | 'uniswapv3'
+  | 'sushiswap'
+  | 'pangolin'
+  | 'traderjoe'
+  | 'pancakeswap'
+  | 'safeswap'
+  | 'kyberdmm'
+  | 'zeroexchange'
+  | 'yetiswap'
+  | 'baguette'
+  | 'canary'
+  | 'lydiafinance'
+  | 'elkfinance'
+  | 'pandaswap'
+  | 'complusnetwork'
+  | 'oliveswap'
+  | 'mdex'
+  | 'ellipsis.finance'
+  | 'biswap'
+  | 'apeswap'
+  | 'knightswap.finance'
+  | 'babyswap'
+  | 'synapse'
+  | 'beamswap'
+  | 'solarflare'
+  | 'stellaswap'
+  | 'zenlink'
+  | 'solarbeam'
+  | 'shibaswap'
+  | 'quickswap'
+  | 'solidex'
+  | 'spookyswap'
+  | 'spiritswap'
+  | 'vvs.finance'
+  | 'mm.finance'
+  | 'cronaswap'
+  | 'crodex'
+  | 'cyborgswap';
+```
+
+- `NetworkType`
+```tsx
+NetworkType = {
+  id: NetworkId;
+  name?: string;
+  icon?: ReactNode;
+  exchanges: ExchangeType[];
+}
+```
+
+- `ExchangeType`
+```tsx
+ExchangeType = {
+  name: ExchangeName;
+  icon?: ReactNode;
+}
+```
+
+- `CustomWrapperType`
+```tsx
+CustomWrapperType = {
+  backgroundColor?: string;
+  borderRadius?: string;
+  border?: string;
+  button?: {
+    borderColor?: string;
+    backColor?: string;
+    color?: string;
+    borderRadius?: string;
+    fontSize?: string;
+    padding?: string;
+    hoverBackColor?: string;
+  };
+}
+```
+
+- `CustomSearchInputType`
+```tsx
+CustomSearchInputType = {
+  input?: {
+    width?: string;
+    height?: string;
+    border?: string;
+    color?: string;
+    display?: string;
+    borderRadius?: string;
+    background?: string;
+    padding?: string;
+    fontSize?: string;
+    fontFamily?: string;
+  };
+
+  icon?: {
+    right?: string;
+    top?: string;
+    height?: number;
+    width?: number;
+    color?: string;
+    activeColor?: string;
+  };
+
+  placeholder?: string;
+}
+```
+
+- `CustomSearchFilterType`
+```tsx
+CustomSearchFilterType = {
+  wrapper?: {
+    backgroundColor?: string;
+    borderRadius?: string;
+    toggleColor?: string;
+    toggleHeight?: string;
+    toggleWidth?: string;
+    toggleMarginRight?: string;
+    toggleLeft?: string;
+    toggleTop?: string;
+    toggleBorderBottom?: string;
+    toggleBorderRight?: string;
+    contentBorder?: string;
+    contentBorderRadius?: string;
+    margin?: string;
+  };
+
+  content?: {
+    network?: string;
+    exchange?: string;
+    header?: {
+      display?: string;
+      justifyContent?: string;
+      alignItems?: string;
+      width?: string;
+      border?: string;
+      backgroundColor?: string;
+      color?: string;
+      padding?: string;
+      textAlign?: string;
+      margin?: string;
+      borderRadius?: string;
+      fontSize?: string;
+      fontWeight?: string;
+      hoverColor?: string;
+    };
+    wrapper?: {
+      justifyContent?: string;
+      alignItems?: string;
+      padding?: string;
+      backgroundColor?: string;
+      borderRadius?: string;
+    };
+    content?: {
+      justifyContent?: string;
+      alignItems?: string;
+      padding?: string;
+    };
+    description?: {
+      textAlign?: string;
+      fontSize?: string;
+      fontWeight?: string;
+      padding?: string;
+      backgroundColor?: string;
+      color?: string;
+    };
+  };
+}
+```
+
+- `CustomResultType`
+```tsx
+CustomResultType = {
+  title?: {
+    color?: string;
+    fontSize?: string;
+    padding?: string;
+    margin?: string;
+    fontSize2?: string;
+  };
+  content?: {
+    padding?: string;
+    background?: string;
+    borderRadius?: string;
+    width?: string;
+    height?: string;
+    border?: string;
+    color?: string;
+    display?: string;
+    borderColor?: string;
+    borderStyle?: string;
+    borderWidth?: string;
+    fontSize?: string;
+    fontFamily?: string;
+  };
+}
+```
+
+- `CustomSearchFilterType`
+```tsx
+CustomSearchFilterType = {
+  wrapper?: {
+    backgroundColor?: string;
+    borderRadius?: string;
+    toggleColor?: string;
+    toggleHeight?: string;
+    toggleWidth?: string;
+    toggleMarginRight?: string;
+    toggleLeft?: string;
+    toggleTop?: string;
+    toggleBorderBottom?: string;
+    toggleBorderRight?: string;
+    contentBorder?: string;
+    contentBorderRadius?: string;
+    margin?: string;
+  };
+
+  content?: {
+    network?: string;
+    exchange?: string;
+    header?: {
+      display?: string;
+      justifyContent?: string;
+      alignItems?: string;
+      width?: string;
+      border?: string;
+      backgroundColor?: string;
+      color?: string;
+      padding?: string;
+      textAlign?: string;
+      margin?: string;
+      borderRadius?: string;
+      fontSize?: string;
+      fontWeight?: string;
+      hoverColor?: string;
+    };
+    wrapper?: {
+      justifyContent?: string;
+      alignItems?: string;
+      padding?: string;
+      backgroundColor?: string;
+      borderRadius?: string;
+    };
+    content?: {
+      justifyContent?: string;
+      alignItems?: string;
+      padding?: string;
+    };
+    description?: {
+      textAlign?: string;
+      fontSize?: string;
+      fontWeight?: string;
+      padding?: string;
+      backgroundColor?: string;
+      color?: string;
+    };
+  };
+}
+```
+
+- `ActionComponentType`
+```tsx
+ActionComponentType = {
+    detail: CustomSearchFilterType
+};
+```
+
+- `ActionType`
+```tsx
+ActionType = {
+    component?: FC<ActionComponentType>,
+    detail?: TokenPair
+}
+```
+
+### Props
+- `customWrapper`
 
 | Type | Default value |
 | --- | --- |
-| array, null | null |
+| CustomWrapperType | null |
+
+Example:
+```tsx
+
+```
+
+- `customSearchInput`
+
+| Type | Default value |
+| --- | --- |
+| CustomSearchInputType | null |
+
+Example:
+```tsx
+
+```
+
+- `customSearchFilter`
+
+| Type | Default value |
+| --- | --- |
+| CustomSearchFilterType | null |
+
+Example:
+```tsx
+
+```
+
+- `customChip`
+
+| Type | Default value |
+| --- | --- |
+| CustomChipType | null |
+
+Example:
+```tsx
+
+```
+
+- `customResult`
+
+| Type | Default value |
+| --- | --- |
+| CustomResultType | null |
+
+Example:
+```tsx
+
+```
+
+- `customTokenDetail`
+
+| Type | Default value |
+| --- | --- |
+| CustomTokenDetailType | null |
+
+Example:
+```tsx
+
+```
+
+- `customLoading`
+
+| Type | Default value |
+| --- | --- |
+| CustomLoadingType | null |
+
+Example:
+```tsx
+
+```
+
+- `customActions`
+
+| Type | Default value |
+| --- | --- |
+| Array<ActionType> | null |
 
 Example:
 ```tsx
 // customActions is the array list which has the index and component
 const customActions = [
-    {
-        index: 1,
-        component: actionComponent1
-    },
-    {    
-        index: 2,
-        component: actionComponent2   
-    },
-    {   
-        index: 3,
-        component: actionComponent3
-    },
+    actionComponent1
+    actionComponent2   
+    actionComponent3    
     ...
 ]
 
 // You can refer the detail for the token pair information from the prop
-const actionComponent1 = (props) => {  
-  const {detail} = props
+const actionComponent1 = (props: ActionType) => {  
+  const { detail } = props
   const handleClick = () => {
     console.log('Exchange: ', detail)
   }
@@ -119,6 +470,18 @@ const actionComponent1 = (props) => {
     <div onClick={handleClick}>Exchange</div>
   )
 }
+```
+
+
+- `networks`
+
+| Type | Default value |
+| --- | --- |
+| Array<NetworkType> | null |
+
+Example:
+```tsx
+
 ```
 
 

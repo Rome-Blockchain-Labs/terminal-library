@@ -1,10 +1,13 @@
 import { FC, ReactNode } from 'react';
+import { ActionComponentType, NetworkId } from '../../types';
+import { Token, TokenPair } from '../redux/types';
 
 export interface IconsType { [key: string]: ReactNode; }
 
+
 export type ActionType = {
-    component?: FC<any>,
-    detail?: any
+    component?: FC<ActionComponentType>,
+    detail?: TokenPair
 }
 
 export type DetailType = {
@@ -16,8 +19,8 @@ export type DetailType = {
 }
 
 export type TokenIconType = {
-    network: string;
-    token: any;
+    network: NetworkId;
+    token: Token;
     size?: number;
 };
 
@@ -25,5 +28,5 @@ export type NetworkExchangeIconType = {
     icon?: any,
     size?: number;
     label?: string;
-    grayscaleFilter?: any;
+    grayscaleFilter?: 0 | 1;
 };

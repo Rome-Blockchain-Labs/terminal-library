@@ -1,5 +1,5 @@
 import React, { FC, useContext, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import {
   searchTokenPairs,
@@ -12,7 +12,6 @@ import Button from "./Button";
 import SearchIcon from "../icons/search";
 import ResetIcon from "../icons/reset";
 import TokenSearchContext from "../Context/TokenSearch";
-import { RootState } from "../redux/store";
 import config from "../config";
 
 const StyledWrapper = styled.div`
