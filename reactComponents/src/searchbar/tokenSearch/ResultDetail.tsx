@@ -168,6 +168,7 @@ const StyledDetailList = styled(StyledGridRow)`
 const Action = (props: ActionType) => {
   const { component, detail } = props;
   const Component: any = component;
+
   return (
     <Component detail={detail} />
   );
@@ -273,12 +274,12 @@ export const ResultDetail: FC<DetailType> = (props: DetailType) => {
           </div>
           <div className="actions">
             {customActions &&
-              customActions.map((action) => (
+              customActions.map((action, index) => (
                 <Action
-                  key={`action-${action.index}`}
-                  component={action.component}
+                  key={`action-${index}`}
+                  component={action}
                   detail={selectedPair}
-                ></Action>
+                />
               ))}
           </div>
         </div>

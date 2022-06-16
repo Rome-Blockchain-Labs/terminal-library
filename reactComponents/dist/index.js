@@ -2999,6 +2999,10 @@ var getTokenLogoURL = (address, network) => {
       return `https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/${address}/logo.png`;
     case "moonriver":
       return `https://raw.githubusercontent.com/solarbeamio/solarbeam-tokenlist/main/assets/moonriver/${address}/logo.png`;
+    case "bsc":
+      return `https://pancakeswap.finance/images/tokens/${address}.png`;
+    case "metis":
+      return `https://raw.githubusercontent.com/Netswap/tokens/master/assets/${address}/logo.png`;
     default:
       return `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${address}/logo.png`;
   }
@@ -3331,9 +3335,9 @@ var ResultDetail = (props) => {
     className: "uppercase"
   }, "Volume:"), /* @__PURE__ */ import_react45.default.createElement("br", null), /* @__PURE__ */ import_react45.default.createElement("span", null, intToWords(selectedPair.volumeUSD))), /* @__PURE__ */ import_react45.default.createElement("div", {
     className: "actions"
-  }, customActions && customActions.map((action) => /* @__PURE__ */ import_react45.default.createElement(Action, {
-    key: `action-${action.index}`,
-    component: action.component,
+  }, customActions && customActions.map((action, index2) => /* @__PURE__ */ import_react45.default.createElement(Action, {
+    key: `action-${index2}`,
+    component: action,
     detail: selectedPair
   })))));
 };
@@ -4049,7 +4053,6 @@ var MobileSearchInput = ({
   const { customSearchInput } = renderProps;
   const [text, setText] = (0, import_react54.useState)("");
   const [error, setError] = (0, import_react54.useState)(false);
-  const { searchText } = (0, import_react_redux7.useSelector)((state) => state);
   const inputRef = (0, import_react54.useRef)(null);
   const onChangeFilter = (event) => {
     const value = event.target.value;
@@ -4064,7 +4067,7 @@ var MobileSearchInput = ({
     dispatch(setSearchText(text));
     dispatch(setViewResult(true));
     dispatch(searchTokenPairs({
-      searchString: searchText,
+      searchString: text,
       networks: renderProps.networks
     }));
     onSearch && onSearch();

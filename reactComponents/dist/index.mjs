@@ -2971,6 +2971,10 @@ var getTokenLogoURL = (address, network) => {
       return `https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/${address}/logo.png`;
     case "moonriver":
       return `https://raw.githubusercontent.com/solarbeamio/solarbeam-tokenlist/main/assets/moonriver/${address}/logo.png`;
+    case "bsc":
+      return `https://pancakeswap.finance/images/tokens/${address}.png`;
+    case "metis":
+      return `https://raw.githubusercontent.com/Netswap/tokens/master/assets/${address}/logo.png`;
     default:
       return `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${address}/logo.png`;
   }
@@ -3303,9 +3307,9 @@ var ResultDetail = (props) => {
     className: "uppercase"
   }, "Volume:"), /* @__PURE__ */ React43.createElement("br", null), /* @__PURE__ */ React43.createElement("span", null, intToWords(selectedPair.volumeUSD))), /* @__PURE__ */ React43.createElement("div", {
     className: "actions"
-  }, customActions && customActions.map((action) => /* @__PURE__ */ React43.createElement(Action, {
-    key: `action-${action.index}`,
-    component: action.component,
+  }, customActions && customActions.map((action, index2) => /* @__PURE__ */ React43.createElement(Action, {
+    key: `action-${index2}`,
+    component: action,
     detail: selectedPair
   })))));
 };
@@ -3929,12 +3933,12 @@ var DesktopSearch_default = DesktopSearch;
 
 // src/searchbar/tokenSearch/MobileSearch.tsx
 import React53, { useRef as useRef4 } from "react";
-import { useDispatch as useDispatch8, useSelector as useSelector8 } from "react-redux";
+import { useDispatch as useDispatch8, useSelector as useSelector7 } from "react-redux";
 import styled11 from "styled-components";
 
 // src/searchbar/tokenSearch/MobileSearchInput.tsx
 import React52, { useContext as useContext8, useRef as useRef3, useState as useState6 } from "react";
-import { useDispatch as useDispatch7, useSelector as useSelector7 } from "react-redux";
+import { useDispatch as useDispatch7 } from "react-redux";
 import styled10 from "styled-components";
 var StyledWrapper2 = styled10.div`
   display: flex;
@@ -4027,7 +4031,6 @@ var MobileSearchInput = ({
   const { customSearchInput } = renderProps;
   const [text, setText] = useState6("");
   const [error, setError] = useState6(false);
-  const { searchText } = useSelector7((state) => state);
   const inputRef = useRef3(null);
   const onChangeFilter = (event) => {
     const value = event.target.value;
@@ -4042,7 +4045,7 @@ var MobileSearchInput = ({
     dispatch(setSearchText(text));
     dispatch(setViewResult(true));
     dispatch(searchTokenPairs({
-      searchString: searchText,
+      searchString: text,
       networks: renderProps.networks
     }));
     onSearch && onSearch();
@@ -4151,7 +4154,7 @@ var MobileSearchTitle = styled11.h1`
 var MobileSearchbar = (renderProps) => {
   const dispatch = useDispatch8();
   const { customWrapper } = renderProps;
-  const { isSelecting, isLoading, viewResult } = useSelector8((state) => state);
+  const { isSelecting, isLoading, viewResult } = useSelector7((state) => state);
   const searchResultRef = useRef4();
   const searchTitle = "Find what you want";
   const closeResultPanel = () => {

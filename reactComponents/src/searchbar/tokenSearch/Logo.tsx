@@ -31,7 +31,7 @@ import MdexIcon from '../icons/mdex';
 
 type LogoType = {
   label: any;
-  grayscaleFilter?: any;
+  grayscaleFilter?: 0 | 1;
   width?: number;
   height?: number;
 };

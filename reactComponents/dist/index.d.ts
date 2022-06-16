@@ -1,6 +1,32 @@
 import { ReactNode, FC } from 'react';
 export { Accordion, AccordionItem, AccordionItemButton, AccordionItemHeading, AccordionItemPanel } from 'react-accessible-accordion';
 
+interface Token {
+    decimals: number;
+    id: string;
+    name: string;
+    symbol: string;
+    image: string;
+    address: string;
+    tradingVolume: string;
+    balance: number;
+    amount: number;
+    allowance: number;
+    usd: number;
+}
+declare type TokenPair = {
+    id: string;
+    token0: Token;
+    token0Price: string;
+    token1: Token;
+    token1Price: string;
+    volumeToken0: string;
+    volumeToken1: string;
+    volumeUSD: string;
+    network: string;
+    exchange: string;
+};
+
 declare type CustomWrapperType = {
     backgroundColor?: string;
     borderRadius?: string;
@@ -15,7 +41,7 @@ declare type CustomWrapperType = {
         hoverBackColor?: string;
     };
 };
-declare type CustomSerchInputType = {
+declare type CustomSearchInputType = {
     input?: {
         width?: string;
         height?: string;
@@ -209,8 +235,7 @@ declare type CustomTokenDetailType = {
     };
 };
 declare type ActionComponentType = {
-    index?: number;
-    component?: FC;
+    detail: TokenPair;
 };
 declare type NetworkId = 'ethereum' | 'avalanche' | 'bsc' | 'moonriver' | 'moonbeam';
 declare type ExchangeName = 'uniswapv2' | 'uniswapv3' | 'sushiswap' | 'pangolin' | 'traderjoe' | 'pancakeswap' | 'safeswap' | 'kyberdmm' | 'zeroexchange' | 'yetiswap' | 'baguette' | 'canary' | 'lydiafinance' | 'elkfinance' | 'pandaswap' | 'complusnetwork' | 'oliveswap' | 'mdex' | 'ellipsis.finance' | 'biswap' | 'apeswap' | 'knightswap.finance' | 'babyswap' | 'synapse' | 'beamswap' | 'solarflare' | 'stellaswap' | 'zenlink' | 'solarbeam' | 'shibaswap' | 'quickswap' | 'solidex' | 'spookyswap' | 'spiritswap' | 'vvs.finance' | 'mm.finance' | 'cronaswap' | 'crodex' | 'cyborgswap';
@@ -226,17 +251,17 @@ declare type NetworkType = {
 };
 declare type RenderProps = {
     customWrapper?: CustomWrapperType;
-    customSearchInput?: CustomSerchInputType;
+    customSearchInput?: CustomSearchInputType;
     customSearchFilter?: CustomSearchFilterType;
     customChip?: CustomChipType;
     customResult?: CustomResultType;
     customTokenDetail?: CustomTokenDetailType;
     customLoading?: CustomLoadingType;
-    customActions?: Array<ActionComponentType>;
+    customActions?: Array<FC<ActionComponentType>>;
     customAllChip?: CustomAllChipType;
     networks: Array<NetworkType>;
 };
 
 declare const SearchBar: FC<RenderProps>;
 
-export { ExchangeName, ExchangeType, NetworkId, NetworkType, RenderProps, SearchBar };
+export { ActionComponentType, ExchangeName, ExchangeType, NetworkId, NetworkType, RenderProps, SearchBar };

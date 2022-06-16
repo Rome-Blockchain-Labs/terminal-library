@@ -7,8 +7,9 @@ import {
   AccordionItemButton,
   AccordionItemPanel,
 } from 'react-accessible-accordion';
-
 export { Accordion, AccordionItem, AccordionItemHeading, AccordionItemButton, AccordionItemPanel };
+
+import { TokenPair } from './searchbar/redux/types';
 
 type CustomWrapperType = {
   backgroundColor?: string;
@@ -25,7 +26,7 @@ type CustomWrapperType = {
   };
 };
 
-type CustomSerchInputType = {
+type CustomSearchInputType = {
   input?: {
     width?: string;
     height?: string;
@@ -234,9 +235,8 @@ type CustomTokenDetailType = {
   };
 };
 
-type ActionComponentType = {
-  index?: number;
-  component?: FC;
+export type ActionComponentType = {
+  detail: TokenPair
 };
 
 export type NetworkId = 'ethereum' | 'avalanche' | 'bsc' | 'moonriver' | 'moonbeam';
@@ -295,13 +295,13 @@ export type NetworkType = {
 
 export type RenderProps = {
   customWrapper?: CustomWrapperType;
-  customSearchInput?: CustomSerchInputType;
+  customSearchInput?: CustomSearchInputType;
   customSearchFilter?: CustomSearchFilterType;
   customChip?: CustomChipType;
   customResult?: CustomResultType;
   customTokenDetail?: CustomTokenDetailType;
   customLoading?: CustomLoadingType;
-  customActions?: Array<ActionComponentType>;
+  customActions?: Array<FC<ActionComponentType>>;
   customAllChip?: CustomAllChipType;
   networks: Array<NetworkType>;
 };
