@@ -7,7 +7,6 @@ import { maxHits } from './config';
 const getRomeSearchTokenQuery = (networks, isPair = false) => {
   let network;
   let pair_search = '';
-  const networkDatasetLength = Math.round(maxHits / networks.length);
 
   let where = `{
     concat_ws:{_ilike:$searchText},             
@@ -31,7 +30,7 @@ const getRomeSearchTokenQuery = (networks, isPair = false) => {
       ${network}:
         ${network}_pair_search(
           where:${where}, 
-          limit:${networkDatasetLength}, 
+          limit:${maxHits}, 
           order_by:{ last_24hour_usd_volume:desc_nulls_last }
         ) 
         {
@@ -159,7 +158,10 @@ export const searchTokensAsync = async (
         volumeUSD: pair.last_24hour_usd_volume,
         ...tokenPrices,
       };
-    });
-
+    })
+    .sort((pair0:any, pair1:any)=>{
+      return Number(pair1.last_24hour_usd_volume) - Number(pair0.last_24hour_usd_volume)
+    }
+  );
   return mappedPairs;
 };

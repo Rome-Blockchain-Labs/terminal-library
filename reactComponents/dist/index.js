@@ -79,7 +79,6 @@ var romePairsClient = new import_graphql_request.GraphQLClient(romeTokenSyncUri)
 var getRomeSearchTokenQuery = (networks, isPair = false) => {
   let network;
   let pair_search = "";
-  const networkDatasetLength = Math.round(maxHits / networks.length);
   let where = `{
     concat_ws:{_ilike:$searchText},             
     exchange:{_in:$exchanges}
@@ -99,7 +98,7 @@ var getRomeSearchTokenQuery = (networks, isPair = false) => {
       ${network}:
         ${network}_pair_search(
           where:${where}, 
-          limit:${networkDatasetLength}, 
+          limit:${maxHits}, 
           order_by:{ last_24hour_usd_volume:desc_nulls_last }
         ) 
         {
@@ -174,6 +173,8 @@ var searchTokensAsync = async (searchString, searchNetworks, searchExchanges) =>
     return __spreadValues(__spreadProps(__spreadValues({}, pair), {
       volumeUSD: pair.last_24hour_usd_volume
     }), tokenPrices);
+  }).sort((pair0, pair1) => {
+    return Number(pair1.last_24hour_usd_volume) - Number(pair0.last_24hour_usd_volume);
   });
   return mappedPairs;
 };
