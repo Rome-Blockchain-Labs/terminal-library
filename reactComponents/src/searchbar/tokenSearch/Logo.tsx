@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import DefaultIcon from '../icons/default';
+import DefaultIcon from '../icons/defaultIcon';
 import KyberIcon from '../icons/kyber';
 import PangolinIcon from '../icons/pangolin';
 import SushiIcon from '../icons/sushi';
