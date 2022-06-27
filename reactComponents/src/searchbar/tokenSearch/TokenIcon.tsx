@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from "react";
-import DefaultIcon from "../icons/default";
+import DefaultIcon from "../icons/defaultIcon";
 import { TokenIconType } from "./types";
 
 const getTokenLogoURL = (address: string, network: string) => {
