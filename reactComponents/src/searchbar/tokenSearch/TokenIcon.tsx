@@ -3,7 +3,7 @@ import DefaultIcon from "../icons/defaultIcon";
 import { TokenIconType } from "./types";
 
 const getTokenLogoURL = (address: string, network: string) => {
-  return `https://storage.googleapis.com/romenet-token-logos/${network}/${address.toLowerCase()}/logo.png`;
+  return `https://storage.googleapis.com/romenet-token-logos/${network}/${address.toLowerCase()}/logo`;
 };
 
 const TokenIcon: FC<TokenIconType> = ({ network, token, size = 28 }) => {
