@@ -55,7 +55,7 @@ export const FilterExchangeSelectors = (): JSX.Element => {
       <Chip
         key={exchange.name}
         name={exchange.name}
-        label={exchange.name}
+        label={exchange.title || exchange.name}
         icon={exchange.icon}
         checked={exchangeMap[exchange.name] || false}
         onChange={(e) =>

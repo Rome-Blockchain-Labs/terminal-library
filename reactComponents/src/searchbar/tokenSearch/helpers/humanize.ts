@@ -11,6 +11,8 @@ export const humanizeExchange = (exchange: string): string => {
   switch (exchange.toLowerCase()) {
     case "traderjoe":
       return "Trader Joe";
+    case "hermesprotocol":
+      return "Hermes"
     default:
       return exchange;
   }
