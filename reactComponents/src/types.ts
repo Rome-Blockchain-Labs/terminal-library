@@ -279,10 +279,12 @@ export type ExchangeName =
   | 'mm.finance'
   | 'cronaswap'
   | 'crodex'
-  | 'cyborgswap';
+  | 'cyborgswap'
+  | 'hermesprotocol';
 
 export type ExchangeType = {
   name: ExchangeName;
+  title?: string;
   icon?: ReactNode;
 };
 
