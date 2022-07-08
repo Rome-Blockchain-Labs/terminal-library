@@ -1,0 +1,63 @@
+{
+  "name": "web3react-ian",
+  "version": "0.1.2",
+  "description": "My first react typescript package",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gapon2401/my-react-typescript-package.git"
+  },
+  "scripts": {
+    "build": "yarn build:esm && yarn build:cjs",
+    "build:esm": "tsc",
+    "build:cjs": "tsc --module commonjs --outDir dist/cjs",
+    "lint": "eslint \"{**/*,*}.{js,ts,jsx,tsx}\"",
+    "prettier": "prettier --write \"{src,tests,example/src}/**/*.{js,ts,jsx,tsx}\"",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test && npm run prettier && npm run lint"
+  },
+  "peerDependencies": {
+    "react": ">=16"
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "keywords": [
+    "react",
+    "typescript",
+    "awesome-project"
+  ],
+  "author": "gapon2401",
+  "license": "ISC",
+  "dependencies": {
+    "@web3-react/core": "8.0.33-beta.0",
+    "@web3-react/metamask": "8.0.26-beta.0",
+    "@web3-react/network": "8.0.26-beta.0",
+    "@web3-react/types": "8.0.19-beta.0",
+    "@web3-react/walletconnect": "8.0.34-beta.0"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^13.3.0",
+    "@types/jest": "^28.1.4",
+    "@types/react": "^18.0.12",
+    "@typescript-eslint/eslint-plugin": "^5.30.5",
+    "@typescript-eslint/parser": "^5.30.5",
+    "eslint": "^8.19.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.30.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "jest": "^28.1.2",
+    "jest-canvas-mock": "^2.4.0",
+    "jest-environment-jsdom": "^28.1.2",
+    "prettier": "^2.7.1",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "ts-jest": "^28.0.5",
+    "typescript": "^4.7.3"
+  }
+}
