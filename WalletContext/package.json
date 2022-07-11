@@ -1,6 +1,6 @@
 {
-  "name": "web3react-ian",
-  "version": "0.1.2",
+  "name": "web3react-v8-ian",
+  "version": "0.1.23",
   "description": "My first react typescript package",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
@@ -34,11 +34,13 @@
   "author": "gapon2401",
   "license": "ISC",
   "dependencies": {
+    "@types/ua-parser-js": "^0.7.36",
     "@web3-react/core": "8.0.33-beta.0",
     "@web3-react/metamask": "8.0.26-beta.0",
     "@web3-react/network": "8.0.26-beta.0",
     "@web3-react/types": "8.0.19-beta.0",
-    "@web3-react/walletconnect": "8.0.34-beta.0"
+    "@web3-react/walletconnect": "8.0.34-beta.0",
+    "ua-parser-js": "^1.0.2"
   },
   "devDependencies": {
     "@testing-library/react": "^13.3.0",

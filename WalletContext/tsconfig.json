@@ -2,12 +2,12 @@
   "include": ["src"],
   "exclude": ["dist", "node_modules"],
   "compilerOptions": {
+    "target": "ESNext",
     "module": "esnext",
     "lib": ["dom", "esnext"],
     "importHelpers": true,
     "declaration": true,
     "sourceMap": true,
-    "baseUrl": "src",
     "rootDir": "./src",
     "outDir": "./dist/esm",
     "strict": true,

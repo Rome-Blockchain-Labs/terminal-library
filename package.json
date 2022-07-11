@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "The common library for Rome terminal Project",
   "main": "index.js",
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -11,11 +10,17 @@
     "type": "git",
     "url": "git+https://github.com/Rome-Blockchain-Labs/terminal-library.git"
   },
-  "workspaces": ["reactComponents","romeBridge"],
+  "workspaces": [
+    "reactComponents",
+    "romeBridge"
+  ],
   "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Rome-Blockchain-Labs/terminal-library/issues"
   },
-  "homepage": "https://github.com/Rome-Blockchain-Labs/terminal-library#readme"
+  "homepage": "https://github.com/Rome-Blockchain-Labs/terminal-library#readme",
+  "dependencies": {
+    "usehooks-ts": "^2.6.0"
+  }
 }
