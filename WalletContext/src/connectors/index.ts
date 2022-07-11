@@ -15,7 +15,8 @@ export enum Wallet {
   GNOSIS_SAFE = 'GNOSIS_SAFE',
 }
 
-export const SELECTABLE_WALLETS = [Wallet.COINBASE_WALLET, Wallet.WALLET_CONNECT, Wallet.INJECTED]
+export const BACKFILLABLE_WALLETS = [Wallet.COINBASE_WALLET, Wallet.WALLET_CONNECT, Wallet.INJECTED]
+export const SELECTABLE_WALLETS = [...BACKFILLABLE_WALLETS, Wallet.FORTMATIC]
 
 function onError(error: Error) {
   console.debug(`web3-react error: ${error}`)
@@ -27,8 +28,10 @@ export function getWalletForConnector(connector: Connector) {
       return Wallet.INJECTED
     case walletConnect:
       return Wallet.WALLET_CONNECT
-    default:
+    case network:
       return Wallet.NETWORK
+    default:
+      throw Error('unsupported connector')
   }
 }
 
@@ -83,13 +86,13 @@ function getConnectorListItemForWallet(wallet: Wallet) {
     hooks: getHooksForWallet(wallet),
   }
 }
-export function useConnectors(selectedWallet: Wallet | null) {
+
+export function useConnectors(selectedWallet: Wallet | undefined) {
   return useMemo(() => {
     const connectors: ConnectorListItem[] = []
     if (selectedWallet) {
-      connectors.push(getConnectorListItemForWallet(selectedWallet))
+      connectors.unshift(getConnectorListItemForWallet(selectedWallet))
     }
-
     connectors.push(
       ...SELECTABLE_WALLETS.filter((wallet) => wallet !== selectedWallet).map(getConnectorListItemForWallet),
     )

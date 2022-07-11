@@ -2,8 +2,8 @@ import { Web3ReactProvider } from '@web3-react/core'
 import { Connector } from '@web3-react/types'
 import { injected, network, Wallet } from '../hooks/useConnectors'
 import React, { ReactNode, useEffect } from 'react'
-import { useLocalStorage } from 'usehooks-ts'
 import { useConnectors, getConnectorForWallet } from '../hooks/useConnectors'
+import useLocalStorage from '../hooks/useLocalStorage'
 
 export const WalletContext = React.createContext<WalletContext>({
   setSelectedWallet: () => {},
@@ -18,7 +18,7 @@ interface WalletProviderProps {
 }
 
 export default function WalletProvider({ children }: WalletProviderProps) {
-  const [selectedWallet, setSelectedWallet] = useLocalStorage<Wallet | null>('selectedWallet', null)
+  const [selectedWallet, setSelectedWallet] = useLocalStorage('selectedWallet', null)
 
   const connectors = useConnectors(selectedWallet)
 
