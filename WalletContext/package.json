@@ -1,6 +1,6 @@
 {
   "name": "web3react-v8-ian",
-  "version": "0.1.56",
+  "version": "0.1.57",
   "description": "My first react typescript package",
   "main": "./dist/index.js",
   "type": "module",

@@ -17,13 +17,11 @@ export const WalletContext = React.createContext<WalletContext>({
 type WalletContext = {
   setSelectedWallet: React.Dispatch<React.SetStateAction<Wallet | null>>
   connectors: Web3ReactConnector[]
-  priorityWallet:
-    | {
-        connector: Connector | null
-        hooks: Web3ReactHooks | null
-        wallet: Wallet | null
-      }
-    | undefined
+  priorityWallet: {
+    connector: Connector | null
+    hooks: Web3ReactHooks | null
+    wallet: Wallet | null
+  }
 }
 
 interface WalletProviderProps {
@@ -33,6 +31,7 @@ interface WalletProviderProps {
 export default function WalletProvider({ children }: WalletProviderProps) {
   const [selectedWallet, setSelectedWallet] = useLocalStorage('wallet', null)
   const connectors = useConnectors(selectedWallet)
+  const priorityWallet = connectors[0]
   const sortedConnectors = connectors.sort((a, b) => {
     if (a.wallet > b.wallet) {
       return -1
@@ -40,7 +39,6 @@ export default function WalletProvider({ children }: WalletProviderProps) {
       return 0
     }
   })
-  const priorityWallet = sortedConnectors.find((c) => c.wallet === selectedWallet)
 
   const connect = async (connector: Connector) => {
     try {

@@ -6,11 +6,10 @@ import { Connector } from '@web3-react/types'
 
 const Home: NextPage = () => {
   const { setSelectedWallet, connectors } = useWallets()
-  const a = useActiveWeb3React()
+  const { hooks, wallet } = useActiveWeb3React()
 
-  const account = a?.hooks?.useAccount()
-  const active = a?.hooks?.useIsActive()
-  const wallet = a?.wallet
+  const account = hooks?.useAccount()
+  const active = hooks?.useIsActive()
 
   const tryActivation = useCallback(async (connector: Connector, wallet: any) => {
     try {
