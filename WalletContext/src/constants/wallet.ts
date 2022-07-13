@@ -3,21 +3,37 @@ import { Connector } from '@web3-react/types'
 import INJECTED_ICON_URL from '../assets/images/arrow-right.svg'
 import METAMASK_ICON_URL from '../assets/images/metamask.png'
 import WALLETCONNECT_ICON_URL from '../assets/images/walletConnectIcon.svg'
-import { injected, Wallet, walletConnect } from '../connectors'
+import { injected, walletConnect } from '../connectors'
+import { Wallet } from '../context/WalletProvider'
 
 interface WalletInfo {
   connector?: Connector
   wallet?: Wallet
   name: string
-  iconURL: string
-  description: string
-  href: string | null
-  color: string
+  iconURL?: string
+  description?: string
+  href?: string | null
+  color?: string
   primary?: true
   mobile?: true
   mobileOnly?: true
 }
 
+export const WALLETS: WalletInfo[] = [
+  {
+    connector: injected,
+    wallet: Wallet.INJECTED,
+    name: 'MetaMask',
+    description: 'Easy-to-use browser extension.',
+  },
+  {
+    connector: walletConnect,
+    wallet: Wallet.WALLET_CONNECT,
+    name: 'WalletConnect',
+    description: 'Connect to Trust Wallet, Rainbow Wallet and more...',
+    mobile: true,
+  },
+]
 export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
   INJECTED: {
     connector: injected,

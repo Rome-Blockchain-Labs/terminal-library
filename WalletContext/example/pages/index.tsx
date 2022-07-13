@@ -1,48 +1,52 @@
 import type { NextPage } from 'next'
-import { useCallback, useEffect } from 'react'
-import { useActiveWeb3React, useWallet, SUPPORTED_WALLETS } from 'web3react-v8-ian'
+import { useCallback } from 'react'
+import {
+  useActiveWeb3React,
+  useWallet,
+  MetamaskConnector,
+  WalletConnectConnector,
+  WALLETS,
+  getWalletForConnector,
+} from 'web3react-v8-ian'
 import styles from '../styles/Home.module.css'
 
 const Home: NextPage = () => {
-  const { connector, account, isActive } = useActiveWeb3React()
+  const { wallet, hooks } = MetamaskConnector
+  const account = hooks.useAccount()
+  console.log(account)
   const { setSelectedWallet } = useWallet()
+
   const tryActivation = useCallback(async (connector: any) => {
-    console.log(connector.provider)
-    // const wallet = getWalletForConnector(connector)
-
-    // log selected wallet
-
+    const wallet = getWalletForConnector(connector)
     try {
-      await connector.activate()
-      setSelectedWallet('INJECTED' as any)
+      console.log('trying to cconnct', wallet, connector.activate)
+      await connector.activate().catch((err: any) => {
+        console.log(err)
+      })
+      setSelectedWallet(wallet as any)
     } catch (error) {
       console.debug(`web3-react connection error: ${error}`)
     }
   }, [])
-  const getOptions = () => {
-    return Object.keys(SUPPORTED_WALLETS).map((key) => {
-      const option = SUPPORTED_WALLETS[key]
-      const isActive = option.connector === connector
 
-      const optionProps = {
-        active: isActive,
-        id: `connect-${key}`,
-        link: option.href,
-        header: option.name,
-        color: option.color,
-        key,
-        icon: option.iconURL,
-      }
+  const getOptions = () => {
+    return WALLETS.map((wallet: any) => {
+      // const isActive = wallet.connector === connector
+
       return (
-        <Option
-          {...optionProps}
-          onClick={() => {
-            if (!isActive && !option.href && !!option.connector) {
-              tryActivation(option.connector)
-            }
-          }}
-          subheader={null}
-        />
+        <div key={wallet.name}>
+          {/* <div>{isActive ? 'connected' : 'disconnected'}</div> */}
+          <button onClick={() => tryActivation(wallet.connector)}>{wallet.name}</button>
+        </div>
+        // <Option
+        //   {...optionProps}
+        //   onClick={() => {
+        //     if (!isActive && !option.href && !!option.connector) {
+        //       tryActivation(option.connector, option.name)
+        //     }
+        //   }}
+        //   subheader={null}
+        // />
       )
 
       // check for mobile options
@@ -130,67 +134,11 @@ const Home: NextPage = () => {
   }
   return (
     <div className={styles.container}>
-      <button
-        onClick={() => {
-          SUPPORTED_WALLETS.METAMASK?.connector?.activate(1)
-          setSelectedWallet('INJECTED' as any)
-        }}
-      >
-        adf
-      </button>
-      {account}
+      account:{account}
       {getOptions()}
+      <button onClick={() => wallet.activate()}>metamask</button>
     </div>
   )
 }
 
 export default Home
-
-function Option({
-  link = null,
-  clickable = true,
-  size,
-  onClick,
-  color,
-  header,
-  subheader = null,
-  icon,
-  active = false,
-  id,
-}: {
-  link?: string | null
-  clickable?: boolean
-  size?: number | null
-  onClick?: () => void
-  color: string
-  header: React.ReactNode
-  subheader: React.ReactNode | null
-  icon: string
-  active?: boolean
-  id: string
-}) {
-  const content = (
-    <button id={id} onClick={onClick}>
-      <div>
-        <div color={color}>
-          {active ? (
-            <div>
-              <div>
-                <div />
-              </div>
-            </div>
-          ) : (
-            ''
-          )}
-          {header}
-        </div>
-        {subheader && <div>{subheader}</div>}
-      </div>
-    </button>
-  )
-  if (link) {
-    return <div>{content}</div>
-  }
-
-  return content
-}

@@ -5,15 +5,7 @@ import { Connector } from '@web3-react/types'
 import { WalletConnect } from '@web3-react/walletconnect'
 import { useMemo } from 'react'
 import { INFURA_NETWORK_URLS } from '../constants/infura'
-
-export enum Wallet {
-  INJECTED = 'INJECTED',
-  COINBASE_WALLET = 'COINBASE_WALLET',
-  WALLET_CONNECT = 'WALLET_CONNECT',
-  FORTMATIC = 'FORTMATIC',
-  NETWORK = 'NETWORK',
-  GNOSIS_SAFE = 'GNOSIS_SAFE',
-}
+import { Wallet } from '../context/WalletProvider'
 
 export const BACKFILLABLE_WALLETS = [Wallet.COINBASE_WALLET, Wallet.WALLET_CONNECT, Wallet.INJECTED]
 export const SELECTABLE_WALLETS = [...BACKFILLABLE_WALLETS, Wallet.FORTMATIC]

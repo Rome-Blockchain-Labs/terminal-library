@@ -6,7 +6,7 @@ import { WalletConnect } from '@web3-react/walletconnect'
 import { useMemo } from 'react'
 import { INFURA_NETWORK_URLS } from '../constants/infura'
 
-export enum Wallet {
+enum Wallet {
   INJECTED = 'INJECTED',
   COINBASE_WALLET = 'COINBASE_WALLET',
   WALLET_CONNECT = 'WALLET_CONNECT',
@@ -32,7 +32,7 @@ export function getWalletForConnector(connector: Connector) {
   }
 }
 
-export function getConnectorForWallet(wallet: Wallet) {
+export function getConnectorForWallet(wallet: Wallet | null) {
   switch (wallet) {
     case Wallet.INJECTED:
       return injected
@@ -43,7 +43,7 @@ export function getConnectorForWallet(wallet: Wallet) {
   }
 }
 
-function getHooksForWallet(wallet: Wallet) {
+export function getHooksForWallet(wallet: Wallet | null) {
   switch (wallet) {
     case Wallet.INJECTED:
       return injectedHooks
