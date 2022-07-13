@@ -15,7 +15,7 @@ enum Wallet {
   GNOSIS_SAFE = 'GNOSIS_SAFE',
 }
 
-export const SELECTABLE_WALLETS = [Wallet.COINBASE_WALLET, Wallet.WALLET_CONNECT, Wallet.INJECTED]
+export const SELECTABLE_WALLETS = [Wallet.WALLET_CONNECT, Wallet.INJECTED]
 
 function onError(error: Error) {
   console.debug(`web3-react error: ${error}`)
@@ -27,8 +27,10 @@ export function getWalletForConnector(connector: Connector) {
       return Wallet.INJECTED
     case walletConnect:
       return Wallet.WALLET_CONNECT
-    default:
+    case network:
       return Wallet.NETWORK
+    default:
+      return undefined
   }
 }
 
@@ -38,8 +40,10 @@ export function getConnectorForWallet(wallet: Wallet | null) {
       return injected
     case Wallet.WALLET_CONNECT:
       return walletConnect
-    default:
+    case Wallet.NETWORK:
       return network
+    default:
+      return undefined
   }
 }
 
@@ -49,8 +53,10 @@ export function getHooksForWallet(wallet: Wallet | null) {
       return injectedHooks
     case Wallet.WALLET_CONNECT:
       return walletConnectHooks
-    default:
+    case Wallet.NETWORK:
       return networkHooks
+    default:
+      return undefined
   }
 }
 
@@ -78,21 +84,31 @@ interface ConnectorListItem {
 }
 
 function getConnectorListItemForWallet(wallet: Wallet) {
+  const connector = getConnectorForWallet(wallet)
+  const hooks = getHooksForWallet(wallet)
+
+  if (!connector || !hooks) return
   return {
-    connector: getConnectorForWallet(wallet),
-    hooks: getHooksForWallet(wallet),
+    connector,
+    hooks,
   }
 }
 export function useConnectors(selectedWallet: Wallet | null) {
   return useMemo(() => {
     const connectors: ConnectorListItem[] = []
     if (selectedWallet) {
-      connectors.push(getConnectorListItemForWallet(selectedWallet))
+      const wallet = getConnectorListItemForWallet(selectedWallet)
+      if (wallet) {
+        connectors.push(wallet)
+      }
     }
+    const inactiveWallets = SELECTABLE_WALLETS.filter((wallet) => wallet !== selectedWallet)
+    const connector2 = inactiveWallets.map(getConnectorListItemForWallet)
+    const c = connector2.filter((e) => e)
+    c.forEach((connector) => {
+      if (connector) connectors.push(connector)
+    })
 
-    connectors.push(
-      ...SELECTABLE_WALLETS.filter((wallet) => wallet !== selectedWallet).map(getConnectorListItemForWallet),
-    )
     connectors.push({ connector: network, hooks: networkHooks })
     const web3ReactConnectors: [Connector, Web3ReactHooks][] = connectors.map(({ connector, hooks }) => [
       connector,

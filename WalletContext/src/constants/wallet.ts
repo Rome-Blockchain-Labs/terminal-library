@@ -3,8 +3,8 @@ import { Connector } from '@web3-react/types'
 import INJECTED_ICON_URL from '../assets/images/arrow-right.svg'
 import METAMASK_ICON_URL from '../assets/images/metamask.png'
 import WALLETCONNECT_ICON_URL from '../assets/images/walletConnectIcon.svg'
-import { injected, walletConnect } from '../connectors'
 import { Wallet } from '../context/WalletProvider'
+import { injected, walletConnect } from '../hooks/useConnectors'
 
 interface WalletInfo {
   connector?: Connector
