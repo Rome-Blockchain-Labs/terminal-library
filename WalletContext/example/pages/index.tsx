@@ -1,23 +1,21 @@
 import type { NextPage } from 'next'
-import { useCallback } from 'react'
-import { useWallet, MetamaskConnector, WalletConnectConnector, WALLETS, getWalletForConnector } from 'web3react-v8-ian'
+import { useCallback, useEffect, useState } from 'react'
+import { useWallets, useActiveWeb3React } from 'web3react-v8-ian'
 import styles from '../styles/Home.module.css'
+import { Connector } from '@web3-react/types'
 
 const Home: NextPage = () => {
-  const { setSelectedWallet, connectors, priorityWallet } = useWallet()
-  console.log(connectors)
-  console.log('priorty', priorityWallet)
-  const metamaskHooks = connectors[1][1]
-  const mb = metamaskHooks.useAccount()
-  console.log(mb)
-  const tryActivation = useCallback(async (connector: any) => {
-    const wallet = getWalletForConnector(connector)
-    console.log(wallet)
+  const { setSelectedWallet, connectors } = useWallets()
+  const a = useActiveWeb3React()
+
+  const account = a?.hooks?.useAccount()
+  const active = a?.hooks?.useIsActive()
+  const wallet = a?.wallet
+
+  const tryActivation = useCallback(async (connector: Connector, wallet: any) => {
     try {
-      await connector.activate().catch((err: any) => {
-        console.log(err)
-      })
-      setSelectedWallet(wallet as any)
+      await connector.activate()
+      setSelectedWallet(wallet)
     } catch (error) {
       console.debug(`web3-react connection error: ${error}`)
     }
@@ -25,17 +23,24 @@ const Home: NextPage = () => {
 
   return (
     <div className={styles.container}>
+      <div>Active Account</div>
+      <div>{wallet}</div>
+      <div>{account}</div>
+      <div>{active}</div>
+
       {connectors
-        .filter((connec) => getWalletForConnector(connec[0]) !== 'NETWORK')
-        .map((connec) => {
+        .filter((connector) => connector.wallet !== 'NETWORK')
+        .map((connector, idx) => {
           return (
-            <div>
+            <div key={idx}>
               <button
                 onClick={() => {
-                  tryActivation(connec[0])
+                  if (connector) {
+                    tryActivation(connector.connector, connector.wallet)
+                  }
                 }}
               >
-                activate
+                {connector.wallet}
               </button>
             </div>
           )

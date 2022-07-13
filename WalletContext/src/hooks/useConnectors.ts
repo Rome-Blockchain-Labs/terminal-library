@@ -6,13 +6,18 @@ import { WalletConnect } from '@web3-react/walletconnect'
 import { useMemo } from 'react'
 import { INFURA_NETWORK_URLS } from '../constants/infura'
 
-enum Wallet {
+export enum Wallet {
   INJECTED = 'INJECTED',
   COINBASE_WALLET = 'COINBASE_WALLET',
   WALLET_CONNECT = 'WALLET_CONNECT',
   FORTMATIC = 'FORTMATIC',
   NETWORK = 'NETWORK',
   GNOSIS_SAFE = 'GNOSIS_SAFE',
+}
+export interface Web3ReactConnector {
+  connector: Connector
+  hooks: Web3ReactHooks
+  wallet: Wallet
 }
 
 export const SELECTABLE_WALLETS = [Wallet.WALLET_CONNECT, Wallet.INJECTED]
@@ -81,6 +86,7 @@ export const [walletConnect, walletConnectHooks] = initializeConnector<WalletCon
 interface ConnectorListItem {
   connector: Connector
   hooks: Web3ReactHooks
+  wallet: Wallet
 }
 
 function getConnectorListItemForWallet(wallet: Wallet) {
@@ -91,6 +97,7 @@ function getConnectorListItemForWallet(wallet: Wallet) {
   return {
     connector,
     hooks,
+    wallet,
   }
 }
 export function useConnectors(selectedWallet: Wallet | null) {
@@ -103,17 +110,19 @@ export function useConnectors(selectedWallet: Wallet | null) {
       }
     }
     const inactiveWallets = SELECTABLE_WALLETS.filter((wallet) => wallet !== selectedWallet)
-    const connector2 = inactiveWallets.map(getConnectorListItemForWallet)
-    const c = connector2.filter((e) => e)
-    c.forEach((connector) => {
+    const connectorList = inactiveWallets.map(getConnectorListItemForWallet)
+    const validConnectors = connectorList.filter((e) => e)
+
+    validConnectors.forEach((connector) => {
       if (connector) connectors.push(connector)
     })
 
-    connectors.push({ connector: network, hooks: networkHooks })
-    const web3ReactConnectors: [Connector, Web3ReactHooks][] = connectors.map(({ connector, hooks }) => [
+    connectors.push({ connector: network, hooks: networkHooks, wallet: Wallet.NETWORK })
+    const web3ReactConnectors: Web3ReactConnector[] = connectors.map(({ connector, hooks, wallet }) => ({
       connector,
       hooks,
-    ])
+      wallet,
+    }))
     return web3ReactConnectors
   }, [selectedWallet])
 }

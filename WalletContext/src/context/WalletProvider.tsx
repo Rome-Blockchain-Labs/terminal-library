@@ -1,8 +1,8 @@
 import { Connector } from '@web3-react/types'
-import { injected, network, useConnectors } from '../hooks/useConnectors'
-import React, { ReactNode, useEffect, useState } from 'react'
-import { getConnectorForWallet } from '../hooks/useConnectors'
+import { injected, network, useConnectors, Wallet, Web3ReactConnector } from '../hooks/useConnectors'
+import React, { ReactNode, useEffect } from 'react'
 import { Web3ReactHooks } from '@web3-react/core'
+import useLocalStorage from '../hooks/useLocalStorage'
 
 export const WalletContext = React.createContext<WalletContext>({
   setSelectedWallet: () => {},
@@ -10,52 +10,45 @@ export const WalletContext = React.createContext<WalletContext>({
   priorityWallet: {
     connector: null,
     hooks: null,
+    wallet: null,
   },
 })
 
 type WalletContext = {
   setSelectedWallet: React.Dispatch<React.SetStateAction<Wallet | null>>
-  connectors: [Connector, Web3ReactHooks][]
-  priorityWallet: {
-    connector: Connector | null
-    hooks: Web3ReactHooks | null
-  }
+  connectors: Web3ReactConnector[]
+  priorityWallet:
+    | {
+        connector: Connector | null
+        hooks: Web3ReactHooks | null
+        wallet: Wallet | null
+      }
+    | undefined
 }
 
 interface WalletProviderProps {
   children: ReactNode
 }
-export enum Wallet {
-  INJECTED = 'INJECTED',
-  COINBASE_WALLET = 'COINBASE_WALLET',
-  WALLET_CONNECT = 'WALLET_CONNECT',
-  FORTMATIC = 'FORTMATIC',
-  NETWORK = 'NETWORK',
-  GNOSIS_SAFE = 'GNOSIS_SAFE',
-}
 
 export default function WalletProvider({ children }: WalletProviderProps) {
-  const [selectedWallet, setSelectedWallet] = useState<Wallet | null>(null)
+  const [selectedWallet, setSelectedWallet] = useLocalStorage('wallet', null)
   const connectors = useConnectors(selectedWallet)
-  const priorityWallet = { connector: connectors[0][0], hooks: connectors[0][1] }
+  const sortedConnectors = connectors.sort((a, b) => {
+    if (a.wallet > b.wallet) {
+      return -1
+    } else {
+      return 0
+    }
+  })
+  const priorityWallet = sortedConnectors.find((c) => c.wallet === selectedWallet)
 
   const connect = async (connector: Connector) => {
     try {
-      if (connector.connectEagerly) {
-        await connector.connectEagerly()
-      } else {
-        await connector.activate()
-      }
+      await connector.activate()
     } catch (error) {
       console.debug(`web3-react eager connection error: ${error}`)
     }
   }
-
-  useEffect(() => {
-    if (selectedWallet) {
-      window.localStorage.setItem('wallet', selectedWallet)
-    }
-  }, [selectedWallet])
 
   useEffect(() => {
     const load = async () => {
@@ -69,12 +62,11 @@ export default function WalletProvider({ children }: WalletProviderProps) {
         injected.activate()
       }
     }
-    console.log(network)
 
     connect(network)
     load()
     if (selectedWallet) {
-      const connector = getConnectorForWallet(selectedWallet)
+      const connector = connectors.find((c) => c.wallet === selectedWallet)?.connector
       if (connector) {
         connect(connector)
       }
@@ -87,7 +79,7 @@ export default function WalletProvider({ children }: WalletProviderProps) {
     <WalletContext.Provider
       value={{
         setSelectedWallet,
-        connectors,
+        connectors: sortedConnectors,
         priorityWallet,
       }}
     >

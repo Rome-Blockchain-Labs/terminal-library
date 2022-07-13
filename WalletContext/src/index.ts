@@ -1,22 +1,5 @@
 import WalletProvider from './context/WalletProvider'
-import { useWallet } from './hooks/useWalletContext'
-import { WALLETS } from './constants/wallet'
-import { getName } from './utils/getName'
-import {
-  getWalletForConnector,
-  injected,
-  injectedHooks,
-  walletConnect,
-  walletConnectHooks,
-} from './hooks/useConnectors'
+import { useWallets } from './hooks/useWalletContext'
+import { useActiveWeb3React } from './hooks/useActiveWeb3React'
 
-const MetamaskConnector = {
-  wallet: injected,
-  hooks: injectedHooks,
-}
-const WalletConnectConnector = {
-  wallet: walletConnect,
-  hooks: walletConnectHooks,
-}
-
-export { WalletProvider, useWallet, getWalletForConnector, getName, WALLETS, MetamaskConnector, WalletConnectConnector }
+export { WalletProvider, useWallets, useActiveWeb3React }
