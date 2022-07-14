@@ -1,13 +1,13 @@
 {
-  "name": "web3react-v8-ian",
-  "version": "0.1.59",
-  "description": "My first react typescript package",
+  "name": "@romeblockchain/wallet",
+  "version": "0.1.0",
+  "description": "Implmentation of web3react-v8 for RT widgets",
   "main": "./dist/index.js",
   "type": "module",
   "types": "./dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gapon2401/my-react-typescript-package.git"
+    "url": "git+https://github.com/Rome-Blockchain-Labs/terminal-library.git"
   },
   "scripts": {
     "lint": "eslint \"{**/*,*}.{js,ts,jsx,tsx}\"",
@@ -26,9 +26,9 @@
   "keywords": [
     "react",
     "typescript",
-    "awesome-project"
+    "web3react"
   ],
-  "author": "gapon2401",
+  "author": "iandjx",
   "license": "ISC",
   "dependencies": {
     "@types/ua-parser-js": "^0.7.36",

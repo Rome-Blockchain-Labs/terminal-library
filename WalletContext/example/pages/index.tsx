@@ -1,8 +1,8 @@
 import type { NextPage } from 'next'
 import { useCallback, useEffect, useState } from 'react'
-import { useWallets, useActiveWeb3React, SUPPORTED_WALLETS } from 'web3react-v8-ian'
 import styles from '../styles/Home.module.css'
 import { Connector } from '@web3-react/types'
+import { useWallets, useActiveWeb3React, SUPPORTED_WALLETS } from '@romeblockchain/wallet'
 
 const Home: NextPage = () => {
   const { setSelectedWallet } = useWallets()
