@@ -11,14 +11,14 @@ specifiers:
   react: 18.2.0
   react-dom: 18.2.0
   typescript: 4.7.4
-  web3react-v8-ian: 0.1.57
+  web3react-v8-ian: 0.1.59
 
 dependencies:
   '@walletconnect/ethereum-provider': 1.7.8
   next: 12.2.2_biqbaboplfbrettd7655fr4n2y
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
-  web3react-v8-ian: 0.1.57_qtbnez4q7bzoc4eqybg3efzzxe
+  web3react-v8-ian: 0.1.59_qtbnez4q7bzoc4eqybg3efzzxe
 
 devDependencies:
   '@types/node': 18.0.3
@@ -3169,8 +3169,8 @@ packages:
     resolution: {integrity: sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA==}
     dev: true
 
-  /web3react-v8-ian/0.1.57_qtbnez4q7bzoc4eqybg3efzzxe:
-    resolution: {integrity: sha512-jTY/zYHfavrFhDkZ1FiC+KXjJrYL6ZmpZ3IZIUYtUlQb7AwYBkt9e1krqUaWJG+PKUzNsqTVtoDHv/wNo/mBFw==}
+  /web3react-v8-ian/0.1.59_qtbnez4q7bzoc4eqybg3efzzxe:
+    resolution: {integrity: sha512-NBvBT4ieMK7MRwnlQIfnHKQnpzWkP9iTv5qKndfkrYp5DsXrFERdWl5aFDD8FQwtXLDFloLtC5herWWuEmIR0w==}
     peerDependencies:
       react: '>=16'
     dependencies:

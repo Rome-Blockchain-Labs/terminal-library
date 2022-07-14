@@ -1,15 +1,18 @@
 import type { NextPage } from 'next'
 import { useCallback, useEffect, useState } from 'react'
-import { useWallets, useActiveWeb3React } from 'web3react-v8-ian'
+import { useWallets, useActiveWeb3React, SUPPORTED_WALLETS } from 'web3react-v8-ian'
 import styles from '../styles/Home.module.css'
 import { Connector } from '@web3-react/types'
 
 const Home: NextPage = () => {
-  const { setSelectedWallet, connectors } = useWallets()
+  const { setSelectedWallet } = useWallets()
   const { hooks, wallet } = useActiveWeb3React()
 
   const account = hooks?.useAccount()
   const active = hooks?.useIsActive()
+
+  const [web3Account, setWeb3Account] = useState<string>()
+  const [web3Wallet, setWeb3Wallet] = useState<string>()
 
   const tryActivation = useCallback(async (connector: Connector, wallet: any) => {
     try {
@@ -20,30 +23,39 @@ const Home: NextPage = () => {
     }
   }, [])
 
+  useEffect(() => {
+    if (account) {
+      setWeb3Account(account)
+    }
+
+    if (wallet) {
+      setWeb3Wallet(wallet)
+    }
+  }, [account, wallet])
+
   return (
     <div className={styles.container}>
       <div>Active Account</div>
-      <div>{wallet}</div>
-      <div>{account}</div>
-      <div>{active}</div>
+      <div>{web3Wallet}</div>
+      <div>{web3Account}</div>
+      <div>{active ? 'connected' : 'disconnected'}</div>
 
-      {connectors
-        .filter((connector) => connector.wallet !== 'NETWORK')
-        .map((connector, idx) => {
-          return (
-            <div key={idx}>
-              <button
-                onClick={() => {
-                  if (connector) {
-                    tryActivation(connector.connector, connector.wallet)
-                  }
-                }}
-              >
-                {connector.wallet}
-              </button>
-            </div>
-          )
-        })}
+      {Object.keys(SUPPORTED_WALLETS).map((key) => {
+        const option = SUPPORTED_WALLETS[key]
+        return (
+          <div key={key}>
+            <button
+              onClick={() => {
+                if (option.connector) {
+                  tryActivation(option.connector, option.wallet)
+                }
+              }}
+            >
+              {option.name}
+            </button>
+          </div>
+        )
+      })}
     </div>
   )
 }

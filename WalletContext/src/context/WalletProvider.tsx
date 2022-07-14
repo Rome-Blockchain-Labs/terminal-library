@@ -32,13 +32,6 @@ export default function WalletProvider({ children }: WalletProviderProps) {
   const [selectedWallet, setSelectedWallet] = useLocalStorage('wallet', null)
   const connectors = useConnectors(selectedWallet)
   const priorityWallet = connectors[0]
-  const sortedConnectors = connectors.sort((a, b) => {
-    if (a.wallet > b.wallet) {
-      return -1
-    } else {
-      return 0
-    }
-  })
 
   const connect = async (connector: Connector) => {
     try {
@@ -77,7 +70,7 @@ export default function WalletProvider({ children }: WalletProviderProps) {
     <WalletContext.Provider
       value={{
         setSelectedWallet,
-        connectors: sortedConnectors,
+        connectors,
         priorityWallet,
       }}
     >
