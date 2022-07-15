@@ -3,7 +3,7 @@ import { MetaMask } from '@web3-react/metamask'
 import { Network } from '@web3-react/network'
 import { WalletConnect } from '@web3-react/walletconnect'
 
-import { SUPPORTED_WALLETS, useWeb3React, Wallet, useWallets } from 'web3react-a'
+import { SUPPORTED_WALLETS, useWeb3React , useWallets } from "@romeblockchain/wallet""
 
 function App() {
   const { connector, account } = useWeb3React()

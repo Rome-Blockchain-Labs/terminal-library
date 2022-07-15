@@ -10,7 +10,7 @@
     "react-dom": "^17.0.2",
     "react-scripts": "^4.0.3",
     "web-vitals": "^2.1.4",
-    "web3react-a": "^0.1.101"
+    "@romeblockchain/wallet": "0.1.1"
   },
   "scripts": {
     "start": "react-scripts start",
