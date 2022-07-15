@@ -1,80 +1,74 @@
-import { Connector } from '@web3-react/types'
-import { injected, network, useConnectors, Wallet, Web3ReactConnector } from '../hooks/useConnectors'
-import React, { ReactNode, useEffect } from 'react'
-import { Web3ReactHooks } from '@web3-react/core'
+import { Web3ReactHooks, Web3ReactProvider } from '@web3-react/core'
+import { MetaMask } from '@web3-react/metamask'
+import { Network } from '@web3-react/network'
+import { WalletConnect } from '@web3-react/walletconnect'
+import React, { useMemo, useEffect } from 'react'
+import { Wallet } from '..'
+import { hooks as metaMaskHooks, metaMask } from '../connectors/metaMask'
+import { hooks as networkHooks, network } from '../connectors/network'
+import { hooks as walletConnectHooks, walletConnect } from '../connectors/walletConnect'
 import useLocalStorage from '../hooks/useLocalStorage'
+import { WalletInfo } from '../types'
 
-export const WalletContext = React.createContext<WalletContext>({
-  setSelectedWallet: () => {},
-  connectors: [],
-  priorityWallet: {
-    connector: null,
-    hooks: null,
-    wallet: null,
+export const initialConnectors: [MetaMask | WalletConnect | Network, Web3ReactHooks][] = [
+  [metaMask, metaMaskHooks],
+  [walletConnect, walletConnectHooks],
+  [network, networkHooks],
+]
+
+export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
+  METAMASK: {
+    connector: metaMask,
+    hooks: metaMaskHooks,
+    wallet: Wallet.METAMASK,
+    name: 'MetaMask',
   },
+  WALLET_CONNECT: {
+    connector: walletConnect,
+    hooks: walletConnectHooks,
+    wallet: Wallet.WALLET_CONNECT,
+    name: 'WalletConnect',
+    mobile: true,
+  },
+}
+interface IWalletContext {
+  setSelectedWallet: (Wallet: Wallet) => void
+}
+
+export const WalletContext = React.createContext<IWalletContext>({
+  setSelectedWallet: () => {},
 })
 
-type WalletContext = {
-  setSelectedWallet: React.Dispatch<React.SetStateAction<Wallet | null>>
-  connectors: Web3ReactConnector[]
-  priorityWallet: {
-    connector: Connector | null
-    hooks: Web3ReactHooks | null
-    wallet: Wallet | null
-  }
-}
-
-interface WalletProviderProps {
-  children: ReactNode
-}
-
-export default function WalletProvider({ children }: WalletProviderProps) {
+export default function ProviderExample({ children }: any) {
   const [selectedWallet, setSelectedWallet] = useLocalStorage('wallet', null)
-  const connectors = useConnectors(selectedWallet)
-  const priorityWallet = connectors[0]
+  const connectors = useMemo(() => {
+    if (!selectedWallet) return initialConnectors
 
-  const connect = async (connector: Connector) => {
-    try {
-      await connector.activate()
-    } catch (error) {
-      console.debug(`web3-react eager connection error: ${error}`)
+    const connectorList: [MetaMask | WalletConnect | Network, Web3ReactHooks][] = []
+    if (selectedWallet) {
+      const wallet = SUPPORTED_WALLETS[selectedWallet]
+      connectorList.push([wallet.connector, wallet.hooks])
     }
-  }
+    Object.keys(SUPPORTED_WALLETS)
+      .filter((wallet) => wallet !== selectedWallet)
+      .forEach((ele) => {
+        const wallet = SUPPORTED_WALLETS[ele]
+        connectorList.push([wallet.connector, wallet.hooks])
+      })
+    connectorList.push([network, networkHooks])
+    return connectorList
+  }, [selectedWallet])
 
   useEffect(() => {
-    const load = async () => {
-      const UAParser = (await import('ua-parser-js')).default
-
-      const parser = new UAParser(window.navigator.userAgent)
-      const { type } = parser.getDevice()
-      const isMobile = type === 'mobile' || type === 'tablet'
-      const isMetaMask = !!window.ethereum?.isMetaMask
-      if (isMobile && isMetaMask) {
-        injected.activate()
-      }
-    }
-
-    connect(network)
-    load()
+    network.activate()
     if (selectedWallet) {
-      const connector = connectors.find((c) => c.wallet === selectedWallet)?.connector
-      if (connector) {
-        connect(connector)
-      }
+      SUPPORTED_WALLETS[selectedWallet].connector.activate()
     }
-    // The dependency list is empty so this is only run once on mount
-    // eslint-disable-line react-hooks/exhaustive-deps
   }, [])
 
   return (
-    <WalletContext.Provider
-      value={{
-        setSelectedWallet,
-        connectors,
-        priorityWallet,
-      }}
-    >
-      {children}
+    <WalletContext.Provider value={{ setSelectedWallet }}>
+      <Web3ReactProvider connectors={connectors}>{children}</Web3ReactProvider>
     </WalletContext.Provider>
   )
 }

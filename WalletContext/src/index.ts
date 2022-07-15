@@ -1,6 +1,6 @@
-import WalletProvider from './context/WalletProvider'
-import { useWallets } from './hooks/useWalletContext'
-import { useActiveWeb3React } from './hooks/useActiveWeb3React'
-import { SUPPORTED_WALLETS } from './constants/wallet'
+import WalletProvider, { SUPPORTED_WALLETS } from './context/WalletProvider'
+import { useWeb3React } from '@web3-react/core'
+import { useWallets } from './hooks/useWallets'
+import { Wallet } from './types'
 
-export { WalletProvider, useWallets, useActiveWeb3React, SUPPORTED_WALLETS }
+export { WalletProvider, SUPPORTED_WALLETS, useWeb3React, Wallet, useWallets }

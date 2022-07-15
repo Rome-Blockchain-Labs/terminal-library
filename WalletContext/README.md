@@ -8,9 +8,9 @@ The package exposes the following
 
 1. WalletProvider - React Context Provider for the connectors
 2. useWallets - Hook that exposes setSelectedWallet function that updates the priority wallet
-3. useActiveWeb3React - Hook that exposes the connector and hooks for the priority wallet
+3. useWeb3React - Hook that exposes the connector and hooks for the priority wallet
 4. SUPPORTED_WALLETS - An object map that contains all supported wallets by the package.
 
 ## Quick Start
 
-1. Check /example folder for Next.JS example
+1. Check /example folder for React example
