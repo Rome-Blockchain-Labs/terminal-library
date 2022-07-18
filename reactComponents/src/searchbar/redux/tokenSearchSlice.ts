@@ -8,17 +8,12 @@ import config from '../config';
 
 const LOAD_LIMIT = Number(config.LOAD_LIMIT || 10);
 
-// 
-const isDuplicatedExchange = (exchange, networks, networkMap) => {
-  let isDuplicated = false;
-
-  networks.forEach((network) => {
+// Check if duplicated exchange exists in selected network
+const isExchangeDuplicated = (exchange, networks, networkMap) => {
+  const isDuplicated = networks.some((network) => {
     if (networkMap[network.id]) {
       const duplicated = network.exchanges.find(ex => ex === exchange);
-      if (duplicated) {
-        isDuplicated = true;
-        return;
-      }
+      if (duplicated) return true;
     }
   });
 
@@ -200,7 +195,7 @@ export const tokenSearchSlice = createSlice({
         action.payload.networks.forEach((network) => {
           if (network.id === action.payload.networkName) {
             network.exchanges.forEach((exchange) => {
-              const isDuplicated = isDuplicatedExchange(exchange, action.payload.networks, state.networkMap);
+              const isDuplicated = isExchangeDuplicated(exchange, action.payload.networks, state.networkMap);
               if (state.exchangeMap[exchange] && !isDuplicated) state.exchangeMap[exchange] = false;
             });
           } else return false;
