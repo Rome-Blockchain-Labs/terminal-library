@@ -2,6 +2,10 @@
 
 > A react component which fetches token pairs and shows information from various network and its exchanges
 
+Current version is 0.3.20
+| version | description |
+- | 0.3.20| Allow duplicated exchanges in networks
+
 ## Prerequisites
 
 This project requires NodeJS (version 16.13 or later) and NPM.
