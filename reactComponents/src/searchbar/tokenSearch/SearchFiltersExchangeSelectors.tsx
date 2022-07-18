@@ -1,11 +1,12 @@
-import React, { useContext } from 'react';
-import { omitBy } from "lodash"
+import React, { useContext, useMemo } from 'react';
+import { omitBy, uniq, uniqBy } from "lodash"
 import { useDispatch, useSelector } from 'react-redux';
 import { setExchangeMap, setExchangeMapAll } from "../redux/tokenSearchSlice"
 import { Chip } from "./Chip"
 import Button from "./Button";
 import { RootState } from "../redux/store";
 import TokenSearchContext from '../Context/TokenSearch';
+import { ExchangeName, ExchangeType } from '../../types';
 
 export const FilterExchangeAll = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -16,14 +17,19 @@ export const FilterExchangeAll = (): JSX.Element => {
   const renderProps = useContext(TokenSearchContext);
   const { networks } = renderProps;
 
-  const exchangeNames: any = [];
-  networks?.forEach((network) => {
-    if (selectedNetworks.includes(network.id)) {
-      network.exchanges?.forEach((exchange) => {
-        exchangeNames.push(exchange.name);
-      });
-    }
-  });
+  const exchangeNames = useMemo(() => {
+    const uniqExchangeNames: ExchangeName[] = [];
+
+    networks?.forEach((network) => {
+      if (selectedNetworks.includes(network.id)) {
+        network.exchanges?.forEach((exchange) => {
+          uniqExchangeNames.push(exchange.name);
+        });
+      }
+    });
+
+    return uniq(uniqExchangeNames);
+  }, [networks, selectedNetworks]);
   
   // RENDERING.
   return (
@@ -40,16 +46,20 @@ export const FilterExchangeSelectors = (): JSX.Element => {
   const { networkMap, exchangeMap } = useSelector((state: RootState) => state);
   const renderProps = useContext(TokenSearchContext);
   const selectedNetworks = Object.keys(omitBy(networkMap, (b) => !b));
-  const exchanges: any = [];
-
-  renderProps.networks?.forEach((network) => {
-    if (selectedNetworks.includes(network.id)) {
-      if (network.exchanges?.length) exchanges.push(...network.exchanges);
-    }
-  });
+  
+  const exchanges = useMemo(() => {
+    const uniqExchanges: ExchangeType[] = [];
+    renderProps.networks?.forEach((network) => {
+      if (selectedNetworks.includes(network.id)) {
+        if (network.exchanges?.length) uniqExchanges.push(...network.exchanges);
+      }
+    });
+  
+    return uniqBy(uniqExchanges, 'name');
+  }, [renderProps.networks, selectedNetworks]);  
 
   // Function generating the HTML element of the network.
-  const exchangeElement = (exchange) => {
+  const exchangeElement = (exchange: ExchangeType) => {
     // RENDERING.
     return (
       <Chip
@@ -71,5 +81,9 @@ export const FilterExchangeSelectors = (): JSX.Element => {
   };
 
   // RENDERING.
-  return exchanges.map((exchange) => exchangeElement(exchange));
+  return (
+    <>
+      {exchanges.map((exchange) => exchangeElement(exchange))}
+    </>
+  )
 };

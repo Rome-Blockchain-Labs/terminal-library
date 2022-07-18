@@ -8,6 +8,18 @@ import config from '../config';
 
 const LOAD_LIMIT = Number(config.LOAD_LIMIT || 10);
 
+// Check if duplicated exchange exists in selected network
+const isExchangeDuplicated = (exchange, networks, networkMap) => {
+  const isDuplicated = networks.some((network) => {
+    if (networkMap[network.id]) {
+      const duplicated = network.exchanges.find(ex => ex === exchange);
+      if (duplicated) return true;
+    }
+  });
+
+  return isDuplicated;
+}
+
 // Function that handles the "All" values of both the network and the exchange.
 // Consider that "no value" equates "All".
 const allValueHandler = (networkMap, exchangeMap, networks) => {
@@ -33,7 +45,7 @@ const allValueHandler = (networkMap, exchangeMap, networks) => {
         });
       }
     });
-    returnedExchangeMap = exchanges;
+    returnedExchangeMap = uniq(exchanges);
   }  
 
   // Returns the processed values of "networkMap" and "exchangeMap".
@@ -182,8 +194,9 @@ export const tokenSearchSlice = createSlice({
       if (!action.payload.checked) {
         action.payload.networks.forEach((network) => {
           if (network.id === action.payload.networkName) {
-            network.exchanges.forEach((exhange) => {
-              if (state.exchangeMap[exhange]) state.exchangeMap[exhange] = false;
+            network.exchanges.forEach((exchange) => {
+              const isDuplicated = isExchangeDuplicated(exchange, action.payload.networks, state.networkMap);
+              if (state.exchangeMap[exchange] && !isDuplicated) state.exchangeMap[exchange] = false;
             });
           } else return false;
         });

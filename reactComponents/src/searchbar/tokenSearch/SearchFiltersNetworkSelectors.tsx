@@ -6,6 +6,7 @@ import { Chip } from "./Chip"
 import Button from "./Button"
 import { RootState } from "../redux/store";
 import TokenSearchContext from '../Context/TokenSearch';
+import { NetworkType } from '../../types';
 
 export const FilterNetworkAll = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -30,8 +31,8 @@ export const FilterNetworkAll = (): JSX.Element => {
 
 export const FilterNetworkSelectors = (): JSX.Element => {
   const renderProps = useContext(TokenSearchContext);
-  const networks: any = [...renderProps.networks];
-  const networkItems: any = useMemo(
+  const networks: NetworkType[] = [...renderProps.networks];
+  const networkItems = useMemo(
     () =>
       networks.map((network) => {
         return { id: network.id, exchanges: network.exchanges.map((exhange) => exhange.name) };
@@ -65,5 +66,9 @@ export const FilterNetworkSelectors = (): JSX.Element => {
   };
 
   // RENDERING.
-  return networks.map((network) => networkElement(network));
+  return (
+    <>
+      {networks.map((network) => networkElement(network))}
+    </>
+  )
 };
