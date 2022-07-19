@@ -107,3 +107,4 @@ typings/
 .idea
 /lib
 /WalletContext/dist
+WalletContext/pnpm-lock.yaml
