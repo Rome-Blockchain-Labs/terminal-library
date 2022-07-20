@@ -2,9 +2,9 @@
 
 > A react component which fetches token pairs and shows information from various network and its exchanges
 
-Current version is 0.3.20
+Current version is 0.3.21
 | version | description |
-- | 0.3.20| Allow duplicated exchanges in networks
+- | 0.3.21| Allow duplicated exchanges in networks
 
 ## Prerequisites
 
