@@ -1,33 +1,21 @@
-import React, { useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import 'twin.macro';
-import 'styled-components/macro'
-import { stopSelecting } from '../redux/tokenSearchSlice';
-import SearchInput from "./SearchInput";
-import SearchResult from "./SearchResult";
-import SearchFilters from "./SearchFilters";
-import {RootState} from "../redux/store";
+import React, { FC } from 'react';
+import TokenSearchContext from '../Context/TokenSearch';
+import DesktopSearch from './DesktopSearch';
+import MobileSearch from './MobileSearch';
+import { RenderProps } from '../../types';
+import { useIsMobile } from '../hooks/useReponsive';
 
-
-export const TokenSearch = () => {
-  const dispatch = useDispatch();
-  const { isSelecting, isLoading } = useSelector((state:RootState) => state);
-  const searchRef = useRef<HTMLInputElement>();
-
-  useEffect(() => {
-    window.onmousedown = (e) => {
-      if (!searchRef?.current?.contains(e.target)) {
-        dispatch(stopSelecting());
-      }
-    };
-  }, [dispatch]);
-
+export const TokenSearch: FC<RenderProps> = (renderProps: RenderProps) => {
+  const isMobile = useIsMobile();  
+  
   return (
-    <div tw="m-10" ref={searchRef}>
-      <SearchInput />
-      <SearchFilters />
-      {isSelecting && <SearchResult loading={isLoading} />}
-    </div>
+    <TokenSearchContext.Provider value={renderProps}>
+      {isMobile ? (
+        <MobileSearch {...renderProps} />
+      ) : (
+        <DesktopSearch {...renderProps} />
+      )}
+    </TokenSearchContext.Provider>
   );
 };
 

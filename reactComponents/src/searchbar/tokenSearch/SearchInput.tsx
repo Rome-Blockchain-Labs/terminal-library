@@ -1,90 +1,173 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useContext, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+import {
+  searchTokenPairs,
+  startSelecting,
+  setSearchText,
+  setViewResult,
+  resetSearch,
+} from '../redux/tokenSearchSlice';
+import Button from './Button';
+import SearchIcon from '../icons/search';
+import ResetIcon from '../icons/reset';
 import debounce from 'lodash.debounce';
-import { searchTokenPairs, startSelecting, toggleSelecting, setSearchText } from '../redux/tokenSearchSlice';
-import magnifyingGlass from './icon-search.svg'
-import {RootState} from "../redux/store";
-import {minStringSearch} from "./helpers/config";
+import TokenSearchContext from '../Context/TokenSearch';
+import { RootState } from '../redux/store';
+import config from '../config';
 
-const PairField = styled.div`
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  position: relative;
-  border-color: #067c82;
-  border-style: solid;
-  border-width: 2px;
-  border-radius: 30px;
-  background: #08333c;
-  padding: 11px 15px;
-  font-size: 15px;
-  color: #ffffff;
-  font-family: 'Fira Code', monospace;
+const StyledWrapper = styled.div`
+  ${({ styleOverrides }) => `    
+    position: relative;
+    border-radius: ${styleOverrides?.borderRadius || '4px'};
+    color: ${styleOverrides?.color || '#7A808A'};
+    background: ${styleOverrides?.background || '#474F5C'};  
+    font-family: ${styleOverrides?.fontFamily || "'Montserrat', monospace"};
+    z-index: 2;
 
-  @media only screen and (max-width: 990px) {
-    width: 100%;
-  }
-
-  @media only screen and (max-width: 769px) {
-    width: 100%;
-  }
+    .invalid-error {
+      padding: ${styleOverrides?.padding || '0 14px 5px'};   
+      color: ${styleOverrides?.colorError || '#F52E2E'};  
+      font-size: 0.825rem;
+    }
+  `}
 `;
 
+const StyledInputGroup = styled.div`
+  ${({ styleOverrides }) => ` 
+    position: relative;
+    width: ${styleOverrides?.width || '-webkit-fill-available'};
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  `}
+`;
 const StyledInput = styled.input`
-  width: 100%;
-  border: none;
-  background-color: inherit;
-  color: #ffffff;
-  //width: auto;
+  ${({ styleOverrides }) => `
+    flex: auto;
+    position: relative;
+    outline: 0;
+    border: none;
+    width: ${styleOverrides?.width || '100%'};
+    height: ${styleOverrides?.height || '40px'};    
+    color: ${styleOverrides?.color || '#B7BEC9'};
+    display: ${styleOverrides?.display || 'block'}; 
+    padding: ${styleOverrides?.padding || '0 10px'};    
+    background: transparent;  
+    font-size: ${styleOverrides?.fontSize || '0.875rem'};
+
+    &::placeholder {
+      font-family: 'Montserrat', monospace;
+      color: #7A808A;
+
+    }
+  `}
 `;
 
-const HideOnSmallScreen = styled.img`
-  width: 30px;
-  cursor: pointer;
-  float: right;
-  position: absolute;
-  right: 22px;
-  top: 9px;
-  @media only screen and (max-width: 990px) {
-    display: none;
-  }
+const StyledInputPrefixWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+`
+
+const StyledInputSuffixWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-shrink: 0;
+`
+
+const StyledResetBtn = styled(Button)`
+  background-color: #252C37;
+  margin-right: 5px;
 `;
 
-
-const SearchInput = () => {
+const SearchInput = (): JSX.Element => {
   const dispatch = useDispatch();
-  const { searchText, networkMap, exchangeMap } = useSelector((state:RootState) => state);
-  
+  const renderProps = useContext(TokenSearchContext);
+  const { customSearchInput } = renderProps;
+  const [text, setText] = useState('');
+  const [error, setError] = useState(false);
+  const { searchText, networkMap, exchangeMap } = useSelector((state: RootState) => state);
+
+  const inputRef = useRef<HTMLInputElement>(null);
   // Updates the datasets of the results.
   useEffect(() => {
     // Ensure that the search text fulfills the minimum lenght requirement.
-    if (searchText.length >= minStringSearch) {
-      dispatch(searchTokenPairs(searchText));
+    if (searchText.length >= config.SEARCH_INPUT_LENGTH_MINIMUM) {
+      setError(false);
+      dispatch(searchTokenPairs({ searchString: searchText, networks: renderProps.networks }));
+      dispatch(setSearchText(searchText));
+    } else if (searchText.length > 0) {
+      setError(true);
     }
-  }, [dispatch, searchText, networkMap, exchangeMap]);
 
+    if (Object.keys(networkMap).length > 0 && Object.keys(exchangeMap).length > 0 && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [dispatch, networkMap, exchangeMap, searchText]);
 
-  const onChangeFilter = (event) => {    
-    const value = event.target.value    
-    dispatch(setSearchText(value))
-  }
+  const debounceChangeHandler = useCallback(
+    debounce((value) => dispatch(setSearchText(value)), 350),
+    []
+  );
 
-  const debounceChangeHandler = useCallback( debounce(onChangeFilter, 350), [searchText])  
+  const onChangeFilter = (event) => {
+    const value = event.target.value;
+    setText(value);
+    debounceChangeHandler(value);
+    dispatch(setViewResult(true));
+  };
+
+  const handleClick = () => {
+    text.length > 0 && dispatch(setViewResult(true));
+  };
+
+  const placeholder = customSearchInput?.placeholder
+    ? customSearchInput?.placeholder
+    : 'Search pair by symbol, name, contract or token';
+  const height = customSearchInput?.icon?.height ? customSearchInput?.icon?.height : 14;
+  const width = customSearchInput?.icon?.width ? customSearchInput?.icon?.width : 14;
+
+  const handleReset = (e) => {
+    e.stopPropagation();
+    setText('');
+    dispatch(resetSearch());
+    if (inputRef && inputRef.current) {
+      inputRef.current.focus();
+    }
+  };
+
   // RENDERING.
   return (
-    <PairField onClick={() => dispatch(startSelecting())}>
-      <StyledInput
-        placeholder={'Select a token pair'}
-        autocomplete={'off'}
-        onChange={debounceChangeHandler}
-      />
-      <HideOnSmallScreen
-        alt={''}
-        src={magnifyingGlass}
-        onClick={() => dispatch(toggleSelecting())}
-      />
-    </PairField>
+    <StyledWrapper onClick={() => dispatch(startSelecting())} styleOverrides={customSearchInput?.input}>
+      <StyledInputGroup styleOverrides={customSearchInput?.input}>
+        <StyledInputPrefixWrapper styleOverrides={customSearchInput?.icon}>
+          <SearchIcon height={height} width={width} />
+        </StyledInputPrefixWrapper>
+        <StyledInput
+          ref={inputRef}
+          placeholder={placeholder}
+          autocomplete={'off'}
+          onChange={onChangeFilter}
+          onClick={handleClick}
+          styleOverrides={customSearchInput?.input}
+          value={text}
+        />
+        <StyledInputSuffixWrapper>
+          <StyledResetBtn onClick={handleReset}>
+            <span>Reset Search</span>
+            <ResetIcon width={12} height={12} />
+          </StyledResetBtn>
+        </StyledInputSuffixWrapper>
+      </StyledInputGroup>
+      {error && (
+        <div className="invalid-error">
+          Please input {config.SEARCH_INPUT_LENGTH_MINIMUM} characters minimum
+        </div>
+      )}
+    </StyledWrapper>
   );
 };
 export default SearchInput;

@@ -10,10 +10,10 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "clean": "rm -Rf ./dist && rm -Rf *.tgz",
-    "prebuild": "yarn run clean",
+    "prebuild": "npm run clean",
     "build:tsup": "tsup",
-    "build": "pnpm build:tsup",
-    "publish": "pnpm build && npm publish --access=public"
+    "build": "npm run build:tsup",
+    "publish": "npm run build && npm publish --access=public"
   },
   "author": "",
   "license": "ISC",

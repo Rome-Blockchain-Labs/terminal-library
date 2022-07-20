@@ -1,4 +1,4 @@
-export function intToWords(int) {
+export function intToWords(int: number): string {
   if (typeof int !== 'number') {
     int = Number(int);
   }
