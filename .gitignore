@@ -106,3 +106,5 @@ dist
 # other
 .idea
 /lib
+/WalletContext/dist
+WalletContext/pnpm-lock.yaml

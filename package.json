@@ -12,7 +12,11 @@
     "url": "git+https://github.com/Rome-Blockchain-Labs/terminal-library.git"
   },
   "workspaces": {
-    "packages": ["reactComponents","romeBridge"]
+    "packages": [
+      "reactComponents",
+      "romeBridge",
+      "WalletContext"
+    ]
   },
   "author": "",
   "license": "ISC",
