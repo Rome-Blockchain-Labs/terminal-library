@@ -39,7 +39,7 @@ const StyledDetailList = styled(StyledGridRow)`
 
     .pair-tokens {
       display: grid;
-      grid-template-columns: 40px 40px;
+      grid-template-columns: minmax(40px, 80px) minmax(40px, 80px);
       grid-gap: 10px;
       align-items: center;
       justify-content: center;
