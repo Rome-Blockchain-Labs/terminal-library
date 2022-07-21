@@ -1740,10 +1740,10 @@
     estree-walker "^1.0.1"
     picomatch "^2.2.2"
 
-"@romeblockchain/wallet@0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@romeblockchain/wallet/-/wallet-0.1.1.tgz#7ebe89b7257b9aec621317718f34c001270ecde4"
-  integrity sha512-+kKQ4wb76intnJbyAmBOND7OkGa0h7XiyniBa7SINiZDXt7SR+jQpQ/8rB/rQPuMuAb9kj4j5rDXP5G4nPEqjg==
+"@romeblockchain/wallet@0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@romeblockchain/wallet/-/wallet-0.1.2.tgz#bdd918eae39addf94fb88eab16bb35528ad25861"
+  integrity sha512-XDuT+C88rgwC9lLjAmLrznfnKxkmlwmjHZ4AHdIsuyDLkGvzSfyHT5nDdvTit+ovOaFuVP7KOT2vYPPt+R7iig==
   dependencies:
     "@types/ua-parser-js" "^0.7.36"
     "@walletconnect/ethereum-provider" "^1.7.8"

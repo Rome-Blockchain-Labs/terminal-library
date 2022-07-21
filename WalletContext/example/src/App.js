@@ -3,11 +3,14 @@ import { MetaMask } from "@web3-react/metamask"
 import { Network } from "@web3-react/network"
 import { WalletConnect } from "@web3-react/walletconnect"
 
-import { SUPPORTED_WALLETS, useWeb3React, useWallets } from "@romeblockchain/wallet"
+import { useWeb3React, useWallets } from "@romeblockchain/wallet"
 
 function App() {
+  console.log(process.env.REACT_APP_INFURA_KEY)
+
+  console.log(process.env.REACT_APP_ALCHEMY_KEY)
   const { connector, account } = useWeb3React()
-  const { setSelectedWallet } = useWallets()
+  const { setSelectedWallet, SUPPORTED_WALLETS } = useWallets()
   return (
     <>
       <div style={{ display: "flex", width: "100%", padding: "2.5rem" }}>

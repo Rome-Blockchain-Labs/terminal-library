@@ -7,7 +7,10 @@ import { WalletProvider } from "@romeblockchain/wallet"
 
 ReactDOM.render(
   <React.StrictMode>
-    <WalletProvider>
+    <WalletProvider
+      INFURA_KEY={process.env.REACT_APP_INFURA_KEY}
+      ALCHEMY_KEY={process.env.REACT_APP_ALCHEMY_KEY}
+    >
       <App />
     </WalletProvider>
   </React.StrictMode>,
