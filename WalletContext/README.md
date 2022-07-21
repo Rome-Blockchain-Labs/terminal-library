@@ -12,5 +12,11 @@ The package exposes the following
 4. SUPPORTED_WALLETS - An object map that contains all supported wallets by the package.
 
 ## Quick Start
+1. `yarn add @romeblockchain/wallet`
+2. If using React add 2 the following env variables. REACT_APP_INFURA_KEY and REACT_APP_ALCHEMY_KEY
+3. if using Next JS add 2 the following env variables instead. INFURA_KEY and ALCHEMY_KEY.
+
+## Demo
 
 1. Check /example folder for React example
+
