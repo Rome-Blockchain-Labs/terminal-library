@@ -4,6 +4,7 @@
 
 Current version is 0.3.21
 | version | description |
+- | 0.3.22| Fix style for long token name ellipsed
 - | 0.3.21| Allow duplicated exchanges in networks
 
 ## Prerequisites
