@@ -5,6 +5,7 @@ import { searchTokensAsync } from '../tokenSearch/helpers/async';
 import { uniq, omitBy } from 'lodash';
 import { TokenSearchState } from './types';
 import config from '../config';
+import { NetworkType } from '../../types';
 
 const LOAD_LIMIT = Number(config.LOAD_LIMIT || 10);
 
@@ -23,6 +24,7 @@ const isExchangeDuplicated = (exchange, networks, networkMap) => {
 // Function that handles the "All" values of both the network and the exchange.
 // Consider that "no value" equates "All".
 const allValueHandler = (networkMap, exchangeMap, networks) => {
+
   let returnedNetworkMap = networkMap;
   let returnedExchangeMap = exchangeMap;
 
@@ -63,7 +65,7 @@ const valueCleaner = (networkMap, exchangeMap) => {
   return [networkMap, exchangeMap];
 };
 
-export const searchTokenPairs = createAsyncThunk('token/search', async (dataProp: any, thunkAPI: any) => {
+export const searchTokenPairs = createAsyncThunk('token/search', async (dataProp: { searchString:string, networks:NetworkType[] }, thunkAPI: any) => {
   try {
     const { networkMap, exchangeMap } = thunkAPI.getState();
     const { searchString, networks } = dataProp;
@@ -83,7 +85,7 @@ export const searchTokenPairs = createAsyncThunk('token/search', async (dataProp
     );
 
     // Loading the data.
-    const data = await retry(() => searchTokensAsync(searchString, processedNetworks, processedExchanges), {
+    const data = await retry(() => searchTokensAsync(searchString, processedNetworks, processedExchanges, networks), {
       retries: 1,
     });
 

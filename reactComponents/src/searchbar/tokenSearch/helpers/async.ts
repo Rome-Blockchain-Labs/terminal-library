@@ -3,6 +3,7 @@ import { stringify } from 'flatted';
 import { gql } from 'graphql-request';
 import { romePairsClient } from './graphqlClients';
 import { maxHits } from './config';
+import { NetworkType } from '../../../types';
 
 const getRomeSearchTokenQuery = (networks, isPair = false) => {
   let network;
@@ -87,7 +88,8 @@ const searchTokenAsync_searchString = (searchString) => {
 export const searchTokensAsync = async (
   searchString: string,
   searchNetworks: Array<string>,
-  searchExchanges: Array<string>
+  searchExchanges: Array<string>,
+  networks: NetworkType[]
 ) => {
   let res;
   let isPair = false;
@@ -105,7 +107,7 @@ export const searchTokensAsync = async (
     isPair = true;
   }
 
-  const query = getRomeSearchTokenQuery(searchNetworks, isPair);
+  const query = getRomeSearchTokenQuery(searchNetworks, isPair );
 
   // IMPORTANT!!!
   // IMPORTANT!!!
@@ -136,7 +138,19 @@ export const searchTokensAsync = async (
     })
     // Flattening all the data sets into one data set.
     .flat()
-    .filter((pair: any) => pair.token0 && pair.token1)
+    .filter((pair: any) => {
+
+      // This checks if the pair's exchange and network is included in the network-exchange list
+      // passed to the searchbox component.
+      // This is a hacky fix. Ideally we should use the 'in' property in the Hasura search filters
+      // to only include valid exchanges per network pair search
+      const validNetworkExchange = !!networks.find(network => {
+         const isExchange = network.exchanges.filter(exchange => exchange.name === pair.exchange)
+         const isPair = network.id === pair.network
+         if(isExchange.length > 0 && isPair){return true}
+       })
+      return pair.token0 && pair.token1 && validNetworkExchange
+    })
     .map((pair: any) => {
       const tokenPrices =
         pair.latest_token0_usd_price && pair.latest_token1_usd_price
