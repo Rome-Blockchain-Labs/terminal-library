@@ -11,9 +11,9 @@ import useLocalStorage from '../hooks/useLocalStorage'
 import { WalletInfo } from '../types'
 
 export const initialConnectors: [MetaMask | WalletConnect | Network, Web3ReactHooks][] = [
+  [network, networkHooks],
   [metaMask, metaMaskHooks],
   [walletConnect, walletConnectHooks],
-  [network, networkHooks],
 ]
 
 export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
