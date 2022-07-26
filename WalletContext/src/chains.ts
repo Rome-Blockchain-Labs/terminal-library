@@ -2,11 +2,11 @@ import type { AddEthereumChainParameter } from '@web3-react/types'
 
 const INFURA_KEY = process.env.REACT_APP_INFURA_KEY
   ? process.env.REACT_APP_INFURA_KEY
-  : process.env.NEXT_PUBLIC_APP_INFURA_KEY
+  : process.env.INFURA_KEY
 
 const ALCHEMY_KEY = process.env.REACT_APP_ALCHEMY_KEY
   ? process.env.REACT_APP_ALCHEMY_KEY
-  : process.env.NEXT_PUBLIC_APP_ALCHEMY_KEY
+  : process.env.ALCHEMY_KEY
 
 const ETH: AddEthereumChainParameter['nativeCurrency'] = {
   name: 'Ether',
