@@ -2,8 +2,9 @@
 
 > A react component which fetches token pairs and shows information from various network and its exchanges
 
-Current version is 0.3.21
+Current version is 0.3.23
 | version | description |
+- | 0.3.23| Filter out unsupported pairs 
 - | 0.3.22| Fix style for long token name ellipsed
 - | 0.3.21| Allow duplicated exchanges in networks
 
@@ -21,7 +22,7 @@ v8.1.2
 ```
 ## Table of contents
 
-- [Project Name](#project-name)
+- [Search Bar Token Pair Centric Widget](#search-bar-token-pair-centric-widget)
   - [Prerequisites](#prerequisites)
   - [Table of contents](#table-of-contents)
   - [Getting Started](#getting-started)
@@ -32,6 +33,8 @@ v8.1.2
     - [Publishing package into npm repositories](#publishing-package-into-npm-repositories)
     - [How to use the search bar component](#how-to-use-the-search-bar-component)
   - [API](#api)
+    - [Types](#types)
+    - [Props](#props)
   - [Authors](#authors)
   - [License](#license)
 
