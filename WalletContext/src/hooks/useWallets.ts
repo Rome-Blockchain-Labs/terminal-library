@@ -6,6 +6,5 @@ export function useWallets() {
   if (context === undefined) {
     throw new Error('useWallet must be used within a useWalletsProvider')
   }
-  const { setSelectedWallet } = context
-  return { setSelectedWallet }
+  return context
 }
