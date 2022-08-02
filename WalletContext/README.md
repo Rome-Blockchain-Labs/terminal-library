@@ -1,9 +1,9 @@
 # Wallet Context
 
-Current version is 0.1.6
+Current version is 0.1.8
 | version | description |
 
-| 0.1.6 | remove eager connect, add utility fn
+| 0.1.8 | remove eager connect, add utility fn
 
 This is an opinionated implementation fo web3react v8 library for Rome Terminal iframe widgets.
 This allows users to have multiple wallets active simultaneously but only have one priority wallet.
