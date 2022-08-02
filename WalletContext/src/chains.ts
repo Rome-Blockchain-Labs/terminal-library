@@ -1,12 +1,8 @@
 import type { AddEthereumChainParameter } from '@web3-react/types'
 
-const INFURA_KEY = process.env.REACT_APP_INFURA_KEY
-  ? process.env.REACT_APP_INFURA_KEY
-  : process.env.INFURA_KEY
+const INFURA_KEY = process.env.REACT_APP_INFURA_KEY ? process.env.REACT_APP_INFURA_KEY : process.env.INFURA_KEY
 
-const ALCHEMY_KEY = process.env.REACT_APP_ALCHEMY_KEY
-  ? process.env.REACT_APP_ALCHEMY_KEY
-  : process.env.ALCHEMY_KEY
+const ALCHEMY_KEY = process.env.REACT_APP_ALCHEMY_KEY ? process.env.REACT_APP_ALCHEMY_KEY : process.env.ALCHEMY_KEY
 
 const ETH: AddEthereumChainParameter['nativeCurrency'] = {
   name: 'Ether',
@@ -50,6 +46,17 @@ interface BasicChainInformation {
   name: string
 }
 
+export enum NetworkName {
+  ETHEREUM = 'ethereum',
+  AVALANCHE = 'avalanche',
+  BINANCE = 'bsc',
+  MOONBEAM = 'moonbeam',
+  MOONRIVER = 'moonriver',
+  METIS = 'metis',
+  OPTIMISM = 'optimism',
+  POLYGON = 'polygon',
+}
+
 interface ExtendedChainInformation extends BasicChainInformation {
   nativeCurrency: AddEthereumChainParameter['nativeCurrency']
   blockExplorerUrls: AddEthereumChainParameter['blockExplorerUrls']
@@ -74,6 +81,17 @@ export function getAddChainParameters(chainId: number): AddEthereumChainParamete
   } else {
     return chainId
   }
+}
+
+const NetworkChainMap: { [key in NetworkName]: number } = {
+  ethereum: 1,
+  avalanche: 43114,
+  bsc: 56,
+  moonbeam: 1284,
+  moonriver: 1285,
+  metis: 1088,
+  optimism: 10,
+  polygon: 137,
 }
 
 export const CHAINS: { [chainId: number]: BasicChainInformation | ExtendedChainInformation } = {
@@ -202,3 +220,7 @@ export const URLS: { [chainId: number]: string[] } = Object.keys(CHAINS).reduce<
   },
   {},
 )
+export const getAddChainParametersfromNetworkName = (network: NetworkName): AddEthereumChainParameter | number => {
+  const chainId = NetworkChainMap[network]
+  return getAddChainParameters(chainId)
+}
