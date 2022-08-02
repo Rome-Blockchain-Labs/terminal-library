@@ -16,12 +16,6 @@ export const initialConnectors: [MetaMask | WalletConnect | Network, Web3ReactHo
 ]
 
 export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
-  NETWORK: {
-    connector: network,
-    hooks: networkHooks,
-    wallet: Wallet.NETWORK,
-    name: 'Network',
-  },
   METAMASK: {
     connector: metaMask,
     hooks: metaMaskHooks,
@@ -37,7 +31,7 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
   },
 }
 export interface IWalletContext {
-  setSelectedWallet: (Wallet: Wallet) => void
+  setSelectedWallet: (Wallet: Wallet | undefined) => void
   selectedWallet: Wallet | undefined
 }
 
