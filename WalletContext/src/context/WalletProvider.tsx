@@ -10,9 +10,9 @@ import { hooks as walletConnectHooks, walletConnect } from '../connectors/wallet
 import { WalletInfo } from '../types'
 
 export const initialConnectors: [MetaMask | WalletConnect | Network, Web3ReactHooks][] = [
+  [network, networkHooks],
   [metaMask, metaMaskHooks],
   [walletConnect, walletConnectHooks],
-  [network, networkHooks],
 ]
 
 export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
@@ -36,12 +36,14 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
     mobile: true,
   },
 }
-interface IWalletContext {
+export interface IWalletContext {
   setSelectedWallet: (Wallet: Wallet) => void
+  selectedWallet: Wallet | undefined
 }
 
 export const WalletContext = React.createContext<IWalletContext>({
   setSelectedWallet: () => {},
+  selectedWallet: undefined,
 })
 
 export default function ProviderExample({ children }: any) {
@@ -69,7 +71,7 @@ export default function ProviderExample({ children }: any) {
   }, [])
 
   return (
-    <WalletContext.Provider value={{ setSelectedWallet }}>
+    <WalletContext.Provider value={{ selectedWallet, setSelectedWallet }}>
       <Web3ReactProvider connectors={connectors}>{children}</Web3ReactProvider>
     </WalletContext.Provider>
   )
