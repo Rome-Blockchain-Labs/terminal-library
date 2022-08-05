@@ -108,4 +108,3 @@ dist
 /lib
 /WalletContext/dist
 WalletContext/pnpm-lock.yaml
-romeBridge/dist
