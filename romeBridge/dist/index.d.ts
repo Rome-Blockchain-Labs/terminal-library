@@ -1,7 +1,9 @@
 declare enum RomeEventType {
     TERMINAL_CLICK_BUTTON = "rome.terminal.click_button",
     TERMINAL_BRIDGE_READY = "rome.terminal.bridge_ready",
-    WIDGET_UPDATE_BUTTON_STATUS = "rome.widget.update_button_status"
+    WIDGET_UPDATE_BUTTON_STATUS = "rome.widget.update_button_status",
+    WIDGET_GOOGLE_ANALYTICS_EVENT = "rome.widget.google_analytics_event",
+    WIDGET_GENERIC_MESSAGE = "rome.widget.generic_message"
 }
 declare class RomeEvent {
     type: RomeEventType | undefined;

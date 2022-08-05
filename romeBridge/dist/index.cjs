@@ -53,6 +53,8 @@ var RomeEventType = /* @__PURE__ */ ((RomeEventType3) => {
   RomeEventType3["TERMINAL_CLICK_BUTTON"] = "rome.terminal.click_button";
   RomeEventType3["TERMINAL_BRIDGE_READY"] = "rome.terminal.bridge_ready";
   RomeEventType3["WIDGET_UPDATE_BUTTON_STATUS"] = "rome.widget.update_button_status";
+  RomeEventType3["WIDGET_GOOGLE_ANALYTICS_EVENT"] = "rome.widget.google_analytics_event";
+  RomeEventType3["WIDGET_GENERIC_MESSAGE"] = "rome.widget.generic_message";
   return RomeEventType3;
 })(RomeEventType || {});
 var RomeEvent = class {
