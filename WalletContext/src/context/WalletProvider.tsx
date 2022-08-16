@@ -2,12 +2,11 @@ import { Web3ReactHooks, Web3ReactProvider } from '@web3-react/core'
 import { MetaMask } from '@web3-react/metamask'
 import { Network } from '@web3-react/network'
 import { WalletConnect } from '@web3-react/walletconnect'
-import React, { useMemo, useEffect } from 'react'
+import React, { useMemo, useEffect, useState } from 'react'
 import { Wallet } from '..'
 import { hooks as metaMaskHooks, metaMask } from '../connectors/metaMask'
 import { hooks as networkHooks, network } from '../connectors/network'
 import { hooks as walletConnectHooks, walletConnect } from '../connectors/walletConnect'
-import useLocalStorage from '../hooks/useLocalStorage'
 import { WalletInfo } from '../types'
 
 export const initialConnectors: [MetaMask | WalletConnect | Network, Web3ReactHooks][] = [
@@ -32,7 +31,7 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
   },
 }
 export interface IWalletContext {
-  setSelectedWallet: (Wallet: Wallet) => void
+  setSelectedWallet: (Wallet: Wallet | undefined) => void
   selectedWallet: Wallet | undefined
 }
 
@@ -42,7 +41,7 @@ export const WalletContext = React.createContext<IWalletContext>({
 })
 
 export default function ProviderExample({ children }: any) {
-  const [selectedWallet, setSelectedWallet] = useLocalStorage('wallet', null)
+  const [selectedWallet, setSelectedWallet] = useState<Wallet>()
   const connectors = useMemo(() => {
     if (!selectedWallet) return initialConnectors
 
@@ -63,9 +62,6 @@ export default function ProviderExample({ children }: any) {
 
   useEffect(() => {
     network.activate()
-    if (selectedWallet) {
-      SUPPORTED_WALLETS[selectedWallet].connector.activate()
-    }
   }, [])
 
   return (

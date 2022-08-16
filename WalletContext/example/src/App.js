@@ -7,6 +7,7 @@ import { SUPPORTED_WALLETS, useWeb3React, useWallets } from "@romeblockchain/wal
 
 function App() {
   const { connector, account } = useWeb3React()
+
   const { setSelectedWallet } = useWallets()
   return (
     <>
