@@ -43,13 +43,14 @@ export interface IWalletContext {
     setSelectedWallet: (wallet: Wallet) => void,
     wallet: Wallet,
     widgetBridge: WidgetBridge | null,
-  ) => void
+    chainParams?: number | AddEthereumChainParameter,
+  ) => Promise<void>
 }
 
 export const WalletContext = React.createContext<IWalletContext>({
   setSelectedWallet: () => {},
   selectedWallet: undefined,
-  handleConnect: () => {},
+  handleConnect: async () => {},
 })
 
 export default function ProviderExample({ children }: any) {
