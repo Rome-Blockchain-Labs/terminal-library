@@ -7,6 +7,7 @@ const NetworkExchangeIcon: FC<NetworkExchangeIconType> = ({
   icon,
   size = 20,
   grayscaleFilter,
+  active = false,
 }) => {
   const Component: any = icon;
 
@@ -21,7 +22,7 @@ const NetworkExchangeIcon: FC<NetworkExchangeIconType> = ({
     );
   }
 
-  return <Component width={size} height={size} />;
+  return <Component active={active} width={size} height={size} />;
 };
 
 export default NetworkExchangeIcon;

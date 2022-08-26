@@ -209,6 +209,7 @@ export const ResultDetail: FC<DetailType> = (props: DetailType) => {
           icon={logoIcons[selectedPair.network]}
           size={20}
           label={selectedPair.network}
+          active
         />
         <span className="capitalize">
           {humanizeNetwork(selectedPair.network)}
@@ -219,6 +220,7 @@ export const ResultDetail: FC<DetailType> = (props: DetailType) => {
           icon={logoIcons[selectedPair.exchange]}
           size={20}
           label={selectedPair.exchange}
+          active
         />
         <span className="capitalize">
           {humanizeExchange(selectedPair.exchange)}

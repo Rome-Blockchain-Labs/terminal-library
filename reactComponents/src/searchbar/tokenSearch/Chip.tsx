@@ -112,6 +112,7 @@ export const Chip: FC<any> = (props) => {
             label={label}
             size={16}
             grayscaleFilter={grayscaleFilter}
+            active={checked}
           />
         </div>
         <span>{label}</span>

@@ -29,4 +29,5 @@ export type NetworkExchangeIconType = {
     size?: number;
     label?: string;
     grayscaleFilter?: 0 | 1;
+    active?: boolean;
 };
