@@ -1,8 +1,8 @@
 # Wallet Context
 
-Current version is 0.1.8
+Current version is 0.1.10
 | version | description |
-
+| 0.1.10 | add handle connect
 | 0.1.8 | remove eager connect, add utility fn
 
 This is an opinionated implementation fo web3react v8 library for Rome Terminal iframe widgets.
