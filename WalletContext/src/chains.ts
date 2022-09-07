@@ -55,6 +55,7 @@ export enum NetworkName {
   METIS = 'metis',
   OPTIMISM = 'optimism',
   POLYGON = 'polygon',
+  RINKEBY = 'rinkeby',
 }
 
 interface ExtendedChainInformation extends BasicChainInformation {
@@ -92,6 +93,7 @@ const NetworkChainMap: { [key in NetworkName]: number } = {
   metis: 1088,
   optimism: 10,
   polygon: 137,
+  rinkeby: 4,
 }
 
 export const CHAINS: { [chainId: number]: BasicChainInformation | ExtendedChainInformation } = {
