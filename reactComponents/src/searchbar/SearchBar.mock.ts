@@ -5,7 +5,8 @@ const MOCK_NETWORKS = [
     id: 'avalanche' as NetworkId,
     name: 'Avalanche',
     exchanges: [{
-      name: 'pangolin' as ExchangeName
+      name: 'pangolin' as ExchangeName,
+      title: 'Pangolin'
     }]
   },
   {
@@ -14,13 +15,16 @@ const MOCK_NETWORKS = [
     icon: null,
     exchanges: [
       {
-        name: 'biswap' as ExchangeName
+        name: 'biswap' as ExchangeName,
+        title:'BiSwap'
       },
       {
-        name: 'pancakeswap' as ExchangeName
+        name: 'pancakeswap' as ExchangeName,
+        title:'PancakeSwap'
       },
       {
-        name: 'mdex' as ExchangeName
+        name: 'mdex' as ExchangeName,
+        title:'MDEX'
       }
     ]
   },
@@ -31,7 +35,8 @@ const MOCK_NETWORKS = [
     exchanges: [
       {
         id: 'solarbeam-moonriver',
-        name: 'solarbeam' as ExchangeName
+        name: 'solarbeam' as ExchangeName,
+        title:'SolarBeam'
       }
     ]
   },
@@ -41,10 +46,12 @@ const MOCK_NETWORKS = [
     icon: null,
     exchanges: [
       {
-        name: 'netswap' as ExchangeName
+        name: 'netswap' as ExchangeName,
+        title:'Netswap'
       },
       {
-        name: 'hermesprotocol' as ExchangeName
+        name: 'hermesprotocol' as ExchangeName,
+        title:'Hermes'
       }
     ]
   },
@@ -54,13 +61,16 @@ const MOCK_NETWORKS = [
     icon: null,
     exchanges: [
       {
-        name: 'sushiswap' as ExchangeName
+        name: 'sushiswap' as ExchangeName,
+        title:"Sushi"
       },
       {
-        name: 'uniswapv2' as ExchangeName
+        name: 'uniswapv2' as ExchangeName,
+        title:'Uniswap V2'
       },
       {
-        name: 'uniswapv3' as ExchangeName
+        name: 'uniswapv3' as ExchangeName,
+        title:'Uniswap V3'
       }
     ]
   },
@@ -70,7 +80,8 @@ const MOCK_NETWORKS = [
     icon: null,
     exchanges: [
       {
-        name: 'beamswap' as ExchangeName
+        name: 'beamswap' as ExchangeName,
+        title:'BeamSwap'
       }
     ]
   },
@@ -80,10 +91,12 @@ const MOCK_NETWORKS = [
     icon: null,
     exchanges: [
       {
-        name: 'sushiswap' as ExchangeName
+        name: 'sushiswap' as ExchangeName,
+        title:"Sushi"
       },      
       {
-        name: 'uniswapv3' as ExchangeName
+        name: 'uniswapv3' as ExchangeName,
+        title:'Uniswap V3'
       }
     ]
   }

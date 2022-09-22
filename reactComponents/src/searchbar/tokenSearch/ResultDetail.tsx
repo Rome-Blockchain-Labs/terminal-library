@@ -175,12 +175,15 @@ const Action = (props: ActionType) => {
 };
 
 export const ResultDetail: FC<DetailType> = (props: DetailType) => {
+  
   const { index, suggestions, handleDetail, currentIndex, logoIcons } = props;
   const renderProps = useContext(TokenSearchContext);
-  const { customActions, customTokenDetail } = renderProps;
+  const { customActions, customTokenDetail, networks } = renderProps;
 
   const selectedPair = suggestions[index];
   const isActive = index === currentIndex;
+  const network = networks.find(n=>n.id === selectedPair.network)
+  const exchange = network && network.exchanges.find(e=> e.name === selectedPair.exchange)
 
   return (
     <StyledDetailList
@@ -223,7 +226,7 @@ export const ResultDetail: FC<DetailType> = (props: DetailType) => {
           active
         />
         <span className="capitalize">
-          {humanizeExchange(selectedPair.exchange)}
+          {exchange?.title && humanizeExchange(exchange.title)}
         </span>
       </div>
       <Button
