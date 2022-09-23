@@ -2,7 +2,7 @@ import WalletProvider, { SUPPORTED_WALLETS } from './context/WalletProvider'
 import { useWeb3React } from '@web3-react/core'
 import { useWallets } from './hooks/useWallets'
 import { Wallet } from './types'
-import { getAddChainParametersfromNetworkName, getAddChainParameters } from './chains'
+import { getAddChainParametersfromNetworkName, getAddChainParameters, NetworkName } from './chains'
 
 export {
   WalletProvider,
@@ -12,4 +12,5 @@ export {
   useWallets,
   getAddChainParametersfromNetworkName,
   getAddChainParameters,
+  NetworkName,
 }
