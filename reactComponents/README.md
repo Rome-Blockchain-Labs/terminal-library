@@ -2,8 +2,9 @@
 
 > A react component which fetches token pairs and shows information from various network and its exchanges
 
-Current version is 0.3.28
+Current version is 0.3.29
 | version | description |
+- | 0.3.28| Make the search bar query more efficient when finding multiple tokens
 - | 0.3.28| Use exchange title instead of exchange name in resultDetail component.
 - | 0.3.23| Filter out unsupported pairs 
 - | 0.3.22| Fix style for long token name ellipsed
