@@ -54,10 +54,6 @@ const DesktopSearch: FC<RenderProps> = (renderProps: RenderProps) => {
 
   const searchRef = useClickOutside(closeResultPanel);
 
-  useEffect(() => {
-    window.addEventListener('searchBarClose', closeResultPanel);
-  }, []);
-
   return (
     <DesktopSearchWrapper>
       {isSelecting && <Backdrop />}

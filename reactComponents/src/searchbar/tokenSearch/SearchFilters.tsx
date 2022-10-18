@@ -23,7 +23,7 @@ import UpIcon from "../icons/up";
 import DropdownSection from "./DropdownSection";
 import { RootState } from "../redux/store";
 import TokenSearchContext from "../Context/TokenSearch";
-import { setViewResult } from "../redux/tokenSearchSlice";
+import { setViewResult, stopSelecting } from "../redux/tokenSearchSlice";
 
 const FilterWrapper = styled(DropdownSection)`
   ${({ styleOverrides }) => `    
@@ -204,6 +204,21 @@ export const SearchFilters = (): JSX.Element => {
       setIsExchangeMapExpanded(true);
     }
   }, [networkMap, exchangeMap, searchText]);
+
+  function handleKeyDown(e: KeyboardEvent) {
+    if (e.code === 'Escape') {
+      dispatch(setViewResult(false));
+      dispatch(stopSelecting());
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    }
+  }, []);
 
   // RENDERING.
   return (
