@@ -41,6 +41,13 @@ const METIS: AddEthereumChainParameter['nativeCurrency'] = {
   symbol: 'METIS',
   decimals: 18,
 }
+
+const JEWEL: AddEthereumChainParameter['nativeCurrency'] = {
+  name: 'Jewel',
+  symbol: 'JEWEL',
+  decimals: 18,
+}
+
 interface BasicChainInformation {
   urls: (string | undefined)[]
   name: string
@@ -56,6 +63,7 @@ export enum NetworkName {
   OPTIMISM = 'optimism',
   POLYGON = 'polygon',
   RINKEBY = 'rinkeby',
+  DFK = 'dfk',
 }
 
 interface ExtendedChainInformation extends BasicChainInformation {
@@ -94,6 +102,7 @@ const NetworkChainMap: { [key in NetworkName]: number } = {
   optimism: 10,
   polygon: 137,
   rinkeby: 4,
+  dfk: 53935,
 }
 
 export const CHAINS: { [chainId: number]: BasicChainInformation | ExtendedChainInformation } = {
@@ -207,6 +216,12 @@ export const CHAINS: { [chainId: number]: BasicChainInformation | ExtendedChainI
     name: 'Metis',
     nativeCurrency: METIS,
     blockExplorerUrls: ['https://andromeda-explorer.metis.io'],
+  },
+  53935: {
+    urls: ['https://subnets.avax.network/defi-kingdoms/dfk-chain/rpc'].filter((url) => url !== undefined),
+    name: 'DFK',
+    nativeCurrency: JEWEL,
+    blockExplorerUrls: ['https://subnets.avax.network/defi-kingdoms'],
   },
 }
 
