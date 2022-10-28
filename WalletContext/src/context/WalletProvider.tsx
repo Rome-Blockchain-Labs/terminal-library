@@ -39,11 +39,9 @@ export interface IWalletContext {
   setSelectedWallet: (Wallet: Wallet | undefined) => void
   selectedWallet: Wallet | undefined
   handleConnect: (
-    connector: MetaMask | WalletConnect | Network,
-    setSelectedWallet: (wallet: Wallet) => void,
-    wallet: Wallet,
-    widgetBridge: WidgetBridge | null,
-    chainParams?: number | AddEthereumChainParameter,
+    wallet: WalletInfo,
+    chainParams: number | AddEthereumChainParameter,
+    widgetBridge?: WidgetBridge,
   ) => Promise<void>
 }
 
@@ -74,82 +72,77 @@ export default function ProviderExample({ children }: any) {
   }, [selectedWallet])
 
   const handleConnect = async (
-    connector: MetaMask | WalletConnect | Network,
-    setSelectedWallet: (wallet: Wallet) => void,
-    wallet: Wallet,
-    widgetBridge: WidgetBridge | null,
-    chainParams?: number | AddEthereumChainParameter,
+    wallet: WalletInfo,
+    chainParams: number | AddEthereumChainParameter,
+    widgetBridge?: WidgetBridge,
   ) => {
-    if (connector instanceof MetaMask) {
-      let error
-      //Metamask will automatically add the network if doesnt no
-      await connector.activate(chainParams).catch(() => (error = true))
-      if (error) return
-    } else {
-      if (typeof chainParams === 'number') {
-        let error
-
-        await connector.activate(chainParams).catch(() => (error = true))
-        if (error) return
-        connector.provider?.once('chainChanged', () => {
-          setSelectedWallet(wallet)
-          connector.provider?.removeListener('chainChanged', () => {})
-        })
+    const { connector, wallet: name } = wallet
+    try {
+      if (connector instanceof MetaMask) {
+        //Metamask will automatically add the network if doesnt no
+        await connector.activate(chainParams)
       } else {
-        let error
-        // error would return true if user rejects the wallet connection request
-        // if network doesnt exist yet connector.activate would not throw an error and still successsfully activate
-        await connector.activate(chainParams && chainParams.chainId).catch(() => (error = true))
+        if (typeof chainParams === 'number') {
+          await connector.activate(chainParams)
+          connector.provider?.once('chainChanged', () => {
+            setSelectedWallet(name)
+            connector.provider?.removeListener('chainChanged', () => {})
+          })
+        } else {
+          // error would return true if user rejects the wallet connection request
+          // if network doesnt exist yet connector.activate would not throw an error and still successsfully activate
+          await connector.activate(chainParams && chainParams.chainId)
 
-        if (error) return
+          // activate needs to occur before wallet_addEthereumChain because we can only make requests with an active
+          // connector.
+          // calling wallet_addEthereumChain will check if the chainId is already present in the wallet
+          // if the chainId alreaady exists then it wont add the duplicate network to the wallet
+          chainParams &&
+            (await connector.provider?.request({
+              method: 'wallet_addEthereumChain',
+              params: [
+                {
+                  ...chainParams,
+                  chainId: ethers.utils.hexValue(chainParams.chainId),
+                },
+              ],
+            }))
 
-        // activate needs to occur before wallet_addEthereumChain because we can only make requests with an active
-        // connector.
-        // calling wallet_addEthereumChain will check if the chainId is already present in the wallet
-        // if the chainId alreaady exists then it wont add the duplicate network to the wallet
-        chainParams &&
-          (await connector.provider?.request({
-            method: 'wallet_addEthereumChain',
-            params: [
-              {
-                ...chainParams,
-                chainId: ethers.utils.hexValue(chainParams.chainId),
-              },
-            ],
-          }))
-
-        // we need to subscribe to chainChanged because we would only want to switch selectedWallet when
-        // the user has switched networks especially when the netork is newly added
-        connector.provider?.once('chainChanged', () => {
-          setSelectedWallet(wallet)
-          connector.provider?.removeListener('chainChanged', () => {})
-        })
+          // we need to subscribe to chainChanged because we would only want to switch selectedWallet when
+          // the user has switched networks especially when the netork is newly added
+          connector.provider?.once('chainChanged', () => {
+            setSelectedWallet(name)
+            connector.provider?.removeListener('chainChanged', () => {})
+          })
+        }
       }
-    }
 
-    // If wallet is already connected to the correct network then set wallet as priority wallet
-    const chainId = await connector.provider?.request<string | number>({
-      method: 'eth_chainId',
-    })
+      // If wallet is already connected to the correct network then set wallet as priority wallet
+      const chainId = await connector.provider?.request<string | number>({
+        method: 'eth_chainId',
+      })
 
-    if (!chainId) return
-    let targetChainId
-    if (typeof chainParams === 'number') {
-      targetChainId = chainParams
-    } else {
-      targetChainId = chainParams?.chainId
-    }
+      if (!chainId) throw new Error('Unable to get chainID from provider')
+      let targetChainId
+      if (typeof chainParams === 'number') {
+        targetChainId = chainParams
+      } else {
+        targetChainId = chainParams?.chainId
+      }
 
-    if (targetChainId && chainId === ethers.utils.hexValue(targetChainId)) {
-      setSelectedWallet(wallet)
+      if (targetChainId && chainId === ethers.utils.hexValue(targetChainId)) {
+        setSelectedWallet(name)
+      }
+      if (targetChainId && chainId === targetChainId) {
+        setSelectedWallet(name)
+      }
+      widgetBridge?.emit(RomeEventType.WIDGET_GOOGLE_ANALYTICS_EVENT, {
+        event: `${name.replace(' ', '_')}_Successful_Connection`,
+        eventGroup: 'Wallet_Connection',
+      })
+    } catch (error) {
+      throw new Error('Unable to connect to wallet. Try again')
     }
-    if (targetChainId && chainId === targetChainId) {
-      setSelectedWallet(wallet)
-    }
-    widgetBridge?.emit(RomeEventType.WIDGET_GOOGLE_ANALYTICS_EVENT, {
-      event: `${wallet.replace(' ', '_')}_Successful_Connection`,
-      eventGroup: 'Wallet_Connection',
-    })
   }
 
   useEffect(() => {
