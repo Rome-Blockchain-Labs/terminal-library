@@ -12,6 +12,7 @@
     "outDir": "./dist/esm",
     "strict": true,
     "noImplicitReturns": true,
+    "resolveJsonModule": true,
     "noFallthroughCasesInSwitch": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
