@@ -1,7 +1,8 @@
 # Wallet Context
 
-Current version is 0.1.10
+Current version is 0.1.13
 | version | description |
+| 0.1.13 | add DFK
 | 0.1.12 | add rinkeby
 | 0.1.10 | add handle connect
 | 0.1.8 | remove eager connect, add utility fn
