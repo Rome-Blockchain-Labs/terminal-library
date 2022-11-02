@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@romeblockchain/wallet': ^0.1.13
+  '@romeblockchain/wallet': ^0.1.16
   '@types/node': 18.11.7
   '@types/react': 18.0.24
   '@types/react-dom': 18.0.8
@@ -13,7 +13,7 @@ specifiers:
   typescript: 4.8.4
 
 dependencies:
-  '@romeblockchain/wallet': 0.1.13_uz2ogxeagc4rbieizlfzyaazee
+  '@romeblockchain/wallet': 0.1.16_uz2ogxeagc4rbieizlfzyaazee
   next: 13.0.0_biqbaboplfbrettd7655fr4n2y
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
@@ -402,6 +402,47 @@ packages:
       '@ethersproject/strings': 5.7.0
     dev: false
 
+  /@gnosis.pm/safe-apps-provider/0.11.3:
+    resolution: {integrity: sha512-vER+vuf44f40KfwqTRjU8rdVMDnGZMmgQcGetlMxq+MTI7VD2Cr3CrCuABFGE/DZK80SxZ+IvQ9yjkemo/ywmQ==}
+    dependencies:
+      '@gnosis.pm/safe-apps-sdk': 7.5.0
+      events: 3.3.0
+    transitivePeerDependencies:
+      - bufferutil
+      - encoding
+      - utf-8-validate
+    dev: false
+
+  /@gnosis.pm/safe-apps-sdk/7.5.0:
+    resolution: {integrity: sha512-OaF2agv2zfPExzedv1eOGtt3W+rnwGFwtuP37epofhsnDgqS/JMPoqyDLRSvyWYlU22OeKvtghTppvRfaEnUTw==}
+    dependencies:
+      '@gnosis.pm/safe-react-gateway-sdk': 3.4.3
+      ethers: 5.7.2
+    transitivePeerDependencies:
+      - bufferutil
+      - encoding
+      - utf-8-validate
+    dev: false
+
+  /@gnosis.pm/safe-apps-sdk/7.8.0:
+    resolution: {integrity: sha512-kO8fJi1ebiKN9qH1NdDToVBuDQQ0U9NkL467U+84LtNTx5PzUJIu6O7tb4nZD24e/OItinf5W8GDWhhfZeiqOA==}
+    dependencies:
+      '@gnosis.pm/safe-react-gateway-sdk': 3.4.3
+      ethers: 5.7.2
+    transitivePeerDependencies:
+      - bufferutil
+      - encoding
+      - utf-8-validate
+    dev: false
+
+  /@gnosis.pm/safe-react-gateway-sdk/3.4.3:
+    resolution: {integrity: sha512-KCyM+tl0Rw+Mv+N/yqNzCX3qm80WYhqPpJ3/vcV3jfxqvbBWsXN3z0TMOrx2oJb9621su8NiQmUaQAnLzv9SaQ==}
+    dependencies:
+      cross-fetch: 3.1.5
+    transitivePeerDependencies:
+      - encoding
+    dev: false
+
   /@humanwhocodes/config-array/0.11.6:
     resolution: {integrity: sha512-jJr+hPTJYKyDILJfhNSHsjiwXYf26Flsz8DvNndOsHs5pwSnpGUEy8yzF0JYhCEvTDdV2vuOK5tt8BVhwO5/hg==}
     engines: {node: '>=10.10.0'}
@@ -615,21 +656,25 @@ packages:
       - ts-node
     dev: false
 
-  /@romeblockchain/wallet/0.1.13_uz2ogxeagc4rbieizlfzyaazee:
-    resolution: {integrity: sha512-80KoHssDiTV77M1v2pYhfk3XRAbPR1R/niNViKkQ/Gzjhfezh0gOAZBtBsxom5V+mRezGhT1FoI5tnMWifpkfg==}
+  /@romeblockchain/wallet/0.1.16_uz2ogxeagc4rbieizlfzyaazee:
+    resolution: {integrity: sha512-aZ6cEsq4PsudEm15ayjDORfNkXnTQJiZGpMzNp9BA7dDCOEvA95/R829jvlvB5xhWzr15tUvKgVVxR5I2FYmIg==}
     peerDependencies:
       react: '>=16'
     dependencies:
       '@romeblockchain/bridge': 0.0.3
       '@types/ua-parser-js': 0.7.36
-      '@walletconnect/ethereum-provider': 1.8.0
+      '@walletconnect/ethereum-provider': 1.7.1
       '@walletconnect/jsonrpc-http-connection': 1.0.3
       '@walletconnect/jsonrpc-provider': 1.0.5
-      '@web3-react/core': 8.0.33-beta.0_react@18.2.0
-      '@web3-react/metamask': 8.0.26-beta.0_react@18.2.0
-      '@web3-react/network': 8.0.26-beta.0_react@18.2.0
-      '@web3-react/types': 8.0.19-beta.0_react@18.2.0
-      '@web3-react/walletconnect': 8.0.34-beta.0_a6am7bqntqsrf64p35rtri2khq
+      '@web3-react/core': 8.0.35-beta.0_react@18.2.0
+      '@web3-react/eip1193': 8.0.26-beta.0_react@18.2.0
+      '@web3-react/empty': 8.0.20-beta.0_react@18.2.0
+      '@web3-react/gnosis-safe': 8.0.6-beta.0_react@18.2.0
+      '@web3-react/metamask': 8.0.28-beta.0_react@18.2.0
+      '@web3-react/network': 8.0.27-beta.0_react@18.2.0
+      '@web3-react/types': 8.0.20-beta.0_react@18.2.0
+      '@web3-react/url': 8.0.25-beta.0_react@18.2.0
+      '@web3-react/walletconnect': 8.0.35-beta.0_4bno7k5vvx7tezok2e7t22ixzm
       ethers: 5.7.2
       react: 18.2.0
       tsup: 6.3.0_typescript@4.8.4
@@ -811,8 +856,8 @@ packages:
     resolution: {integrity: sha512-4BwqyWy6KpSvkocSaV7WR3BlZfrxLbJSLkg+j7Gl6pTDE+U55lLhJvQaMuDVazXYxcjBsG09k7UlH7cGiUI5vQ==}
     dev: false
 
-  /@walletconnect/ethereum-provider/1.8.0:
-    resolution: {integrity: sha512-Nq9m+oo5P0F+njsROHw9KMWdoc/8iGHYzQdkjJN/1C7DtsqFRg5k5a3hd9rzCLpbPsOC1q8Z5lRs6JQgDvPm6Q==}
+  /@walletconnect/ethereum-provider/1.7.1:
+    resolution: {integrity: sha512-r01XPO8NHs0n/rjU77VXXgCtxC/hL8F34bu+UHGXmkMUHZGCSY2uKN4VCe2uptkCVYUQ9gCEDyCOUyQSQzULjw==}
     dependencies:
       '@walletconnect/client': 1.8.0
       '@walletconnect/jsonrpc-http-connection': 1.0.3
@@ -946,13 +991,13 @@ packages:
       '@walletconnect/window-getters': 1.0.0
     dev: false
 
-  /@web3-react/core/8.0.33-beta.0_react@18.2.0:
-    resolution: {integrity: sha512-qif/t5zycmlercIGPGNLpxM0+qiRZpbBIVFHgTGSS67bssgZoeBAXwafesbD1KRjiubATMgYBsKy16KskjxwTA==}
+  /@web3-react/core/8.0.35-beta.0_react@18.2.0:
+    resolution: {integrity: sha512-vkEL2Vafu57lTA9T/cd3DNkZoDZ3G/JDUgxgjHqKLQVF4bPucrkeErqIHutAJ4suIi4bLOD0dFPMpFs+Bq7RgA==}
     peerDependencies:
       react: '>=16.8'
     dependencies:
-      '@web3-react/store': 8.0.24-beta.0_react@18.2.0
-      '@web3-react/types': 8.0.19-beta.0_react@18.2.0
+      '@web3-react/store': 8.0.25-beta.0_react@18.2.0
+      '@web3-react/types': 8.0.20-beta.0_react@18.2.0
       react: 18.2.0
       zustand: 4.1.3_react@18.2.0
     optionalDependencies:
@@ -963,21 +1008,53 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@web3-react/metamask/8.0.26-beta.0_react@18.2.0:
-    resolution: {integrity: sha512-srYzA4nvMBWlH7kJLCunYueyucbTLmGqDUOK3QquVmQ+avvwOlYVzyvKPQrHf4M2+6f6GpzWYuw6AjNknvfaIA==}
+  /@web3-react/eip1193/8.0.26-beta.0_react@18.2.0:
+    resolution: {integrity: sha512-n/2ajjABcP8DktZfXxSHrxtPIxeSRJ9tsgfmd9XPEIW9FO7xLzLrF+nloTSghtZ8H+ZKKcswlKjYq4rbX/oqHg==}
     dependencies:
-      '@metamask/detect-provider': 1.2.0
-      '@web3-react/types': 8.0.19-beta.0_react@18.2.0
+      '@web3-react/types': 8.0.20-beta.0_react@18.2.0
     transitivePeerDependencies:
       - immer
       - react
     dev: false
 
-  /@web3-react/network/8.0.26-beta.0_react@18.2.0:
-    resolution: {integrity: sha512-8VSYbWYHpGvlJOSXgUduSp+UDUaUU1tx+/9ivMb96TOgeyUqmkbERJzzPiaE3d3Ehe+7y/uvu0+v20tQqlx8Uw==}
+  /@web3-react/empty/8.0.20-beta.0_react@18.2.0:
+    resolution: {integrity: sha512-hde1Wq7w03cal6hD0E+seVg6ZFMWKcaSZ0S5UwJi5CDxhF79oL8QuzpvTBslohRkWqzqlvl52wCSVaY+l2+F8Q==}
+    dependencies:
+      '@web3-react/types': 8.0.20-beta.0_react@18.2.0
+    transitivePeerDependencies:
+      - immer
+      - react
+    dev: false
+
+  /@web3-react/gnosis-safe/8.0.6-beta.0_react@18.2.0:
+    resolution: {integrity: sha512-xDf87UPfAZK89T19q0oKsN8P6RgWKqD8T9CxjClIVdeDxOoEWMTPn9FPeXM5/Ik3+pq3UUaqcITUZb2CMD14Zw==}
+    dependencies:
+      '@gnosis.pm/safe-apps-provider': 0.11.3
+      '@gnosis.pm/safe-apps-sdk': 7.8.0
+      '@web3-react/types': 8.0.20-beta.0_react@18.2.0
+    transitivePeerDependencies:
+      - bufferutil
+      - encoding
+      - immer
+      - react
+      - utf-8-validate
+    dev: false
+
+  /@web3-react/metamask/8.0.28-beta.0_react@18.2.0:
+    resolution: {integrity: sha512-IXuVyj6vhRAhfGQ/sN4qgET8EEdqX844pB4kCDG9kjPD3LLm5kq47ykBosgTr9YCUtdHAXN0UaUimD0TbLMRFg==}
+    dependencies:
+      '@metamask/detect-provider': 1.2.0
+      '@web3-react/types': 8.0.20-beta.0_react@18.2.0
+    transitivePeerDependencies:
+      - immer
+      - react
+    dev: false
+
+  /@web3-react/network/8.0.27-beta.0_react@18.2.0:
+    resolution: {integrity: sha512-kLHilUpLkDejx0C5Rr57puQSEVA+BQmT58xN6D/elphcZpVHAIkbh/MCYm0XrnLmqq0uOjw+jDhEYBBn80ncHQ==}
     dependencies:
       '@ethersproject/providers': 5.7.2
-      '@web3-react/types': 8.0.19-beta.0_react@18.2.0
+      '@web3-react/types': 8.0.20-beta.0_react@18.2.0
     transitivePeerDependencies:
       - bufferutil
       - immer
@@ -985,19 +1062,19 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@web3-react/store/8.0.24-beta.0_react@18.2.0:
-    resolution: {integrity: sha512-R2MA1lByr9LwQKhso3PYq31GRYEPbM1HKC4uWGGAY42JBXG+Fnhf/0fUIDcdJzdT6tonGBKRgqXKXQ+8HEjgzA==}
+  /@web3-react/store/8.0.25-beta.0_react@18.2.0:
+    resolution: {integrity: sha512-YHrZ42EHiQ9UAJq8Y/pHsyXu6GhzbCSHaQJ9U0wCDhbPoQ9QjOj0Pwcaa/VLXljuynK/7ERP942nI1IzArt9Sg==}
     dependencies:
       '@ethersproject/address': 5.7.0
-      '@web3-react/types': 8.0.19-beta.0_react@18.2.0
+      '@web3-react/types': 8.0.20-beta.0_react@18.2.0
       zustand: 4.1.3_react@18.2.0
     transitivePeerDependencies:
       - immer
       - react
     dev: false
 
-  /@web3-react/types/8.0.19-beta.0_react@18.2.0:
-    resolution: {integrity: sha512-tM63N3IiL5E61HBvx62kDmQlQ/zCfnlYAkJCQnLWFpzQ2Kafcfpi0qAynvFye8DqSgy4E3d6kQah/NIs6BL+qw==}
+  /@web3-react/types/8.0.20-beta.0_react@18.2.0:
+    resolution: {integrity: sha512-qOZYMyUmsm3Um6t6Pg3OgnE86ufhWZpB5/VxsooB8cdpXc/C/f8KMyYSeM63GoKSMScOKwfqV6yODFL7g/Qc8g==}
     dependencies:
       zustand: 4.1.3_react@18.2.0
     transitivePeerDependencies:
@@ -1005,13 +1082,25 @@ packages:
       - react
     dev: false
 
-  /@web3-react/walletconnect/8.0.34-beta.0_a6am7bqntqsrf64p35rtri2khq:
-    resolution: {integrity: sha512-CG6dc6Lq0QVNvTp5lCFycIaHoPPV+X/6ay3swd5t2LD9R9Ao8sSzF0zU9Fi1iq41UDCue6WO4u2Lp7uHNAIcxw==}
+  /@web3-react/url/8.0.25-beta.0_react@18.2.0:
+    resolution: {integrity: sha512-cjFfAFjsWF5vqJ7TG79HT72jNNWlcS9bqbNK2jvu25zej62zMpPvy4iyYiV7zy2SLbAQTdsgvIMYAdxRbnzlWg==}
+    dependencies:
+      '@ethersproject/providers': 5.7.2
+      '@web3-react/types': 8.0.20-beta.0_react@18.2.0
+    transitivePeerDependencies:
+      - bufferutil
+      - immer
+      - react
+      - utf-8-validate
+    dev: false
+
+  /@web3-react/walletconnect/8.0.35-beta.0_4bno7k5vvx7tezok2e7t22ixzm:
+    resolution: {integrity: sha512-fUrqcnwAr5oecZ6VUE/7+RSVURrohbAgWMLKYxd8Zo47AtTPzgJ1t5Lydh/EX4xJPLhfK1LqX5YgMwiys3DvhQ==}
     peerDependencies:
       '@walletconnect/ethereum-provider': ^1.7.5
     dependencies:
-      '@walletconnect/ethereum-provider': 1.8.0
-      '@web3-react/types': 8.0.19-beta.0_react@18.2.0
+      '@walletconnect/ethereum-provider': 1.7.1
+      '@web3-react/types': 8.0.20-beta.0_react@18.2.0
       eventemitter3: 4.0.7
     transitivePeerDependencies:
       - immer
@@ -2266,6 +2355,11 @@ packages:
 
   /eventemitter3/4.0.7:
     resolution: {integrity: sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw==}
+    dev: false
+
+  /events/3.3.0:
+    resolution: {integrity: sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==}
+    engines: {node: '>=0.8.x'}
     dev: false
 
   /execa/5.1.1:

@@ -2,7 +2,7 @@ import { Web3ReactHooks, Web3ReactProvider } from '@web3-react/core'
 import { MetaMask } from '@web3-react/metamask'
 import { Network } from '@web3-react/network'
 import { WalletConnect } from '@web3-react/walletconnect'
-import React, { useMemo, useEffect, useState } from 'react'
+import React, { useMemo, useEffect, useState, ReactNode } from 'react'
 import { Wallet } from '..'
 import { hooks as metaMaskHooks, metaMask } from '../connectors/metaMask'
 import { hooks as networkHooks, network } from '../connectors/network'
@@ -51,7 +51,13 @@ export const WalletContext = React.createContext<IWalletContext>({
   handleConnect: async () => {},
 })
 
-export default function ProviderExample({ children }: any) {
+export default function WalletProvider({
+  children,
+  connectToNetwork,
+}: {
+  children: ReactNode
+  connectToNetwork?: boolean
+}) {
   const [selectedWallet, setSelectedWallet] = useState<Wallet>()
   const connectors = useMemo(() => {
     if (!selectedWallet) return initialConnectors
@@ -118,7 +124,7 @@ export default function ProviderExample({ children }: any) {
       }
 
       // If wallet is already connected to the correct network then set wallet as priority wallet
-      const chainId = await connector.provider?.request<string | number>({
+      const chainId = await connector.provider?.request({
         method: 'eth_chainId',
       })
 
@@ -146,8 +152,10 @@ export default function ProviderExample({ children }: any) {
   }
 
   useEffect(() => {
-    network.activate()
-  }, [])
+    if (connectToNetwork) {
+      network.activate()
+    }
+  }, [connectToNetwork])
 
   return (
     <WalletContext.Provider value={{ selectedWallet, setSelectedWallet, handleConnect }}>

@@ -1,7 +1,11 @@
 # Wallet Context
 
-Current version is 0.1.13
+Current version is 0.1.18
 | version | description |
+| 0.0.18 | add boolean for eagerly connecting to network
+| 0.0.17 | revert package versions due to incompatibility
+| 0.0.16 | revert handleConnect args dues to referential equality requirement
+| 0.1.14 | update package versions
 | 0.1.13 | add DFK
 | 0.1.12 | add rinkeby
 | 0.1.10 | add handle connect
