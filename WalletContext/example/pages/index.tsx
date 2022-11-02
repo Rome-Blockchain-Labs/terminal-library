@@ -24,7 +24,8 @@ export default function Home() {
               key={index}
               onClick={async () => {
                 try {
-                  await handleConnect(wallet.connector, wallet.wallet, 1)
+                  console.log(wallet)
+                  await handleConnect(wallet, 1)
                 } catch (error) {
                   console.log(error)
                 }
