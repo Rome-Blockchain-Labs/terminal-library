@@ -146,8 +146,8 @@ export default function WalletProvider({
         event: `${name.replace(' ', '_')}_Successful_Connection`,
         eventGroup: 'Wallet_Connection',
       })
-    } catch (error) {
-      throw new Error('Unable to connect to wallet. Try again')
+    } catch (error: any) {
+      throw new Error('Unable to connect to wallet. error:', error)
     }
   }
 
