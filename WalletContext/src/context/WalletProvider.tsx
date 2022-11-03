@@ -7,17 +7,20 @@ import { Wallet } from '..'
 import { hooks as metaMaskHooks, metaMask } from '../connectors/metaMask'
 import { hooks as networkHooks, network } from '../connectors/network'
 import { hooks as walletConnectHooks, walletConnect } from '../connectors/walletConnect'
+import { hooks as coinbaseWalletHooks, coinbase } from '../connectors/coinbase'
 import { WalletInfo } from '../types'
 import { AddEthereumChainParameter } from '@web3-react/types'
 import { ethers } from 'ethers'
 import { RomeEventType, widgetBridge } from '@romeblockchain/bridge'
+import { CoinbaseWallet } from '@web3-react/coinbase-wallet'
 
 type WidgetBridge = typeof widgetBridge
 
-export const initialConnectors: [MetaMask | WalletConnect | Network, Web3ReactHooks][] = [
+export const initialConnectors: [MetaMask | WalletConnect | CoinbaseWallet | Network, Web3ReactHooks][] = [
   [network, networkHooks],
   [metaMask, metaMaskHooks],
   [walletConnect, walletConnectHooks],
+  [coinbase, coinbaseWalletHooks],
 ]
 
 export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
@@ -33,6 +36,12 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
     wallet: Wallet.WALLET_CONNECT,
     name: 'WalletConnect',
     mobile: true,
+  },
+  COINBASE: {
+    connector: coinbase,
+    hooks: coinbaseWalletHooks,
+    wallet: Wallet.COINBASE_WALLET,
+    name: 'Coinbase',
   },
 }
 export interface IWalletContext {
@@ -62,7 +71,7 @@ export default function WalletProvider({
   const connectors = useMemo(() => {
     if (!selectedWallet) return initialConnectors
 
-    const connectorList: [MetaMask | WalletConnect | Network, Web3ReactHooks][] = []
+    const connectorList: [MetaMask | WalletConnect | CoinbaseWallet | Network, Web3ReactHooks][] = []
     if (selectedWallet) {
       const wallet = SUPPORTED_WALLETS[selectedWallet]
       connectorList.push([wallet.connector, wallet.hooks])
@@ -84,13 +93,15 @@ export default function WalletProvider({
   ) => {
     const { connector, wallet: name } = wallet
     try {
-      if (connector instanceof MetaMask) {
+      if (connector instanceof MetaMask || connector instanceof CoinbaseWallet) {
         //Metamask will automatically add the network if doesnt no
         await connector.activate(chainParams)
+        console.log('connected to metamask/coinbase')
       } else {
         if (typeof chainParams === 'number') {
           await connector.activate(chainParams)
           connector.provider?.once('chainChanged', () => {
+            console.log('Chain changed')
             setSelectedWallet(name)
             connector.provider?.removeListener('chainChanged', () => {})
           })
@@ -117,6 +128,7 @@ export default function WalletProvider({
           // we need to subscribe to chainChanged because we would only want to switch selectedWallet when
           // the user has switched networks especially when the netork is newly added
           connector.provider?.once('chainChanged', () => {
+            console.log('Chain changed')
             setSelectedWallet(name)
             connector.provider?.removeListener('chainChanged', () => {})
           })

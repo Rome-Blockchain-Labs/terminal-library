@@ -2,6 +2,7 @@ import { Web3ReactHooks } from '@web3-react/core'
 import { MetaMask } from '@web3-react/metamask'
 import { Network } from '@web3-react/network'
 import { WalletConnect } from '@web3-react/walletconnect'
+import { CoinbaseWallet } from '@web3-react/coinbase-wallet'
 
 export enum Wallet {
   INJECTED = 'INJECTED',
@@ -14,7 +15,7 @@ export enum Wallet {
 }
 
 export interface WalletInfo {
-  connector: MetaMask | WalletConnect | Network
+  connector: MetaMask | WalletConnect | Network | CoinbaseWallet
   hooks: Web3ReactHooks
   wallet: Wallet
   name: string

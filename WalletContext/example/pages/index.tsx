@@ -1,4 +1,4 @@
-import { SUPPORTED_WALLETS, useWallets } from '@romeblockchain/wallet'
+import { getAddChainParameters, SUPPORTED_WALLETS, useWallets } from '@iandjx/wallet'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 
