@@ -1,7 +1,8 @@
 # Wallet Context
 
-Current version is 0.1.22
+Current version is 0.1.23
 | version | description |
+| 0.0.23 | added ofac list
 | 0.0.22 | added coinbase
 | 0.0.19 | return error when wallet fails to connect
 | 0.0.18 | add boolean for eagerly connecting to network
