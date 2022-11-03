@@ -41,7 +41,7 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
   COINBASE: {
     connector: coinbase,
     hooks: coinbaseWalletHooks,
-    wallet: Wallet.COINBASE_WALLET,
+    wallet: Wallet.COINBASE,
     name: 'Coinbase',
   },
 }

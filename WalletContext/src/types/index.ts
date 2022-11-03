@@ -7,7 +7,7 @@ import { CoinbaseWallet } from '@web3-react/coinbase-wallet'
 export enum Wallet {
   INJECTED = 'INJECTED',
   METAMASK = 'METAMASK',
-  COINBASE_WALLET = 'COINBASE_WALLET',
+  COINBASE = 'COINBASE',
   WALLET_CONNECT = 'WALLET_CONNECT',
   FORTMATIC = 'FORTMATIC',
   NETWORK = 'NETWORK',
