@@ -11,6 +11,8 @@ import { WalletInfo } from '../types'
 import { AddEthereumChainParameter } from '@web3-react/types'
 import { ethers } from 'ethers'
 import { RomeEventType, widgetBridge } from '@romeblockchain/bridge'
+import {useWeb3React} from "../index"
+import bannedAccounts from '../../src/bannedAccounts.json';
 
 type WidgetBridge = typeof widgetBridge
 
@@ -52,6 +54,35 @@ export const WalletContext = React.createContext<IWalletContext>({
   selectedWallet: undefined,
   handleConnect: async () => {},
 })
+
+const OfacBan = ({children}:any) => {
+  const { account } = useWeb3React()
+  const ofacBanned = account && bannedAccounts.includes((account).toLowerCase());
+  if (ofacBanned){
+    return <div style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      width: '100%',
+      height: '100%'
+    }}>
+      <div style={{
+        padding: '1.25rem',
+        backgroundColor: '#991b1b',
+        borderRadius: '0.375rem'
+      }}>
+        <p style={{
+          marginBottom: '0.75rem',
+          fontSize: 'large'
+        }}>Blocked Address</p>
+        <p>
+          This address is blocked because it is associated with banned activities.
+        </p>
+      </div>
+    </div>
+  }
+  return children
+}
 
 export default function ProviderExample({ children }: any) {
   const [selectedWallet, setSelectedWallet] = useState<Wallet>()
@@ -158,7 +189,11 @@ export default function ProviderExample({ children }: any) {
 
   return (
     <WalletContext.Provider value={{ selectedWallet, setSelectedWallet, handleConnect }}>
-      <Web3ReactProvider connectors={connectors}>{children}</Web3ReactProvider>
+      <Web3ReactProvider connectors={connectors}>
+        <OfacBan>
+          {children}
+        </OfacBan>
+      </Web3ReactProvider>
     </WalletContext.Provider>
   )
 }
