@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@romeblockchain/wallet": "0.1.22",
+    "@romeblockchain/wallet": "0.1.24",
     "next": "13.0.1",
     "react": "18.2.0",
     "react-dom": "18.2.0"

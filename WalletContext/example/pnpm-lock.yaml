@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@iandjx/wallet': 0.2.0
+  '@romeblockchain/wallet': 0.1.24
   '@types/node': 18.11.7
   '@types/react': 18.0.24
   '@types/react-dom': 18.0.8
@@ -13,7 +13,7 @@ specifiers:
   typescript: 4.8.4
 
 dependencies:
-  '@iandjx/wallet': 0.2.0_e73w6jr6xctdr5atxo4mbgrpf4
+  '@romeblockchain/wallet': 0.1.24_e73w6jr6xctdr5atxo4mbgrpf4
   next: 13.0.1_qtpcxnaaarbm4ws7ughq6oxfve
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
@@ -1776,42 +1776,6 @@ packages:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
     dev: true
 
-  /@iandjx/wallet/0.2.0_e73w6jr6xctdr5atxo4mbgrpf4:
-    resolution: {integrity: sha512-Wttgh8ovFSMm0b+OiJR5WPdTgSObyxHV9g3H9pDaHtopvJMdIuYBR5jhbt0m7HPmpaCbOqBNDidD341jHEvU7A==}
-    peerDependencies:
-      react: '>=16'
-    dependencies:
-      '@coinbase/wallet-sdk': 3.5.4_atq3pxwl2vgronp4cy5kf52qjm
-      '@romeblockchain/bridge': 0.0.3
-      '@types/ua-parser-js': 0.7.36
-      '@walletconnect/ethereum-provider': 1.8.0
-      '@walletconnect/jsonrpc-http-connection': 1.0.3
-      '@walletconnect/jsonrpc-provider': 1.0.5
-      '@web3-react/coinbase-wallet': 8.0.33-beta.0_eymglnjenipc2dxjnrtu2zux7i
-      '@web3-react/core': 8.0.33-beta.0_react@18.2.0
-      '@web3-react/metamask': 8.0.26-beta.0_react@18.2.0
-      '@web3-react/network': 8.0.26-beta.0_react@18.2.0
-      '@web3-react/types': 8.0.19-beta.0_react@18.2.0
-      '@web3-react/walletconnect': 8.0.34-beta.0_a6am7bqntqsrf64p35rtri2khq
-      ethers: 5.7.2
-      react: 18.2.0
-      tsup: 6.3.0_typescript@4.8.4
-      ua-parser-js: 1.0.32
-    transitivePeerDependencies:
-      - '@babel/core'
-      - '@swc/core'
-      - bufferutil
-      - debug
-      - encoding
-      - immer
-      - postcss
-      - react-native
-      - supports-color
-      - ts-node
-      - typescript
-      - utf-8-validate
-    dev: false
-
   /@jest/create-cache-key-function/29.2.1:
     resolution: {integrity: sha512-///wxGQUyP0GCr3L1OcqIzhsKvN2gOyqWsRxs56XGCdD8EEuoKg857G9nC+zcWIpIsG+3J5UnEbhe3LJw8CNmQ==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
@@ -2287,6 +2251,42 @@ packages:
       - postcss
       - supports-color
       - ts-node
+    dev: false
+
+  /@romeblockchain/wallet/0.1.24_e73w6jr6xctdr5atxo4mbgrpf4:
+    resolution: {integrity: sha512-RknZNb6AQbng7JU5vDYV/RvveasluLvkeDpi6+/0DQoHE4amB285zVoao5wqWcrtX/84XFvJbx4Ni82rr8sIXQ==}
+    peerDependencies:
+      react: '>=16'
+    dependencies:
+      '@coinbase/wallet-sdk': 3.5.4_atq3pxwl2vgronp4cy5kf52qjm
+      '@romeblockchain/bridge': 0.0.3
+      '@types/ua-parser-js': 0.7.36
+      '@walletconnect/ethereum-provider': 1.8.0
+      '@walletconnect/jsonrpc-http-connection': 1.0.3
+      '@walletconnect/jsonrpc-provider': 1.0.5
+      '@web3-react/coinbase-wallet': 8.0.33-beta.0_eymglnjenipc2dxjnrtu2zux7i
+      '@web3-react/core': 8.0.33-beta.0_react@18.2.0
+      '@web3-react/metamask': 8.0.26-beta.0_react@18.2.0
+      '@web3-react/network': 8.0.26-beta.0_react@18.2.0
+      '@web3-react/types': 8.0.19-beta.0_react@18.2.0
+      '@web3-react/walletconnect': 8.0.34-beta.0_a6am7bqntqsrf64p35rtri2khq
+      ethers: 5.7.2
+      react: 18.2.0
+      tsup: 6.3.0_typescript@4.8.4
+      ua-parser-js: 1.0.32
+    transitivePeerDependencies:
+      - '@babel/core'
+      - '@swc/core'
+      - bufferutil
+      - debug
+      - encoding
+      - immer
+      - postcss
+      - react-native
+      - supports-color
+      - ts-node
+      - typescript
+      - utf-8-validate
     dev: false
 
   /@rushstack/eslint-patch/1.2.0:
