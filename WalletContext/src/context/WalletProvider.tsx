@@ -2,7 +2,7 @@ import { useWeb3React, Web3ReactHooks, Web3ReactProvider } from '@web3-react/cor
 import { MetaMask } from '@web3-react/metamask'
 import { Network } from '@web3-react/network'
 import { WalletConnect } from '@web3-react/walletconnect'
-import React, { useMemo, useEffect, useState, ReactNode } from 'react'
+import React, { useEffect, useState, ReactNode } from 'react'
 import { Wallet } from '..'
 import { hooks as metaMaskHooks, metaMask } from '../connectors/metaMask'
 import { hooks as networkHooks, network } from '../connectors/network'
@@ -41,7 +41,7 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
   COINBASE: {
     connector: coinbase,
     hooks: coinbaseWalletHooks,
-    wallet: Wallet.COINBASE_WALLET,
+    wallet: Wallet.COINBASE,
     name: 'Coinbase',
   },
 }
@@ -106,23 +106,6 @@ export default function WalletProvider({
   connectToNetwork?: boolean
 }) {
   const [selectedWallet, setSelectedWallet] = useState<Wallet>()
-  const connectors = useMemo(() => {
-    if (!selectedWallet) return initialConnectors
-
-    const connectorList: [MetaMask | WalletConnect | CoinbaseWallet | Network, Web3ReactHooks][] = []
-    if (selectedWallet) {
-      const wallet = SUPPORTED_WALLETS[selectedWallet]
-      connectorList.push([wallet.connector, wallet.hooks])
-    }
-    Object.keys(SUPPORTED_WALLETS)
-      .filter((wallet) => wallet !== selectedWallet)
-      .forEach((ele) => {
-        const wallet = SUPPORTED_WALLETS[ele]
-        connectorList.push([wallet.connector, wallet.hooks])
-      })
-    connectorList.push([network, networkHooks])
-    return connectorList
-  }, [selectedWallet])
 
   const handleConnect = async (
     wallet: WalletInfo,
@@ -153,15 +136,25 @@ export default function WalletProvider({
           // calling wallet_addEthereumChain will check if the chainId is already present in the wallet
           // if the chainId alreaady exists then it wont add the duplicate network to the wallet
           chainParams &&
-            (await connector.provider?.request({
-              method: 'wallet_addEthereumChain',
-              params: [
-                {
-                  ...chainParams,
-                  chainId: ethers.utils.hexValue(chainParams.chainId),
-                },
-              ],
-            }))
+            connector.provider
+              ?.request({
+                method: 'wallet_addEthereumChain',
+                params: [
+                  {
+                    ...chainParams,
+                    chainId: ethers.utils.hexValue(chainParams.chainId),
+                  },
+                ],
+              })
+              .then(() => console.log('chain added'))
+
+          chainParams &&
+            connector.provider
+              ?.request({
+                method: 'wallet_switchEthereumChain',
+                params: [{ chainId: ethers.utils.hexValue(chainParams.chainId) }],
+              })
+              .then(() => console.log('switched network'))
 
           // we need to subscribe to chainChanged because we would only want to switch selectedWallet when
           // the user has switched networks especially when the netork is newly added
@@ -208,10 +201,10 @@ export default function WalletProvider({
   }, [connectToNetwork])
 
   return (
-    <WalletContext.Provider value={{ selectedWallet, setSelectedWallet, handleConnect }}>
-      <Web3ReactProvider connectors={connectors}>
+    <Web3ReactProvider connectors={initialConnectors}>
+      <WalletContext.Provider value={{ selectedWallet, setSelectedWallet, handleConnect }}>
         <OfacBan>{children}</OfacBan>
-      </Web3ReactProvider>
-    </WalletContext.Provider>
+      </WalletContext.Provider>
+    </Web3ReactProvider>
   )
 }

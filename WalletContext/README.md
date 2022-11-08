@@ -1,13 +1,16 @@
 # Wallet Context
 
-Current version is 0.1.23
+Current version is 0.1.29
 | version | description |
-| 0.0.23 | added ofac list
-| 0.0.22 | added coinbase
-| 0.0.19 | return error when wallet fails to connect
-| 0.0.18 | add boolean for eagerly connecting to network
-| 0.0.17 | revert package versions due to incompatibility
-| 0.0.16 | revert handleConnect args dues to referential equality requirement
+| 0.1.29 | remove window.localstorage.clear
+| 0.1.27 | always return chain information
+| 0.1.25 | delete deprecated testnets
+| 0.1.23 | added ofac list
+| 0.1.22 | added coinbase
+| 0.1.19 | return error when wallet fails to connect
+| 0.1.18 | add boolean for eagerly connecting to network
+| 0.1.17 | revert package versions due to incompatibility
+| 0.1.16 | revert handleConnect args dues to referential equality requirement
 | 0.1.14 | update package versions
 | 0.1.13 | add DFK
 | 0.1.12 | add rinkeby
