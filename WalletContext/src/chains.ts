@@ -62,7 +62,6 @@ export enum NetworkName {
   METIS = 'metis',
   OPTIMISM = 'optimism',
   POLYGON = 'polygon',
-  RINKEBY = 'rinkeby',
   DFK = 'dfk',
 }
 
@@ -71,24 +70,14 @@ interface ExtendedChainInformation extends BasicChainInformation {
   blockExplorerUrls: AddEthereumChainParameter['blockExplorerUrls']
 }
 
-function isExtendedChainInformation(
-  chainInformation: BasicChainInformation | ExtendedChainInformation,
-): chainInformation is ExtendedChainInformation {
-  return !!(chainInformation as ExtendedChainInformation).nativeCurrency
-}
-
 export function getAddChainParameters(chainId: number): AddEthereumChainParameter | number {
   const chainInformation = CHAINS[chainId]
-  if (isExtendedChainInformation(chainInformation)) {
-    return {
-      chainId,
-      chainName: chainInformation.name,
-      nativeCurrency: chainInformation.nativeCurrency,
-      rpcUrls: chainInformation.urls as any,
-      blockExplorerUrls: chainInformation.blockExplorerUrls,
-    }
-  } else {
-    return chainId
+  return {
+    chainId,
+    chainName: chainInformation.name,
+    nativeCurrency: chainInformation.nativeCurrency,
+    rpcUrls: chainInformation.urls as any,
+    blockExplorerUrls: chainInformation.blockExplorerUrls,
   }
 }
 
@@ -101,34 +90,25 @@ const NetworkChainMap: { [key in NetworkName]: number } = {
   metis: 1088,
   optimism: 10,
   polygon: 137,
-  rinkeby: 4,
   dfk: 53935,
 }
 
-export const CHAINS: { [chainId: number]: BasicChainInformation | ExtendedChainInformation } = {
+export const CHAINS: { [chainId: number]: ExtendedChainInformation } = {
   1: {
     urls: [
-      INFURA_KEY ? `https://mainnet.infura.io/v3/${INFURA_KEY}` : undefined,
+      INFURA_KEY ? `https://mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161` : undefined,
       ALCHEMY_KEY ? `https://eth-mainnet.alchemyapi.io/v2/${ALCHEMY_KEY}` : undefined,
       'https://cloudflare-eth.com',
     ].filter((url) => url !== undefined),
     name: 'Mainnet',
-  },
-  3: {
-    urls: [INFURA_KEY ? `https://ropsten.infura.io/v3/${INFURA_KEY}` : undefined].filter((url) => url !== undefined),
-    name: 'Ropsten',
-  },
-  4: {
-    urls: [INFURA_KEY ? `https://rinkeby.infura.io/v3/${INFURA_KEY}` : undefined].filter((url) => url !== undefined),
-    name: 'Rinkeby',
+    nativeCurrency: ETH,
+    blockExplorerUrls: ['https://etherscan.io/'],
   },
   5: {
     urls: [INFURA_KEY ? `https://goerli.infura.io/v3/${INFURA_KEY}` : undefined].filter((url) => url !== undefined),
     name: 'Görli',
-  },
-  42: {
-    urls: [INFURA_KEY ? `https://kovan.infura.io/v3/${INFURA_KEY}` : undefined].filter((url) => url !== undefined),
-    name: 'Kovan',
+    nativeCurrency: ETH,
+    blockExplorerUrls: ['https://goerli.etherscan.io/'],
   },
   // Optimism
   10: {
@@ -140,15 +120,6 @@ export const CHAINS: { [chainId: number]: BasicChainInformation | ExtendedChainI
     nativeCurrency: ETH,
     blockExplorerUrls: ['https://optimistic.etherscan.io'],
   },
-  69: {
-    urls: [
-      INFURA_KEY ? `https://optimism-kovan.infura.io/v3/${INFURA_KEY}` : undefined,
-      'https://kovan.optimism.io',
-    ].filter((url) => url !== undefined),
-    name: 'Optimism Kovan',
-    nativeCurrency: ETH,
-    blockExplorerUrls: ['https://kovan-optimistic.etherscan.io'],
-  },
   // Arbitrum
   42161: {
     urls: [
@@ -158,15 +129,6 @@ export const CHAINS: { [chainId: number]: BasicChainInformation | ExtendedChainI
     name: 'Arbitrum One',
     nativeCurrency: ETH,
     blockExplorerUrls: ['https://arbiscan.io'],
-  },
-  421611: {
-    urls: [
-      INFURA_KEY ? `https://arbitrum-rinkeby.infura.io/v3/${INFURA_KEY}` : undefined,
-      'https://rinkeby.arbitrum.io/rpc',
-    ].filter((url) => url !== undefined),
-    name: 'Arbitrum Testnet',
-    nativeCurrency: ETH,
-    blockExplorerUrls: ['https://testnet.arbiscan.io'],
   },
   // Polygon
   137: {

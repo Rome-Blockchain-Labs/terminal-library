@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@romeblockchain/wallet': 0.1.24
+  '@romeblockchain/wallet': 0.1.28
   '@types/node': 18.11.7
   '@types/react': 18.0.24
   '@types/react-dom': 18.0.8
@@ -13,7 +13,7 @@ specifiers:
   typescript: 4.8.4
 
 dependencies:
-  '@romeblockchain/wallet': 0.1.24_e73w6jr6xctdr5atxo4mbgrpf4
+  '@romeblockchain/wallet': 0.1.28_e73w6jr6xctdr5atxo4mbgrpf4
   next: 13.0.1_qtpcxnaaarbm4ws7ughq6oxfve
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
@@ -1746,6 +1746,47 @@ packages:
       '@ethersproject/strings': 5.7.0
     dev: false
 
+  /@gnosis.pm/safe-apps-provider/0.11.3:
+    resolution: {integrity: sha512-vER+vuf44f40KfwqTRjU8rdVMDnGZMmgQcGetlMxq+MTI7VD2Cr3CrCuABFGE/DZK80SxZ+IvQ9yjkemo/ywmQ==}
+    dependencies:
+      '@gnosis.pm/safe-apps-sdk': 7.5.0
+      events: 3.3.0
+    transitivePeerDependencies:
+      - bufferutil
+      - encoding
+      - utf-8-validate
+    dev: false
+
+  /@gnosis.pm/safe-apps-sdk/7.5.0:
+    resolution: {integrity: sha512-OaF2agv2zfPExzedv1eOGtt3W+rnwGFwtuP37epofhsnDgqS/JMPoqyDLRSvyWYlU22OeKvtghTppvRfaEnUTw==}
+    dependencies:
+      '@gnosis.pm/safe-react-gateway-sdk': 3.4.5
+      ethers: 5.7.2
+    transitivePeerDependencies:
+      - bufferutil
+      - encoding
+      - utf-8-validate
+    dev: false
+
+  /@gnosis.pm/safe-apps-sdk/7.8.0:
+    resolution: {integrity: sha512-kO8fJi1ebiKN9qH1NdDToVBuDQQ0U9NkL467U+84LtNTx5PzUJIu6O7tb4nZD24e/OItinf5W8GDWhhfZeiqOA==}
+    dependencies:
+      '@gnosis.pm/safe-react-gateway-sdk': 3.4.5
+      ethers: 5.7.2
+    transitivePeerDependencies:
+      - bufferutil
+      - encoding
+      - utf-8-validate
+    dev: false
+
+  /@gnosis.pm/safe-react-gateway-sdk/3.4.5:
+    resolution: {integrity: sha512-b8ZaYaQ1apS/4R9sEEUCtrg0AwTf8tfqS0Jp6JAopLxHdX0NItCvs5/Y1+rjDodv2l+I/Zf9vJJyUDC0XABfMA==}
+    dependencies:
+      cross-fetch: 3.1.5
+    transitivePeerDependencies:
+      - encoding
+    dev: false
+
   /@hapi/hoek/9.3.0:
     resolution: {integrity: sha512-/c6rf4UJlmHlC9b5BaNvzAcFv7HZ2QHaV0D4/HNlBdvFnvQq8RI4kYdhyPCl7Xj+oWvTWQ8ujhqS53LIgAe6KQ==}
     dev: false
@@ -2253,8 +2294,8 @@ packages:
       - ts-node
     dev: false
 
-  /@romeblockchain/wallet/0.1.24_e73w6jr6xctdr5atxo4mbgrpf4:
-    resolution: {integrity: sha512-RknZNb6AQbng7JU5vDYV/RvveasluLvkeDpi6+/0DQoHE4amB285zVoao5wqWcrtX/84XFvJbx4Ni82rr8sIXQ==}
+  /@romeblockchain/wallet/0.1.28_e73w6jr6xctdr5atxo4mbgrpf4:
+    resolution: {integrity: sha512-N3EgGTMttFDm+Jgz6GPTE/IunkMQMz/b0DWpyDsXkayGhJTg9G1FFrdVKMeKJtT7Axo9ckjX2AnrUsBAlN3CJg==}
     peerDependencies:
       react: '>=16'
     dependencies:
@@ -2264,12 +2305,16 @@ packages:
       '@walletconnect/ethereum-provider': 1.8.0
       '@walletconnect/jsonrpc-http-connection': 1.0.3
       '@walletconnect/jsonrpc-provider': 1.0.5
-      '@web3-react/coinbase-wallet': 8.0.33-beta.0_eymglnjenipc2dxjnrtu2zux7i
-      '@web3-react/core': 8.0.33-beta.0_react@18.2.0
-      '@web3-react/metamask': 8.0.26-beta.0_react@18.2.0
-      '@web3-react/network': 8.0.26-beta.0_react@18.2.0
-      '@web3-react/types': 8.0.19-beta.0_react@18.2.0
-      '@web3-react/walletconnect': 8.0.34-beta.0_a6am7bqntqsrf64p35rtri2khq
+      '@web3-react/coinbase-wallet': 8.0.34-beta.0_eymglnjenipc2dxjnrtu2zux7i
+      '@web3-react/core': 8.0.35-beta.0_react@18.2.0
+      '@web3-react/eip1193': 8.0.26-beta.0_react@18.2.0
+      '@web3-react/empty': 8.0.20-beta.0_react@18.2.0
+      '@web3-react/gnosis-safe': 8.0.6-beta.0_react@18.2.0
+      '@web3-react/metamask': 8.0.28-beta.0_react@18.2.0
+      '@web3-react/network': 8.0.27-beta.0_react@18.2.0
+      '@web3-react/types': 8.0.20-beta.0_react@18.2.0
+      '@web3-react/url': 8.0.25-beta.0_react@18.2.0
+      '@web3-react/walletconnect': 8.0.35-beta.0_a6am7bqntqsrf64p35rtri2khq
       ethers: 5.7.2
       react: 18.2.0
       tsup: 6.3.0_typescript@4.8.4
@@ -2712,25 +2757,25 @@ packages:
       '@walletconnect/window-getters': 1.0.0
     dev: false
 
-  /@web3-react/coinbase-wallet/8.0.33-beta.0_eymglnjenipc2dxjnrtu2zux7i:
-    resolution: {integrity: sha512-bi+lm5g8PbLkXjrSS8cKXUuU4yg4A8OJp9M+BAuEWiQ++f7er+XtVF9+o/S81F411YkQH+NTP4VtJmo4V0kWIw==}
+  /@web3-react/coinbase-wallet/8.0.34-beta.0_eymglnjenipc2dxjnrtu2zux7i:
+    resolution: {integrity: sha512-eGgtGtAqcRL64U1lcWeICB9CmpUycVl/mWD/b2Nd7yE0hXFUbPGLZHNvBTpnOpkANkjHI5ufFoyDGzzoxdw12A==}
     peerDependencies:
       '@coinbase/wallet-sdk': ^3.0.4
     dependencies:
       '@coinbase/wallet-sdk': 3.5.4_atq3pxwl2vgronp4cy5kf52qjm
-      '@web3-react/types': 8.0.19-beta.0_react@18.2.0
+      '@web3-react/types': 8.0.20-beta.0_react@18.2.0
     transitivePeerDependencies:
       - immer
       - react
     dev: false
 
-  /@web3-react/core/8.0.33-beta.0_react@18.2.0:
-    resolution: {integrity: sha512-qif/t5zycmlercIGPGNLpxM0+qiRZpbBIVFHgTGSS67bssgZoeBAXwafesbD1KRjiubATMgYBsKy16KskjxwTA==}
+  /@web3-react/core/8.0.35-beta.0_react@18.2.0:
+    resolution: {integrity: sha512-vkEL2Vafu57lTA9T/cd3DNkZoDZ3G/JDUgxgjHqKLQVF4bPucrkeErqIHutAJ4suIi4bLOD0dFPMpFs+Bq7RgA==}
     peerDependencies:
       react: '>=16.8'
     dependencies:
-      '@web3-react/store': 8.0.24-beta.0_react@18.2.0
-      '@web3-react/types': 8.0.19-beta.0_react@18.2.0
+      '@web3-react/store': 8.0.25-beta.0_react@18.2.0
+      '@web3-react/types': 8.0.20-beta.0_react@18.2.0
       react: 18.2.0
       zustand: 4.1.4_react@18.2.0
     optionalDependencies:
@@ -2741,21 +2786,53 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@web3-react/metamask/8.0.26-beta.0_react@18.2.0:
-    resolution: {integrity: sha512-srYzA4nvMBWlH7kJLCunYueyucbTLmGqDUOK3QquVmQ+avvwOlYVzyvKPQrHf4M2+6f6GpzWYuw6AjNknvfaIA==}
+  /@web3-react/eip1193/8.0.26-beta.0_react@18.2.0:
+    resolution: {integrity: sha512-n/2ajjABcP8DktZfXxSHrxtPIxeSRJ9tsgfmd9XPEIW9FO7xLzLrF+nloTSghtZ8H+ZKKcswlKjYq4rbX/oqHg==}
     dependencies:
-      '@metamask/detect-provider': 1.2.0
-      '@web3-react/types': 8.0.19-beta.0_react@18.2.0
+      '@web3-react/types': 8.0.20-beta.0_react@18.2.0
     transitivePeerDependencies:
       - immer
       - react
     dev: false
 
-  /@web3-react/network/8.0.26-beta.0_react@18.2.0:
-    resolution: {integrity: sha512-8VSYbWYHpGvlJOSXgUduSp+UDUaUU1tx+/9ivMb96TOgeyUqmkbERJzzPiaE3d3Ehe+7y/uvu0+v20tQqlx8Uw==}
+  /@web3-react/empty/8.0.20-beta.0_react@18.2.0:
+    resolution: {integrity: sha512-hde1Wq7w03cal6hD0E+seVg6ZFMWKcaSZ0S5UwJi5CDxhF79oL8QuzpvTBslohRkWqzqlvl52wCSVaY+l2+F8Q==}
+    dependencies:
+      '@web3-react/types': 8.0.20-beta.0_react@18.2.0
+    transitivePeerDependencies:
+      - immer
+      - react
+    dev: false
+
+  /@web3-react/gnosis-safe/8.0.6-beta.0_react@18.2.0:
+    resolution: {integrity: sha512-xDf87UPfAZK89T19q0oKsN8P6RgWKqD8T9CxjClIVdeDxOoEWMTPn9FPeXM5/Ik3+pq3UUaqcITUZb2CMD14Zw==}
+    dependencies:
+      '@gnosis.pm/safe-apps-provider': 0.11.3
+      '@gnosis.pm/safe-apps-sdk': 7.8.0
+      '@web3-react/types': 8.0.20-beta.0_react@18.2.0
+    transitivePeerDependencies:
+      - bufferutil
+      - encoding
+      - immer
+      - react
+      - utf-8-validate
+    dev: false
+
+  /@web3-react/metamask/8.0.28-beta.0_react@18.2.0:
+    resolution: {integrity: sha512-IXuVyj6vhRAhfGQ/sN4qgET8EEdqX844pB4kCDG9kjPD3LLm5kq47ykBosgTr9YCUtdHAXN0UaUimD0TbLMRFg==}
+    dependencies:
+      '@metamask/detect-provider': 1.2.0
+      '@web3-react/types': 8.0.20-beta.0_react@18.2.0
+    transitivePeerDependencies:
+      - immer
+      - react
+    dev: false
+
+  /@web3-react/network/8.0.27-beta.0_react@18.2.0:
+    resolution: {integrity: sha512-kLHilUpLkDejx0C5Rr57puQSEVA+BQmT58xN6D/elphcZpVHAIkbh/MCYm0XrnLmqq0uOjw+jDhEYBBn80ncHQ==}
     dependencies:
       '@ethersproject/providers': 5.7.2
-      '@web3-react/types': 8.0.19-beta.0_react@18.2.0
+      '@web3-react/types': 8.0.20-beta.0_react@18.2.0
     transitivePeerDependencies:
       - bufferutil
       - immer
@@ -2763,19 +2840,19 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@web3-react/store/8.0.24-beta.0_react@18.2.0:
-    resolution: {integrity: sha512-R2MA1lByr9LwQKhso3PYq31GRYEPbM1HKC4uWGGAY42JBXG+Fnhf/0fUIDcdJzdT6tonGBKRgqXKXQ+8HEjgzA==}
+  /@web3-react/store/8.0.25-beta.0_react@18.2.0:
+    resolution: {integrity: sha512-YHrZ42EHiQ9UAJq8Y/pHsyXu6GhzbCSHaQJ9U0wCDhbPoQ9QjOj0Pwcaa/VLXljuynK/7ERP942nI1IzArt9Sg==}
     dependencies:
       '@ethersproject/address': 5.7.0
-      '@web3-react/types': 8.0.19-beta.0_react@18.2.0
+      '@web3-react/types': 8.0.20-beta.0_react@18.2.0
       zustand: 4.1.4_react@18.2.0
     transitivePeerDependencies:
       - immer
       - react
     dev: false
 
-  /@web3-react/types/8.0.19-beta.0_react@18.2.0:
-    resolution: {integrity: sha512-tM63N3IiL5E61HBvx62kDmQlQ/zCfnlYAkJCQnLWFpzQ2Kafcfpi0qAynvFye8DqSgy4E3d6kQah/NIs6BL+qw==}
+  /@web3-react/types/8.0.20-beta.0_react@18.2.0:
+    resolution: {integrity: sha512-qOZYMyUmsm3Um6t6Pg3OgnE86ufhWZpB5/VxsooB8cdpXc/C/f8KMyYSeM63GoKSMScOKwfqV6yODFL7g/Qc8g==}
     dependencies:
       zustand: 4.1.4_react@18.2.0
     transitivePeerDependencies:
@@ -2783,13 +2860,25 @@ packages:
       - react
     dev: false
 
-  /@web3-react/walletconnect/8.0.34-beta.0_a6am7bqntqsrf64p35rtri2khq:
-    resolution: {integrity: sha512-CG6dc6Lq0QVNvTp5lCFycIaHoPPV+X/6ay3swd5t2LD9R9Ao8sSzF0zU9Fi1iq41UDCue6WO4u2Lp7uHNAIcxw==}
+  /@web3-react/url/8.0.25-beta.0_react@18.2.0:
+    resolution: {integrity: sha512-cjFfAFjsWF5vqJ7TG79HT72jNNWlcS9bqbNK2jvu25zej62zMpPvy4iyYiV7zy2SLbAQTdsgvIMYAdxRbnzlWg==}
+    dependencies:
+      '@ethersproject/providers': 5.7.2
+      '@web3-react/types': 8.0.20-beta.0_react@18.2.0
+    transitivePeerDependencies:
+      - bufferutil
+      - immer
+      - react
+      - utf-8-validate
+    dev: false
+
+  /@web3-react/walletconnect/8.0.35-beta.0_a6am7bqntqsrf64p35rtri2khq:
+    resolution: {integrity: sha512-fUrqcnwAr5oecZ6VUE/7+RSVURrohbAgWMLKYxd8Zo47AtTPzgJ1t5Lydh/EX4xJPLhfK1LqX5YgMwiys3DvhQ==}
     peerDependencies:
       '@walletconnect/ethereum-provider': ^1.7.5
     dependencies:
       '@walletconnect/ethereum-provider': 1.8.0
-      '@web3-react/types': 8.0.19-beta.0_react@18.2.0
+      '@web3-react/types': 8.0.20-beta.0_react@18.2.0
       eventemitter3: 4.0.7
     transitivePeerDependencies:
       - immer
