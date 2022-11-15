@@ -12,8 +12,7 @@
     "clean": "rm -Rf ./dist && rm -Rf *.tgz",
     "prebuild": "npm run clean",
     "build:tsup": "tsup",
-    "build": "npm run build:tsup",
-    "publish": "npm run build && npm publish --access=public"
+    "build": "npm run build:tsup"
   },
   "author": "",
   "license": "ISC",
