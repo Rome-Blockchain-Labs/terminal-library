@@ -4,6 +4,8 @@ import {
   TerminalBridgeReadyEvent,
 } from "./types";
 
+export type BridgeAnalyticsEventData = { [key: string]: string };
+
 class WidgetBridge {
   widgetId = null;
 
@@ -21,6 +23,13 @@ class WidgetBridge {
       { payload: payload, type: type, widgetId: this.widgetId },
       "*"
     );
+  }
+
+  sendAnalyticsEvent(event:string,data:BridgeAnalyticsEventData){
+    this.emit(RomeEventType.WIDGET_GOOGLE_ANALYTICS_EVENT, {
+      data,
+      event
+    });
   }
 
   subscribe<T>(type: RomeEventType, handler: RomeEventHandler<T>) {

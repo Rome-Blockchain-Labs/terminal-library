@@ -1,24 +1,7 @@
 var __defProp = Object.defineProperty;
-var __defProps = Object.defineProperties;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
-var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
 var __getOwnPropNames = Object.getOwnPropertyNames;
-var __getOwnPropSymbols = Object.getOwnPropertySymbols;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
-var __propIsEnum = Object.prototype.propertyIsEnumerable;
-var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-var __spreadValues = (a, b) => {
-  for (var prop in b || (b = {}))
-    if (__hasOwnProp.call(b, prop))
-      __defNormalProp(a, prop, b[prop]);
-  if (__getOwnPropSymbols)
-    for (var prop of __getOwnPropSymbols(b)) {
-      if (__propIsEnum.call(b, prop))
-        __defNormalProp(a, prop, b[prop]);
-    }
-  return a;
-};
-var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
 var __export = (target, all) => {
   for (var name in all)
     __defProp(target, name, { get: all[name], enumerable: true });
@@ -49,13 +32,13 @@ __export(src_exports, {
 module.exports = __toCommonJS(src_exports);
 
 // src/types.ts
-var RomeEventType = /* @__PURE__ */ ((RomeEventType3) => {
-  RomeEventType3["TERMINAL_CLICK_BUTTON"] = "rome.terminal.click_button";
-  RomeEventType3["TERMINAL_BRIDGE_READY"] = "rome.terminal.bridge_ready";
-  RomeEventType3["WIDGET_UPDATE_BUTTON_STATUS"] = "rome.widget.update_button_status";
-  RomeEventType3["WIDGET_GOOGLE_ANALYTICS_EVENT"] = "rome.widget.google_analytics_event";
-  RomeEventType3["WIDGET_GENERIC_MESSAGE"] = "rome.widget.generic_message";
-  return RomeEventType3;
+var RomeEventType = /* @__PURE__ */ ((RomeEventType2) => {
+  RomeEventType2["TERMINAL_CLICK_BUTTON"] = "rome.terminal.click_button";
+  RomeEventType2["TERMINAL_BRIDGE_READY"] = "rome.terminal.bridge_ready";
+  RomeEventType2["WIDGET_UPDATE_BUTTON_STATUS"] = "rome.widget.update_button_status";
+  RomeEventType2["WIDGET_GOOGLE_ANALYTICS_EVENT"] = "rome.widget.google_analytics_event";
+  RomeEventType2["WIDGET_GENERIC_MESSAGE"] = "rome.widget.generic_message";
+  return RomeEventType2;
 })(RomeEventType || {});
 var RomeEvent = class {
   constructor(payload) {
@@ -90,12 +73,24 @@ var WidgetBridge = class {
     this.widgetId = null;
   }
   init() {
-    this.subscribe(TerminalBridgeReadyEvent.TYPE, (data) => {
-      this.widgetId = data.payload.widgetId;
-    });
+    this.subscribe(
+      TerminalBridgeReadyEvent.TYPE,
+      (data) => {
+        this.widgetId = data.payload.widgetId;
+      }
+    );
   }
   emit(type, payload) {
-    window.parent.postMessage({ payload, type, widgetId: this.widgetId }, "*");
+    window.parent.postMessage(
+      { payload, type, widgetId: this.widgetId },
+      "*"
+    );
+  }
+  sendAnalyticsEvent(event, data) {
+    this.emit("rome.widget.google_analytics_event" /* WIDGET_GOOGLE_ANALYTICS_EVENT */, {
+      data,
+      event
+    });
   }
   subscribe(type, handler) {
     window.addEventListener("message", (event) => {
@@ -118,7 +113,7 @@ var TerminalBridge = class {
   emit(event) {
     if (!this.iframeWindow)
       throw new Error("Invalid window object");
-    this.iframeWindow.postMessage(__spreadProps(__spreadValues({}, event), { widgetId: this.widgetId }), "*");
+    this.iframeWindow.postMessage({ ...event, widgetId: this.widgetId }, "*");
   }
   subscribe(type, handler) {
     window.addEventListener("message", (event) => {
