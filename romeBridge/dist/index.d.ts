@@ -24,10 +24,14 @@ declare class WidgetUpdateButtonStatusEvent extends RomeEvent {
     type: RomeEventType;
 }
 
+declare type BridgeAnalyticsEventData = {
+    [key: string]: string;
+};
 declare class WidgetBridge {
     widgetId: any;
     init(): void;
     emit(type: RomeEventType, payload: any): void;
+    sendAnalyticsEvent(event: string, data: BridgeAnalyticsEventData): void;
     subscribe<T>(type: RomeEventType, handler: RomeEventHandler<T>): void;
 }
 declare const widgetBridge: WidgetBridge;
@@ -51,4 +55,4 @@ declare class TerminalBridgeFactory {
 }
 declare const terminalBridgeFactory: TerminalBridgeFactory;
 
-export { RomeEvent, RomeEventHandler, RomeEventType, TerminalBridge, TerminalBridgeFactory, TerminalBridgeReadyEvent, TerminalClickButtonEvent, WidgetUpdateButtonStatusEvent, terminalBridgeFactory, widgetBridge };
+export { BridgeAnalyticsEventData, RomeEvent, RomeEventHandler, RomeEventType, TerminalBridge, TerminalBridgeFactory, TerminalBridgeReadyEvent, TerminalClickButtonEvent, WidgetUpdateButtonStatusEvent, terminalBridgeFactory, widgetBridge };
