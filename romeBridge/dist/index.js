@@ -4,6 +4,7 @@ var RomeEventType = /* @__PURE__ */ ((RomeEventType2) => {
   RomeEventType2["TERMINAL_BRIDGE_READY"] = "rome.terminal.bridge_ready";
   RomeEventType2["WIDGET_UPDATE_BUTTON_STATUS"] = "rome.widget.update_button_status";
   RomeEventType2["WIDGET_GOOGLE_ANALYTICS_EVENT"] = "rome.widget.google_analytics_event";
+  RomeEventType2["WIDGET_ANALYTICS_TRANSACTION_EVENT"] = "rome.widget.analytics_transaction_event";
   RomeEventType2["WIDGET_GENERIC_MESSAGE"] = "rome.widget.generic_message";
   return RomeEventType2;
 })(RomeEventType || {});
@@ -56,6 +57,12 @@ var WidgetBridge = class {
   sendAnalyticsEvent(event, data) {
     this.emit("rome.widget.google_analytics_event" /* WIDGET_GOOGLE_ANALYTICS_EVENT */, {
       data,
+      event
+    });
+  }
+  sendAnalyticsTxEvent(event, txData) {
+    this.emit("rome.widget.analytics_transaction_event" /* WIDGET_ANALYTICS_TRANSACTION_EVENT */, {
+      txData,
       event
     });
   }
