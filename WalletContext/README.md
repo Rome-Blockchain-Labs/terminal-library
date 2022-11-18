@@ -2,7 +2,7 @@
 
 Current version is 0.1.29
 | version | description |
-| 0.1.30 | remove widgetbridge
+| 0.1.31 | remove widgetbridge
 | 0.1.29 | remove window.localstorage.clear
 | 0.1.27 | always return chain information
 | 0.1.25 | delete deprecated testnets
