@@ -11,17 +11,14 @@ import { hooks as coinbaseWalletHooks, coinbase } from '../connectors/coinbase'
 import { WalletInfo } from '../types'
 import { AddEthereumChainParameter } from '@web3-react/types'
 import { ethers } from 'ethers'
-import { RomeEventType, widgetBridge } from '@romeblockchain/bridge'
 import { CoinbaseWallet } from '@web3-react/coinbase-wallet'
 import bannedAccounts from '../../src/bannedAccounts.json'
 
-type WidgetBridge = typeof widgetBridge
-
 export const initialConnectors: [MetaMask | WalletConnect | CoinbaseWallet | Network, Web3ReactHooks][] = [
-  [network, networkHooks],
   [metaMask, metaMaskHooks],
   [walletConnect, walletConnectHooks],
   [coinbase, coinbaseWalletHooks],
+  [network, networkHooks],
 ]
 
 export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
@@ -38,21 +35,17 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
     name: 'WalletConnect',
     mobile: true,
   },
-  COINBASE: {
-    connector: coinbase,
-    hooks: coinbaseWalletHooks,
-    wallet: Wallet.COINBASE,
-    name: 'Coinbase',
-  },
+  // COINBASE: {
+  //   connector: coinbase,
+  //   hooks: coinbaseWalletHooks,
+  //   wallet: Wallet.COINBASE,
+  //   name: 'Coinbase',
+  // },
 }
 export interface IWalletContext {
   setSelectedWallet: (Wallet: Wallet | undefined) => void
   selectedWallet: Wallet | undefined
-  handleConnect: (
-    wallet: WalletInfo,
-    chainParams: number | AddEthereumChainParameter,
-    widgetBridge?: WidgetBridge,
-  ) => Promise<void>
+  handleConnect: (wallet: WalletInfo, chainParams: number | AddEthereumChainParameter) => Promise<void>
 }
 
 export const WalletContext = React.createContext<IWalletContext>({
@@ -107,11 +100,7 @@ export default function WalletProvider({
 }) {
   const [selectedWallet, setSelectedWallet] = useState<Wallet>()
 
-  const handleConnect = async (
-    wallet: WalletInfo,
-    chainParams: number | AddEthereumChainParameter,
-    widgetBridge?: WidgetBridge,
-  ) => {
+  const handleConnect = async (wallet: WalletInfo, chainParams: number | AddEthereumChainParameter) => {
     const { connector, wallet: name } = wallet
     try {
       if (connector instanceof MetaMask || connector instanceof CoinbaseWallet) {
@@ -185,10 +174,6 @@ export default function WalletProvider({
       if (targetChainId && chainId === targetChainId) {
         setSelectedWallet(name)
       }
-      widgetBridge?.emit(RomeEventType.WIDGET_GOOGLE_ANALYTICS_EVENT, {
-        event: `${name.replace(' ', '_')}_Successful_Connection`,
-        eventGroup: 'Wallet_Connection',
-      })
     } catch (error: any) {
       throw new Error('Unable to connect to wallet. error:', error)
     }
