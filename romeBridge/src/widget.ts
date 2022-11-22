@@ -1,12 +1,16 @@
-import {RomeEventHandler, RomeEventType, TerminalBridgeReadyEvent,} from "./types";
+import {
+  RomeEventHandler,
+  RomeEventType,
+  TerminalBridgeReadyEvent,
+} from "./types";
 
 export type BridgeAnalyticsEventData = { [key: string]: string };
 export type BridgeAnalyticsTxEventData = {
-  chain_id:string,
-  token_address:string,
-  token_amount_w_decimals:string
-  [key: string]: string
-}
+  chain_id?: string;
+  token_address?: string;
+  token_amount_w_decimals?: string;
+  [key: string]: string | undefined;
+};
 
 class WidgetBridge {
   widgetId = null;
@@ -27,16 +31,16 @@ class WidgetBridge {
     );
   }
 
-  sendAnalyticsEvent(event:string,data:BridgeAnalyticsEventData){
+  sendAnalyticsEvent(event: string, data: BridgeAnalyticsEventData) {
     this.emit(RomeEventType.WIDGET_GOOGLE_ANALYTICS_EVENT, {
       data,
-      event
+      event,
     });
   }
-  sendAnalyticsTxEvent(event:string,txData:BridgeAnalyticsTxEventData){
+  sendAnalyticsTxEvent(event: string, txData: BridgeAnalyticsTxEventData) {
     this.emit(RomeEventType.WIDGET_ANALYTICS_TRANSACTION_EVENT, {
       txData,
-      event
+      event,
     });
   }
 
