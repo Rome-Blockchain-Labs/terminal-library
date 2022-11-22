@@ -1,8 +1,9 @@
 # Wallet Context
 
-Current version is 0.1.29
+Current version is 0.1.31
 | version | description |
 | 0.1.31 | remove widgetbridge
+| 0.1.30 | use latest version of bridge to allow type consistency
 | 0.1.29 | remove window.localstorage.clear
 | 0.1.27 | always return chain information
 | 0.1.25 | delete deprecated testnets

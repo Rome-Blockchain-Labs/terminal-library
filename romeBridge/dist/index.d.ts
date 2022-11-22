@@ -3,6 +3,7 @@ declare enum RomeEventType {
     TERMINAL_BRIDGE_READY = "rome.terminal.bridge_ready",
     WIDGET_UPDATE_BUTTON_STATUS = "rome.widget.update_button_status",
     WIDGET_GOOGLE_ANALYTICS_EVENT = "rome.widget.google_analytics_event",
+    WIDGET_ANALYTICS_TRANSACTION_EVENT = "rome.widget.analytics_transaction_event",
     WIDGET_GENERIC_MESSAGE = "rome.widget.generic_message"
 }
 declare class RomeEvent {
@@ -27,11 +28,18 @@ declare class WidgetUpdateButtonStatusEvent extends RomeEvent {
 declare type BridgeAnalyticsEventData = {
     [key: string]: string;
 };
+declare type BridgeAnalyticsTxEventData = {
+    chain_id: string;
+    token_address: string;
+    token_amount_w_decimals: string;
+    [key: string]: string;
+};
 declare class WidgetBridge {
     widgetId: any;
     init(): void;
     emit(type: RomeEventType, payload: any): void;
     sendAnalyticsEvent(event: string, data: BridgeAnalyticsEventData): void;
+    sendAnalyticsTxEvent(event: string, txData: BridgeAnalyticsTxEventData): void;
     subscribe<T>(type: RomeEventType, handler: RomeEventHandler<T>): void;
 }
 declare const widgetBridge: WidgetBridge;
@@ -55,4 +63,4 @@ declare class TerminalBridgeFactory {
 }
 declare const terminalBridgeFactory: TerminalBridgeFactory;
 
-export { BridgeAnalyticsEventData, RomeEvent, RomeEventHandler, RomeEventType, TerminalBridge, TerminalBridgeFactory, TerminalBridgeReadyEvent, TerminalClickButtonEvent, WidgetUpdateButtonStatusEvent, terminalBridgeFactory, widgetBridge };
+export { BridgeAnalyticsEventData, BridgeAnalyticsTxEventData, RomeEvent, RomeEventHandler, RomeEventType, TerminalBridge, TerminalBridgeFactory, TerminalBridgeReadyEvent, TerminalClickButtonEvent, WidgetUpdateButtonStatusEvent, terminalBridgeFactory, widgetBridge };

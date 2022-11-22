@@ -4,6 +4,7 @@ export enum RomeEventType {
 
   WIDGET_UPDATE_BUTTON_STATUS = "rome.widget.update_button_status",
   WIDGET_GOOGLE_ANALYTICS_EVENT = 'rome.widget.google_analytics_event',
+  WIDGET_ANALYTICS_TRANSACTION_EVENT = 'rome.widget.analytics_transaction_event',
   WIDGET_GENERIC_MESSAGE = 'rome.widget.generic_message'
 }
 
