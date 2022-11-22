@@ -6,10 +6,10 @@ import {
 
 export type BridgeAnalyticsEventData = { [key: string]: string };
 export type BridgeAnalyticsTxEventData = {
-  chain_id?: string;
-  token_address?: string;
-  token_amount_w_decimals?: string;
-  [key: string]: string | undefined;
+  chain_id: string;
+  token_address: string;
+  token_amount_w_decimals: string;
+  [key: string]: string;
 };
 
 class WidgetBridge {
