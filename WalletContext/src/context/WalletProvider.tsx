@@ -15,8 +15,6 @@ import { RomeEventType, widgetBridge } from '@romeblockchain/bridge'
 import { CoinbaseWallet } from '@web3-react/coinbase-wallet'
 import bannedAccounts from '../../src/bannedAccounts.json'
 
-type WidgetBridge = typeof widgetBridge
-
 export const initialConnectors: [MetaMask | WalletConnect | CoinbaseWallet | Network, Web3ReactHooks][] = [
   [network, networkHooks],
   [metaMask, metaMaskHooks],
@@ -48,11 +46,7 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
 export interface IWalletContext {
   setSelectedWallet: (Wallet: Wallet | undefined) => void
   selectedWallet: Wallet | undefined
-  handleConnect: (
-    wallet: WalletInfo,
-    chainParams: number | AddEthereumChainParameter,
-    widgetBridge?: WidgetBridge,
-  ) => Promise<void>
+  handleConnect: (wallet: WalletInfo, chainParams: number | AddEthereumChainParameter) => Promise<void>
 }
 
 export const WalletContext = React.createContext<IWalletContext>({
@@ -107,15 +101,11 @@ export default function WalletProvider({
 }) {
   const [selectedWallet, setSelectedWallet] = useState<Wallet>()
 
-  const handleConnect = async (
-    wallet: WalletInfo,
-    chainParams: number | AddEthereumChainParameter,
-    widgetBridge?: WidgetBridge,
-  ) => {
+  const handleConnect = async (wallet: WalletInfo, chainParams: number | AddEthereumChainParameter) => {
     const { connector, wallet: name } = wallet
     try {
       if (connector instanceof MetaMask || connector instanceof CoinbaseWallet) {
-        //Metamask will automatically add the network if doesnt no
+        //Metamask will automatically add theWidgetRomeBridgeIframe network if doesnt no
         await connector.activate(chainParams)
         console.log('connected to metamask/coinbase')
       } else {
@@ -171,6 +161,15 @@ export default function WalletProvider({
         method: 'eth_chainId',
       })
 
+      const accounts = (await connector.provider?.request({
+        method: 'eth_requestAccounts',
+      })) as string[]
+
+      widgetBridge?.sendWalletConnectEvent(RomeEventType.WIDGET_WALLET_CONNECT_EVENT, {
+        address: accounts[0],
+        wallet: name,
+      })
+
       if (!chainId) throw new Error('Unable to get chainID from provider')
       let targetChainId
       if (typeof chainParams === 'number') {
@@ -185,14 +184,16 @@ export default function WalletProvider({
       if (targetChainId && chainId === targetChainId) {
         setSelectedWallet(name)
       }
-      widgetBridge?.emit(RomeEventType.WIDGET_GOOGLE_ANALYTICS_EVENT, {
-        event: `${name.replace(' ', '_')}_Successful_Connection`,
-        eventGroup: 'Wallet_Connection',
-      })
     } catch (error: any) {
       throw new Error('Unable to connect to wallet. error:', error)
     }
   }
+
+  useEffect(() => {
+    if (!selectedWallet) {
+      widgetBridge?.sendWalletDisconnectEvent(RomeEventType.WIDGET_WALLET_DISCONNECT_EVENT)
+    }
+  }, [selectedWallet])
 
   useEffect(() => {
     if (connectToNetwork) {

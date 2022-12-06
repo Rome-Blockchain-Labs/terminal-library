@@ -1,6 +1,6 @@
 {
   "name": "@romeblockchain/bridge",
-  "version": "0.0.6",
+  "version": "0.0.9",
   "description": "widget-parent & widget-widget communication inside Rome Terminal",
   "main": "./dist/index.js",
   "type": "module",
