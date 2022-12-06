@@ -11,8 +11,19 @@ export type BridgeAnalyticsTxEventData = {
   token_amount_w_decimals: string;
   [key: string]: string;
 };
+
+export enum Wallet {
+  INJECTED = "INJECTED",
+  METAMASK = "METAMASK",
+  COINBASE = "COINBASE",
+  WALLET_CONNECT = "WALLET_CONNECT",
+  FORTMATIC = "FORTMATIC",
+  NETWORK = "NETWORK",
+  GNOSIS_SAFE = "GNOSIS_SAFE",
+}
+
 export type BridgeWalletConnectEventData = {
-  wallet: "METAMASK" | "COINBASE" | "WALLET_CONNECT";
+  wallet: Wallet;
   address: string;
 };
 
@@ -43,7 +54,7 @@ class WidgetBridge {
   }
 
   sendWalletDisconnectEvent(event: string) {
-    this.emit(RomeEventType.WIDGET_WALLET_CONNECT_EVENT, {
+    this.emit(RomeEventType.WIDGET_WALLET_DISCONNECT_EVENT, {
       event,
     });
   }
