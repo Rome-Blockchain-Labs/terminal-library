@@ -48,6 +48,12 @@ const JEWEL: AddEthereumChainParameter['nativeCurrency'] = {
   decimals: 18,
 }
 
+const KLAY: AddEthereumChainParameter['nativeCurrency'] = {
+  name: 'Klay',
+  symbol: 'KLAY',
+  decimals: 18,
+}
+
 interface BasicChainInformation {
   urls: (string | undefined)[]
   name: string
@@ -63,6 +69,7 @@ export enum NetworkName {
   OPTIMISM = 'optimism',
   POLYGON = 'polygon',
   DFK = 'dfk',
+  KLAYTN = 'klaytn',
 }
 
 interface ExtendedChainInformation extends BasicChainInformation {
@@ -91,6 +98,7 @@ const NetworkChainMap: { [key in NetworkName]: number } = {
   optimism: 10,
   polygon: 137,
   dfk: 53935,
+  klaytn: 8217,
 }
 
 export const CHAINS: { [chainId: number]: ExtendedChainInformation } = {
@@ -184,6 +192,12 @@ export const CHAINS: { [chainId: number]: ExtendedChainInformation } = {
     name: 'DFK',
     nativeCurrency: JEWEL,
     blockExplorerUrls: ['https://subnets.avax.network/defi-kingdoms'],
+  },
+  8217: {
+    urls: ['https://public-node-api.klaytnapi.com/v1/cypress'].filter((url) => url !== undefined),
+    name: 'Klaytn',
+    nativeCurrency: KLAY,
+    blockExplorerUrls: ['https://scope.klaytn.com'],
   },
 }
 
