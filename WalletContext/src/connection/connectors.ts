@@ -5,9 +5,6 @@ import { Network } from '@web3-react/network'
 import { Connector } from '@web3-react/types'
 import { WalletConnect } from '@web3-react/walletconnect'
 import { URLS } from '../chains'
-import WalletConnectLogo from '../icons/WalletConnectLogo'
-import CoinbaseIcon from '../icons/Coinbase'
-import { LogoProps } from '../icons/Coinbase'
 
 export enum ConnectionType {
   INJECTED = 'INJECTED',
@@ -21,7 +18,6 @@ export interface Connection {
   connector: Connector
   hooks: Web3ReactHooks
   type: ConnectionType
-  icon?: React.FC<LogoProps>
 }
 
 function onError(error: Error) {
@@ -63,7 +59,6 @@ export const walletConnectConnection: Connection = {
   connector: web3WalletConnect,
   hooks: web3WalletConnectHooks,
   type: ConnectionType.WALLET_CONNECT,
-  icon: WalletConnectLogo,
 }
 
 const [web3CoinbaseWallet, web3CoinbaseWalletHooks] = initializeConnector<CoinbaseWallet>(
@@ -83,7 +78,6 @@ export const coinbaseWalletConnection: Connection = {
   connector: web3CoinbaseWallet,
   hooks: web3CoinbaseWalletHooks,
   type: ConnectionType.COINBASE_WALLET,
-  icon: CoinbaseIcon,
 }
 
 export const ConnectionList: Connection[] = [injectedConnection, coinbaseWalletConnection, walletConnectConnection]

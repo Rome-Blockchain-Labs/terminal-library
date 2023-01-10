@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import { getAddChainParameters, useWallets, useWeb3React, ConnectionList } from '@iandjx/wallet'
+import { getAddChainParameters, useWallets, useWeb3React, ConnectionList } from '@romeblockchain/wallet'
 
 const ethparams = getAddChainParameters(1)
 const avaxparams = getAddChainParameters(43114)
@@ -53,7 +53,6 @@ export default function Home() {
               }}
             >
               {c.type}
-              {c.icon && <c.icon size={24} />}
             </button>
           )
         })}
