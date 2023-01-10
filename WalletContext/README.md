@@ -1,7 +1,8 @@
 # Wallet Context
 
-Current version is 0.1.32
+Current version is 0.1.33
 | version | description |
+| 0.1.33 | expose utils
 | 0.1.32 | simplified handle connect logic, added loading event
 | 0.1.30 | emit wallet connect and disconnect events
 | 0.1.29 | use latest version of bridge to allow type consistency
