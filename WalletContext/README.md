@@ -1,7 +1,8 @@
 # Wallet Context
 
-Current version is 0.1.34
+Current version is 0.1.35
 | version | description |
+| 0.1.35 | change type for chainparams
 | 0.1.34 | remove icons
 | 0.1.33 | expose utils
 | 0.1.32 | simplified handle connect logic, added loading event
