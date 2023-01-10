@@ -1,7 +1,11 @@
 # Wallet Context
 
-Current version is 0.1.29
+Current version is 0.1.35
 | version | description |
+| 0.1.35 | change type for chainparams
+| 0.1.34 | remove icons
+| 0.1.33 | expose utils
+| 0.1.32 | simplified handle connect logic, added loading event
 | 0.1.30 | emit wallet connect and disconnect events
 | 0.1.29 | use latest version of bridge to allow type consistency
 | 0.1.29 | remove window.localstorage.clear
@@ -28,7 +32,7 @@ The package exposes the following
 1. WalletProvider - React Context Provider for the connectors
 2. useWallets - Hook that exposes setSelectedWallet function that updates the priority wallet
 3. useWeb3React - Hook that exposes the connector and hooks for the priority wallet
-4. SUPPORTED_WALLETS - An object map that contains all supported wallets by the package.
+4. ConnectionList - An array that contains all supported wallets by the package.
 
 ## Quick Start
 

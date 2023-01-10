@@ -77,7 +77,7 @@ interface ExtendedChainInformation extends BasicChainInformation {
   blockExplorerUrls: AddEthereumChainParameter['blockExplorerUrls']
 }
 
-export function getAddChainParameters(chainId: number): AddEthereumChainParameter | number {
+export function getAddChainParameters(chainId: number): AddEthereumChainParameter {
   const chainInformation = CHAINS[chainId]
   return {
     chainId,

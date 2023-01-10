@@ -1,11 +1,12 @@
-import { getAddChainParameters, SUPPORTED_WALLETS, useWallets, useWeb3React } from '@romeblockchain/wallet'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
+import { getAddChainParameters, useWallets, useWeb3React, ConnectionList } from '@romeblockchain/wallet'
+
 const ethparams = getAddChainParameters(1)
 const avaxparams = getAddChainParameters(43114)
 
 export default function Home() {
-  const { handleConnect, selectedWallet, setSelectedWallet } = useWallets()
+  const { handleConnect, selectedWallet, loading } = useWallets()
   const { account, connector } = useWeb3React()
   return (
     <div className={styles.container}>
@@ -15,6 +16,7 @@ export default function Home() {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <div>
+        {loading && <div>Currently connecting to wallet</div>}
         <div>{account}</div>
         {account && (
           <button
@@ -30,9 +32,8 @@ export default function Home() {
           </button>
         )}
         <div>connect to ethereum</div>
-        {Object.keys(SUPPORTED_WALLETS).map((key, index) => {
-          const wallet = SUPPORTED_WALLETS[key]
-          const isActive = selectedWallet === wallet.wallet
+        {ConnectionList.map((c, index) => {
+          const isActive = selectedWallet === c.type
 
           return (
             <button
@@ -44,43 +45,43 @@ export default function Home() {
               onClick={async () => {
                 try {
                   console.log(ethparams)
-                  await handleConnect(wallet, ethparams)
+                  console.log(c)
+                  await handleConnect(c.connector, ethparams as any)
                 } catch (error) {
                   console.log(error)
                 }
               }}
             >
-              {wallet.wallet}
+              {c.type}
             </button>
           )
         })}
       </div>
       <div>connect to avalanche</div>
-      <div>
-        {Object.keys(SUPPORTED_WALLETS).map((key, index) => {
-          const wallet = SUPPORTED_WALLETS[key]
-          const isActive = selectedWallet === wallet.wallet
 
-          return (
-            <button
-              style={{
-                background: isActive ? 'green' : 'gray',
-              }}
-              disabled={!!account}
-              key={index}
-              onClick={async () => {
-                try {
-                  await handleConnect(wallet, avaxparams)
-                } catch (error) {
-                  console.log(error)
-                }
-              }}
-            >
-              {wallet.wallet}
-            </button>
-          )
-        })}
-      </div>
+      {ConnectionList.map((c, index) => {
+        const isActive = selectedWallet === c.type
+
+        return (
+          <button
+            style={{
+              background: isActive ? 'green' : 'gray',
+            }}
+            disabled={!!account}
+            key={index}
+            onClick={async () => {
+              try {
+                console.log(ethparams)
+                await handleConnect(c.connector, avaxparams as any)
+              } catch (error) {
+                console.log(error)
+              }
+            }}
+          >
+            {c.type}
+          </button>
+        )
+      })}
     </div>
   )
 }
