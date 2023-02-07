@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
+
 import { getAddChainParameters, useWallets, useWeb3React, ConnectionList } from '@romeblockchain/wallet'
 
 const ethparams = getAddChainParameters(1)
@@ -46,7 +47,7 @@ export default function Home() {
                 try {
                   console.log(ethparams)
                   console.log(c)
-                  await handleConnect(c.connector, ethparams as any)
+                  await handleConnect(c.connector)
                 } catch (error) {
                   console.log(error)
                 }

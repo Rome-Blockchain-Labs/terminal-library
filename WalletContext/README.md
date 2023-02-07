@@ -2,6 +2,7 @@
 
 Current version is 0.1.35
 | version | description |
+| 0.1.36 | Enable ability to just connect wallet without requiring to switch networks
 | 0.1.35 | change type for chainparams
 | 0.1.34 | remove icons
 | 0.1.33 | expose utils

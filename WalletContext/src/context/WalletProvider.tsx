@@ -11,7 +11,7 @@ import useOrderedConnections from '../hooks/useOrderedConnections'
 export interface IWalletContext {
   setSelectedWallet: (ConnectionType: undefined) => void
   selectedWallet: ConnectionType | undefined
-  handleConnect: (connector: Connector, chainParams: AddEthereumChainParameter) => Promise<void>
+  handleConnect: (connector: Connector, chainParams?: AddEthereumChainParameter) => Promise<void>
   loading: boolean
 }
 
@@ -65,44 +65,54 @@ export const WalletProvider = ({ children, connectToNetwork }: { children: React
 
   const connections = useOrderedConnections(selectedWallet)
 
-  const handleConnect = async (connector: Connector, chainParams: AddEthereumChainParameter) => {
+  const handleConnect = async (connector: Connector, chainParams?: AddEthereumChainParameter) => {
     const connection = getConnection(connector)
+    const chainIdInput = chainParams && chainParams.chainId ? chainParams.chainId : undefined
+    const chainIdInputHex = chainIdInput ? ethers.utils.hexValue(chainIdInput) : undefined
     setLoading(true)
+
     try {
       // error would return true if user rejects the wallet connection request
       // if network doesnt exist yet connector.activate would not throw an error and still successsfully activate
-      await connector.activate(chainParams.chainId)
-
+      await connector.activate(chainIdInput)
       // activate needs to occur before wallet_addEthereumChain because we can only make requests with an active
       // connector.
-      // calling wallet_addEthereumChain will check if the chainId is already present in the wallet
-      // if the chainId alreaady exists then it wont add the duplicate network to the wallet
-      connector.provider
-        ?.request({
-          method: 'wallet_addEthereumChain',
-          params: [
-            {
-              ...chainParams,
-              chainId: ethers.utils.hexValue(chainParams.chainId),
-            },
-          ],
-        })
-        .then(() => console.log('chain added'))
 
-      connector.provider
-        ?.request({
-          method: 'wallet_switchEthereumChain',
-          params: [{ chainId: ethers.utils.hexValue(chainParams.chainId) }],
+      // check if chainId was passed, if it did, then we can assume that
+      // the user wished to add "Chain" and do a "Network Switch"
+      // otherwise this is just simply a wallet connect
+      if (chainIdInput != undefined) {
+        // calling wallet_addEthereumChain will check if the chainId is already present in the wallet
+        // if the chainId alreaady exists then it wont add the duplicate network to the wallet
+        connector.provider
+          ?.request({
+            method: 'wallet_addEthereumChain',
+            params: [
+              {
+                ...chainParams,
+                chainId: chainIdInputHex,
+              },
+            ],
+          })
+          .then(() => console.log('chain added'))
+  
+        connector.provider
+          ?.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{ 
+              chainId: chainIdInputHex
+            }],
+          })
+          .then(() => console.log('switched network'))
+  
+        // we need to subscribe to chainChanged because we would only want to switch selectedWallet when
+        // the user has switched networks especially when the netork is newly added
+        connector.provider?.once('chainChanged', () => {
+          console.log('Chain changed')
+          setSelectedWallet(connection.type)
+          connector.provider?.removeListener('chainChanged', () => {})
         })
-        .then(() => console.log('switched network'))
-
-      // we need to subscribe to chainChanged because we would only want to switch selectedWallet when
-      // the user has switched networks especially when the netork is newly added
-      connector.provider?.once('chainChanged', () => {
-        console.log('Chain changed')
-        setSelectedWallet(connection.type)
-        connector.provider?.removeListener('chainChanged', () => {})
-      })
+      }
 
       // If wallet is already connected to the correct network then set wallet as priority wallet
       const chainId = await connector.provider?.request({
@@ -120,7 +130,7 @@ export const WalletProvider = ({ children, connectToNetwork }: { children: React
 
       if (!chainId) throw new Error('Unable to get chainID from provider')
 
-      if (chainId === ethers.utils.hexValue(chainParams.chainId)) {
+      if (chainId === chainIdInputHex) {
         setSelectedWallet(connection.type)
       }
     } catch (error: any) {
