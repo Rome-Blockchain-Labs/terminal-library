@@ -47,7 +47,7 @@ export default function Home() {
                 try {
                   console.log(ethparams)
                   console.log(c)
-                  await handleConnect(c.connector)
+                  await handleConnect(c)
                 } catch (error) {
                   console.log(error)
                 }
@@ -73,7 +73,7 @@ export default function Home() {
             onClick={async () => {
               try {
                 console.log(ethparams)
-                await handleConnect(c.connector, avaxparams as any)
+                await handleConnect(c, avaxparams as any)
               } catch (error) {
                 console.log(error)
               }

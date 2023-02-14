@@ -11,7 +11,7 @@ import useOrderedConnections from '../hooks/useOrderedConnections'
 export interface IWalletContext {
   setSelectedWallet: (ConnectionType: undefined) => void
   selectedWallet: ConnectionType | undefined
-  handleConnect: (connector: Connector, chainParams?: AddEthereumChainParameter) => Promise<void>
+  handleConnect: (connection: Connection, chainParams?: AddEthereumChainParameter) => Promise<void>
   loading: boolean
 }
 
@@ -65,9 +65,10 @@ export const WalletProvider = ({ children, connectToNetwork }: { children: React
 
   const connections = useOrderedConnections(selectedWallet)
 
-  const handleConnect = async (connector: Connector, chainParams?: AddEthereumChainParameter) => {
+  const handleConnect = async (connection: Connection, chainParams?: AddEthereumChainParameter) => {
     const chainIdInput = chainParams && chainParams.chainId
     const chainIdInputHex = chainIdInput && ethers.utils.hexValue(chainIdInput)
+    const { connector } = connection
 
     setLoading(true)
 

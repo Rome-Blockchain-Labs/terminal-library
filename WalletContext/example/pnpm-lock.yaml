@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@iandjx/wallet': ^0.1.47
+  '@iandjx/wallet': ^0.1.53
   '@types/node': 18.11.7
   '@types/react': 18.0.24
   '@types/react-dom': 18.0.8
@@ -13,7 +13,7 @@ specifiers:
   typescript: 4.8.4
 
 dependencies:
-  '@iandjx/wallet': 0.1.47_uz2ogxeagc4rbieizlfzyaazee
+  '@iandjx/wallet': 0.1.54_uz2ogxeagc4rbieizlfzyaazee
   next: 13.0.1_biqbaboplfbrettd7655fr4n2y
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
@@ -569,8 +569,8 @@ packages:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
     dev: true
 
-  /@iandjx/wallet/0.1.47_uz2ogxeagc4rbieizlfzyaazee:
-    resolution: {integrity: sha512-0OV4eLKHOVsT7Yn7FEkBaAVYCxM3yemI1x1XST2McJ4Ji3JtHiFV2akJ0oZyTVWfzggvk1WP28edTT2StnRaiQ==}
+  /@iandjx/wallet/0.1.54_uz2ogxeagc4rbieizlfzyaazee:
+    resolution: {integrity: sha512-vXgx1JM32EIa5umnb1OwMCWYvpQuX4acWBASw1ZQU6+QuvZgeQF5ls5V55jAw5KA42bzaeLwpiNYrnUmX09fHQ==}
     peerDependencies:
       react: '>=16'
     dependencies:
