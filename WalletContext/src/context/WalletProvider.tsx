@@ -5,7 +5,7 @@ import { ethers } from 'ethers'
 import { RomeEventType, widgetBridge } from '@romeblockchain/bridge'
 import bannedAccounts from '../../src/bannedAccounts.json'
 import { Connection, ConnectionType, networkConnection } from '../connection/connectors'
-import { getConnection, getConnectionName } from '../connection/utils'
+import { getConnectionName } from '../connection/utils'
 import useOrderedConnections from '../hooks/useOrderedConnections'
 
 export interface IWalletContext {
@@ -66,9 +66,9 @@ export const WalletProvider = ({ children, connectToNetwork }: { children: React
   const connections = useOrderedConnections(selectedWallet)
 
   const handleConnect = async (connector: Connector, chainParams?: AddEthereumChainParameter) => {
-    const connection = getConnection(connector)
-    const chainIdInput = chainParams && chainParams.chainId ? chainParams.chainId : undefined
-    const chainIdInputHex = chainIdInput ? ethers.utils.hexValue(chainIdInput) : undefined
+    const chainIdInput = chainParams && chainParams.chainId
+    const chainIdInputHex = chainIdInput && ethers.utils.hexValue(chainIdInput)
+
     setLoading(true)
 
     try {
@@ -77,62 +77,41 @@ export const WalletProvider = ({ children, connectToNetwork }: { children: React
       await connector.activate(chainIdInput)
       // activate needs to occur before wallet_addEthereumChain because we can only make requests with an active
       // connector.
+      console.log(connector.provider, 'provider')
+      // only trigger addethereumchain and switchethereumchain for wallet connect connector
+      // calling wallet_addEthereumChain will check if the chainId is already present in the wallet
+      // if the chainId alreaady exists then it wont add the duplicate network to the wallet
+      await connector.provider?.request({
+        method: 'wallet_addEthereumChain',
+        params: [
+          {
+            ...chainParams,
+            chainId: chainIdInputHex,
+          },
+        ],
+      })
 
-      // check if chainId was passed, if it did, then we can assume that
-      // the user wished to add "Chain" and do a "Network Switch"
-      // otherwise this is just simply a wallet connect
-      if (chainIdInput != undefined) {
-        // calling wallet_addEthereumChain will check if the chainId is already present in the wallet
-        // if the chainId alreaady exists then it wont add the duplicate network to the wallet
-        connector.provider
-          ?.request({
-            method: 'wallet_addEthereumChain',
-            params: [
-              {
-                ...chainParams,
-                chainId: chainIdInputHex,
-              },
-            ],
-          })
-          .then(() => console.log('chain added'))
-  
-        connector.provider
-          ?.request({
-            method: 'wallet_switchEthereumChain',
-            params: [{ 
-              chainId: chainIdInputHex
-            }],
-          })
-          .then(() => console.log('switched network'))
-  
-        // we need to subscribe to chainChanged because we would only want to switch selectedWallet when
-        // the user has switched networks especially when the netork is newly added
-        connector.provider?.once('chainChanged', () => {
-          console.log('Chain changed')
-          setSelectedWallet(connection.type)
-          connector.provider?.removeListener('chainChanged', () => {})
+      await connector.provider?.request({
+        method: 'wallet_switchEthereumChain',
+        params: [
+          {
+            chainId: chainIdInputHex,
+          },
+        ],
+      })
+
+      const accounts =
+        connector.provider &&
+        ((await connector.provider.request({
+          method: 'eth_requestAccounts',
+        })) as string[])
+
+      widgetBridge &&
+        accounts &&
+        widgetBridge.sendWalletConnectEvent(RomeEventType.WIDGET_WALLET_CONNECT_EVENT, {
+          address: accounts[0],
+          wallet: ConnectionType as any,
         })
-      }
-
-      // If wallet is already connected to the correct network then set wallet as priority wallet
-      const chainId = await connector.provider?.request({
-        method: 'eth_chainId',
-      })
-
-      const accounts = (await connector.provider?.request({
-        method: 'eth_requestAccounts',
-      })) as string[]
-
-      widgetBridge?.sendWalletConnectEvent(RomeEventType.WIDGET_WALLET_CONNECT_EVENT, {
-        address: accounts[0],
-        wallet: ConnectionType as any,
-      })
-
-      if (!chainId) throw new Error('Unable to get chainID from provider')
-
-      if (chainId === chainIdInputHex) {
-        setSelectedWallet(connection.type)
-      }
     } catch (error: any) {
       throw new Error('Unable to connect to wallet. error:', error)
     }
@@ -141,8 +120,8 @@ export const WalletProvider = ({ children, connectToNetwork }: { children: React
   }
 
   useEffect(() => {
-    if (!selectedWallet) {
-      widgetBridge?.sendWalletDisconnectEvent(RomeEventType.WIDGET_WALLET_DISCONNECT_EVENT)
+    if (!selectedWallet && widgetBridge) {
+      widgetBridge.sendWalletDisconnectEvent(RomeEventType.WIDGET_WALLET_DISCONNECT_EVENT)
     }
   }, [selectedWallet])
 

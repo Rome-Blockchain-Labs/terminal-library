@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 
-import { getAddChainParameters, useWallets, useWeb3React, ConnectionList } from '@romeblockchain/wallet'
+import { getAddChainParameters, useWallets, useWeb3React, ConnectionList } from '@iandjx/wallet'
 
 const ethparams = getAddChainParameters(1)
 const avaxparams = getAddChainParameters(43114)
@@ -83,6 +83,8 @@ export default function Home() {
           </button>
         )
       })}
+
+      <iframe src='http://localhost:3001' height='500' width='500' title='Iframe Example'></iframe>
     </div>
   )
 }
