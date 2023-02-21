@@ -1,11 +1,13 @@
-import React, { useEffect, FC } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
 import styled from 'styled-components';
+import Popper from '@mui/material/Popper';
+import ClickAwayListener from '@mui/material/ClickAwayListener';
+
 import { stopSelecting, setViewResult } from '../redux/tokenSearchSlice';
 import SearchInput from './SearchInput';
 import SearchResult from './SearchResult';
 import SearchFilters from './SearchFilters';
-import useClickOutside from '../hooks/useClickOutside';
 import { RenderProps } from '../../types';
 
 const DesktopSearchWrapper = styled.div`
@@ -35,11 +37,14 @@ const DesktopSearchInner = styled.div`
   `}
 `;
 
-const Backdrop = styled.div`
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
+const PopoverContent = styled.div<{ minWidth: number }>`
+  padding: 10px;
+  background: #494F5B;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 2px;
+
+  ${({ minWidth }) => Boolean(minWidth) && `min-width: ${minWidth}px;`}
 `;
 
 const DesktopSearch: FC<RenderProps> = (renderProps: RenderProps) => {
@@ -47,29 +52,47 @@ const DesktopSearch: FC<RenderProps> = (renderProps: RenderProps) => {
   const { customWrapper } = renderProps;
   const { isSelecting, isLoading, viewResult } = useSelector((state: RootStateOrAny) => state);
 
-  const closeResultPanel = () => {
+  const [, setRecomputePopperPosition] = useState(false);
+
+  const searchInputRef = useRef<HTMLInputElement | null>(null);
+
+  const onClickAwayResultsMenu = () => {
     dispatch(stopSelecting());
     dispatch(setViewResult(false));
   };
 
-  const searchRef = useClickOutside(closeResultPanel);
+  function toggleRecomputePopperPosition() {
+    setRecomputePopperPosition(prev => !prev);
+  }
+
+  useEffect(() => {
+    setTimeout(() => {
+      toggleRecomputePopperPosition();
+    }, 100);
+  }, [isSelecting]);
 
   return (
     <DesktopSearchWrapper>
-      {isSelecting && <Backdrop />}
-      <DesktopSearchInner ref={searchRef} styleOverrides={customWrapper}>
-        <SearchInput />
-        {isSelecting && (
-          <div className="tl-dropdown">
-            <SearchFilters />
-            {viewResult && <SearchResult loading={isLoading} />}
-          </div>
-        )}
-      </DesktopSearchInner>
+        <DesktopSearchInner styleOverrides={customWrapper}>
+          <ClickAwayListener onClickAway={onClickAwayResultsMenu}>
+            <div>
+              <div ref={searchInputRef}>
+                <SearchInput />
+              </div>
+              <Popper
+                open={isSelecting}
+                anchorEl={searchInputRef?.current}
+              >
+                <PopoverContent style={{ minWidth: searchInputRef?.current?.offsetWidth ?? 360 }}>
+                  <SearchFilters recomputePositioning={toggleRecomputePopperPosition} />
+                  {viewResult && <SearchResult loading={isLoading} />}
+                </PopoverContent>
+              </Popper>
+            </div>
+          </ClickAwayListener>
+        </DesktopSearchInner>
     </DesktopSearchWrapper>
-  )
-
-  
+  );
 };
 
 export default DesktopSearch;

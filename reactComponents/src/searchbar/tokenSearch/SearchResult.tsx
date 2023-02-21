@@ -9,10 +9,11 @@ import Button from "./Button";
 import UnCheckedIcon from "../icons/unchecked";
 import { setViewResult, loadMore } from "../redux/tokenSearchSlice";
 import ResultDetail, { StyledGridRow } from "./ResultDetail";
-import DropdownSection from "./DropdownSection";
 import { IconsType } from "./types";
 
-const StyledResult = styled(DropdownSection)`
+const StyledResult = styled.div`
+  margin-top: 4px;
+
   ${({ styleOverrides }) => `
     position: relative;
     background: ${styleOverrides?.background || "#00070E"};
@@ -49,7 +50,8 @@ const StyledResultTitle = styled.div`
 const StyledResultContent = styled.div`
   ${({ styleOverrides }) => `
     width: ${styleOverrides?.width || "100%"};
-    height: ${styleOverrides?.height || "500px"};
+    min-height: 100px;
+    max-height: ${styleOverrides?.height || "calc(100vh - 350px)"};
     color: ${styleOverrides?.color || "#FFF"};
     display: ${styleOverrides?.display || "block"};
     font-size: ${styleOverrides?.fontSize || "0.875rem"};      
@@ -72,7 +74,6 @@ const StyledResultContent = styled.div`
 
     > div {
       text-align: center;
-      overflow: hidden;
       text-overflow: ellipsis;
     }
 
