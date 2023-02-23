@@ -80,9 +80,14 @@ const StyledInputSuffixWrapper = styled.div`
 
 const StyledResetBtn = styled(Button)`
   background-color: #252C37;
+  border: 1px solid #252C37;
   margin-right: 5px;
-`;
+  cursor: pointer;
 
+  &:hover {
+    background: #474F5C;
+  }
+`;
 const SearchInput = (): JSX.Element => {
   const dispatch = useDispatch();
   const renderProps = useContext(TokenSearchContext);

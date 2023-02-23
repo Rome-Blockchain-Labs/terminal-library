@@ -20,13 +20,14 @@ import {
 import Button from "./Button";
 import DownIcon from "../icons/down";
 import UpIcon from "../icons/up";
-import DropdownSection from "./DropdownSection";
 import { RootState } from "../redux/store";
 import TokenSearchContext from "../Context/TokenSearch";
 import { setViewResult, stopSelecting } from "../redux/tokenSearchSlice";
 
-const FilterWrapper = styled(DropdownSection)`
-  ${({ styleOverrides }) => `    
+const FilterWrapper = styled.div<{ styleOverrides }>`
+  overflow: hidden;
+
+  ${({ styleOverrides }) => `
     background-color: ${styleOverrides?.backgroundColor || "#00070E"};
     border-radius: ${styleOverrides?.borderRadius || "4px"};
 
@@ -163,7 +164,11 @@ const AccordionToggleButton: FC<AccordionToggleButtonProps> = ({
   );
 };
 
-export const SearchFilters = (): JSX.Element => {
+interface Props {
+  recomputePositioning?: () => void;
+}
+
+export const SearchFilters = ({ recomputePositioning }: Props): JSX.Element => {
   const dispatch = useDispatch();
   const { networkMap, exchangeMap, searchText, viewResult } = useSelector(
     (state: RootState) => state
@@ -229,16 +234,28 @@ export const SearchFilters = (): JSX.Element => {
             <AccordionItemButton>
               <StyledFilterHeader
                 styleOverrides={customSearchFilter?.content?.header}
-                onClick={() => setIsNetworkMapExpanded(!isNetworkMapExpanded)}
+                onClick={() => {
+                  setIsNetworkMapExpanded(!isNetworkMapExpanded);
+                  if (recomputePositioning) {
+                    setTimeout(() => {
+                      recomputePositioning();
+                    }, 100);
+                  }
+                }}
               >
                 <span>{networkTitle}</span>
                 <StyledFilterHeaderActionWrapper>
                   <FilterNetworkAll />
                   <AccordionToggleButton
                     isOpen={isNetworkMapExpanded}
-                    onClick={() =>
-                      setIsNetworkMapExpanded(!isNetworkMapExpanded)
-                    }
+                    onClick={() => {
+                      setIsNetworkMapExpanded(!isNetworkMapExpanded);
+                      if (recomputePositioning) {
+                        setTimeout(() => {
+                          recomputePositioning();
+                        }, 100);
+                      }
+                    }}
                   />
                 </StyledFilterHeaderActionWrapper>
               </StyledFilterHeader>
@@ -262,18 +279,28 @@ export const SearchFilters = (): JSX.Element => {
               <AccordionItemButton>
                 <StyledFilterHeader
                   styleOverrides={customSearchFilter?.content?.header}
-                  onClick={() =>
-                    setIsExchangeMapExpanded(!isExchangeMapExpanded)
-                  }
+                  onClick={() => {
+                    setIsExchangeMapExpanded(!isExchangeMapExpanded);
+                    if (recomputePositioning) {
+                      setTimeout(() => {
+                        recomputePositioning();
+                      }, 100);
+                    }
+                  }}
                 >
                   <span>{exchangeTitle}</span>
                   <StyledFilterHeaderActionWrapper>
                     <FilterExchangeAll />
                     <AccordionToggleButton
                       isOpen={isExchangeMapExpanded}
-                      onClick={() =>
-                        setIsExchangeMapExpanded(!isExchangeMapExpanded)
-                      }
+                      onClick={() => {
+                        setIsExchangeMapExpanded(!isExchangeMapExpanded);
+                        if (recomputePositioning) {
+                          setTimeout(() => {
+                            recomputePositioning();
+                          }, 100);
+                        }
+                      }}
                     />
                   </StyledFilterHeaderActionWrapper>
                 </StyledFilterHeader>
