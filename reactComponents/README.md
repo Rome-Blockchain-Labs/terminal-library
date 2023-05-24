@@ -2,8 +2,9 @@
 
 > A react component which fetches token pairs and shows information from various network and its exchanges
 
-Current version is 0.3.32
+Current version is 0.3.33
 | version | description |
+- | 0.3.33| Update RBL Net URL
 - | 0.3.32| Remove autofocus from mobile search input
 - | 0.3.31| Improve positioning logic for search bar results menu
 - | 0.3.28| Make the search bar query more efficient when finding multiple tokens
