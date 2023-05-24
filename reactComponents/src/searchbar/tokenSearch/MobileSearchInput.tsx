@@ -185,7 +185,6 @@ const MobileSearchInput: FC<MobileSearchInputProps> = ({
             onClick={handleClick}
             styleOverrides={customSearchInput?.input}
             value={text}
-            autoFocus
           />
           <StyledInputSuffixWrapper>
             {resetable && (
